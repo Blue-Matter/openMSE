@@ -12,3 +12,4 @@ index.Rmd
 ^content$
 config.toml
 config.original
+netlify.toml
