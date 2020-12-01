@@ -1,6 +1,6 @@
 ################################# Default configuration ###################
 # provide your domain here
-baseURL = "localhost:4321"
+baseURL = "https://stoic-noether-e5f2c8.netlify.app/"
 #baseURL = "https://examplesite.com/"
 # theme
 theme = "dot-hugo-documentation-theme"
