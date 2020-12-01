@@ -3,3 +3,12 @@
 ^_pkgdown\.yml$
 ^docs$
 ^pkgdown$
+^public$
+^themes$
+^static$
+^resources$
+index.Rmd
+^i18n$
+^content$
+config.toml
+config.original
