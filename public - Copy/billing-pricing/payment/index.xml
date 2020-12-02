@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Payment arrangements on openMSE</title>
+    <link>https://stoic-noether-e5f2c8.netlify.app/billing-pricing/payment/</link>
+    <description>Recent content in Payment arrangements on openMSE</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <copyright>Copyright © 2020 a Hugo theme by [Gethugothemes](https://gethugothemes.com/)</copyright>
+    <lastBuildDate>Sat, 29 Dec 2018 11:02:05 +0600</lastBuildDate>
+    
+	<atom:link href="https://stoic-noether-e5f2c8.netlify.app/billing-pricing/payment/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+  </channel>
+</rss>

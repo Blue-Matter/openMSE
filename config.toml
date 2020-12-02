@@ -10,9 +10,12 @@ title = "openMSE"
 disableLanguages = []
 # google analytics
 googleAnalytics = "" # paste your analytics ID here. (Ex: UA-123-45)
+
 # unsafe html
 [markup.goldmark.renderer]
 unsafe = true
+
+[intro]
 
 
 ############################# Default Parameters ##########################
@@ -22,6 +25,12 @@ logo = ""
 # logo white is for homepage logo, you can use colorful logo too...
 logo_white = ""
 # when logo is empty, it will shown your site title
+
+intro_text = """Intro text and stuff here.
+
+ Words
+
+"""
 
 # customize color
 primary_color = "#02007e"
@@ -39,21 +48,21 @@ contact_form_action = "#" # contact form works with : https://formspree.io
 
 
 ############################## social links ##############################
-[[params.social]]
-icon = "ti-facebook" # themify icon pack : https://themify.me/themify-icons
-link = "#"
+#[[params.social]]
+#icon = "ti-facebook" # themify icon pack : https://themify.me/themify-icons
+#link = "#"
 
-[[params.social]]
-icon = "ti-twitter-alt" # themify icon pack : https://themify.me/themify-icons
-link = "#"
+#[[params.social]]
+#icon = "ti-twitter-alt" # themify icon pack : https://themify.me/themify-icons
+#link = "#"
 
 [[params.social]]
 icon = "ti-github" # themify icon pack : https://themify.me/themify-icons
-link = "#"
+link = "https://github.com/Blue-Matter/"
 
-[[params.social]]
-icon = "ti-linkedin" # themify icon pack : https://themify.me/themify-icons
-link = "#"
+#[[params.social]]
+#icon = "ti-linkedin" # themify icon pack : https://themify.me/themify-icons
+#link = "#"
 
 ################################ English Language ######################
 [Languages.en]

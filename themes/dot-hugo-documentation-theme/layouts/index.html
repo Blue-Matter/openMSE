@@ -1,19 +1,72 @@
 {{ define "main" }}
 
+ {{ "<!-- introduction -->" | safeHTML }}
+ <section class="section">
+   <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 ">
+          <h2 class="section-title text-left"> Introduction</h2>
+          {{with .Site.Params.intro_text | safeHTML }}<p>{{. | markdownify}}</p>{{end}}
+        </div>
+      </div>
+   </div>
+  {{ "<!-- /introduction -->" | safeHTML }}
+
+
+
+  {{ "<!-- Section 1 --> " | safeHTML }}
+
+   <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 text-left">
+          <h2 class="section-title">{{ i18n "section1_title" | safeHTML }}</h2>
+        </div>
+        {{ "<!-- topic-item -->" | safeHTML }}
+        {{ range (where .Site.Pages "Type" "section1") }}
+        <div class="col-lg-4 col-sm-6 mb-4">
+          <a href="{{ .Permalink }}" class="px-4 py-5 bg-white shadow text-center d-block match-height">
+            {{ with .Params.icon}}<i class="{{.}} icon text-primary d-block mb-4"></i>{{end}}
+            <h3 class="mb-3 mt-0">{{ .Title }}</h3>
+            {{with .Params.description}}<p class="mb-0">{{. | markdownify}}</p>{{end}}
+          </a>
+        </div>
+        {{ end }}
+      </div>
+   </div>
+  {{ "<!-- /Section 1 --> " | safeHTML }}
+
+  {{ "<!-- Section 2 --> " | safeHTML }}
+
+   <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 text-left">
+          <h2 class="section-title">{{ i18n "section2_title" | safeHTML }}</h2>
+        </div>
+        {{ "<!-- topic-item -->" | safeHTML }}
+        {{ range (where .Site.Pages "Type" "section2") }}
+        <div class="col-lg-4 col-sm-6 mb-4">
+          <a href="{{ .Permalink }}" class="px-4 py-5 bg-white shadow text-center d-block match-height">
+            {{ with .Params.icon}}<i class="{{.}} icon text-primary d-block mb-4"></i>{{end}}
+            <h3 class="mb-3 mt-0">{{ .Title }}</h3>
+            {{with .Params.description}}<p class="mb-0">{{. | markdownify}}</p>{{end}}
+          </a>
+        </div>
+        {{ end }}
+      </div>
+   </div>
+
+  {{ "<!-- /Section 2 --> " | safeHTML }}
+
   {{ "<!-- topics -->" | safeHTML }}
   <section class="section">
     <div class="container">
       <div class="row justify-content-center">
-        
-        <div class="col-12 ">
-          <h2 class="section-title text-left"> Introduction</h2>
-          <p> openMSE is ...</p>
-        </div>
-        
+
+
         <div class="col-12 ">
          <h3 class="section-title text-left"> Core Packages</h3>
           <div class="row">
-            
+
             <div class="col-lg-3 col-sm-6 mb-3">
               <a href='openMSE' target="_blank">
               <img class='package-img' src="images/package_logos/MSEtool.png" width=80px;>
@@ -25,7 +78,7 @@
               <p>openMSE is ...</p>
             </div>
           </div>
-          
+
           <div class="col-lg-3 col-sm-6 mb-3">
             <a href='MSEtool' target="_blank">
               <img class='package-img' src="images/package_logos/MSEtool.png" width=80px;>
@@ -37,7 +90,7 @@
               <p>MSEtool is ...</p>
             </div>
           </div>
-          
+
           <div class="col-lg-3 col-sm-6 mb-3">
             <a href='DLMtool' target="_blank">
               <img class='package-img' src="images/package_logos/MSEtool.png" width=80px;>
@@ -59,10 +112,10 @@
               </h3>
               <p>SAMtool is ...</p>
             </div>
-          </div>         
+          </div>
         </div>
         </div>
-        
+
         <div class="col-12 text-left">
           <h2 class="section-title">{{ i18n "topics_title" | safeHTML }}</h2>
         </div>
