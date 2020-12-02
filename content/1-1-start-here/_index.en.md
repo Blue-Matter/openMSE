@@ -4,5 +4,6 @@ description: First time working with openMSE?
 icon: ti-control-play
 title: Start Here
 type: section1
+weight: 1
 ---
 
