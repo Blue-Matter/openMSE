@@ -4,7 +4,7 @@ draft: false
 keywords:
 - ""
 lastmod: "2020-01-05T10:42:26+06:00"
-title: Requirments
+title: Requirements
 weight: 1
 ---
 
