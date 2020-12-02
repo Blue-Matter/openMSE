@@ -3,7 +3,7 @@ date: "2020-12-12"
 description: Learn about openMSE
 icon: ti-info-alt
 title: About openMSE
-type: section1
+type: docs
 weight: 3
 ---
 
