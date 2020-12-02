@@ -1,5 +1,5 @@
 ---
-date: "2020-12-12"
+date: "2018-12-29T11:02:05+06:00"
 description: Build an Operating Model from scratch
 icon: ti-panel
 title: Data-Limited

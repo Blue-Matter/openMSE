@@ -1,5 +1,5 @@
 ---
-date: "2020-12-12"
+date: "2018-12-29T11:02:05+06:00"
 description: Condition an Operating Model with Data
 icon: ti-panel
 title: Data-Moderate
