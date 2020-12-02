@@ -3,7 +3,7 @@ date: "2020-12-12"
 description: First time working with openMSE?
 icon: ti-control-play
 title: Start Here
-type: section1
+type: docs
 weight: 1
 ---
 
