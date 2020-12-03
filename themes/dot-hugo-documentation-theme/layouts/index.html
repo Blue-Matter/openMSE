@@ -1,5 +1,6 @@
 {{ define "main" }}
 
+<!--
  {{ "<!-- introduction -->" | safeHTML }}
  <section class="section">
    <div class="container">
@@ -12,17 +13,17 @@
    </div>
   {{ "<!-- /introduction -->" | safeHTML }}
 
-
-
-  {{ "<!-- Section 1 --> " | safeHTML }}
+-->
+ <section class="section">
+  {{ "<!-- Welcome --> " | safeHTML }}
 
    <div class="container">
       <div class="row justify-content-center">
         <div class="col-12 text-left">
-          <h2 class="section-title">{{ i18n "section1_title" | safeHTML }}</h2>
+          <h2 class="section-title">{{ i18n "welcome" | safeHTML }}</h2>
         </div>
         {{ "<!-- topic-item -->" | safeHTML }}
-        {{ range (where .Site.Pages "Type" "section1") }}
+        {{ range (where .Site.Pages "Type" "welcome") }}
         <div class="col-lg-4 col-sm-6 mb-4">
           <a href="{{ .Permalink }}" class="px-4 py-5 bg-white shadow text-center d-block match-height">
             {{ with .Params.icon}}<i class="{{.}} icon text-primary d-block mb-4"></i>{{end}}
@@ -33,17 +34,17 @@
         {{ end }}
       </div>
    </div>
-  {{ "<!-- /Section 1 --> " | safeHTML }}
+  {{ "<!-- /Welcome --> " | safeHTML }}
 
-  {{ "<!-- Section 2 --> " | safeHTML }}
+  {{ "<!-- Use-Cases --> " | safeHTML }}
  <section class="section">
    <div class="container">
       <div class="row justify-content-center">
         <div class="col-12 text-left">
-          <h2 class="section-title">{{ i18n "section2_title" | safeHTML }}</h2>
+          <h2 class="section-title">{{ i18n "use-cases" | safeHTML }}</h2>
         </div>
         {{ "<!-- topic-item -->" | safeHTML }}
-        {{ range (where .Site.Pages "Type" "section2") }}
+        {{ range (where .Site.Pages "Type" "use-cases") }}
         <div class="col-lg-4 col-sm-6 mb-4">
           <a href="{{ .Permalink }}" class="px-4 py-5 bg-white shadow text-center d-block match-height">
             {{ with .Params.icon}}<i class="{{.}} icon text-primary d-block mb-4"></i>{{end}}
@@ -55,20 +56,18 @@
       </div>
    </div>
  </section>
-  {{ "<!-- /Section 2 --> " | safeHTML }}
+  {{ "<!-- /Use-Cases --> " | safeHTML }}
 
-  {{ "<!-- topics -->" | safeHTML }}
-  <section class="section">
-    <div class="container">
+
+  {{ "<!-- Objects --> " | safeHTML }}
+ <section class="section">
+   <div class="container">
       <div class="row justify-content-center">
-
-
-
         <div class="col-12 text-left">
-          <h2 class="section-title">{{ i18n "topics_title" | safeHTML }}</h2>
+          <h2 class="section-title">{{ i18n "objects" | safeHTML }}</h2>
         </div>
         {{ "<!-- topic-item -->" | safeHTML }}
-        {{ range (where .Site.Pages "Type" "docs") }}
+        {{ range (where .Site.Pages "Type" "objects") }}
         <div class="col-lg-4 col-sm-6 mb-4">
           <a href="{{ .Permalink }}" class="px-4 py-5 bg-white shadow text-center d-block match-height">
             {{ with .Params.icon}}<i class="{{.}} icon text-primary d-block mb-4"></i>{{end}}
@@ -78,9 +77,34 @@
         </div>
         {{ end }}
       </div>
-    </div>
-  </section>
-  {{ "<!-- /topics -->" | safeHTML }}
+   </div>
+ </section>
+  {{ "<!-- /Objects --> " | safeHTML }}
+
+
+{{ "<!-- Functions --> " | safeHTML }}
+ <section class="section">
+   <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 text-left">
+          <h2 class="section-title">{{ i18n "functions" | safeHTML }}</h2>
+        </div>
+        {{ "<!-- topic-item -->" | safeHTML }}
+        {{ range (where .Site.Pages "Type" "functions") }}
+        <div class="col-lg-4 col-sm-6 mb-4">
+          <a href="{{ .Permalink }}" class="px-4 py-5 bg-white shadow text-center d-block match-height">
+            {{ with .Params.icon}}<i class="{{.}} icon text-primary d-block mb-4"></i>{{end}}
+            <h3 class="mb-3 mt-0">{{ .Title }}</h3>
+            {{with .Params.description}}<p class="mb-0">{{. | markdownify}}</p>{{end}}
+          </a>
+        </div>
+        {{ end }}
+      </div>
+   </div>
+ </section>
+  {{ "<!-- /Functions --> " | safeHTML }}
+
+
 
   {{ if .Site.Params.cta.enable }}
   {{ with .Site.Params.cta }}

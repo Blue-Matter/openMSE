@@ -3,9 +3,9 @@
   <title>{{ .Title }}</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   {{ hugo.Generator }}
-  
+
   {{ "<!-- ** CSS Plugins Needed for the Project ** -->" | safeHTML }}
-  
+
   {{ "<!-- Bootstrap -->" | safeHTML }}
   <link rel="stylesheet" href="{{ `plugins/bootstrap/bootstrap.min.css` | absURL }}">
 
@@ -17,7 +17,10 @@
 
   {{ "<!-- fonts -->" | safeHTML }}
   <link href="https://fonts.googleapis.com/css?family={{replace .Site.Params.font_family ' ' '+' | title}}:300,400,700&display=swap" rel="stylesheet">
-  
+
+  {{ "<!-- font-awesome -->" | safeHTML }}
+  <link rel="stylesheet" href="{{ `plugins/fa/css/all.css` | absURL }}">
+
   <style>
   :root{
     --primary-color:{{ .Site.Params.primary_color }};
@@ -33,7 +36,7 @@
 {{ "<!-- Main Stylesheet -->" | safeHTML }}
 {{ $css := resources.Get "css/style.css" | minify }}
 <link href="{{ $css.Permalink }}" rel="stylesheet" media="screen"/>
-  
+
 {{ "<!-- ** JS Plugins Needed for the Project ** -->" | safeHTML }}
 
 {{ "<!-- jquiry -->" | safeHTML }}
@@ -49,7 +52,7 @@
 <script src="{{ `plugins/match-height/jquery.matchHeight-min.js` | absURL }}"></script>
 
 {{ template "_internal/google_analytics.html" . }}
-  
+
 {{ if templates.Exists ( printf "partials/overrides/header.html" ) }}
   {{ partial "partials/overrides/header.html" . }}
 {{ else }}

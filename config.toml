@@ -11,6 +11,7 @@ disableLanguages = []
 # google analytics
 googleAnalytics = "" # paste your analytics ID here. (Ex: UA-123-45)
 
+ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\\.md$"]
 # unsafe html
 [markup.goldmark.renderer]
 unsafe = true
@@ -26,7 +27,7 @@ logo = ""
 logo_white = ""
 # when logo is empty, it will shown your site title
 
-intro_text = """Intro text and stuff here.
+intro_text = """Welcome to openMSE.
 
  Words
 
@@ -69,7 +70,7 @@ link = "https://github.com/Blue-Matter/"
 languageName = "En"
 languageCode = "en-us"
 weight = 1
-copyright = "Copyright © 2020 a Hugo theme by [Gethugothemes](https://gethugothemes.com/)"
+copyright = "Copyright © 2020 [Blue Matter Science](https://www.bluematterscience.com/)"
 
 # banner
 [Languages.en.params.banner]

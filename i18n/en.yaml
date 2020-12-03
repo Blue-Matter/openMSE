@@ -1,12 +1,15 @@
-- id: section1_title
-  translation: About openMSE
+- id: welcome
+  translation: Welcome to openMSE
 
-- id: section2_title
-  translation: Building an Operating Model - Use Cases
+- id: use-cases
+  translation: Operating Model Use Cases
 
 
-- id: topics_title
-  translation: Use Cases
+- id: objects
+  translation: openMSE Objects
+
+- id: functions
+  translation: openMSE Functions
 
 - id: send
   translation: Send
