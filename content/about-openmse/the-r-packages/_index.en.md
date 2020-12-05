@@ -16,16 +16,32 @@ $(document).ready(function(){
 </script>
 
 <div>
-<img src="/images/PackageStructure.png" alt="" usemap="#Map" width="600" />
+<img src="/images/PackageStructure.png" alt="" usemap="#Map" width="600" height="600" />
 <map name="Map" id="Map">
-    <area alt="" title="instantgram" href="#" shape="rect" coords="0,600,0,600" />
-    <area alt="" title="gmail" href="#" shape="rect" coords="203,576,314,683" />
-    <area alt="" title="..." href="#" shape="rect" coords="474,579,582,688" />
-    <area alt="" title="..." href="#" shape="rect" coords="605,344,716,451" />
-    <area alt="" title="..." href="#" shape="rect" coords="471,104,582,216" />
-    <area alt="" title="..." href="#" shape="rect" coords="205,106,319,216" />
+    <area alt="" title="openMSE" href="#openMSE" shape="rect" coords="150,0,450,200" />
+    <area alt="" title="DLMtool" href="#DLMtool" shape="rect" coords="0,200,275,400" />
+    <area alt="" title="SAMtool" href="#SAMtool" shape="rect" coords="325,200,600,400" />
+    <area alt="" title="MSEtool" href="#MSEtool" shape="rect" coords="150,425,450,600" />
+
 </map>
 </div>
 
 
 Some words and stuff here!!
+
+#### openMSE <a name="openMSE"></a>
+
+
+
+#### DLMtool <a name="DLMtool"></a>
+
+
+
+#### SAMtool <a name="SAMtool"></a>
+
+
+#### MSEtool <a name="MSEtool"></a>
+
+
+
+
