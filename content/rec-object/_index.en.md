@@ -1,7 +1,9 @@
---- 
-date: "2020-12-03T14:35:15+06:00" 
-icon:  far fa-arrows 
-title:  Rec Object 
-type:  objects 
-weight:  8 
---- 
+---
+date: "2020-12-04T15:18:02+06:00"
+description: Output from Management Procedures
+icon: far fa-arrows
+title: Rec Object
+type: objects
+weight: 8
+keywords: 
+---

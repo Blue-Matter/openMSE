@@ -4,20 +4,48 @@ library(stringi)
 
 # --- Setup ----
 base.dir <- 'content'
-structure <- openxlsx::read.xlsx('build_site/directory_structure.xlsx')
+
 
 
 # ---- Functions ----
-replace_line <- function(str, val, exist.txt) {
-  ind <- which(!is.na(stringi::stri_match(exist.txt, regex=str)))
-  if (length(ind)>0)
-    exist.txt[ind] <- paste0(str,': ',  val)
-  exist.txt
+replace_line <- function(str, val, new.txt) {
+  if (str == 'keywords') {
+    ind <- which(!is.na(stringi::stri_match(new.txt, regex=str)))
+    end <- which(!is.na(stringi::stri_match(new.txt, regex='---')))[2]
+    n.kw <- end - ind - 1
+
+    words <- unique(strsplit(val, ",")[[1]])
+    n.nkw <- length(words)
+    if (is.na(val)) n.nkw=0
+
+    if (n.kw == n.nkw && n.kw>0) {
+      # replace
+      new.txt[(ind+1):(end-1)] <- paste0("- ", words)
+    } else {
+      new.lines <- n.nkw - n.kw
+      if (new.lines>0) {
+        # add lines
+        new.txt[(end+new.lines):(length(new.txt)+new.lines)] <- new.txt[end:length(new.txt)]
+
+        new.txt[(ind+(1:(1+new.lines)))] <- paste0("- ", words)
+      } else if (new.lines<0) {
+        new.txt[(ind+(1:(n.nkw)))] <- paste0("- ", words)
+        ind2 <- ind+1+(1:abs(new.lines))
+        new.txt <- new.txt[-ind2]
+      }
+    }
+  } else {
+    ind <- which(!is.na(stringi::stri_match(new.txt, regex=str)))
+    if (length(ind)>0)
+      new.txt[ind] <- paste0(str,': ',  val)
+  }
+
+  new.txt
 }
 
 # write YAML
-writeYAML <- function(file, structure, i) {
-  exist.txt <- stringi::stri_read_lines(file)
+writeYAML <- function(index, structure, i) {
+  exist.txt <- stringi::stri_read_lines(index)
   empty <- FALSE
   if (all(nchar(exist.txt)==0)) empty <- TRUE
 
@@ -46,28 +74,45 @@ writeYAML <- function(file, structure, i) {
 
   # write lines
   if (empty) {
-    cat('---',  '\n', file=file, append = TRUE)
-    cat('date:',  date, '\n', file=file, append = TRUE)
-    if (!is.na(dec)>0) cat('description: ', dec, '\n', file=file, append = TRUE)
-    if (!is.na(icon)) cat('icon: ', icon,  '\n', file=file, append = TRUE)
-    cat('title: ', title,  '\n',file=file, append = TRUE)
-    if (!is.na(type)) cat('type: ', type, '\n', file=file, append = TRUE)
-    cat('weight: ', structure$Weight[i],  '\n', file=file, append = TRUE)
-    cat('---',  '\n', file=file, append = TRUE)
+    cat('---',  '\n', file=index, append = TRUE, sep="")
+    cat('date: ',  date, '\n', file=index, append = TRUE, sep="")
+    if (!is.na(dec)>0) cat('description: ', dec, '\n', file=index, append = TRUE, sep="")
+    if (!is.na(icon)) cat('icon: ', icon,  '\n', file=index, append = TRUE, sep="")
+    cat('title: ', title,  '\n',file=index, append = TRUE, sep="")
+    if (!is.na(type)) cat('type: ', type, '\n', file=index, append = TRUE, sep="")
+    cat('weight: ', structure$Weight[i],  '\n', file=index, append = TRUE, sep="")
+    cat('keywords: ',  '\n', file=index, append = TRUE, sep="")
+    if (!is.na(structure$Keywords[i])>0) {
+      kw <- structure$Keywords[i]
+      words <- unique(strsplit(kw, ",")[[1]])
+      for (j in seq_along(words)) {
+        word <- trimws(words[j])
+        cat('- ', word,  '\n', file=index, append = TRUE, sep="")
+      }
+    }
+    cat('---',  '\n', file=index, append = TRUE, sep="")
   } else {
     # replace the YAML
-    exist.txt <- replace_line('date', date, exist.txt)
-    exist.txt <- replace_line(str='description', val=dec, exist.txt)
-    exist.txt <- replace_line('icon', icon, exist.txt)
-    exist.txt <- replace_line('title', title, exist.txt)
-    exist.txt <- replace_line('type', type, exist.txt)
-    exist.txt <- replace_line('weight', weight, exist.txt)
-    stringi::stri_write_lines(exist.txt, file)
-  }
+    new.txt <- exist.txt
+    new.txt <- replace_line(str='description', val=dec, new.txt)
+    new.txt <- replace_line('icon', icon, new.txt)
+    new.txt <- replace_line('title', title, new.txt)
+    new.txt <- replace_line('type', type, new.txt)
+    new.txt <- replace_line('weight', weight, new.txt)
+    new.txt <- replace_line('keywords',val=structure$Keywords[i], new.txt)
 
+    update <- FALSE
+    if (length(new.txt)!= length(exist.txt)) update <- TRUE
+    if (update || !all(trimws(new.txt) ==  trimws(exist.txt))) {
+      # update the date and text
+      new.txt <- replace_line('date', date, new.txt)
+      stringi::stri_write_lines(new.txt, index)
+    }
+  }
 }
 
 # ---- Loop over rows in directory_structure.xlsx
+structure <- openxlsx::read.xlsx('build_site/directory_structure.xlsx')
 for (i in 1:nrow(structure)) {
   Parent <- structure$Parent[i] %>% tolower() %>% gsub(' ', "-",.)
 

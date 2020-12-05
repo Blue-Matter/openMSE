@@ -11,5 +11,8 @@
 - id: functions
   translation: openMSE Functions
 
+- id: documentation
+  translation: Other Documentation
+
 - id: send
   translation: Send

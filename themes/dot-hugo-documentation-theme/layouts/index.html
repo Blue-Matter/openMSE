@@ -37,7 +37,7 @@
   {{ "<!-- /Welcome --> " | safeHTML }}
 
   {{ "<!-- Use-Cases --> " | safeHTML }}
- <section class="section">
+
    <div class="container">
       <div class="row justify-content-center">
         <div class="col-12 text-left">
@@ -55,12 +55,11 @@
         {{ end }}
       </div>
    </div>
- </section>
+
   {{ "<!-- /Use-Cases --> " | safeHTML }}
 
 
   {{ "<!-- Objects --> " | safeHTML }}
- <section class="section">
    <div class="container">
       <div class="row justify-content-center">
         <div class="col-12 text-left">
@@ -78,12 +77,11 @@
         {{ end }}
       </div>
    </div>
- </section>
   {{ "<!-- /Objects --> " | safeHTML }}
 
 
 {{ "<!-- Functions --> " | safeHTML }}
- <section class="section">
+
    <div class="container">
       <div class="row justify-content-center">
         <div class="col-12 text-left">
@@ -101,9 +99,32 @@
         {{ end }}
       </div>
    </div>
- </section>
+
   {{ "<!-- /Functions --> " | safeHTML }}
 
+
+{{ "<!-- Documentation --> " | safeHTML }}
+
+   <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-12 text-left">
+          <h2 class="section-title">{{ i18n "documentation" | safeHTML }}</h2>
+        </div>
+        {{ "<!-- topic-item -->" | safeHTML }}
+        {{ range (where .Site.Pages "Type" "documentation") }}
+        <div class="col-lg-4 col-sm-6 mb-4">
+          <a href="{{ .Permalink }}" class="px-4 py-5 bg-white shadow text-center d-block match-height">
+            {{ with .Params.icon}}<i class="{{.}} icon text-primary d-block mb-4"></i>{{end}}
+            <h3 class="mb-3 mt-0">{{ .Title }}</h3>
+            {{with .Params.description}}<p class="mb-0">{{. | markdownify}}</p>{{end}}
+          </a>
+        </div>
+        {{ end }}
+      </div>
+   </div>
+
+  {{ "<!-- /Documentation --> " | safeHTML }}
+</section>
 
 
   {{ if .Site.Params.cta.enable }}
