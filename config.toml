@@ -1,6 +1,6 @@
 ################################# Default configuration ###################
 # provide your domain here
-baseURL = "https://development--openMSE.netlify.app/"
+baseURL = "https://development.openMSE.com/"
 
 # theme
 theme = "dot-hugo-documentation-theme"
