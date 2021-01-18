@@ -1,6 +1,6 @@
 ################################# Default configuration ###################
 # provide your domain here
-baseURL = "/"
+baseURL = "https://openMSE.com"
 #baseURL = "https://examplesite.com/"
 # theme
 theme = "dot-hugo-documentation-theme"
@@ -27,9 +27,7 @@ logo = "images/OpenMSE.png"
 logo_white = "images/OpenMSE_white.png"
 # when logo is empty, it will shown your site title
 
-intro_text = """Welcome to openMSE.
-
- Words
+intro_text = """This website is in development and will be updated soon.
 
 """
 
@@ -108,26 +106,4 @@ url = "contact"
 weight = 3
 
 # Dropdown menu
-[[Languages.en.menu.main]]
-weight = 4
-name = "docs"
-hasChildren = true
-
-  [[Languages.en.menu.main]]
-  parent = "docs"
-  name = "Installation"
-  url = "installation"
-  weight = 1
-
-  [[Languages.en.menu.main]]
-  parent = "docs"
-  name = "Billing and Pricing"
-  url = "billing-pricing"
-  weight = 2
-
-  [[Languages.en.menu.main]]
-  parent = "docs"
-  name = "Features"
-  url = "features"
-  weight = 3
 
