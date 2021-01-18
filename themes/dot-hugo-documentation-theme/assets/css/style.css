@@ -620,14 +620,15 @@ table {
   width: 100%;
   max-width: 100%;
   margin-bottom: 1rem;
-  border: 1px solid #dee2e6;
+  border: none;
+  table-layout: fixed;
+  word-wrap:break-word;
 }
 
 table td,
 table th {
   padding: .75rem;
   vertical-align: top;
-  border: 1px solid #dee2e6;
   margin-bottom: 0;
 }
 
@@ -637,7 +638,7 @@ thead {
 }
 
 tbody {
-  background: #f8f8f8;
+  background: white;
   margin-bottom: 0;
 }
 

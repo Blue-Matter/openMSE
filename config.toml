@@ -22,9 +22,9 @@ unsafe = true
 ############################# Default Parameters ##########################
 [params]
 # logo is for all page
-logo = ""
+logo = "images/OpenMSE.png"
 # logo white is for homepage logo, you can use colorful logo too...
-logo_white = ""
+logo_white = "images/OpenMSE_white.png"
 # when logo is empty, it will shown your site title
 
 intro_text = """Welcome to openMSE.
@@ -83,7 +83,7 @@ placeholder = "Have a question? Just ask here or enter terms"
 [Languages.en.params.cta]
 enable = true
 title = "Didn't find an answer to your question?"
-content = "Musce libero nunc, dignissim quis turpis quis, semper vehicula dolor. Suspendisse tincidunt consequat quam."
+content = "Contact us for more information"
 # call to action button
 [Languages.en.params.cta.button]
 enable = true

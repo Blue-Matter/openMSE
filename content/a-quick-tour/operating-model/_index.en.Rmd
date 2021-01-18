@@ -1,0 +1,29 @@
+---
+date: "2020-12-04T15:18:01+06:00"
+title: Operating Model
+weight: 1
+keywords: 
+---
+
+
+### Objects
+
+The fundamental component of the `openMSE` framework is the Operating Model. 
+
+`openMSE` uses an object oriented design
+
+
+The Operating Model is a complete
+
+Operating Models in `openMSE` are stored in an S4
+
+
+#### Constructing an Operating Model
+
+
+
+### Glossary
+
+#### Operating Model
+A blah blah
+
