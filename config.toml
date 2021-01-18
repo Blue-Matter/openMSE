@@ -1,6 +1,6 @@
 ################################# Default configuration ###################
 # provide your domain here
-baseURL = "https://openMSE.com"
+baseURL = "https://openMSE.com/"
 #baseURL = "https://examplesite.com/"
 # theme
 theme = "dot-hugo-documentation-theme"
