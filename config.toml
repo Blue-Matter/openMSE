@@ -47,6 +47,15 @@ font_family = "lato" # Choose font family from : https://fonts.google.com/
 # contact form action
 contact_form_action = "#" # contact form works with : https://formspree.io
 
+[params.contact]
+  enable = true
+  title =  "Contact Us"
+  message =  ""
+  name_placeholder = "Your name"
+  email_placeholder = "Your email"
+  email_disclaimer = "We will never share your email with anyone else."
+  message_placeholder = "Please enter a message."
+  button_text = "Submit"
 
 ############################## social links ##############################
 #[[params.social]]
