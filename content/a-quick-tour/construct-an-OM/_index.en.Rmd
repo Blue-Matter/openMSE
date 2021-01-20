@@ -1,15 +1,24 @@
 ---
-date: "2020-12-16T15:18:01+06:00"
+date: "2021-01-19T11:35:01+06:00"
 title: Construct an Operating Model Object
 weight: 2
+keywords:
+  - stochastic
+  - slots
+  - parameters
 ---
 
 ```{r, include=FALSE}
 library(openMSE)
 ```
 
-`openMSE` uses an age-structured spatial population dynamics model to simulate the fishery dynamics. The parameters for the operating model are stored in an [OM Object](#OM-object).
+The Operating Model (OM) is the main component of the MSE framework.  The OM is used to describe the characteristics of a fishery system and contains all the parameters required to simulate the population and fleet dynamics, the collection of data, and the application of a management procedure (e.g., implement a size regulation, effort control, spatial closure, or catch limit). 
 
+The parameters for the operating model are stored in an [OM Object](#OM-object) (like most of the core objects in `openMSE`, the `OM` object is an [S4](/faq/#what-are-s4-objects) type object).
+
+There are several different methods for constructing an operating model. In this brief demo, we will create an operating model using some of the example objects that are included in `openMSE`. The other methods for building operating models are described elsewhere on this site.
+
+### Building an operating model from example objects
 The simplest way to build an Operating Model object is to stitch together some of the example objects that are included in `openMSE`: 
 
 ```{r}
@@ -18,29 +27,54 @@ ourOM <- new('OM', Albacore, Generic_IncE, Imprecise_Unbiased, Perfect_Imp)
 
 As you can see, the Operating Model object is made up of four sub-components. Here we are using:
 
-1. `Albacore` - an example [Stock Object](#Stock-object) that contains the biological parameters of a stock based on albacore (*Thunnus alalunga*);
-2. `Generic_IncE` - an example [Fleet Object](#Fleet-object) describes a generic fishing fleet with an increasing effort pattern;
-3. `Imprecise_Unbiased` - an example [Obs Object](#Obs-object) that describes a generally imprecise but unbiased observation process;
-4. `Perfect_Imp` - an example [Imp Object](#Imp-object) that assumes the management recommendations are implemented into the fishery without error.
+1. `Albacore` - an example [Stock Object](/object-stock) that contains the biological parameters of a stock based on albacore (*Thunnus alalunga*);
+2. `Generic_IncE` - an example [Fleet Object](/object-fleet) describes a generic fishing fleet with an increasing effort pattern;
+3. `Imprecise_Unbiased` - an example [Obs Object](/object-obs) that describes a generally imprecise but unbiased observation process;
+4. `Perfect_Imp` - an example [Imp Object](/object-imp) that assumes the management recommendations are implemented into the fishery without error.
 
-`ourOM` is now an object of class `OM` containing all the information required to simulate the fishery dynamics. 
+`ourOM` is now an object of class `OM`: 
+```{r}
+class(ourOM)
+```
 
-can read more about the [OM Object](#OM-object)
+### Brief description of the contents of the OM object
+The `OM` object contains all the information that is used to simulate the fishery dynamics.
 
+Here we will briefly examine some of the contents of the OM object. See the [OM Object](/object-operating-model) page for a more detailed description of the `OM` object.
 
+The `OM` object is an [S4 class object](/faq/#what-are-s4-objects), and the contents are stored in slots which are accessed using the @ symbol.
 
-[OM Object](#OM-object)
+For example, the number of simulations that will be run is stored in the `nsim` slot:
 
-S4 classes
+```{r}
+ourOM@nsim # number of simulations
+```
 
-Tests: 
+The number of historical (the spool-up period) and projection years stored in the `nyears` and `proyears` slots respectively:
 
+```{r}
+ourOM@nyears # number of historical years
+ourOM@proyears # number of projection years
+```
 
-- plot Stock
-- plot Fleet
-- plot Obs
-- plot Imp 
-- plot OM
+The operating model in `openMSE` is a fully stochastic model, where each parameter is drawn from a distribution. By default, the parameters are sampled from a uniform distribution, with the lower and upper bounds for each parameter specified in the relevant slot in the `OM` object (alternative distributions, including correlated samples for multiple parameters, can be used with the [Custom Parameters](#custom-parameters) feature).  
 
+For example, the natural mortality parameter (*M*) is stored in the `M` slot:
 
+```{r}
+ourOM@M
+```
+
+In this case, when the operating model is used for the simulations, there will be `r ourOM@nsim` samples of the natural mortality parameter drawn from a uniform distribution with lower bound `r min(ourOM@M)` and upper bound `r max(ourOM@M)`:
+
+```{r}
+M <- runif(ourOM@nsim, ourOM@M[1], ourOM@M[2]) # M sampled from the operating model
+M # values of M used for the simulations
+```
+
+The OM object includes a seed for the random number generator (`ourOM@seed`) so that the sampled values are identical each time the OM is used.
+
+The [OM Object](/object-operating-model) page describes the contents of the `OM` object in more detail. For the purposes of this brief demonstration, the main thing to know is that the `OM` object contains all the information related to simulating the fishery. 
+
+In the next section we will select some management procedures to evaluate for the OM we constructed.
 

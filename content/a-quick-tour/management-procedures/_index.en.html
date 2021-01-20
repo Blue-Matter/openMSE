@@ -1,0 +1,42 @@
+---
+date: "2021-01-19T11:35:01+06:00"
+title: Management Procedures
+weight: 3
+keywords:
+  - output controls
+  - input controls
+  - TAC
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+
+<p>A key purpose of an MSE is to compare the performance of alternative management approaches, or <strong><em>Management Procedures</em></strong> to identify the method that is most likely to meet the management objectives for a fishery.</p>
+<p>In essence, a Management Procedure is simply a set of rules which define how a fishery will be managed. These rules can range from simple harvest policies to more complex arrangements.</p>
+<p>For example, a simple Management Procedure may be a constant catch policy, where the annual total allowable catch (TAC) is set a some fixed value. Alternatively, a more complex Management Procedure may involve multiple data sources, with rules that increase or reduce the TAC in response to trends in one or several indicators.</p>
+<p>Management Procedures can differ in data requirements and complexity. However, all Management Procedures have one thing in common. They take fishery information and return a management recommendation.</p>
+<p>To be included in an MSE, a Management Procedure must be reproducible and able to be coded in a set of instructions. While fisheries are sometimes managed by expert judgment, it is difficult to reproduce the subjective decision-making process in a computer simulation and include such methods in an MSE.</p>
+<div id="available-management-procedures" class="section level4">
+<h4>Available Management Procedures</h4>
+<p>There are over 100 management procedures included in the <code>openMSE</code> packages. The MPs are grouped into two categories:</p>
+<ol style="list-style-type: decimal">
+<li>Data-Limited: These MPs are in the <code>DLMtool</code> package, and typically use model-free approaches to determine the management recommendations rather than fitting a stock assessment model. More information on the MPs in the <code>DLMtool</code> package is available on the <a href="https://dlmtool.openmse.com">DLMtool documentation page</a>;</li>
+<li>Data-Moderate/Rich: These MPs are in the <code>SAMtool</code> package, and are comprised of a stock assessment method linked to a harvest control rule. More information on the MPs in the <code>SAMtool</code> package is available on the <a href="https://samtool.openmse.com">SAMtool documentation page</a>;</li>
+</ol>
+<p><code>openMSE</code> is extensible, and users can easily develop their own management procedures to use within the framework. Information on this and other details related to the management procedures is available in the <a href="/features-management-procedures">Management Procedure</a> section.</p>
+</div>
+<div id="choosing-from-the-available-management-procedures" class="section level4">
+<h4>Choosing from the available Management Procedures</h4>
+<p>The <code>avail</code> function can be used determine which MPs are available. In this case, we are specifying that the <code>avail</code> function only search in the <code>DLMtool</code> package:</p>
+<pre class="r"><code>allMPs &lt;- avail(&#39;MP&#39;, &#39;DLMtool&#39;)</code></pre>
+<pre><code>## Searching for objects of class MP in package: DLMtool</code></pre>
+<p>For the purposes of this quick demonstration, we will select 5 management procedures from the <code>DLMtool</code> package and evaluate their
+performance for the operating model we built in the previous section.</p>
+<pre class="r"><code>ourMPs &lt;- allMPs[c(1, 3, 6, 20, 51)] # select 5 MPs
+ourMPs</code></pre>
+<pre><code>## [1] &quot;AvC&quot;     &quot;BK&quot;      &quot;CC1&quot;     &quot;DCAC&quot;    &quot;Islope1&quot;</code></pre>
+<p>Help documentation for the <code>MP</code> functions can be accessed in the usual way, e.g., by typing <code>?AvC</code> in the console, or by visiting the <a href="https://dlmtool.openmse.com">DLMtool</a> and <a href="https://samtool.openmse.com">SAMtool</a> function documentation pages.</p>
+<p>In the next section we will run the MSE using these 5 MPs and the OM we constructed in the previous section.</p>
+</div>

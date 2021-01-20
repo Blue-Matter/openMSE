@@ -1,5 +1,5 @@
 ---
-date: "2020-12-16T15:18:01+06:00"
+date: "2021-01-19T11:35:01+06:00"
 description: A tour of the main features of openMSE
 icon: ti-control-play
 title: A Quick Demo

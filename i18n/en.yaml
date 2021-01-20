@@ -8,11 +8,11 @@
 - id: objects
   translation: openMSE Objects
 
-- id: functions
-  translation: openMSE Functions
+- id: features
+  translation: Using openMSE
 
-- id: documentation
-  translation: Other Documentation
+- id: tutorials
+  translation: Concepts and Tutorials
 
 - id: send
   translation: Send

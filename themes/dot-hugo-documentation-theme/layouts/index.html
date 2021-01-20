@@ -20,7 +20,7 @@
    <div class="container">
       <div class="row justify-content-center">
         <div class="col-12 text-left">
-          <h2 class="section-title">{{ i18n "welcome" | safeHTML }}</h2>
+          <h2 class="section-title" id="welcome">{{ i18n "welcome" | safeHTML }}</h2>
         </div>
         {{ "<!-- topic-item -->" | safeHTML }}
         {{ range (where .Site.Pages "Type" "welcome") }}
@@ -41,7 +41,7 @@
    <div class="container">
       <div class="row justify-content-center">
         <div class="col-12 text-left">
-          <h2 class="section-title">{{ i18n "use-cases" | safeHTML }}</h2>
+          <h2 class="section-title" id="use-cases">{{ i18n "use-cases" | safeHTML }}</h2>
         </div>
         {{ "<!-- topic-item -->" | safeHTML }}
         {{ range (where .Site.Pages "Type" "use-cases") }}
@@ -63,7 +63,7 @@
    <div class="container">
       <div class="row justify-content-center">
         <div class="col-12 text-left">
-          <h2 class="section-title">{{ i18n "objects" | safeHTML }}</h2>
+          <h2 class="section-title" id="objects">{{ i18n "objects" | safeHTML }}</h2>
         </div>
         {{ "<!-- topic-item -->" | safeHTML }}
         {{ range (where .Site.Pages "Type" "objects") }}
@@ -85,10 +85,10 @@
    <div class="container">
       <div class="row justify-content-center">
         <div class="col-12 text-left">
-          <h2 class="section-title">{{ i18n "functions" | safeHTML }}</h2>
+          <h2 class="section-title" id="features">{{ i18n "features" | safeHTML }}</h2>
         </div>
         {{ "<!-- topic-item -->" | safeHTML }}
-        {{ range (where .Site.Pages "Type" "functions") }}
+        {{ range (where .Site.Pages "Type" "features") }}
         <div class="col-lg-4 col-sm-6 mb-4">
           <a href="{{ .Permalink }}" class="px-4 py-5 bg-white shadow text-center d-block match-height">
             {{ with .Params.icon}}<i class="{{.}} icon text-primary d-block mb-4"></i>{{end}}
@@ -108,10 +108,10 @@
    <div class="container">
       <div class="row justify-content-center">
         <div class="col-12 text-left">
-          <h2 class="section-title">{{ i18n "documentation" | safeHTML }}</h2>
+          <h2 class="section-title" id="tutorials">{{ i18n "tutorials" | safeHTML }}</h2>
         </div>
         {{ "<!-- topic-item -->" | safeHTML }}
-        {{ range (where .Site.Pages "Type" "documentation") }}
+        {{ range (where .Site.Pages "Type" "tutorials") }}
         <div class="col-lg-4 col-sm-6 mb-4">
           <a href="{{ .Permalink }}" class="px-4 py-5 bg-white shadow text-center d-block match-height">
             {{ with .Params.icon}}<i class="{{.}} icon text-primary d-block mb-4"></i>{{end}}

@@ -111,32 +111,47 @@ name = "Faq"
 url = "faq"
 weight = 2
 
-[[Languages.en.menu.main]]
-name = "contact"
-url = "contact"
-weight = 3
-
 # Dropdown menu
 [[Languages.en.menu.main]]
-weight = 4
-name = "docs"
+weight = 3
+name = "Sections"
 hasChildren = true
 
   [[Languages.en.menu.main]]
-  parent = "docs"
-  name = "Installation"
-  url = "installation"
+  parent = "Sections"
+  name = "Welcome"
+  url = "/#welcome"
   weight = 1
 
   [[Languages.en.menu.main]]
-  parent = "docs"
-  name = "Billing and Pricing"
-  url = "billing-pricing"
+  parent = "Sections"
+  name = "OM Use Cases"
+  url = "/#use-cases"
   weight = 2
 
   [[Languages.en.menu.main]]
-  parent = "docs"
-  name = "Features"
-  url = "features"
+  parent = "Sections"
+  name = "openMSE Objects"
+  url = "/#objects"
   weight = 3
+
+  [[Languages.en.menu.main]]
+  parent = "Sections"
+  name = "Using openMSE"
+  url = "/#features"
+  weight = 4
+
+  [[Languages.en.menu.main]]
+  parent = "Sections"
+  name = "Concepts and Tutorials"
+  url = "/#tutorials"
+  weight = 5
+
+
+[[Languages.en.menu.main]]
+name = "contact"
+url = "contact"
+weight = 4
+
+
 
