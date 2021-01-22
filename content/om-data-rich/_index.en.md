@@ -6,3 +6,5 @@ title: Data-Rich
 type: use-cases
 weight: 3
 ---
+
+Import an OM from an assessment

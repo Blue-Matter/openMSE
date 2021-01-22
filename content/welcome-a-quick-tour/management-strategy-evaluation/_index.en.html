@@ -41,16 +41,5 @@ weight: 5
 <pre><code>## [1] &quot;array&quot;</code></pre>
 <pre class="r"><code>dim(MSE@SB_SBMSY)</code></pre>
 <pre><code>## [1] 48  5 50</code></pre>
-<p>You can read more about the <code>MSE</code> object in the <a href="/object-mse/"><code>MSE</code> object section</a>.</p>
-<div id="running-the-mse-in-two-phases" class="section level4">
-<h4>Running the MSE in two phases</h4>
-<p>The time to run the simulations depends on the dynamics of the stock (e.g., number of age classes), the number of simulations (<code>OM@nsim</code>), and the number of historical (<code>OM@nyears</code>) and projection years (<code>OM@proyears</code>).</p>
-<p>For longer running simulations, it is sometimes helpful to split the simulations up into two phases. First, we use the <code>Simulate</code> function to simulate the historical spool-up period:</p>
-<pre class="r"><code>Hist &lt;- Simulate(OM)</code></pre>
-<p>The <code>Simulate</code> function returns an object of class <code>Hist</code> (see <a href="/object-hist/"><code>Hist</code> object</a> for more details).</p>
-<p>To avoid re-running the spool-up period, the <code>Hist</code> object can be saved to disk (e.g., <code>saveRDS(Hist, 'myHist.rda')</code>) and re-loaded in the next R session (e.g., <code>Hist &lt;- readRDS('myHist.rda')</code>).</p>
-<p>The forward projections can then run using the <code>Hist</code> object and the <code>Project</code> function:</p>
-<pre class="r"><code>MSE &lt;- Project(Hist, MPs=ourMPs)</code></pre>
-<p>This will result in an <code>MSE</code> object that is identical to the one obtained above with <code>MSE &lt;- runMSE(ourOM, MPs=ourMPs)</code>.</p>
-<p>In the next section we will examine the MSE results in more detail.</p>
-</div>
+<p>See the <a href="/features-running-mse/">Running the MSE</a> and the <a href="/object-mse/"><code>MSE</code> object</a> pages for more details.</p>
+<p>In the next section we will examine the MSE results.</p>

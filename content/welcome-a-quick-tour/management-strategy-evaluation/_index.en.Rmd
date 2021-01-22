@@ -6,8 +6,7 @@ weight: 5
 
 ```{r, include=FALSE}
 library(openMSE)
-allMPs <- avail('MP', 'DLMtool')
-ourMPs <- allMPs[c(1, 3, 6, 20, 51)] 
+ourMPs <- c("AvC", "BK", "CC1", "DCAC","Islope1") 
 ourOM <- new('OM', Albacore, Generic_IncE, Imprecise_Unbiased, Perfect_Imp)
 ```
 
@@ -34,28 +33,6 @@ class(MSE@SB_SBMSY)
 dim(MSE@SB_SBMSY)
 ```
 
-You can read more about the `MSE` object in the [`MSE` object section](/object-mse/).
+See the [Running the MSE](/features-running-mse/) and the [`MSE` object](/object-mse/) pages for more details.
 
-#### Running the MSE in two phases
-
-The time to run the simulations depends on the dynamics of the stock (e.g., number of age classes), the number of simulations (`OM@nsim`), and the number of historical (`OM@nyears`) and projection years (`OM@proyears`).
-
-For longer running simulations, it is sometimes helpful to split the simulations up into two phases. First, we use the `Simulate` function to simulate the historical spool-up period:
-
-```{r, eval=FALSE}
-Hist <- Simulate(OM)
-```
-
-The `Simulate` function returns an object of class `Hist` (see [`Hist` object](/object-hist/) for more details).
-
-To avoid re-running the spool-up period, the `Hist` object can be saved to disk (e.g., `saveRDS(Hist, 'myHist.rda')`) and re-loaded in the next R session (e.g., `Hist <- readRDS('myHist.rda')`).
-
-The forward projections can then run using the `Hist` object and the `Project` function:
-
-```{r, eval=FALSE}
-MSE <- Project(Hist, MPs=ourMPs)
-```
-
-This will result in an `MSE` object that is identical to the one obtained above with `MSE <- runMSE(ourOM, MPs=ourMPs)`.
-
-In the next section we will examine the MSE results in more detail.
+In the next section we will examine the MSE results. 

@@ -1,6 +1,6 @@
 ---
 date: "2021-01-19T11:35:01+06:00"
-description: First time using `openMSE`? Start here
+description: First time using openMSE? Start here
 icon: ti-info-alt
 title: About openMSE
 type: welcome
