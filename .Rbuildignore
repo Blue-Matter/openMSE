@@ -14,3 +14,4 @@ config.toml
 config.original
 netlify.toml
 ^objects$
+^build_tools$

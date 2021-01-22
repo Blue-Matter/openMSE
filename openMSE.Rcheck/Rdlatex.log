@@ -1,0 +1,455 @@
+Hmm ... looks like a package
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+(./Rd2.tex
+LaTeX2e <2020-10-01> patch level 2
+L3 programming layer <2020-12-07> xparse <2020-03-03>
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2020/04/10 v1.4m Standard LaTeX document class
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/bk10.clo))
+(c:/Program Files/R/R-4.0.3/share/texmf/tex/latex/Rd.sty
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/longtable.s
+ty) (c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/bm.sty)
+ (c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/alltt.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/verbatim.st
+y) (c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/url/url.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty)
+ (c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/times.sty
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/inconsolata/zi4.s
+ty `inconsolata-zi4' v1.12, 2019/05/17 Text macros for Inconsolata (msharpe)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/xkeyval/xkeyval.s
+ty
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/xkeyval/xkeyval
+.tex
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/xkeyval/xkvutil
+s.tex
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/xkeyval/keyval.
+tex)))))
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/color.st
+y
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/colo
+r.cfg)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-def/pdft
+ex.def))
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref
+.sty
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds
+.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdft
+excmds.sty
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/infwarerr/infwa
+rerr.sty))
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/kvsetkeys/kvset
+keys.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/kvdefinekeys/kv
+definekeys.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdfescape/pdfes
+cape.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.s
+ty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/letltxmacro/letlt
+xmacro.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/auxhook/auxhook.s
+ty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptio
+ns.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.d
+ef)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc
+.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/etexcmds/etexcm
+ds.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bitset/bitset.s
+ty
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigi
+ntcalc.sty))
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atbegshi-ltx
+.sty))
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.
+def
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atveryend-lt
+x.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/re
+runfilecheck.sty
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/uniquecounter/u
+niquecounter.sty)))
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/makeidx.sty)
+
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/inputenc.sty
+)
+Writing index file Rd2.idx
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backe
+nd-pdftex.def)
+No file Rd2.aux.
+
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.
+sty
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/refcount/refcount
+.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/gettitlestring/
+gettitlestring.sty))
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/inconsolata/t1zi4
+.fd)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/t1phv.fd
+
+LaTeX Warning: Font shape declaration has incorrect series value `mc'.
+               It should not contain an `m'! Please correct it.
+               Found on input line 20.
+
+
+LaTeX Warning: Font shape declaration has incorrect series value `mc'.
+               It should not contain an `m'! Please correct it.
+               Found on input line 23.
+
+
+LaTeX Warning: Font shape declaration has incorrect series value `mc'.
+               It should not contain an `m'! Please correct it.
+               Found on input line 26.
+
+
+LaTeX Warning: Font shape declaration has incorrect series value `mc'.
+               It should not contain an `m'! Please correct it.
+               Found on input line 46.
+
+) [1{c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/
+pdftex.map}]
+No file Rd2.ind.
+[2] (./Rd2.aux)
+
+Package rerunfilecheck Warning: File `Rd2.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+ ){c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.e
+nc}{c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/inconsol
+ata/i4-t1-0.enc} <c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/lj
+four/jknappen/ec/tcrm1000.600pk><c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-
+dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb><c:/Users/Adrian/AppDa
+ta/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb><c:/Users/Adr
+ian/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/Use
+rs/Adrian/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><
+c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a
+.pfb><c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/
+utmri8a.pfb>
+Output written on Rd2.pdf (2 pages, 66836 bytes).
+Transcript written on Rd2.log.
+This is makeindex, version 2.15 [TeX Live 2019/W32TeX] (kpathsea + Thai support).
+Scanning input file Rd2.idx....done (2 entries accepted, 0 rejected).
+Sorting entries....done (2 comparisons).
+Generating output file Rd2.ind....done (9 lines written, 0 warnings).
+Output written in Rd2.ind.
+Transcript written in Rd2.ilg.
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+(./Rd2.tex
+LaTeX2e <2020-10-01> patch level 2
+L3 programming layer <2020-12-07> xparse <2020-03-03>
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2020/04/10 v1.4m Standard LaTeX document class
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/bk10.clo))
+(c:/Program Files/R/R-4.0.3/share/texmf/tex/latex/Rd.sty
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/longtable.s
+ty) (c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/bm.sty)
+ (c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/alltt.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/verbatim.st
+y) (c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/url/url.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty)
+ (c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/times.sty
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/inconsolata/zi4.s
+ty `inconsolata-zi4' v1.12, 2019/05/17 Text macros for Inconsolata (msharpe)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/xkeyval/xkeyval.s
+ty
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/xkeyval/xkeyval
+.tex
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/xkeyval/xkvutil
+s.tex
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/xkeyval/keyval.
+tex)))))
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/color.st
+y
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/colo
+r.cfg)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-def/pdft
+ex.def))
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref
+.sty
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds
+.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdft
+excmds.sty
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/infwarerr/infwa
+rerr.sty))
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/kvsetkeys/kvset
+keys.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/kvdefinekeys/kv
+definekeys.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdfescape/pdfes
+cape.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.s
+ty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/letltxmacro/letlt
+xmacro.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/auxhook/auxhook.s
+ty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptio
+ns.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.d
+ef)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc
+.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/etexcmds/etexcm
+ds.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bitset/bitset.s
+ty
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigi
+ntcalc.sty))
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atbegshi-ltx
+.sty))
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.
+def
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atveryend-lt
+x.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/re
+runfilecheck.sty
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/uniquecounter/u
+niquecounter.sty)))
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/makeidx.sty)
+
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/inputenc.sty
+)
+Writing index file Rd2.idx
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backe
+nd-pdftex.def) (./Rd2.aux)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.
+sty
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/refcount/refcount
+.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/gettitlestring/
+gettitlestring.sty)) (./Rd2.out) (./Rd2.out)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/inconsolata/t1zi4
+.fd)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/t1phv.fd
+
+LaTeX Warning: Font shape declaration has incorrect series value `mc'.
+               It should not contain an `m'! Please correct it.
+               Found on input line 20.
+
+
+LaTeX Warning: Font shape declaration has incorrect series value `mc'.
+               It should not contain an `m'! Please correct it.
+               Found on input line 23.
+
+
+LaTeX Warning: Font shape declaration has incorrect series value `mc'.
+               It should not contain an `m'! Please correct it.
+               Found on input line 26.
+
+
+LaTeX Warning: Font shape declaration has incorrect series value `mc'.
+               It should not contain an `m'! Please correct it.
+               Found on input line 46.
+
+) (./Rd2.toc) [1{c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pd
+ftex/updmap/pdftex.map}] (./Rd2.ind [2] [3]) (./Rd2.aux)
+
+Package rerunfilecheck Warning: File `Rd2.out' has changed.
+(rerunfilecheck)                Rerun to get outlines right
+(rerunfilecheck)                or use package `bookmark'.
+
+ ){c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.e
+nc}{c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/inconsol
+ata/i4-t1-0.enc} <c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/lj
+four/jknappen/ec/tcrm1000.600pk><c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-
+dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb><c:/Users/Adrian/AppDa
+ta/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb><c:/Users/Adr
+ian/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/Use
+rs/Adrian/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><
+c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a
+.pfb><c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/
+utmri8a.pfb>
+Output written on Rd2.pdf (3 pages, 67530 bytes).
+Transcript written on Rd2.log.
+This is makeindex, version 2.15 [TeX Live 2019/W32TeX] (kpathsea + Thai support).
+Scanning input file Rd2.idx....done (2 entries accepted, 0 rejected).
+Sorting entries....done (2 comparisons).
+Generating output file Rd2.ind....done (9 lines written, 0 warnings).
+Output written in Rd2.ind.
+Transcript written in Rd2.ilg.
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex)
+ restricted \write18 enabled.
+entering extended mode
+(./Rd2.tex
+LaTeX2e <2020-10-01> patch level 2
+L3 programming layer <2020-12-07> xparse <2020-03-03>
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2020/04/10 v1.4m Standard LaTeX document class
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/bk10.clo))
+(c:/Program Files/R/R-4.0.3/share/texmf/tex/latex/Rd.sty
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/longtable.s
+ty) (c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/bm.sty)
+ (c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/alltt.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/verbatim.st
+y) (c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/url/url.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty)
+ (c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/times.sty
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/inconsolata/zi4.s
+ty `inconsolata-zi4' v1.12, 2019/05/17 Text macros for Inconsolata (msharpe)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/xkeyval/xkeyval.s
+ty
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/xkeyval/xkeyval
+.tex
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/xkeyval/xkvutil
+s.tex
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/xkeyval/keyval.
+tex)))))
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/color.st
+y
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/colo
+r.cfg)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-def/pdft
+ex.def))
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref
+.sty
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds
+.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdft
+excmds.sty
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/infwarerr/infwa
+rerr.sty))
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/kvsetkeys/kvset
+keys.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/kvdefinekeys/kv
+definekeys.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdfescape/pdfes
+cape.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.s
+ty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/letltxmacro/letlt
+xmacro.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/auxhook/auxhook.s
+ty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptio
+ns.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.d
+ef)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc
+.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/etexcmds/etexcm
+ds.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bitset/bitset.s
+ty
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigi
+ntcalc.sty))
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atbegshi-ltx
+.sty))
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.
+def
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atveryend-lt
+x.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/re
+runfilecheck.sty
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/uniquecounter/u
+niquecounter.sty)))
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/makeidx.sty)
+
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/inputenc.sty
+)
+Writing index file Rd2.idx
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/t1ptm.fd)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backe
+nd-pdftex.def) (./Rd2.aux)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.
+sty
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/refcount/refcount
+.sty)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/gettitlestring/
+gettitlestring.sty)) (./Rd2.out) (./Rd2.out)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/inconsolata/t1zi4
+.fd)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/t1phv.fd
+
+LaTeX Warning: Font shape declaration has incorrect series value `mc'.
+               It should not contain an `m'! Please correct it.
+               Found on input line 20.
+
+
+LaTeX Warning: Font shape declaration has incorrect series value `mc'.
+               It should not contain an `m'! Please correct it.
+               Found on input line 23.
+
+
+LaTeX Warning: Font shape declaration has incorrect series value `mc'.
+               It should not contain an `m'! Please correct it.
+               Found on input line 26.
+
+
+LaTeX Warning: Font shape declaration has incorrect series value `mc'.
+               It should not contain an `m'! Please correct it.
+               Found on input line 46.
+
+) (./Rd2.toc) [1{c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pd
+ftex/updmap/pdftex.map}] (./Rd2.ind [2] [3]) (./Rd2.aux) ){c:/Users/Adrian/AppD
+ata/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.enc}{c:/Users/Adrian/App
+Data/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/inconsolata/i4-t1-0.enc} <c:/Us
+ers/Adrian/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm10
+00.600pk><c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/public
+/inconsolata/Inconsolata-zi4r.pfb><c:/Users/Adrian/AppData/Roaming/TinyTeX/texm
+f-dist/fonts/type1/urw/helvetic/uhvr8a.pfb><c:/Users/Adrian/AppData/Roaming/Tin
+yTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/Users/Adrian/AppData/Roami
+ng/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/Users/Adrian/AppData
+/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><c:/Users/Adrian/A
+ppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on Rd2.pdf (3 pages, 68170 bytes).
+Transcript written on Rd2.log.
+Saving output to 'openMSE-manual.pdf' ...
+Done
+You may want to clean up by 'rm -Rf C:/Users/Adrian/AppData/Local/Temp/RtmpqSSq5b/Rd2pdf8758483443f3'

@@ -1,0 +1,467 @@
+This is pdfTeX, Version 3.14159265-2.6-1.40.21 (TeX Live 2020/W32TeX) (preloaded format=pdflatex 2020.12.18)  22 JAN 2021 13:41
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**Rd2.tex
+(./Rd2.tex
+LaTeX2e <2020-10-01> patch level 2
+L3 programming layer <2020-12-07> xparse <2020-03-03>
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/book.cls
+Document Class: book 2020/04/10 v1.4m Standard LaTeX document class
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/bk10.clo
+File: bk10.clo 2020/04/10 v1.4m Standard LaTeX file (size option)
+)
+\c@part=\count177
+\c@chapter=\count178
+\c@section=\count179
+\c@subsection=\count180
+\c@subsubsection=\count181
+\c@paragraph=\count182
+\c@subparagraph=\count183
+\c@figure=\count184
+\c@table=\count185
+\abovecaptionskip=\skip47
+\belowcaptionskip=\skip48
+\bibindent=\dimen138
+)
+(c:/Program Files/R/R-4.0.3/share/texmf/tex/latex/Rd.sty
+Package: Rd 
+
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/ifthen.sty
+Package: ifthen 2014/09/29 v1.1c Standard LaTeX ifthen package (DPC)
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/longtable.s
+ty
+Package: longtable 2020/01/07 v4.13 Multi-page Table package (DPC)
+\LTleft=\skip49
+\LTright=\skip50
+\LTpre=\skip51
+\LTpost=\skip52
+\LTchunksize=\count186
+\LTcapwidth=\dimen139
+\LT@head=\box47
+\LT@firsthead=\box48
+\LT@foot=\box49
+\LT@lastfoot=\box50
+\LT@cols=\count187
+\LT@rows=\count188
+\c@LT@tables=\count189
+\c@LT@chunks=\count190
+\LT@p@ftn=\toks15
+) (c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/bm.sty
+Package: bm 2019/07/24 v1.2d Bold Symbol Support (DPC/FMi)
+\symboldoperators=\mathgroup4
+\symboldletters=\mathgroup5
+\symboldsymbols=\mathgroup6
+LaTeX Font Info:    Redeclaring math alphabet \mathbf on input line 141.
+LaTeX Info: Redefining \bm on input line 209.
+) (c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/alltt.sty
+Package: alltt 1997/06/16 v2.0g defines alltt environment
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/tools/verbatim.st
+y
+Package: verbatim 2020-07-07 v1.5u LaTeX2e package for verbatim enhancements
+\every@verbatim=\toks16
+\verbatim@line=\toks17
+\verbatim@in@stream=\read2
+) (c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/url/url.sty
+\Urlmuskip=\muskip16
+Package: url 2013/09/16  ver 3.4  Verb mode for urls, etc.
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/textcomp.sty
+Package: textcomp 2020/02/02 v2.0n Standard LaTeX package
+)
+\ldescriptionwidth=\skip53
+
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/fontenc.sty
+Package: fontenc 2020/08/10 v2.0s Standard LaTeX package
+) (c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/times.st
+y
+Package: times 2005/04/12 PSNFSS-v9.2a (SPQR) 
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/inconsolata/zi4.s
+ty
+Package: zi4 2019/05/17 v1.12
+ `inconsolata-zi4' v1.12, 2019/05/17 Text macros for Inconsolata (msharpe)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/xkeyval/xkeyval.s
+ty
+Package: xkeyval 2020/11/20 v2.8 package option processing (HA)
+
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/xkeyval/xkeyval
+.tex
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/xkeyval/xkvutil
+s.tex
+\XKV@toks=\toks18
+\XKV@tempa@toks=\toks19
+
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/xkeyval/keyval.
+tex))
+\XKV@depth=\count191
+File: xkeyval.tex 2014/12/03 v2.7a key=value parser (HA)
+))
+\zifour@ocount=\count192
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics/color.st
+y
+Package: color 2020/02/24 v1.2b Standard LaTeX Color (DPC)
+
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-cfg/colo
+r.cfg
+File: color.cfg 2016/01/02 v1.6 sample color configuration
+)
+Package color Info: Driver file: pdftex.def on input line 147.
+
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/graphics-def/pdft
+ex.def
+File: pdftex.def 2020/10/05 v1.2a Graphics/color driver for pdftex
+))
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hyperref
+.sty
+Package: hyperref 2020-05-15 v7.00e Hypertext links for LaTeX
+
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/ltxcmds/ltxcmds
+.sty
+Package: ltxcmds 2020-05-10 v1.25 LaTeX kernel commands for general use (HO)
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/iftex/iftex.sty
+Package: iftex 2020/03/06 v1.0d TeX engine tests
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdftexcmds/pdft
+excmds.sty
+Package: pdftexcmds 2020-06-27 v0.33 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/infwarerr/infwa
+rerr.sty
+Package: infwarerr 2019/12/03 v1.5 Providing info/warning/error messages (HO)
+)
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/kvsetkeys/kvset
+keys.sty
+Package: kvsetkeys 2019/12/15 v1.18 Key value parser (HO)
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/kvdefinekeys/kv
+definekeys.sty
+Package: kvdefinekeys 2019-12-19 v1.6 Define keys (HO)
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/pdfescape/pdfes
+cape.sty
+Package: pdfescape 2019/12/09 v1.15 Implements pdfTeX's escape features (HO)
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hycolor/hycolor.s
+ty
+Package: hycolor 2020-01-27 v1.10 Color options for hyperref/bookmark (HO)
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/letltxmacro/letlt
+xmacro.sty
+Package: letltxmacro 2019/12/03 v1.6 Let assignment for LaTeX macros (HO)
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/auxhook/auxhook.s
+ty
+Package: auxhook 2019-12-17 v1.6 Hooks for auxiliary files (HO)
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/kvoptions/kvoptio
+ns.sty
+Package: kvoptions 2020-10-07 v3.14 Key value format for package options (HO)
+)
+\@linkdim=\dimen140
+\Hy@linkcounter=\count193
+\Hy@pagecounter=\count194
+
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/pd1enc.d
+ef
+File: pd1enc.def 2020-05-15 v7.00e Hyperref: PDFDocEncoding definition (HO)
+Now handling font encoding PD1 ...
+... no UTF-8 mapping file for font encoding PD1
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/intcalc/intcalc
+.sty
+Package: intcalc 2019/12/15 v1.3 Expandable calculations with integers (HO)
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/etexcmds/etexcm
+ds.sty
+Package: etexcmds 2019/12/15 v1.7 Avoid name clashes with e-TeX commands (HO)
+)
+\Hy@SavedSpaceFactor=\count195
+Package hyperref Info: Hyper figures OFF on input line 4464.
+Package hyperref Info: Link nesting OFF on input line 4469.
+Package hyperref Info: Hyper index ON on input line 4472.
+Package hyperref Info: Plain pages OFF on input line 4479.
+Package hyperref Info: Backreferencing OFF on input line 4484.
+Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
+Package hyperref Info: Bookmarks ON on input line 4717.
+\c@Hy@tempcnt=\count196
+LaTeX Info: Redefining \url on input line 5076.
+\XeTeXLinkMargin=\dimen141
+
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bitset/bitset.s
+ty
+Package: bitset 2019/12/09 v1.3 Handle bit-vector datatype (HO)
+
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/bigintcalc/bigi
+ntcalc.sty
+Package: bigintcalc 2019/12/15 v1.5 Expandable calculations on big integers (HO
+)
+))
+\Fld@menulength=\count197
+\Field@Width=\dimen142
+\Fld@charsize=\dimen143
+Package hyperref Info: Hyper figures OFF on input line 6347.
+Package hyperref Info: Link nesting OFF on input line 6352.
+Package hyperref Info: Hyper index ON on input line 6355.
+Package hyperref Info: backreferencing OFF on input line 6362.
+Package hyperref Info: Link coloring OFF on input line 6367.
+Package hyperref Info: Link coloring with OCG OFF on input line 6372.
+Package hyperref Info: PDF/A mode OFF on input line 6377.
+LaTeX Info: Redefining \ref on input line 6417.
+LaTeX Info: Redefining \pageref on input line 6421.
+
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atbegshi-ltx
+.sty
+Package: atbegshi-ltx 2020/08/17 v1.0a Emulation of the original atbegshi packa
+ge
+with kernel methods
+)
+\Hy@abspage=\count198
+\c@Item=\count199
+\c@Hfootnote=\count266
+)
+Package hyperref Info: Driver (autodetected): hpdftex.
+
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/hpdftex.
+def
+File: hpdftex.def 2020-05-15 v7.00e Hyperref driver for pdfTeX
+
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/atveryend-lt
+x.sty
+Package: atveryend-ltx 2020/08/19 v1.0a Emulation of the original atvery packag
+e
+with kernel methods
+)
+\Fld@listcount=\count267
+\c@bookmark@seq@number=\count268
+
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/rerunfilecheck/re
+runfilecheck.sty
+Package: rerunfilecheck 2019/12/05 v1.9 Rerun checks for auxiliary files (HO)
+
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/uniquecounter/u
+niquecounter.sty
+Package: uniquecounter 2019/12/15 v1.4 Provide unlimited unique counter (HO)
+)
+Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
+86.
+)
+\Hy@SectionHShift=\skip54
+)
+
+Package hyperref Warning: Option `hyperindex' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+Package hyperref Info: Option `colorlinks' set `true' on input line 377.
+
+Package hyperref Warning: Option `pagebackref' has already been used,
+(hyperref)                setting the option has no effect on input line 377.
+
+Package hyperref Info: Option `linktocpage' set `true' on input line 377.
+Package hyperref Info: Option `plainpages' set `false' on input line 377.
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/makeidx.sty
+Package: makeidx 2014/09/29 v1.0m Standard LaTeX package
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/base/inputenc.sty
+Package: inputenc 2020/08/01 v1.3d Input encoding file
+\inpenc@prehook=\toks20
+\inpenc@posthook=\toks21
+)
+\@indexfile=\write3
+\openout3 = `Rd2.idx'.
+
+
+Writing index file Rd2.idx
+LaTeX Font Info:    Trying to load font information for T1+ptm on input line 8.
+
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/t1ptm.fd
+File: t1ptm.fd 2001/06/04 font definitions for T1/ptm.
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/l3backend/l3backe
+nd-pdftex.def
+File: l3backend-pdftex.def 2020-09-24 L3 backend support: PDF output (pdfTeX)
+\l__kernel_color_stack_int=\count269
+\l__pdf_internal_box=\box51
+) (./Rd2.aux)
+\openout1 = `Rd2.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 8.
+LaTeX Font Info:    ... okay on input line 8.
+Package hyperref Info: Link coloring ON on input line 8.
+
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/hyperref/nameref.
+sty
+Package: nameref 2019/09/16 v2.46 Cross-referencing by name of section
+
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/refcount/refcount
+.sty
+Package: refcount 2019/12/15 v3.6 Data extraction from label references (HO)
+)
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/generic/gettitlestring/
+gettitlestring.sty
+Package: gettitlestring 2019/12/15 v1.6 Cleanup title references (HO)
+)
+\c@section@level=\count270
+)
+LaTeX Info: Redefining \ref on input line 8.
+LaTeX Info: Redefining \pageref on input line 8.
+LaTeX Info: Redefining \nameref on input line 8.
+ (./Rd2.out) (./Rd2.out)
+\@outlinefile=\write4
+\openout4 = `Rd2.out'.
+
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family ptm in TS1 encoding.
+(textcomp)             Default family used instead on input line 17.
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family ptm in TS1 encoding.
+(textcomp)             Default family used instead on input line 17.
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family ptm in TS1 encoding.
+(textcomp)             Default family used instead on input line 25.
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family ptm in TS1 encoding.
+(textcomp)             Default family used instead on input line 25.
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family ptm in TS1 encoding.
+(textcomp)             Default family used instead on input line 25.
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family ptm in TS1 encoding.
+(textcomp)             Default family used instead on input line 25.
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family ptm in TS1 encoding.
+(textcomp)             Default family used instead on input line 25.
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family ptm in TS1 encoding.
+(textcomp)             Default family used instead on input line 25.
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family ptm in TS1 encoding.
+(textcomp)             Default family used instead on input line 25.
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family ptm in TS1 encoding.
+(textcomp)             Default family used instead on input line 25.
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family ptm in TS1 encoding.
+(textcomp)             Default family used instead on input line 25.
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family ptm in TS1 encoding.
+(textcomp)             Default family used instead on input line 25.
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family ptm in TS1 encoding.
+(textcomp)             Default family used instead on input line 25.
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family ptm in TS1 encoding.
+(textcomp)             Default family used instead on input line 25.
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family ptm in TS1 encoding.
+(textcomp)             Default family used instead on input line 25.
+Package textcomp Info: Symbol \textasciigrave not provided by
+(textcomp)             font family ptm in TS1 encoding.
+(textcomp)             Default family used instead on input line 25.
+LaTeX Font Info:    Trying to load font information for T1+zi4 on input line 27
+.
+
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/inconsolata/t1zi4
+.fd
+File: t1zi4.fd 2018/01/14 T1/zi4 (Inconsolata)
+)
+LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
+(Font)              scaled to size 10.0pt on input line 27.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <7> on input line 27.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <5> on input line 27.
+LaTeX Font Info:    Trying to load font information for T1+phv on input line 41
+.
+
+(c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/tex/latex/psnfss/t1phv.fd
+File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
+
+
+LaTeX Warning: Font shape declaration has incorrect series value `mc'.
+               It should not contain an `m'! Please correct it.
+               Found on input line 20.
+
+
+LaTeX Warning: Font shape declaration has incorrect series value `mc'.
+               It should not contain an `m'! Please correct it.
+               Found on input line 23.
+
+
+LaTeX Warning: Font shape declaration has incorrect series value `mc'.
+               It should not contain an `m'! Please correct it.
+               Found on input line 26.
+
+
+LaTeX Warning: Font shape declaration has incorrect series value `mc'.
+               It should not contain an `m'! Please correct it.
+               Found on input line 46.
+
+) (./Rd2.toc)
+\tf@toc=\write5
+\openout5 = `Rd2.toc'.
+
+ [1
+
+
+{c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-var/fonts/map/pdftex/updmap/pdft
+ex.map}]
+LaTeX Font Info:    Font shape `T1/zi4/m/n' will be
+(Font)              scaled to size 9.0pt on input line 57.
+ (./Rd2.ind [2] [3
+
+
+]) (./Rd2.aux)
+Package rerunfilecheck Info: File `Rd2.out' has not changed.
+(rerunfilecheck)             Checksum: C0EF599228704DDFDDCBF235890632AC;128.
+ ) 
+Here is how much of TeX's memory you used:
+ 5657 strings out of 481364
+ 88006 string characters out of 5917496
+ 383399 words of memory out of 5000000
+ 22343 multiletter control sequences out of 15000+600000
+ 438014 words of font info for 61 fonts, out of 8000000 for 9000
+ 14 hyphenation exceptions out of 8191
+ 82i,5n,87p,215b,425s stack positions out of 5000i,500n,10000p,200000b,80000s
+{c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/base/8r.e
+nc}{c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/fonts/enc/dvips/inconsol
+ata/i4-t1-0.enc} <c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-var/fonts/pk/lj
+four/jknappen/ec/tcrm1000.600pk><c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-
+dist/fonts/type1/public/inconsolata/Inconsolata-zi4r.pfb><c:/Users/Adrian/AppDa
+ta/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb><c:/Users/Adr
+ian/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmb8a.pfb><c:/Use
+rs/Adrian/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a.pfb><
+c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/utmr8a
+.pfb><c:/Users/Adrian/AppData/Roaming/TinyTeX/texmf-dist/fonts/type1/urw/times/
+utmri8a.pfb>
+Output written on Rd2.pdf (3 pages, 68170 bytes).
+PDF statistics:
+ 86 PDF objects out of 1000 (max. 8388607)
+ 73 compressed objects within 1 object stream
+ 17 named destinations out of 1000 (max. 500000)
+ 25 words of extra memory for PDF output out of 10000 (max. 10000000)
+

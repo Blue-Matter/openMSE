@@ -1,5 +1,5 @@
 Package: openMSE
-Title: Easily Install and Load the `openMSE` Packages
+Title: Easily Install and Load the `openMSE` packages
 Version: 1.0.0
 Authors@R: c(
   person("Adrian", "Hordyk", 
@@ -13,7 +13,7 @@ Authors@R: c(
   person("Tom", "Carruthers", 
          role = "aut",
          email = "tom@bluematterscience.com"))
-Description: The `openMSE` package is designed for building operating models, 
+Description: `openMSE` is a package designed for building operating models, 
     doing simulation modelling and management strategy evaluation for fisheries.
     `openMSE` is an umbrella package for the `MSEtool` (Management Strategy Evaluation
     toolkit), `DLMtool` (Data-Limited Methods toolkit), and 
@@ -21,18 +21,18 @@ Description: The `openMSE` package is designed for building operating models,
     `openMSE`, users have access to the full functionality contained within
     these packages. Learn more about `openMSE` at <https://openmse.com/>.
 License: GPL-3
-URL: https://openmse.com/,
-     https://github.com/Blue-Matter/openMSE
+URL: https://openmse.com/, https://github.com/Blue-Matter/openMSE
 BugReports: https://github.com/Blue-Matter/openMSE/issues
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
-Depends: 
-    R (>= 4.0.0),
-    MSEtool (>= 3.0.0),
-    DLMtool (>= 6.0.0),
-    SAMtool
-Imports:
-    crayon
-
+Depends: R (>= 4.0.0), MSEtool (>= 3.0.0), DLMtool (>= 6.0.0), SAMtool
+Imports: crayon
+NeedsCompilation: no
+Packaged: 2021-01-22 21:40:39 UTC; Adrian
+Author: Adrian Hordyk [aut, cre] (<https://orcid.org/0000-0001-5620-3446>),
+  Quang Huynh [aut],
+  Tom Carruthers [aut]
+Maintainer: Adrian Hordyk <adrian@bluematterscience.com>
+Built: R 4.0.3; ; 2021-01-22 21:40:45 UTC; windows
