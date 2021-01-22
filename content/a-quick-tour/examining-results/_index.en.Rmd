@@ -1,0 +1,139 @@
+---
+date: "2021-01-21T11:35:01+06:00"
+title: Examining Results
+weight: 6
+---
+
+```{r, include=FALSE}
+library(openMSE)
+MSE <- readRDS("../../../objects/walkthroughMSE.rda")
+```
+
+We can now examine the results of the MSE, and determine which of the `r MSE@nMPs` MPs in our example had the best performance.
+
+To interpret the MSE results it is important that a clear set of performance metrics have been defined. Fisheries managers often have broadly defined policy goals. These conceptual objectives must be translated to quantitative operational objectives so that the MSE results can be used to evaluate performance against the specified management objectives. 
+
+For example, suppose that the fishery managers had stated broad goals to maximize yield from the fishery while minimizing the risk of the stock collapsing to unacceptably low levels. In order to use MSE to determine which MPs are most likely to meet these objectives it is necessary to be more specific:
+
+- What are *unacceptable low stock levels*? Some fraction of unfished biomass? The lowest observed historical biomass?
+- What is an *acceptable level of risk*? What chance are we willing to tolerate that the stock will fall below that limit?
+- How much yield are we willing to give up in order to increase the probability of the stock staying above unacceptably low limit?
+ 
+It is important to recognize that performance metrics can vary considerably between different fisheries and management structures, but are a crucial component of the MSE and must be carefully defined before the analysis is carried out. The [Calculating Performance section](/features-calculating-performance/) section discusses this topic in more detail. 
+
+`openMSE` includes a number of commonly used performance metrics and a series of functions to summarize MP performance. The MSE results can be examined either graphically in a plot or summarized in a table. Advanced users can also develop their own plotting and summary functions (see the [Custom Performance Metrics](/features-calculating-performance/custom-performance-metrics/) section for more details).
+
+Here we briefly demonstrate some of the plotting and summary functions in DLMtool. The [Calculating Performance section](/features-calculating-performance/) section describe the process of evaluating MSE results in more detail. 
+
+
+
+#### Summary Table
+The `summary` function can be used to generate a table of MP performance with respect to a set of performance metrics:
+
+```{r}
+summary(MSE)
+```
+
+By default the `summary` function includes four performance metrics, and displays the probability that: 
+
+1. fishing mortality $\left(F\right)$ is below $F_\text{MSY}$, i.e *Not Overfishing* (`PNOF`);
+2. spawning biomass $\left(\text{SB}\right)$ is above half of biomass at maximum sustainable yield $\left(\text{SB}_{\text{MSY}}\right)$ (`P50`);
+3. average inter-annual variability in yield is less than 20% (`AAVY`);
+4. long-term yield (last 10 years of projection period) is above half of the maximum yield obtainable at a constant fishing rate (`LTY`) (see [reference yield](/tutorial-simulation-dynamics/reference-yield/) for more details).
+
+
+```{r, include=FALSE}
+df <- summary(MSE)
+```
+
+In this example we can see that probability of $\text{SB} > 0.5\text{SB}_\text{MSY}$ for `r df$MP[1]` is `r df$P50[1]`. 
+
+The performance metrics have been defined in such a way that a higher number is always better (e.g, probability of *Not Overfishing* rather than *Overfishing* where a lower probability would be more desirable).
+
+These performance metrics are functions of class `PM` that operate on objects of class `MSE`, for example:
+
+```{r}
+P50(MSE) # probability SB > 0.5SBMSY
+```
+
+Help documentation for the performance metric functions can be found in the usual way, for example:
+
+```{r, eval=FALSE}
+?PNOF
+```
+
+The performance metrics in the `summary` function are completely customizable. See the [Custom Performance Metrics](/features-calculating-performance/custom-performance-metrics/) section for more details.
+
+
+#### Plotting MSE Results
+`openMSE` includes several functions for plotting the MSE results. Here we demonstrate a few of the plotting functions for the MSE results. See the [Calculating Performance section](/features-calculating-performance/) for more plotting and summary functions, and information on how to create your own.
+
+##### Trade-Off Plots
+The `Tplot` function creates four plots that show the trade-off between the probability that the long-term expected yield is greater than half of the highest obtainable yield at a fixed *F* (reference yield) against the probability of:
+
+1. Not overfishing in all projection years ($F/F_\text{MSY} < 1$)
+2. Spawning biomass ($\text{SB}$) above $\text{SB}_\text{MSY}$ in all projection years ($\text{SB} > \text{SB}_\text{MSY}$)
+3. Spawning biomass above $0.5 \text{SB}_\text{MSY}$  ($\text{SB} > 0.5 \text{SB}_\text{MSY}$)
+4. Spawning biomass above $0.1 \text{SB}_\text{MSY}$  ($\text{SB} > 0.1 \text{SB}_\text{MSY}$)
+ 
+The `Tplot` function includes minimum acceptable risk thresholds indicated by the horizontal and vertical gray shading. These thresholds can be adjusted be the `Lims` argument to the `Tplot` function. See `?Tplot` for more information on adjusting the risk thresholds.
+
+MPs that fail to meet one or both of the risk thresholds for each axis are shown in *italics* text. The `Tplot` function returns a data frame showing the performance of each MP with respect to the 5 performance metrics, and whether the MP is *Satisificed*, i.e., if it meets the minimum performance criteria for **all** performance metrics.
+
+```{r, fig.width=8, fig.height=7}
+Tplot(MSE)
+```
+
+The `Tplot2` function shows the trade-off between long-term and short-term yield, and the trade-off between biomass being above $0.1B_{MSY}$ and the expected variability in the yield:
+```{r, fig.width=8, fig.height=3.5}
+Tplot2(MSE)
+```
+
+The `Tplot` and `Tplot2` functions are part of a family of plotting functions that are fully customizable, and designed to work with all Performance Metrics objects. See `?Tplot` and the [Calculating Performance section](/features-calculating-performance/) section for more information.
+
+##### Wormplot
+The `wormplot` function plots the likelihood of meeting biomass targets in future years:
+```{r}
+wormplot(MSE)
+```
+
+The arguments to the `wormplot` function allow you to choose the reference level for the biomass relative to $B_{MSY}$, as well as the upper and lower bounds of the colored bands.
+
+##### Projection Plots
+The `Pplot` function plots the trajectories of biomass, fishing mortality, and relative yield for the Management Procedures.
+
+By default, the `Pplot` function shows the individual trajectories of $B/B_{MSY}$ and $F/F_{MSY}$ for each simulation:
+```{r, projection-plot, cache=TRUE}
+Pplot(MSE)
+```
+
+The `Pplot2` function has several additional arguments. The `YVar` argument can be used to specify additional variables of interest. For example, here we have included the projections of yield relative to the long-term optimum yield:
+```{r, projection-plot2, cache=TRUE}
+Pplot2(MSE, YVar=c("B_BMSY", "F_FMSY", "Yield"))
+```
+
+The `traj` argument can be used to summarize the projections into quantiles. Here we show the 20th and 80th percentiles of the distributions (the median (50th percentile) is included by default):
+```{r, projection-plot3, cache=TRUE}
+Pplot2(MSE, traj="quant", quants=c(0.2, 0.8))
+```
+
+Details on additional controls for the `Pplot` and `Pplot2` functions can be found in the help documentation associated with this function.
+
+
+#### Kobe-style Plots
+Kobe-style plots are often used in stock assessment and MSE to examine the proportion of time the stock spends in different states.  A Kobe-style plot of the MSE results can be produced with the `Kplot` function:
+```{r kobe-plot, cache=TRUE}
+Kplot(MSE)
+```
+
+### Compare to Current Conditions
+The `Cplot` shows a scatter plot of the median biomass and median yield over the last five years of the projection relative to the current conditions (the last year in the historical period):
+
+```{r}
+Cplot(MSE)
+```
+
+
+
+
+

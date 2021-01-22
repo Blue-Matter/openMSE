@@ -13,3 +13,4 @@ index.Rmd
 config.toml
 config.original
 netlify.toml
+^objects$

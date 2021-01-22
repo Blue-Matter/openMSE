@@ -1,0 +1,56 @@
+---
+date: "2021-01-21T11:35:01+06:00"
+title: Management Strategy Evaluation
+weight: 5
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+
+<p>Now that we have an operating model and a set of management procedures, we are ready to run our first management strategy evaluation.</p>
+<p>The MSE is run with the <code>runMSE</code> function, which requires two arguments: a <code>OM</code> object (<code>ourOM</code> in this case) and a character vector with the names of the MPs that will be tested (<code>ourMPs</code>):</p>
+<pre class="r"><code>MSE &lt;- runMSE(OM=ourOM, MPs=ourMPs)</code></pre>
+<pre><code>## Checking MPs</code></pre>
+<pre><code>## Loading operating model</code></pre>
+<pre><code>## Optimizing for user-specified movement</code></pre>
+<pre><code>## Optimizing for user-specified depletion in last historical year</code></pre>
+<pre><code>## 1 simulations have final biomass that is not close to sampled depletion</code></pre>
+<pre><code>## Re-sampling depletion, recruitment error, and fishing effort</code></pre>
+<pre><code>## Calculating historical stock and fishing dynamics</code></pre>
+<pre><code>## Calculating MSY reference points for each year</code></pre>
+<pre><code>## Calculating B-low reference points</code></pre>
+<pre><code>## Calculating reference yield - best fixed F strategy</code></pre>
+<pre><code>## Simulating observed data</code></pre>
+<pre><code>## Running forward projections</code></pre>
+<pre><code>## 1 / 5 Running MSE for AvC</code></pre>
+<pre><code>## ..................................................</code></pre>
+<pre><code>## 2 / 5 Running MSE for BK</code></pre>
+<pre><code>## ..................................................</code></pre>
+<pre><code>## 3 / 5 Running MSE for CC1</code></pre>
+<pre><code>## ..................................................</code></pre>
+<pre><code>## 4 / 5 Running MSE for DCAC</code></pre>
+<pre><code>## ..................................................</code></pre>
+<pre><code>## 5 / 5 Running MSE for Islope1</code></pre>
+<pre><code>## ..................................................</code></pre>
+<p>The <code>runMSE</code> function first runs the historical simulations (the spool-up period) and then runs the MSE for the specified MPs. Messages are printed in the console to show the progress.</p>
+<p>The <code>runMSE</code> function returns an object of class <code>MSE</code>, an S4 object with all of the information from the MSE run.</p>
+<p>For example, the slot <code>SB_SBMSY</code> is a 3-dimensional array with the spawning biomass (<span class="math inline">\(\text{SB}\)</span>) relative to the spawning biomass corresponding to maximum sustainable yield (<span class="math inline">\(\text{SB}_{\text{MSY}}\)</span>; see <a href="/tutorial-reference_points/">Reference Points</a> for more details) for each simulation, MP, and projection year:</p>
+<pre class="r"><code>class(MSE@SB_SBMSY)</code></pre>
+<pre><code>## [1] &quot;array&quot;</code></pre>
+<pre class="r"><code>dim(MSE@SB_SBMSY)</code></pre>
+<pre><code>## [1] 48  5 50</code></pre>
+<p>You can read more about the <code>MSE</code> object in the <a href="/object-mse/"><code>MSE</code> object section</a>.</p>
+<div id="running-the-mse-in-two-phases" class="section level4">
+<h4>Running the MSE in two phases</h4>
+<p>The time to run the simulations depends on the dynamics of the stock (e.g., number of age classes), the number of simulations (<code>OM@nsim</code>), and the number of historical (<code>OM@nyears</code>) and projection years (<code>OM@proyears</code>).</p>
+<p>For longer running simulations, it is sometimes helpful to split the simulations up into two phases. First, we use the <code>Simulate</code> function to simulate the historical spool-up period:</p>
+<pre class="r"><code>Hist &lt;- Simulate(OM)</code></pre>
+<p>The <code>Simulate</code> function returns an object of class <code>Hist</code> (see <a href="/object-hist/"><code>Hist</code> object</a> for more details).</p>
+<p>To avoid re-running the spool-up period, the <code>Hist</code> object can be saved to disk (e.g., <code>saveRDS(Hist, 'myHist.rda')</code>) and re-loaded in the next R session (e.g., <code>Hist &lt;- readRDS('myHist.rda')</code>).</p>
+<p>The forward projections can then run using the <code>Hist</code> object and the <code>Project</code> function:</p>
+<pre class="r"><code>MSE &lt;- Project(Hist, MPs=ourMPs)</code></pre>
+<p>This will result in an <code>MSE</code> object that is identical to the one obtained above with <code>MSE &lt;- runMSE(ourOM, MPs=ourMPs)</code>.</p>
+<p>In the next section we will examine the MSE results in more detail.</p>
+</div>

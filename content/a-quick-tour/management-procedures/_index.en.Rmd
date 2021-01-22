@@ -1,7 +1,7 @@
 ---
 date: "2021-01-19T11:35:01+06:00"
 title: Management Procedures
-weight: 3
+weight: 4
 keywords:
   - output controls
   - input controls
@@ -20,7 +20,16 @@ To be included in an MSE, a Management Procedure must be reproducible and able t
 
 #### Available Management Procedures
 
-There are over 100 management procedures included in the `openMSE` packages. The MPs are grouped into two categories:
+There are over 100 management procedures (MPs) included in the `openMSE` packages. 
+
+The MPs are functions of class `MP` that take an object of class [`Data`](/object-data) and return an object of class [`Rec`](/object-rec) which contains the management recommendation(s).
+
+The first two arguments of an MP are always: 
+
+1. `x` - the simulation number;
+2. `Data` - a [`Data object`](/object-data) containing either `OM@nsim` sets of simulated data, or a set of real fishery data (`x` is always one in this case).
+
+The MPs are grouped into two categories:
 
 1. Data-Limited: These MPs are in the `DLMtool` package, and typically use model-free approaches to determine the management recommendations rather than fitting a stock assessment model. More information on the MPs in the `DLMtool` package is available on the [DLMtool documentation page](https://dlmtool.openmse.com);
 2. Data-Moderate/Rich: These MPs are in the `SAMtool` package, and are comprised of a stock assessment method linked to a harvest control rule. More information on the MPs in the `SAMtool` package is available on the [SAMtool documentation page](https://samtool.openmse.com);

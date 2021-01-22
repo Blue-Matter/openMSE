@@ -106,14 +106,9 @@ name = "Home"
 url = "/"
 weight = 1
 
-[[Languages.en.menu.main]]
-name = "Faq"
-url = "faq"
-weight = 2
-
 # Dropdown menu
 [[Languages.en.menu.main]]
-weight = 3
+weight = 2
 name = "Sections"
 hasChildren = true
 
@@ -122,6 +117,13 @@ hasChildren = true
   name = "Welcome"
   url = "/#welcome"
   weight = 1
+  hasChildren = true
+
+    [[Languages.en.menu.main]]
+    parent = "Welcome"
+    name = "About openMSE"
+    url = "/#welcome"
+    weight = 1
 
   [[Languages.en.menu.main]]
   parent = "Sections"
@@ -147,11 +149,20 @@ hasChildren = true
   url = "/#tutorials"
   weight = 5
 
+[[Languages.en.menu.main]]
+name = "OM Library"
+url = "/OM-library"
+weight = 3
+
+[[Languages.en.menu.main]]
+name = "Faq"
+url = "faq"
+weight = 4
 
 [[Languages.en.menu.main]]
 name = "contact"
 url = "contact"
-weight = 4
+weight = 5
 
 
 

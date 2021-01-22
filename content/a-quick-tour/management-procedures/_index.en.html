@@ -1,7 +1,7 @@
 ---
 date: "2021-01-19T11:35:01+06:00"
 title: Management Procedures
-weight: 3
+weight: 4
 keywords:
   - output controls
   - input controls
@@ -20,7 +20,14 @@ keywords:
 <p>To be included in an MSE, a Management Procedure must be reproducible and able to be coded in a set of instructions. While fisheries are sometimes managed by expert judgment, it is difficult to reproduce the subjective decision-making process in a computer simulation and include such methods in an MSE.</p>
 <div id="available-management-procedures" class="section level4">
 <h4>Available Management Procedures</h4>
-<p>There are over 100 management procedures included in the <code>openMSE</code> packages. The MPs are grouped into two categories:</p>
+<p>There are over 100 management procedures (MPs) included in the <code>openMSE</code> packages.</p>
+<p>The MPs are functions of class <code>MP</code> that take an object of class <a href="/object-data"><code>Data</code></a> and return an object of class <a href="/object-rec"><code>Rec</code></a> which contains the management recommendation(s).</p>
+<p>The first two arguments of an MP are always:</p>
+<ol style="list-style-type: decimal">
+<li><code>x</code> - the simulation number;</li>
+<li><code>Data</code> - a <a href="/object-data"><code>Data object</code></a> containing either <code>OM@nsim</code> sets of simulated data, or a set of real fishery data (<code>x</code> is always one in this case).</li>
+</ol>
+<p>The MPs are grouped into two categories:</p>
 <ol style="list-style-type: decimal">
 <li>Data-Limited: These MPs are in the <code>DLMtool</code> package, and typically use model-free approaches to determine the management recommendations rather than fitting a stock assessment model. More information on the MPs in the <code>DLMtool</code> package is available on the <a href="https://dlmtool.openmse.com">DLMtool documentation page</a>;</li>
 <li>Data-Moderate/Rich: These MPs are in the <code>SAMtool</code> package, and are comprised of a stock assessment method linked to a harvest control rule. More information on the MPs in the <code>SAMtool</code> package is available on the <a href="https://samtool.openmse.com">SAMtool documentation page</a>;</li>

@@ -1,0 +1,15 @@
+{{ define "main" }}
+
+{{ "<!-- main -->" | safeHTML }}
+<section class="section">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 bg-white">
+        <h2 class="section-title text-primary">{{ .Title }}</h2>
+        {{ .Content }}
+		<p class="post-meta border-bottom pb-3 mb-0 mt-3">Updated on {{ .Lastmod.Format "02 Jan 2006" }}</p>		
+      </div>
+    </div>	
+  </div>
+</section>
+{{ end }}

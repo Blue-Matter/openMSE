@@ -1,0 +1,61 @@
+---
+date: "2021-01-21T11:35:01+06:00"
+title: Management Strategy Evaluation
+weight: 5
+---
+
+```{r, include=FALSE}
+library(openMSE)
+allMPs <- avail('MP', 'DLMtool')
+ourMPs <- allMPs[c(1, 3, 6, 20, 51)] 
+ourOM <- new('OM', Albacore, Generic_IncE, Imprecise_Unbiased, Perfect_Imp)
+```
+
+Now that we have an operating model and a set of management procedures, we are ready to run our first management strategy evaluation.
+
+The MSE is run with the `runMSE` function, which requires two arguments: a `OM` object (`ourOM` in this case) and a character vector with the names of the MPs that will be tested (`ourMPs`):
+
+```{r, cache=TRUE}
+MSE <- runMSE(OM=ourOM, MPs=ourMPs)
+```
+
+```{r, include=FALSE}
+saveRDS(MSE, "../../../objects/walkthroughMSE.rda")
+```
+
+The `runMSE` function first runs the historical simulations (the spool-up period) and then runs the MSE for the specified MPs. Messages are printed in the console to show the progress. 
+
+The `runMSE` function returns an object of class `MSE`, an S4 object with all of the information from the MSE run.
+
+For example, the slot `SB_SBMSY` is a 3-dimensional array with the spawning biomass ($\text{SB}$) relative to the spawning biomass corresponding to maximum sustainable yield ($\text{SB}_{\text{MSY}}$; see [Reference Points](/tutorial-reference_points/) for more details) for each simulation, MP, and projection year:
+
+```{r}
+class(MSE@SB_SBMSY)
+dim(MSE@SB_SBMSY)
+```
+
+You can read more about the `MSE` object in the [`MSE` object section](/object-mse/).
+
+#### Running the MSE in two phases
+
+The time to run the simulations depends on the dynamics of the stock (e.g., number of age classes), the number of simulations (`OM@nsim`), and the number of historical (`OM@nyears`) and projection years (`OM@proyears`).
+
+For longer running simulations, it is sometimes helpful to split the simulations up into two phases. First, we use the `Simulate` function to simulate the historical spool-up period:
+
+```{r, eval=FALSE}
+Hist <- Simulate(OM)
+```
+
+The `Simulate` function returns an object of class `Hist` (see [`Hist` object](/object-hist/) for more details).
+
+To avoid re-running the spool-up period, the `Hist` object can be saved to disk (e.g., `saveRDS(Hist, 'myHist.rda')`) and re-loaded in the next R session (e.g., `Hist <- readRDS('myHist.rda')`).
+
+The forward projections can then run using the `Hist` object and the `Project` function:
+
+```{r, eval=FALSE}
+MSE <- Project(Hist, MPs=ourMPs)
+```
+
+This will result in an `MSE` object that is identical to the one obtained above with `MSE <- runMSE(ourOM, MPs=ourMPs)`.
+
+In the next section we will examine the MSE results in more detail.

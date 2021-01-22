@@ -1,0 +1,39 @@
+---
+date: "2021-01-19T11:35:01+06:00"
+title: Brief Overview of the Operating Model
+weight: 3
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+
+<p>The <code>OM</code> object contains all the information that is used to simulate the fishery dynamics.</p>
+<p>Here we will briefly examine some of the contents of the OM object. See the <a href="/object-operating-model">OM Object</a> page for a more detailed description of the <code>OM</code> object.</p>
+<p>The <code>OM</code> object is an <a href="/faq/#what-are-s4-objects">S4 class object</a>, and the contents are stored in slots which are accessed using the @ symbol.</p>
+<p>For example, the number of simulations that will be run is stored in the <code>nsim</code> slot:</p>
+<pre class="r"><code>ourOM@nsim # number of simulations</code></pre>
+<pre><code>## [1] 48</code></pre>
+<p>The number of historical (the spool-up period) and projection years stored in the <code>nyears</code> and <code>proyears</code> slots respectively:</p>
+<pre class="r"><code>ourOM@nyears # number of historical years</code></pre>
+<pre><code>## [1] 50</code></pre>
+<pre class="r"><code>ourOM@proyears # number of projection years</code></pre>
+<pre><code>## [1] 50</code></pre>
+<p>The operating model in <code>openMSE</code> is a fully stochastic model, where each parameter is drawn from a distribution. By default, the parameters are sampled from a uniform distribution, with the lower and upper bounds for each parameter specified in the relevant slot in the <code>OM</code> object (alternative distributions, including correlated samples for multiple parameters, can be used with the <a href="#custom-parameters">Custom Parameters</a> feature).</p>
+<p>For example, the natural mortality parameter (<em>M</em>) is stored in the <code>M</code> slot:</p>
+<pre class="r"><code>ourOM@M</code></pre>
+<pre><code>## [1] 0.35 0.45</code></pre>
+<p>In this case, when the operating model is used for the simulations, there will be 48 samples of the natural mortality parameter drawn from a uniform distribution with lower bound 0.35 and upper bound 0.45:</p>
+<pre class="r"><code>M &lt;- runif(ourOM@nsim, ourOM@M[1], ourOM@M[2]) # M sampled from the operating model
+M # values of M used for the simulations</code></pre>
+<pre><code>##  [1] 0.3698543 0.4222455 0.4403686 0.4472502 0.4397119 0.3506955 0.4126445
+##  [8] 0.4471097 0.4076560 0.3838653 0.3803989 0.3983288 0.4358772 0.3774742
+## [15] 0.4050423 0.4089683 0.3823551 0.3849651 0.4456676 0.4417484 0.4070175
+## [22] 0.3863474 0.4293636 0.4169499 0.4108194 0.3511876 0.4457994 0.4003700
+## [29] 0.3822893 0.3510292 0.4462483 0.4037365 0.3806164 0.4058214 0.3673038
+## [36] 0.3768116 0.4348517 0.3968157 0.3551631 0.3882023 0.4413210 0.3713615
+## [43] 0.4447201 0.4429939 0.3632159 0.4407836 0.3818141 0.3685469</code></pre>
+<p>The OM object includes a seed for the random number generator (<code>ourOM@seed</code>) so that the sampled values are identical each time the OM is used.</p>
+<p>The <a href="/object-operating-model">OM Object</a> page describes the contents of the <code>OM</code> object in more detail. For the purposes of this brief demonstration, the main thing to know is that the <code>OM</code> object contains all the information related to simulating the fishery.</p>
+<p>In the next section we will select some management procedures to evaluate for the OM we constructed.</p>
