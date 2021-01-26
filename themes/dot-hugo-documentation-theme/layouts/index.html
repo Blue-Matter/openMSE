@@ -1,19 +1,18 @@
 {{ define "main" }}
 
-<!--
+
  {{ "<!-- introduction -->" | safeHTML }}
  <section class="section">
    <div class="container">
       <div class="row justify-content-center">
         <div class="col-12 ">
-          <h2 class="section-title text-left"> About openMSE</h2>
-          {{with .Site.Params.intro_text | safeHTML }}<p>{{. | markdownify}}</p>{{end}}
+          <!--<h2 class="section-title text-left"> About openMSE</h2> -->
+          {{with .Site.Params.intro_text | safeHTML }}<h3>{{. | markdownify}}</h3>{{end}}
         </div>
       </div>
    </div>
   {{ "<!-- /introduction -->" | safeHTML }}
 
--->
 
  <section class="section">
   {{ "<!-- Welcome --> " | safeHTML }}
