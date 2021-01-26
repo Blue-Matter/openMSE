@@ -15,3 +15,7 @@ config.original
 netlify.toml
 ^objects$
 ^build_tools$
+^build_site$
+^blogdown$
+^cran-comments\.md$
+^\.github$
