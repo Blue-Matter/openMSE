@@ -1,7 +1,7 @@
 ################################# Default configuration ###################
 # provide your domain here
 baseURL = "https://openMSE.com/"
-#baseURL = "https://examplesite.com/"
+
 # theme
 theme = "dot-hugo-documentation-theme"
 # site title
@@ -45,6 +45,15 @@ font_family = "lato" # Choose font family from : https://fonts.google.com/
 # contact form action
 contact_form_action = "#" # contact form works with : https://formspree.io
 
+[params.contact]
+  enable = true
+  title =  "Contact Us"
+  message =  ""
+  name_placeholder = "Your name"
+  email_placeholder = "Your email"
+  email_disclaimer = "We will never share your email with anyone else."
+  message_placeholder = "Please enter a message."
+  button_text = "Submit"
 
 ############################## social links ##############################
 #[[params.social]]
@@ -95,15 +104,65 @@ name = "Home"
 url = "/"
 weight = 1
 
+# Dropdown menu
+
+[[Languages.en.menu.main]]
+weight = 2
+name = "Sections"
+hasChildren = true
+
+  [[Languages.en.menu.main]]
+  parent = "Sections"
+  name = "Welcome"
+  url = "/#welcome"
+  weight = 1
+  hasChildren = true
+
+    [[Languages.en.menu.main]]
+    parent = "Welcome"
+    name = "About openMSE"
+    url = "/#welcome"
+    weight = 1
+
+  [[Languages.en.menu.main]]
+  parent = "Sections"
+  name = "OM Use Cases"
+  url = "/#use-cases"
+  weight = 2
+
+  [[Languages.en.menu.main]]
+  parent = "Sections"
+  name = "openMSE Objects"
+  url = "/#objects"
+  weight = 3
+
+
+  [[Languages.en.menu.main]]
+  parent = "Sections"
+  name = "Using openMSE"
+  url = "/#features"
+  weight = 4
+
+  [[Languages.en.menu.main]]
+  parent = "Sections"
+  name = "Concepts and Tutorials"
+  url = "/#tutorials"
+  weight = 5
+
+[[Languages.en.menu.main]]
+name = "OM Library"
+url = "/OM-library"
+weight = 3
+
 [[Languages.en.menu.main]]
 name = "Faq"
 url = "faq"
-weight = 2
+weight = 4
 
 [[Languages.en.menu.main]]
 name = "contact"
 url = "contact"
-weight = 3
+weight = 5
 
-# Dropdown menu
+
 

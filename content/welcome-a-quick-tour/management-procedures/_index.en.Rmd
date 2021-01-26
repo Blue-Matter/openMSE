@@ -1,0 +1,42 @@
+---
+date: "2021-01-19T11:35:01+06:00"
+title: Management Procedures
+weight: 4
+keywords:
+  - output controls
+  - input controls
+  - TAC
+---
+
+There are over 100 management procedures (MPs) included in the `openMSE` packages. 
+
+The MPs are grouped into two categories:
+
+1. Data-Limited: These MPs are in the `DLMtool` package, and typically use model-free approaches to determine the management recommendations rather than fitting a stock assessment model. More information on the MPs in the `DLMtool` package is available on the [DLMtool documentation page](https://dlmtool.openmse.com);
+2. Data-Moderate/Rich: These MPs are in the `SAMtool` package, and are comprised of a stock assessment method linked to a harvest control rule. More information on the MPs in the `SAMtool` package is available on the [SAMtool documentation page](https://samtool.openmse.com);
+
+`openMSE` is extensible, and users can easily develop their own management procedures to use within the framework. Information on this and other details related to the management procedures is available in the [Management Procedure](/features-management-procedures) section.
+
+
+```{r, include=FALSE}
+library(openMSE)
+```
+
+The `avail` function can be used determine which MPs are available:
+
+```{r}
+allMPs <- avail('MP')
+allMPs
+```
+
+For the purposes of this quick demonstration, we will select 5 management procedures from the `DLMtool` package and evaluate their 
+performance for the operating model we built in the previous section.
+
+```{r}
+ourMPs <- c("AvC", "BK", "CC1", "DCAC","Islope1") # select 5 MPs
+```
+
+Help documentation for the `MP` functions can be accessed in the usual way, e.g., by typing `?AvC` in the console, or by visiting the [DLMtool](https://dlmtool.openmse.com) and [SAMtool](https://samtool.openmse.com) function documentation pages.
+
+In the next section we will run the MSE using these 5 MPs and the OM we constructed in the previous section.
+

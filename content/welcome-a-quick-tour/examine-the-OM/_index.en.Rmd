@@ -1,0 +1,51 @@
+---
+date: "2021-01-19T11:35:01+06:00"
+title: Brief Overview of the Operating Model
+weight: 3
+---
+
+```{r, include=FALSE}
+library(openMSE)
+ourOM <- new('OM', Albacore, Generic_IncE, Imprecise_Unbiased, Perfect_Imp)
+```
+
+The `OM` object contains all the information that is used to simulate the fishery dynamics.
+
+Here we will briefly examine some of the contents of the OM object. See the [OM Object](/object-operating-model) page for a more detailed description of the `OM` object.
+
+The `OM` object is an [S4 class object](/faq/#what-are-s4-objects), and the contents are stored in slots which are accessed using the @ symbol.
+
+For example, the number of simulations that will be run is stored in the `nsim` slot:
+
+```{r}
+ourOM@nsim # number of simulations
+```
+
+The number of historical (the spool-up period) and projection years stored in the `nyears` and `proyears` slots respectively:
+
+```{r}
+ourOM@nyears # number of historical years
+ourOM@proyears # number of projection years
+```
+
+The operating model in `openMSE` is a fully stochastic model, where each parameter is drawn from a distribution. By default, the parameters are sampled from a uniform distribution, with the lower and upper bounds for each parameter specified in the relevant slot in the `OM` object (alternative distributions, including correlated samples for multiple parameters, can be used with the [Custom Parameters](#custom-parameters) feature).  
+
+For example, the natural mortality parameter (*M*) is stored in the `M` slot:
+
+```{r}
+ourOM@M
+```
+
+In this case, when the operating model is used for the simulations, there will be `r ourOM@nsim` samples of the natural mortality parameter drawn from a uniform distribution with lower bound `r min(ourOM@M)` and upper bound `r max(ourOM@M)`:
+
+```{r}
+M <- runif(ourOM@nsim, ourOM@M[1], ourOM@M[2]) # M sampled from the operating model
+M # values of M used for the simulations
+```
+
+The OM object includes a seed for the random number generator (`ourOM@seed`) so that the sampled values are identical each time the OM is used.
+
+The [OM Object](/object-operating-model) page describes the contents of the `OM` object in more detail. For the purposes of this brief demonstration, the main thing to know is that the `OM` object contains all the information related to simulating the fishery. 
+
+In the next section we will select some management procedures to evaluate for the OM we constructed.
+
