@@ -19,3 +19,4 @@ netlify.toml
 ^blogdown$
 ^cran-comments\.md$
 ^\.github$
+^CRAN-RELEASE$
