@@ -1,3 +1,6 @@
+## Re-submission
+* Replaced directed quotes in Title and Description fields as requested - ie `openMSE` is now 'openMSE'
+
 ## Note to CRAN Maintainers
 * This is a new release of the `openMSE` package
 * The package serves as an umbrella package for our three closely related packages: `MSEtool`, `DLMtool` and `SAMtool`
