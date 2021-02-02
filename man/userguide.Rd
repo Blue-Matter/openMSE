@@ -6,11 +6,12 @@
 \usage{
 userguide()
 }
+\value{
+Nothing is returned. Opens the 'openMSE.com' in the web browser
+}
 \description{
 Opens the openMSE Documentation website (requires internet connection)
 }
 \examples{
-\dontrun{
 userguide()
-}
 }

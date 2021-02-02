@@ -6,12 +6,21 @@
 \usage{
 demo()
 }
+\value{
+Invisibly returns an MSE object, and produces example plots of performance metrics.
+}
 \description{
 Run an example MSE using three data-limited management procedures from
-\code{DLMtool} and one stock assessment model from \code{SAMtool}
+\code{DLMtool} and one stock assessment model from \code{SAMtool}.
+}
+\details{
+The MSE is run and three example performance metrics plots are produced: a
+trade-off plot, a projection plot, and a Kobe plot.
+
+An MSE about is invisibly returned, and can be explored further (e.g., \code{summary(MSE)}).
 }
 \examples{
-\dontrun{
-demo()
+\donttest{
+MSE <- demo()
 }
 }

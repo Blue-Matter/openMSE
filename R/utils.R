@@ -2,11 +2,10 @@
 #'
 #' Opens the openMSE Documentation website (requires internet connection)
 #'
+#' @return Nothing is returned. Opens the 'openMSE.com' in the web browser
 #' @export
 #' @examples
-#' \dontrun{
 #' userguide()
-#' }
 userguide <- function() {
   utils::browseURL("https://openmse.com/")
 }
@@ -15,13 +14,19 @@ userguide <- function() {
 #' Run an example MSE
 #'
 #' Run an example MSE using three data-limited management procedures from
-#' `DLMtool` and one stock assessment model from `SAMtool`
+#' `DLMtool` and one stock assessment model from `SAMtool`.
 #'
+#' The MSE is run and three example performance metrics plots are produced: a
+#' trade-off plot, a projection plot, and a Kobe plot.
+#'
+#' An MSE about is invisibly returned, and can be explored further (e.g., `summary(MSE)`).
+#'
+#' @return Invisibly returns an MSE object, and produces example plots of performance metrics.
 #' @export
 #'
 #' @examples
-#' \dontrun{
-#' demo()
+#' \donttest{
+#' MSE <- demo()
 #' }
 #' @importFrom MSEtool runMSE Kplot Pplot Tplot
 #' @importFrom SAMtool DDSS_MSY
@@ -53,6 +58,8 @@ demo <- function() {
   t <- Tplot(MSE, Show='plots')
   t <- Pplot(MSE, nam='Projection Plot')
   Kplot(MSE)
+
+  invisible(MSE)
 
 }
 

@@ -1,5 +1,7 @@
 ## Re-submission
-* Replaced directed quotes in Title and Description fields as requested - ie `openMSE` is now 'openMSE'
+* Added the missing value tags to the .Rd files.
+* \dontrun has been replaced with \donttest for `demo()` as it takes longer than 5 seconds to run
+* \dontrun has been removed from `userguide()`
 
 ## Note to CRAN Maintainers
 * This is a new release of the `openMSE` package
