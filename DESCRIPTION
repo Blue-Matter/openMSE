@@ -1,22 +1,38 @@
 Package: openMSE
-Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
-Authors@R: 
-    person(given = "First",
-           family = "Last",
-           role = c("aut", "cre"),
-           email = "first.last@example.com",
-           comment = c(ORCID = "YOUR-ORCID-ID"))
-Description: What the package does (one paragraph).
-License: `use_mit_license()`, `use_gpl3_license()` or friends to
-    pick a license
+Title: Easily Install and Load the 'openMSE' Packages
+Version: 1.0.0
+Authors@R: c(
+  person("Adrian", "Hordyk", 
+         role = c("aut", "cre"),
+         email = "adrian@bluematterscience.com",
+         comment=c(ORCID="0000-0001-5620-3446")),
+  person("Quang",
+         "Huynh", 
+         role = "aut",
+         email = "quang@bluematterscience.com"), 
+  person("Tom", "Carruthers", 
+         role = "aut",
+         email = "tom@bluematterscience.com"))
+Description: The 'openMSE' package is designed for building operating models, 
+    doing simulation modelling and management strategy evaluation for fisheries.
+    'openMSE' is an umbrella package for the 'MSEtool' (Management Strategy Evaluation
+    toolkit), 'DLMtool' (Data-Limited Methods toolkit), and 
+    SAMtool (Stock Assessment Methods toolkit) packages. By loading and installing
+    'openMSE', users have access to the full functionality contained within
+    these packages. Learn more about 'openMSE' at <https://openmse.com/>.
+License: GPL-3
+URL: https://openmse.com/,
+     https://github.com/Blue-Matter/openMSE
+BugReports: https://github.com/Blue-Matter/openMSE/issues
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.1.1
 Depends: 
-    R (>= 3.5.0),
-    MSEtool,
-    DLMtool,
+    R (>= 4.0.0),
+    MSEtool (>= 3.0.0),
+    DLMtool (>= 6.0.0),
     SAMtool
+Imports:
+    crayon
 
