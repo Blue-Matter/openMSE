@@ -20,3 +20,4 @@ netlify.toml
 ^cran-comments\.md$
 ^\.github$
 ^CRAN-RELEASE$
+^README\.Rmd$
