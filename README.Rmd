@@ -1,0 +1,61 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+library(badger)
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%"
+)
+```
+
+# openMSE <img src='man/figures/logo.png' align="right" height="139" />
+
+<!-- badges: start -->
+[![CRAN status](https://www.r-pkg.org/badges/version/openMSE)](https://CRAN.R-project.org/package=openMSE)
+[![R build status](https://github.com/Blue-Matter/openMSE/workflows/R-CMD-check/badge.svg)](https://github.com/Blue-Matter/openMSE/actions)
+`r badge_devel("blue-matter/openMSE", "blue")`
+
+<!-- badges: end -->
+
+openMSE is an umbrella R package for building operating models, analyzing fishery data, and conducting Management Strategy Evaluation (MSE) for a wide range of fisheries.
+
+Installing the openMSE package and loading with `library("openMSE")` will load the following core packages:
+
+[MSEtool](https://MSEtool.openMSE.com) - the Management Strategy Evaluation toolkit is the core package in the openMSE collection. It contains the core functions for constructing operating models, simulating fishery dynamics, and evaluating the effectiveness of alternative management strategies using closed-loop simulation testing.
+
+[DLMtool](https://DLMtool.openMSE.com)  - the Data-Limited Methods toolkit is a collection of data-limited management procedures that can be evaluated using MSE. DLMtool requires the MSEtool package as a dependency, and all MSEtool functions will be available when DLMtool is loaded into an R session.
+
+[SAMtool](https://SAMtool.openMSE.com)  - the Stock Assessment Methods toolkit is a collection of assessment methods and management procedures that have been developed for more data-intensive applications. This package includes the Rapid Conditioning Model for conditioning operating models in data-moderate and data-rich fisheries. SAMtool requires the MSEtool package as a dependency, and all MSEtool functions will be available when SAMtool is loaded into an R session.
+
+You can learn more about the openMSE packages at the [openMSE documentation site](https://openMSE.com).
+
+## Installation
+
+You can install the released version of openMSE from [CRAN](https://CRAN.R-project.org) with:
+
+``` r
+install.packages("openMSE")
+```
+
+And the development version from [GitHub](https://github.com/) with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("Blue-Matter/openMSE")
+```
+## Example
+
+The `demo` function runs an example MSE using three data-limited management procedures from `DLMtool` and one stock assessment model from `SAMtool`, and demonstrates some example plotting output:
+
+```{r example}
+library(openMSE)
+demo()
+```
+
+
