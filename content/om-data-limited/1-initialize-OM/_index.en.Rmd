@@ -61,7 +61,7 @@ OMinit('BorrowOM', OtherOM)
 
 #### A Complete Example
 
-To demonstrate the populated Excel and RMarkdown files, we will first create an example of a complete OM, where we borrow using existing OM objects. 
+To demonstrate the populated Excel and RMarkdown files, we will first create an example of a complete OM, where we borrow using existing OM objects.
 
 In the next section we will create a new blank operating model and step through the process of populating the operating model.
 
@@ -73,6 +73,7 @@ OMdoc(dir="ExampleOM", overwrite=TRUE, openFile=FALSE)
 if (!dir.exists("../../../static/ExampleOM")) dir.create("../../../static/ExampleOM")
 fls <- list.files('ExampleOM')
 file.copy(file.path('ExampleOM', fls), file.path("../../../static/ExampleOM", fls))
+unlink('ExampleOM')
 ```
 
 The `OMinit` function can be used to initialize a new OM called 'MyOM'. Here we are borrowing the 'Albacore' [Stock object](/object-stock),
