@@ -180,8 +180,8 @@ select:focus {
 }
 
 .section {
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }
 
 @media (max-width: 768px) {
@@ -528,7 +528,7 @@ textarea.form-control {
 /* single page */
 
 .content * {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
 }
 
 .content img {
@@ -780,6 +780,7 @@ pre {
   display: block;
   padding: 9.5px;
   margin: 10px 0px 10px;
+  background: #fafafa;
 }
 
 code {
