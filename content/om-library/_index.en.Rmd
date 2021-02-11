@@ -19,9 +19,11 @@ title: Operating Model Library
 
 The Operating Model library contains complete OM reports and corresponding OM Excel and R input files for a growing number of fisheries.
 
-Each report uses a standardized format that can be generated from within `openMSE`.  
+Each report uses a standardized format that can be generated from within openMSE.   
 
-We will be adding operating models over time, with the goal of including the broadest range of fisheries to which the `openMSE` packages have been applied.  The standardized format is intended to provide a readily available resource for the development of new operating models for additional fisheries over time.  We are also developing a standardized MSE report, which will be added to the library of fisheries soon.  Please [contact us](/contact) if you’d like to include an operating model in the library.
+We will be adding operating models over time, with the goal of including the broadest range of fisheries to which the openMSE packages have been applied.  The standardized format is intended to provide a readily available resource for the development of new operating models for additional fisheries over time.  We are also developing a standardized MSE report, which will be added to the library of fisheries soon.
+
+Please [contact us](/contact) if you would like to add your operating model(s) in the library. 
 
 
 ```{r include=FALSE, message=FALSE, warning=FALSE}

@@ -4,4 +4,16 @@ title: Populate the Stock Object
 weight: 2
 ---
 
-Coming soon!
+```{r, include=FALSE}
+library(openMSE)
+```
+
+```{r, eval=FALSE}
+OMinit('MyOM')
+```
+
+In the last section we used the `OMinit` function to create the OM Excel and Rmarkdown files.
+
+In this section we will describe how to populate the Stock object for a data-limited fishery.
+
+

@@ -1,6 +1,6 @@
 ---
 date: "2021-01-22T11:35:01+06:00"
-title: Initialize the Operating Model
+title: Initialize the OM
 weight: 1
 ---
 
@@ -9,4 +9,64 @@ weight: 1
 <script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 
 
-<p>Coming soon!</p>
+<p>The Operating Model (OM) is the core component for simulation modelling and management strategy evaluation in openMSE.</p>
+<p>The figure below shows our recommended workflow creating a new Operating Model for data-limited fisheries:</p>
+<p><img src="/images/NewOMWorkFlow.png" alt="OM Workflow" width="450"/></p>
+<div id="create-a-new-project" class="section level3">
+<h3>Create a New Project</h3>
+<p>We recommend creating a new directory for each MSE analysis. Each new R session should start by setting the working directory to this location. One of the easiest ways to do this is to create a new project in RStudio (File &gt; New Project) and open this each time you revisit the analysis.</p>
+<p>Alternatively, you can set the working directory with RStudio (Session &gt; Set Working Directory) or directly in the R console, for example:</p>
+<pre class="r"><code>setwd(&quot;C:/MSE/MyOM&quot;)</code></pre>
+</div>
+<div id="initialize-a-new-om" class="section level3">
+<h3>Initialize a New OM</h3>
+<p>The <code>OMinit</code> function is used to create a blank OM spreadsheet and a skeleton OM documentation file in the working directory.
+This is only required the first time a new OM is created.</p>
+<p>The <code>OMinit</code> function requires one argument, a name for the OM, and wil create two files in the working directory. For example <code>OMinit('MyOM')</code> will create <strong>MyOM.xlsx</strong> and <strong>MyOM.rmd</strong> in the working directory.</p>
+<p><strong>MyOM.xlsx</strong> is a spreadsheet with sheets corresponding to the components of an OM: <strong>Stock</strong>, <strong>Fleet</strong>, <strong>Obs</strong>, and <strong>Imp</strong>, and <strong>OM</strong> worksheets. The first column in each sheet is populated with the names of the slots of the respective objects (Stock, Fleet, etc) and all slots are empty (except the OM sheet which has default values).</p>
+<p>Values are required for all parameters.</p>
+<p>The <strong>MyOM.rmd</strong> file can be opened in any text editor or RStudio, and contains a skeleton for the OM documentation.</p>
+<p>The <code>OMinit</code> function also creates several folders in the working directory: data, docs, images, and robustness. These sub-directories can be used to store data, documents, images, and other information that is reference in the OM Report.</p>
+<div id="using-templates" class="section level4">
+<h4>Using Templates</h4>
+<blockquote>
+<p><strong>Note:</strong> This feature requires additional software and may not be available on all systems. Specifically, it requires a zip application on the system PATH. Possibly the easiest way for this is to install <a href="https://cran.r-project.org/bin/windows/Rtools/">Rtools</a> on your system. However, note that this feature is not required to use openMSE.</p>
+</blockquote>
+<p>Some users may wish to build an operating model based on other pre-existing OM, Stock, Fleet, Obs, or Imp objects.</p>
+<p>For example, <code>OMinit('Albacore2', Albacore)</code> will result in a <strong>Albacore2.xlsx</strong> file being created with the <strong>Stock</strong> sheet populated with the values from the <strong>Albacore</strong> Stock object.</p>
+<p>Other examples:</p>
+<pre class="r"><code># using existing Stock and Fleet objects
+OMinit(&#39;StockAndFleet&#39;, Albacore, Generic_FlatE)
+
+# using existing Obs and Imp objects
+OMinit(&#39;ObsAndImp&#39;, Generic_Obs, Perfect_Imp)
+
+# using an existing OM
+OMinit(&#39;BorrowOM&#39;, OtherOM) </code></pre>
+</div>
+<div id="a-complete-example" class="section level4">
+<h4>A Complete Example</h4>
+<p>To demonstrate the populated Excel and RMarkdown files, we will first create an example of a complete OM, where we borrow using existing OM objects.</p>
+<p>In the next section we will create a new blank operating model and step through the process of populating the operating model.</p>
+<p>The <code>OMinit</code> function can be used to initialize a new OM called ‘MyOM’. Here we are borrowing the ‘Albacore’ <a href="/object-stock">Stock object</a>,
+the ‘Generic_FlatE’ <a href="/object-fleet">Fleet object</a>, the ‘Imprecise_Unbiased’ <a href="/object-obs">Obs object</a>, and the ‘Perfect_Imp’ <a href="/object-imp">Imp object</a>:</p>
+<pre class="r"><code>OMinit(&#39;MyOM&#39;, Albacore, Generic_FlatE, Imprecise_Unbiased, Perfect_Imp)</code></pre>
+<p>You can <a href="/ExampleOM/MyOM.xlsx" download> download </a> and inspect the populated OM workbook, which contains all of the parameters for the operating model.</p>
+<p>The OM Excel file can be imported to create an <a href="/object-operating-model">OM object</a> in the R session:</p>
+<pre class="r"><code>MyOM &lt;- XL2OM(&#39;MyOM&#39;)</code></pre>
+<p>The RMarkdown file that was created by <code>OMinit</code> can be <a href="/ExampleOM/MyOM.rmd" download> downloaded </a> and opened in RStudio.</p>
+<p>We recommended adding a short but informative description or rationale for the OM values in the RMarkdown file while the OM Excel file is being populated (open the RMarkdown file and edit with any text editor or RStudio).</p>
+<p>Once complete, the <code>OMdoc</code> function can be used to compile the RMarkdown file into a HTML report and provides a complete documentation for the OM.</p>
+<p>For example, we can compile the (incomplete) OM Rmarkdown file:</p>
+<pre class="r"><code>OMdoc(&#39;MyOM&#39;)</code></pre>
+<p>and view the resulting <a href="/ExampleOM/MyOM.html">HTML OM Report</a>.</p>
+<p>See the <a href="/document-OM">Documenting the OM</a> section for more details on documenting the operating model and compiling the OM report.</p>
+<p>For more completed operating models and OM documentation reports, see the <a href="/om-library">Operating Model Library</a>.</p>
+</div>
+<div id="a-new-example" class="section level4">
+<h4>A New Example</h4>
+<p>To create a blank OM called ‘MyOM’ you would simply write:</p>
+<pre class="r"><code>OMinit(&#39;MyOM&#39;)</code></pre>
+<p>In the next sections we will describe how to populate the Stock, Fleet, Obs, Imp and OM parameters in the operating model.</p>
+</div>
+</div>

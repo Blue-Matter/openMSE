@@ -1,0 +1,335 @@
+
+# Title
+Include name and location of the Fishery. One line only.
+
+# Subtitle
+Subtitle. One line only.
+
+# Author(s)
+Name and contact details (e.g email, affiliation) for each author.
+One line per author.
+
+# Date
+Optional. Date that the operating model was created. If none provided, today's date will be used.
+
+# Introduction
+
+## Completing the OM Documentation
+This document is used to generate a HTML OM report document.
+
+The document is separated into 7 sections:
+1. Introduction (this section)
+2. Custom Parameters (optional)
+3. Stock Parameters
+4. Fleet Parameters
+5. Obs (Observation) Parameters
+6. Imp (Implementation) Parameters
+7. References
+
+The Introduction section is used to briefly describe the fishery and the details of the Operating Model.
+It should include an explanation for the OM parameters:
+ * nsim: the number of simulations.
+ * proyears: the number of projectio years.
+ * interval: the management interval.
+ * pstar: the percentile of the sample of the management recommendation for each method.
+ * maxF: the maximum instantaneous fishing mortality rate that may be simulated for any given age class.
+ * reps: the number of samples of the management recommendation for each method.
+
+The Custom Parameters section is optional and should only be included if the cpars feature of DLMtool is used in the OM.
+Delete both the heading and the text in this section if `cpars` are not used.
+
+The Stock, Fleet, Obs, and Imp sections include each slot in these components of the OM object.
+Provide details (including references where applicable) for the choice of values for each slot below the corresponding slot name (e.g., ## M).
+For example: 
+**M**
+An explanation for the values of the natural mortality rate in the OM (Smith et al. 1999).
+
+You do not need to include the actual values from the OM. These will be included automatically in the final compiled document.
+
+References should be included in the 'References' section at the end of the document.
+
+Once complete, this text file will be compiled into an OM Report Document.
+This text file is linked to the Excel spreadsheet that was generated with the same file name.
+It serves as a single documentation source for a DLMtool OM, and should be updated whenever parameter values in the OM spreadsheet are updated.
+
+## Tips on filling this Document
+
+This document is uses the Markdown format. All first and second level headings have been provided, and in general you
+should only need to enter plain text.
+
+You can have multiple paragraphs throughout the document.
+
+The Introduction and Custom Parameters sections also support second and third level headings.
+
+## An example Second level heading
+
+### An example third level heading
+
+### Technical Tip
+
+This document will be compiled into Rmarkdown, and then a HTML document using Pandoc. Equations can be included by
+
+using Latex (see [here](https://www.sharelatex.com/learn/Mathematical_expressions) for some examples).
+
+## Replace all text below 'Introduction' new text.
+
+
+
+# Custom Parameters
+Optional. Only required if the `cpars` feature is used in the OM.
+
+Provide details for the parameters included in 'cpars' here instead of in the corresponding slot sections below.
+Text in the slot section below will be ignored if a parameter is included in 'cpars'.
+Delete this section (including heading) if the `cpars` feature is not used in the OM.
+
+
+# Stock Parameters
+
+## Common_Name
+Borrowed from: Albacore
+
+## maxage
+Borrowed from: Albacore
+
+## R0
+Borrowed from: Albacore
+
+## M
+Borrowed from: Albacore
+
+## Msd
+Borrowed from: Albacore
+
+## h
+Borrowed from: Albacore
+
+## SRrel
+Borrowed from: Albacore
+
+## Perr
+Borrowed from: Albacore
+
+## AC
+Borrowed from: Albacore
+
+## Linf
+Borrowed from: Albacore
+
+## Linfsd
+Borrowed from: Albacore
+
+## K
+Borrowed from: Albacore
+
+## Ksd
+Borrowed from: Albacore
+
+## t0
+Borrowed from: Albacore
+
+## LenCV
+Borrowed from: Albacore
+
+## L50
+Borrowed from: Albacore
+
+## L50_95
+Borrowed from: Albacore
+
+## D
+Borrowed from: Albacore
+
+## a
+Borrowed from: Albacore
+
+## b
+Borrowed from: Albacore
+
+## Size_area_1
+Borrowed from: Albacore
+
+## Frac_area_1
+Borrowed from: Albacore
+
+## Prob_staying
+Borrowed from: Albacore
+
+## Fdisc
+Borrowed from: Albacore
+
+## Source
+No justification provided. 
+
+
+
+# Fleet Parameters
+
+## nyears
+Borrowed from: Generic_Flat effort
+
+## Spat_targ
+Borrowed from: Generic_Flat effort
+
+## EffYears
+Borrowed from: Generic_Flat effort
+
+## EffLower
+Borrowed from: Generic_Flat effort
+
+## EffUpper
+Borrowed from: Generic_Flat effort
+
+## Esd
+Borrowed from: Generic_Flat effort
+
+## qinc
+Borrowed from: Generic_Flat effort
+
+## qcv
+Borrowed from: Generic_Flat effort
+
+## L5
+Borrowed from: Generic_Flat effort
+
+## LFS
+Borrowed from: Generic_Flat effort
+
+## Vmaxlen
+Borrowed from: Generic_Flat effort
+
+## isRel
+Borrowed from: Generic_Flat effort
+
+## LR5
+Borrowed from: Generic_Flat effort
+
+## LFR
+Borrowed from: Generic_Flat effort
+
+## Rmaxlen
+Borrowed from: Generic_Flat effort
+
+## DR
+Borrowed from: Generic_Flat effort
+
+## CurrentYr
+Borrowed from: Generic_Flat effort
+
+## MPA
+Borrowed from: Generic_Flat effort
+
+
+
+# Obs Parameters
+
+## Cobs
+Borrowed from: Imprecise-Unbiased
+
+## Cbiascv
+Borrowed from: Imprecise-Unbiased
+
+## CAA_nsamp
+Borrowed from: Imprecise-Unbiased
+
+## CAA_ESS
+Borrowed from: Imprecise-Unbiased
+
+## CAL_nsamp
+Borrowed from: Imprecise-Unbiased
+
+## CAL_ESS
+Borrowed from: Imprecise-Unbiased
+
+## Iobs
+Borrowed from: Imprecise-Unbiased
+
+## Btobs
+Borrowed from: Imprecise-Unbiased
+
+## Btbiascv
+Borrowed from: Imprecise-Unbiased
+
+## beta
+Borrowed from: Imprecise-Unbiased
+
+## LenMbiascv
+Borrowed from: Imprecise-Unbiased
+
+## Mbiascv
+Borrowed from: Imprecise-Unbiased
+
+## Kbiascv
+Borrowed from: Imprecise-Unbiased
+
+## t0biascv
+Borrowed from: Imprecise-Unbiased
+
+## Linfbiascv
+Borrowed from: Imprecise-Unbiased
+
+## LFCbiascv
+Borrowed from: Imprecise-Unbiased
+
+## LFSbiascv
+Borrowed from: Imprecise-Unbiased
+
+## FMSY_Mbiascv
+Borrowed from: Imprecise-Unbiased
+
+## BMSY_B0biascv
+Borrowed from: Imprecise-Unbiased
+
+## Irefbiascv
+Borrowed from: Imprecise-Unbiased
+
+## Brefbiascv
+Borrowed from: Imprecise-Unbiased
+
+## Crefbiascv
+Borrowed from: Imprecise-Unbiased
+
+## Dbiascv
+Borrowed from: Imprecise-Unbiased
+
+## Dobs
+Borrowed from: Imprecise-Unbiased
+
+## hbiascv
+Borrowed from: Imprecise-Unbiased
+
+## Recbiascv
+Borrowed from: Imprecise-Unbiased
+
+## sigmaRbiascv
+Borrowed from: Imprecise-Unbiased
+
+## Eobs
+Borrowed from: Imprecise-Unbiased
+
+## Ebiascv
+Borrowed from: Imprecise-Unbiased
+
+# Imp Parameters
+
+## TACFrac
+Borrowed from: Perfect_Imp
+
+## TACSD
+Borrowed from: Perfect_Imp
+
+## TAEFrac
+Borrowed from: Perfect_Imp
+
+## TAESD
+Borrowed from: Perfect_Imp
+
+## SizeLimFrac
+Borrowed from: Perfect_Imp
+
+## SizeLimSD
+Borrowed from: Perfect_Imp
+
+
+
+# References
+

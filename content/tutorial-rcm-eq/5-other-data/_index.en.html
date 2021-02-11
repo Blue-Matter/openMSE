@@ -1,0 +1,36 @@
+---
+date: "2021-01-21T11:35:01+06:00"
+title: Other data
+weight: 5
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+
+<div id="catch-in-weight" class="section level3">
+<h3>Catch in weight</h3>
+<p>The catch in weight <span class="math inline">\(Y\)</span> is
+<span class="math display">\[ Y_{y,f} = \sum_a C_{y,a,f} w_{y,a}.\]</span></p>
+</div>
+<div id="mean-size" class="section level3">
+<h3>Mean size</h3>
+<p>The mean length of the catch <span class="math inline">\(\bar{L}_{y,f}\)</span> is
+<span class="math display">\[ \bar{L}_{y,f} = \dfrac{\sum_{\ell} L_{\ell} C_{y,\ell,f}}{\sum_{\ell} C_{y,\ell,f}},\]</span>
+where <span class="math inline">\(L_\ell\)</span> is the midpoint of the length bin <span class="math inline">\(\ell\)</span>.</p>
+<p>The mean weight of the catch <span class="math inline">\(\bar{w}_{y,f}\)</span> is
+<span class="math display">\[ \bar{w}_{y,f} = \dfrac{\sum_a C_{y,a,f}w_{y,a}}{\sum_a C_{y,a,f}},\]</span></p>
+</div>
+<div id="survey" class="section level3">
+<h3>Survey</h3>
+<p>If the <span class="math inline">\(s^{\textrm{th}}\)</span> survey is biomass-based, then the survey value <span class="math inline">\(I_{y,s}\)</span> is calculated as
+<span class="math display">\[ I_{y,s} = q_s \sum_a v_{y,a,s} N_{y,a} w_{y,a}, \]</span>
+where <span class="math inline">\(q\)</span> is the scaling coefficient and <span class="math inline">\(s\)</span> indexes survey.</p>
+<p>If the survey is abundance-based, then
+<span class="math display">\[ I_{y,s} = q_s \sum_a v_{y,a,s} N_{y,a} . \]</span></p>
+<p>The proportion-at-age vulnerable to the survey is
+<span class="math display">\[ p_{y,a,s} = \dfrac{v_{a,s}N_{y,a}}{\sum_a v_{a,s}N_{y,a}}.\]</span></p>
+<p>The proportion-at-length vulnerable to the survey is
+<span class="math display">\[ p_{y,\ell,s} = \dfrac{\sum_a v_{a,s} N_{y,a} P(\ell|a)}{\sum_{\ell} \sum_a v_{a,s} N_{y,a} P(\ell|a)}.\]</span></p>
+</div>

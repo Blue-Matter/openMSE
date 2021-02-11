@@ -1,0 +1,62 @@
+---
+date: "2021-02-10T11:35:01+06:00"
+title: Operating Model Slots
+weight: 1
+---
+
+```{r, include=FALSE}
+library(openMSE)
+```
+
+
+This section describes the slots in the OM object.
+
+### nsim
+The number of simulations. For example, if `OM@nsim=10` 10 samples will be drawn for each parameter in the Stock, Fleet, Obs, and Imp objects, and 10 independent simulations will be run.
+
+### proyears
+The number of time-steps (default is years) in the projection period.
+
+### interval
+The management interval (default is years). For example, if `OM@interval=4`, the management procedures will be applied every 4th year (i.e., the first projection year, 4th, 8th, etc). Management regulations (e.g., TAC, TAE, size regulation or spatial closure) remain unchanged in the interim years.
+
+If `OM@interval` is length 1, the same management interval will be used for all MPs.
+
+To set MP-specific management intervals, set `OM@interval` to be the same length as the MPs specified in the argument for `runMSE`.
+
+
+### reps and pstar
+For management procedures that calculate a stochastic distribution of management recommendations, the `reps` argument specifies the number of samples.
+
+For example:
+```{r}
+# apply the average catch MP to example data
+Rec <- AvC(1, SimulatedData, reps=10)
+# distribution of average catch - AvC assumes of log-normal s.d of 0.2
+Rec@TAC
+```
+
+The `pstar` argument species the percentile used to calculate the management recommendation (default is 0.5, i.e., median):
+
+```{r}
+OM <- testOM
+OM@pstar <- 0.2
+quantile(Rec@TAC, OM@pstar)
+```
+
+Default for many OMs is `reps=1`, in which case the MPs return the median value (uncertainty is ignored).
+
+For obvious reasons, `reps` should either be 1, or some large number so that the distribution is stable enough that to use the `pstar` percentile.
+
+### maxF
+Specifies the maximum instantaneous fishing mortality for any single age class. Used to prevent unrealistically high Fs on any single age class. 
+
+Default value for new OMs is `r testOM@maxF`. 
+
+### seed
+`OM@seed` is the seed for the random number generator and is used ensure the analysis will be reproduced identically.
+
+### cpars
+The `cpars` slot is a list for providing custom parameters, used to override the default uniform distributions in the [Stock](/object-stock), [Fleet](/object-fleet), [Obs](/object-obs), and [Imp](/object-imp) objects. 
+
+See the [Custom Parameters](/features-custom-parameters/) section for more details.

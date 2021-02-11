@@ -1,0 +1,82 @@
+---
+date: "2021-01-21T11:35:01+06:00"
+title: Objective function
+weight: 7
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+
+<div id="total-objective-function" class="section level3">
+<h3>Total objective function</h3>
+<p>The total objective function <span class="math inline">\(\textrm{LL}\)</span> to be maximized is
+<span class="math display">\[\textrm{LL} = \sum_{i=1}^9\Lambda_i + \sum \textrm{pr} + \sum_y\sum_f\textrm{pen}_{y,f},\]</span></p>
+<p>including the log likelihoods <span class="math inline">\(\Lambda_i\)</span>, logarithm of the parameter priors <span class="math inline">\(pr\)</span>, and penalty functions, described below.</p>
+</div>
+<div id="likelihoods" class="section level3">
+<h3>Likelihoods</h3>
+<p>If the model is conditioned on catch and fishing mortality rates are estimated parameters, then the log-likelihood component <span class="math inline">\(\Lambda_1\)</span> of the catch is
+<span class="math display">\[\Lambda_1 = \sum_f \left[\lambda^{Y}_f \sum_y \left(-\log(\omega_{y,f}) - \dfrac{[\log(Y^{\textrm{obs}}_{y,f}) - \log(Y^{\textrm{pred}}_{y,f})]^2}{2 \omega _{y,f}^2}\right)\right],\]</span></p>
+<p>where <span class="math inline">\(\textrm{obs}\)</span> and <span class="math inline">\(\textrm{pred}\)</span> indicate observed and predicted quantities, respectively, <span class="math inline">\(\lambda\)</span> are likelihood weights, and <span class="math inline">\(\omega\)</span> is the catch standard deviation. With a small standard deviation for the catch likelihood relative to the variance in other likelihood components, i.e., <span class="math inline">\(\omega = 0.01\)</span>, the predicted catch should match the observed catch in the model.</p>
+<p>The log-likelihood component <span class="math inline">\(\Lambda_2\)</span> of survey data is
+<span class="math display">\[\Lambda_2 = \sum_s \left[ \lambda^I_s \sum_y \left(-\log(\sigma_{y,s}) - \dfrac{[\log(I^{\textrm{obs}}_{y,s}) - \log(I^{\textrm{pred}}_{y,s})]^2}{2\sigma_{y,s}^2}\right) \right].\]</span></p>
+<p>The log-likelihood component <span class="math inline">\(\Lambda_3\)</span> of catch-at-age data is
+<span class="math display">\[\Lambda_3 = \sum_f \lambda^A_f \left[\sum_y O^A_{y,f} \sum_a p^{\textrm{obs}}_{y,a,f} \log(p^{\textrm{pred}}_{y,a,f})\right],\]</span>
+where <span class="math inline">\(O^A\)</span> is the annual sample sizes for the age compositions.</p>
+<p>The log-likelihood component <span class="math inline">\(\Lambda_4\)</span> of catch-at-length data is
+<span class="math display">\[\Lambda_4 = \sum_f \lambda^L_f \left[ \sum_y O^L_{y,f} \sum_{\ell} p^{\textrm{obs}}_{y,\ell,f} \log(p^{\textrm{pred}}_{y,\ell,f})\right]\]</span>
+where <span class="math inline">\(O^L\)</span> is the annual sample sizes for the length compositions.</p>
+<p>The log-likelihood component <span class="math inline">\(\Lambda_5\)</span> for the observed mean size in this catch is:</p>
+<p><span class="math display">\[\Lambda_5 = \sum_f \lambda^{\bar{L}}_f\left[ \sum_y \left(-\log(\eta_{y,f}) - \dfrac{[\bar{L}^{\textrm{obs}}_{y,f} - \bar{L}^{\textrm{pred}}_{y,f}]^2}{2 \eta^2_{y,f}}\right)\right],\]</span>
+for mean lengths, or</p>
+<p><span class="math display">\[\Lambda_5 = \sum_f \lambda^{\bar{w}}_f\left[ \sum_y \left(-\log(\eta_{y,f}) - \dfrac{[\bar{w}^{\textrm{obs}}_{y,f} - \bar{w}^{\textrm{pred}}_{y,f}]^2}{2 \eta^2_{y,f}}\right)\right],\]</span>
+for mean weights, where <span class="math inline">\(\eta_{y,f}\)</span> is the standard deviation of the mean size. With constant coefficient of variation (CV), <span class="math inline">\(\eta_{y,f} = \bar{w}^{\textrm{obs}}_{y,f} CV^{\eta}_f\)</span>.</p>
+<p>The log-likelihood component <span class="math inline">\(\Lambda_6\)</span> of annual estimated recruitment deviates <span class="math inline">\(\delta_y\)</span> in log space is
+<span class="math display">\[\Lambda_6 = \Sigma_y\left(-\log(\tau) - \dfrac{\delta_y^2}{2 \tau^2}\right),\]</span>
+where <span class="math inline">\(\tau\)</span> is the standard deviation of recruitment deviates.</p>
+<p>The log-likelihood component <span class="math inline">\(\Lambda_7\)</span> of the equilibrium catch is
+<span class="math display">\[\Lambda_7 = \sum_f \lambda^{Y}_f \left(-\log(\omega^{\textrm{eq}}_f) - \dfrac{[\log(Y^{\textrm{eq,obs}}_f) - \log(Y^{\textrm{eq,pred}}_f)]^2}{2 \times (\omega^{\textrm{eq}}_f)^2}\right),\]</span></p>
+<p>The log-likelihood component <span class="math inline">\(\Lambda_8\)</span> of the survey proportion-at-age data is
+<span class="math display">\[\Lambda_8 = \sum_s \lambda^{IA}_s \left[\sum_y O^{IA}_{y,s} \sum_a p^{\textrm{obs}}_{y,a,s} \log(p^{\textrm{pred}}_{y,a,s})\right],\]</span>
+where <span class="math inline">\(O^{IA}\)</span> is the annual sample sizes for the survey age compositions.</p>
+<p>The log-likelihood component <span class="math inline">\(\Lambda_9\)</span> of the survey proportion-at-length data is
+<span class="math display">\[\Lambda_9 = \sum_s \lambda^{IL}_s \left[ \sum_y O^{IL}_{y,s} \sum_{\ell} p^{\textrm{obs}}_{y,\ell,s} \log(p^{\textrm{pred}}_{y,\ell,s})\right]\]</span>
+where <span class="math inline">\(O^{IL}\)</span> is the annual sample sizes for the survey length compositions.</p>
+</div>
+<div id="priors" class="section level3">
+<h3>Priors</h3>
+<p>Vague priors are added to selectivity parameters to aid in convergence, with
+<span class="math display">\[ \begin{align}
+x^{\textrm{LFS}}_b &amp;\sim N(0,3)\\
+x^{\textrm{L5}}_b &amp;\sim N(0,3)\\
+V^{L_{\infty}}_b &amp;\sim \textrm{Beta}(1.01, 1.01)
+\end{align}\]</span></p>
+<p>If free selectivity parameters are estimated, then
+<span class="math display">\[v_{y,a,f} \sim \textrm{Beta}(1.01, 1.01)\]</span></p>
+</div>
+<div id="optional-priors" class="section level3">
+<h3>Optional priors</h3>
+<p>A lognormal prior on <span class="math inline">\(R_0\)</span> can be specified. The penalty term <span class="math inline">\(\textrm{pr}\)</span> to the objective function is:
+<span class="math display">\[\textrm{pr}^{R_0} = -\log(\sigma^{R_0}) - 0.5\left[\dfrac{\log(R_0/\mu^{R_0})}{\sigma^{R_0}}\right]^2,\]</span>
+where <span class="math inline">\(\mu^{R_0}\)</span> and <span class="math inline">\(\sigma^{R_0}\)</span> are the mean and standard deviations for the prior provided by the user.</p>
+<p>Recall that the parameter corresponding to Beverton-Holt steepness <span class="math inline">\(x^h\)</span> is estimable over all real numbers and is transformed such that <span class="math inline">\(h = 0.8 \times \textrm{logit}^{-1}(x^h) + 0.2\)</span>. The prior uses a beta distribution on <span class="math inline">\(y = (h - 0.2)/0.8\)</span>. The penalty to the objective function is:
+<span class="math display">\[\textrm{pr}^{h} = \log(y) (\alpha-1) + \log(1-y) * (\beta-1) - \log(y - y^2),\]</span>
+where <span class="math inline">\(\alpha = \mu^h \left(\frac{\mu^h (1 - \mu^h)}{(\sigma^h)^2} - 1\right)\)</span>, <span class="math inline">\(\beta = (1-\mu^h)\left(\frac{\mu^h (1 - \mu^h)}{(\sigma^h)^2} - 1\right)\)</span>, and the last term is the log Jacobian transform of the logit function.</p>
+<p>With a Ricker SR function, a normal distribution is used:
+<span class="math display">\[\textrm{pr}^{h} = -\log(\sigma^{h}) - 0.5\left(\dfrac{h - \mu^{h}}{\sigma^{h}}\right)^2.\]</span></p>
+<p>The prior for <span class="math inline">\(M\)</span> is lognormal:
+<span class="math display">\[\textrm{pr}^{M} = -\log(\sigma^{M}) - 0.5\left[\dfrac{\log(M/\mu^{M})}{\sigma^{M}}\right]^2.\]</span></p>
+<p>Priors for survey catchability <span class="math inline">\(q_s\)</span> are normally distributed:
+<span class="math display">\[\textrm{pr}^{q} = \sum_s\left(-\log(\sigma^{q}_s) - 0.5\left(\dfrac{q_s - \mu^{q}_s}{\sigma^{q}_s}\right)^2\right).\]</span></p>
+</div>
+<div id="penalties" class="section level3">
+<h3>Penalties</h3>
+<p>A penalty to the likelihood is added when <span class="math inline">\(F_{y,f} \ge F_{\textrm{max}}\)</span> for any year and fleet. The penalty is</p>
+<p><span class="math display">\[\textrm{pen}_{y,f} = 
+\begin{cases}
+0.01 (F_{y,f} - F_{\textrm{max}})^2 &amp; F_{y,f} \ge F_{\textrm{max}}\\ 
+0 &amp; \textrm{otherwise}
+\end{cases}.\]</span></p>
+</div>
