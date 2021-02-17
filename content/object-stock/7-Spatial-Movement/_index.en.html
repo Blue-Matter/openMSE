@@ -1,0 +1,30 @@
+---
+date: "2021-02-16T15:18:01+06:00"
+title: Spatial & Movement
+weight: 7
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+
+<div id="size_area_1" class="section level3">
+<h3>Size_area_1</h3>
+<p>The size of area 1 relative to area 2. The fraction of the unfished biomass in area 1. Please specify numbers between 0 and 1. For each simulation a single value is drawn from a uniform distribution specified by the upper and lower bounds provided. For example, if Size_area_1 is 0.2, then 20% of the total area is allocated to area 1. Fishing can occur in both areas, or can be turned off in one area to simulate the effects of a no take marine reserve. Uniform distribution lower and upper bounds. Positive real numbers.</p>
+</div>
+<div id="frac_area_1" class="section level3">
+<h3>Frac_area_1</h3>
+<p>The fraction of the unfished biomass in area 1. Please specify numbers between 0 and 1. For each simulation a single value is drawn from a uniform distribution specified by the upper and lower bounds provided. For example, if Frac_area_1 is 0.5, then 50% of the unfished biomass is allocated to area 1, regardless of the size of area 1 (i.e, size and fraction in each area determine the density of fish, which may impact fishing spatial targeting). In each time step recruits are allocated to each area based on the proportion specified in Frac_area_1. Uniform distribution lower and upper bounds. Positive real numbers.</p>
+</div>
+<div id="prob_staying" class="section level3">
+<h3>Prob_staying</h3>
+<p>The probability of individuals in area 1 remaining in area 1 over the course of one year. Please specify numbers between 0 and 1. For each simulation a single value is drawn from a uniform distribution specified by the upper and lower bounds provided. For example, in an area with a Prob_staying value of 0.95 each fish has a 95% probability of staying in that area in each time step, and a 5% probability of moving to the other area. Uniform distribution lower and upper bounds. Positive fraction.</p>
+</div>
+<div id="custom-parameters" class="section level3">
+<h3>Custom Parameters</h3>
+<ul>
+<li>more than 2 areas</li>
+<li>spatial closures by year</li>
+</ul>
+</div>

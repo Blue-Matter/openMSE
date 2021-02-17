@@ -9,6 +9,39 @@ weight: 2
 <script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 
 
+<p>In the last section the <code>OMinit</code> function was to create the OM Excel and Rmarkdown files:</p>
 <pre class="r"><code>OMinit(&#39;MyOM&#39;)</code></pre>
-<p>In the last section we used the <code>OMinit</code> function to create the OM Excel and Rmarkdown files.</p>
-<p>In this section we will describe how to populate the Stock object for a data-limited fishery.</p>
+<p>Then, once the OM Excel and Rmarkdown files were populated, the OM was imported from the spreadsheet with:</p>
+<pre class="r"><code>OM &lt;- XL2Data(&#39;MyOM&#39;)</code></pre>
+<p>and the Rmarkdown file was compiled into an <a href="6-document-om/">OM documentation report</a>.</p>
+<p>In this section we describe how to populate the Stock object for a data-limited fishery.</p>
+<p>Rather than populate the stock parameters in an Excel spreadsheet and importing into R, in this example we will create the <code>Stock</code> object directly in the R script. Note that this is equivalent to entering the parameters in the corresponding rows in the OM Excel file and importing with <code>XL2OM</code>.</p>
+<pre class="r"><code>Stock &lt;- new(&#39;Stock&#39;)
+slotNames(Stock)</code></pre>
+<pre><code>##  [1] &quot;Name&quot;         &quot;Common_Name&quot;  &quot;Species&quot;      &quot;maxage&quot;       &quot;R0&quot;          
+##  [6] &quot;M&quot;            &quot;Msd&quot;          &quot;h&quot;            &quot;SRrel&quot;        &quot;Perr&quot;        
+## [11] &quot;AC&quot;           &quot;Linf&quot;         &quot;Linfsd&quot;       &quot;K&quot;            &quot;Ksd&quot;         
+## [16] &quot;t0&quot;           &quot;LenCV&quot;        &quot;L50&quot;          &quot;L50_95&quot;       &quot;D&quot;           
+## [21] &quot;a&quot;            &quot;b&quot;            &quot;Size_area_1&quot;  &quot;Frac_area_1&quot;  &quot;Prob_staying&quot;
+## [26] &quot;Fdisc&quot;        &quot;Source&quot;</code></pre>
+<div id="meta-data" class="section level3">
+<h3>Meta-Data</h3>
+</div>
+<div id="mortality-and-maximum-age" class="section level3">
+<h3>Mortality and Maximum Age</h3>
+</div>
+<div id="recruitment-parameters" class="section level3">
+<h3>Recruitment Parameters</h3>
+</div>
+<div id="growth" class="section level3">
+<h3>Growth</h3>
+</div>
+<div id="maturity" class="section level3">
+<h3>Maturity</h3>
+</div>
+<div id="depletion" class="section level3">
+<h3>Depletion</h3>
+</div>
+<div id="spatial-movement" class="section level3">
+<h3>Spatial &amp; Movement</h3>
+</div>

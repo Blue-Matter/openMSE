@@ -115,7 +115,7 @@ To create a blank OM called 'MyOM' you would simply write:
 OMinit('MyOM')
 ```
 
-In the next sections we will describe how to populate the Stock, Fleet, Obs, Imp and OM parameters in the operating model. 
+In the next sections we describe how to populate the Stock, Fleet, Obs, Imp and OM parameters in the operating model. 
 
 
 

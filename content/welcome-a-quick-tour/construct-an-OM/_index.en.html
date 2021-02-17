@@ -14,13 +14,13 @@ keywords:
 
 
 <p>The Operating Model (OM) is the main component of the MSE framework. The OM is used to describe the characteristics of a fishery system and contains all the parameters required to simulate the population and fleet dynamics, the collection of data, and the application of a management procedure (e.g., implement a size regulation, effort control, spatial closure, or catch limit).</p>
-<p>The parameters for the operating model are stored in an <a href="#OM-object">OM Object</a> (like most of the core objects in <code>openMSE</code>, the <code>OM</code> object is an <a href="/faq/#what-are-s4-objects">S4</a> type object).</p>
+<p>The parameters for the operating model are stored in an <a href="/object-operating-model">OM Object</a> (like most of the core objects in <code>openMSE</code>, the <code>OM</code> object is an <a href="/faq/#what-are-s4-objects">S4</a> type object).</p>
 <p>There are several different methods for constructing an operating model. In this brief demo, we will create an operating model using some of the example objects that are included in <code>openMSE</code>. The other methods for building operating models are described elsewhere on this site.</p>
 <div id="building-an-operating-model-from-example-objects" class="section level3">
 <h3>Building an operating model from example objects</h3>
 <p>The simplest way to build an Operating Model object is to stitch together some of the example objects that are included in <code>openMSE</code>:</p>
 <pre class="r"><code>ourOM &lt;- new(&#39;OM&#39;, Albacore, Generic_IncE, Imprecise_Unbiased, Perfect_Imp)</code></pre>
-<p>As you can see, the Operating Model object is made up of four sub-components. Here we are using:</p>
+<p>The Operating Model object is made up of four sub-components. In this example:</p>
 <ol style="list-style-type: decimal">
 <li><code>Albacore</code> - an example <a href="/object-stock">Stock Object</a> that contains the biological parameters of a stock based on albacore (<em>Thunnus alalunga</em>);</li>
 <li><code>Generic_IncE</code> - an example <a href="/object-fleet">Fleet Object</a> describes a generic fishing fleet with an increasing effort pattern;</li>

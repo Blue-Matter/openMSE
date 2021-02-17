@@ -14,7 +14,7 @@ library(openMSE)
 
 The Operating Model (OM) is the main component of the MSE framework.  The OM is used to describe the characteristics of a fishery system and contains all the parameters required to simulate the population and fleet dynamics, the collection of data, and the application of a management procedure (e.g., implement a size regulation, effort control, spatial closure, or catch limit). 
 
-The parameters for the operating model are stored in an [OM Object](#OM-object) (like most of the core objects in `openMSE`, the `OM` object is an [S4](/faq/#what-are-s4-objects) type object).
+The parameters for the operating model are stored in an [OM Object](/object-operating-model) (like most of the core objects in `openMSE`, the `OM` object is an [S4](/faq/#what-are-s4-objects) type object).
 
 There are several different methods for constructing an operating model. In this brief demo, we will create an operating model using some of the example objects that are included in `openMSE`. The other methods for building operating models are described elsewhere on this site.
 
@@ -25,7 +25,7 @@ The simplest way to build an Operating Model object is to stitch together some o
 ourOM <- new('OM', Albacore, Generic_IncE, Imprecise_Unbiased, Perfect_Imp)
 ```
 
-As you can see, the Operating Model object is made up of four sub-components. Here we are using:
+The Operating Model object is made up of four sub-components. In this example:
 
 1. `Albacore` - an example [Stock Object](/object-stock) that contains the biological parameters of a stock based on albacore (*Thunnus alalunga*);
 2. `Generic_IncE` - an example [Fleet Object](/object-fleet) describes a generic fishing fleet with an increasing effort pattern;

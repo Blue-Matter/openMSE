@@ -1,0 +1,21 @@
+---
+date: "2021-02-16T15:18:01+06:00"
+title: Maturity
+weight: 5
+---
+
+```{r,include=FALSE}
+library(openMSE)
+printDesc <- function(slot, class="Stock") {
+  Desc <- get(paste0(class, "Description"))
+  Desc$Description[which(Desc$Slot == slot)]
+}
+```
+
+### L50
+`r printDesc("L50")`
+
+### L50_95 
+`r printDesc("L50_95")`
+
+

@@ -8,12 +8,42 @@ weight: 2
 library(openMSE)
 ```
 
+
+In the last section the `OMinit` function was to create the OM Excel and Rmarkdown files:
+
 ```{r, eval=FALSE}
 OMinit('MyOM')
 ```
 
-In the last section we used the `OMinit` function to create the OM Excel and Rmarkdown files.
+Then, once the OM Excel and Rmarkdown files were populated, the OM was imported from the spreadsheet with:
 
-In this section we will describe how to populate the Stock object for a data-limited fishery.
+```{r, eval=FALSE}
+OM <- XL2Data('MyOM')
+```
+and the Rmarkdown file was compiled into an [OM documentation report](6-document-om/).
+
+In this section we describe how to populate the Stock object for a data-limited fishery. 
+
+Rather than populate the stock parameters in an Excel spreadsheet and importing into R, in this example we will create the `Stock` object directly in the R script. Note that this is equivalent to entering the parameters in the corresponding rows in the OM Excel file and importing with `XL2OM`.
+
+```{r}
+Stock <- new('Stock')
+slotNames(Stock)
+```
+
+### Meta-Data
+
+
+### Mortality and Maximum Age
+
+### Recruitment Parameters
+
+### Growth
+
+### Maturity
+
+### Depletion
+
+### Spatial & Movement
 
 

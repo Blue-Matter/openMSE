@@ -1,9 +1,10 @@
 ---
 date: "2020-12-15T15:18:01+06:00"
 title: Example Stock Objects
-weight: 1
+weight: 8
 keywords:
   - examples
 ---
 
-Test
+Coming soon!
+

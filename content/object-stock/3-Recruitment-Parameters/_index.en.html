@@ -1,0 +1,31 @@
+---
+date: "2021-02-16T15:18:01+06:00"
+title: Recruitment Parameters 
+weight: 3
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+
+<div id="r0" class="section level3">
+<h3>R0</h3>
+<p>Initial number of unfished recruits to age-0. This number is used to scale the size of the population to match catch or data, but does not affect any of the population dynamics unless the OM has been conditioned with data. As a result, for a data-limited fishery any number can be used for R0 . In data-rich stocks R0 may be estimated as part of a stock assessment, but for data limited stocks users can choose either an arbitrary number (say, 1000) or choose a number that produces simulated catches in recent historical years that are similar to real world catch data. Single value. Positive real number.</p>
+</div>
+<div id="h" class="section level3">
+<h3>h</h3>
+<p>Steepness of the stock recruit relationship. Steepness governs the proportion of unfished recruits produced when the stock is at 20% of the unfished population size. For each simulation a single value is drawn from a uniform distribution specified by the upper and lower bounds provided. This value is the same in all years of a given simulation. Uniform distribution lower and upper bounds. Values from 1/5 to 1.</p>
+</div>
+<div id="perr" class="section level3">
+<h3>Perr</h3>
+<p>Recruitment process error, which is defined as the standard deviation of the recruitment deviations in log space. For each simulation a single value is drawn from a uniform distribution specified by the upper and lower bounds provided. Uniform distribution lower and upper bounds. Non-negative real numbers.</p>
+</div>
+<div id="ac" class="section level3">
+<h3>AC</h3>
+<p>Autocorrelation in the recruitment deviations in log space. For each simulation a single value is drawn from a uniform distribution specified by the upper and lower bounds provided, and used to add lag-1 auto-correlation to the log recruitment deviations. Uniform distribution lower and upper bounds. Non-negative real numbers.</p>
+</div>
+<div id="custom-parameters" class="section level3">
+<h3>Custom Parameters</h3>
+<p>Example of adding cycle?</p>
+</div>
