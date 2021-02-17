@@ -899,3 +899,7 @@ pre code::-webkit-scrollbar-thumb {
   margin-left: -50vw;
   margin-right: -50vw;
 }
+
+iframe {
+  border: none;
+}

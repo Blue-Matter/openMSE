@@ -1,7 +1,7 @@
 ---
 date: "2021-02-16T15:18:01+06:00"
-title: Meta-Data 
-weight: 1
+title: Natural Mortality
+weight: 2
 ---
 
 ```{r,include=FALSE}
@@ -12,14 +12,23 @@ printDesc <- function(slot, class="Stock") {
 }
 ```
 
-### Name
-`r printDesc("Name")`
+### maxage 
+`r printDesc("maxage")`
 
-### Common_Name 
-`r printDesc("Common_Name")`
+### M 
+`r printDesc("M")`
 
-### Species
-`r printDesc("Species")`
+### Msd
+`r printDesc("Msd")`
 
-### Source
-`r printDesc("Source")`
+### Fdisc
+`r printDesc("Fdisc")`
+
+### Custom Parameters
+TBD
+
+### Interactive App
+
+```{r, echo=FALSE, screenshot.opts = list(delay = 5)}
+knitr::include_app("https://apps.bluematterscience.com/openMSE/mortality",height="650px") 
+```
