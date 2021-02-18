@@ -24,6 +24,10 @@ printDesc <- function(slot, class="Stock") {
 ### AC
 `r printDesc("AC")`
 
-### Custom Parameters 
-Example of adding cycle?
+### Custom Parameters
+TBD
 
+### Interactive App
+
+```{r, echo=FALSE, screenshot.opts = list(delay = 5)}
+knitr::include_app("https://apps.bluematterscience.com/openMSE/recruitment",height="850px") 
