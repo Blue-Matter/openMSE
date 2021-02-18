@@ -23,6 +23,7 @@ weight: 4
 </div>
 <div id="linfsd" class="section level3">
 <h3>Linfsd</h3>
+<p>Inter-annual variation in Linf. For each simulation a single value is drawn from a uniform distribution specified by the upper and lower bounds provided. If this parameter has a positive value, yearly Linf is drawn from a log-normal distribution with a mean specified by the value of Linf drawn for that simulation and a standard deviation (in log space) specified by the value of Linfsd drawn for that simulation. Uniform distribution lower and upper bounds. Non-negative real numbers.</p>
 </div>
 <div id="ksd" class="section level3">
 <h3>Ksd</h3>
@@ -30,7 +31,7 @@ weight: 4
 </div>
 <div id="a" class="section level3">
 <h3>a</h3>
-<p>positive value, yearly Linf is drawn from a log-normal distribution with a mean specified by the value of Linf drawn for that simulation and a standard deviation (in log space) specified by the value of Linfsd drawn for that simulation. Uniform distribution lower and upper bounds. Non-negative real numbers.</p>
+<p>The alpha parameter in allometric length-weight relationship. Single value. Weight parameters are used to determine catch-at-age and population-at-age from the number of individuals in each age class and the length of each individual, which is drawn from a normal distribution determined by the Linf , K , t0 , and LenCV parameters. As a result, they function as a way to scale between numbers at age and biomass, and are not stochastic parameters. Single value. Positive real number.</p>
 </div>
 <div id="b" class="section level3">
 <h3>b</h3>

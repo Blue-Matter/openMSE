@@ -22,7 +22,7 @@ printDesc <- function(slot, class="Stock") {
 `r printDesc("t0")`
 
 ### Linfsd
-`r printDesc("Linfsd")`
+`r printDesc("Linfsd")` 
 
 ### Ksd
 `r printDesc("Ksd")`
