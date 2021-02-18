@@ -31,4 +31,4 @@ printDesc <- function(slot, class="Stock") {
 `r printDesc("a")`
 
 ### b
-`r printDesc("b")`
+`r printDesc("b")` 
