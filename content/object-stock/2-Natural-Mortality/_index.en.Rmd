@@ -19,7 +19,7 @@ printDesc <- function(slot, class="Stock") {
 `r printDesc("M")`
 
 ### Msd
-`r printDesc("Msd")`
+`r printDesc("Msd")` 
 
 ### Fdisc
 `r printDesc("Fdisc")`
