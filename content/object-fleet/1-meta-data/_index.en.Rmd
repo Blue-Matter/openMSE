@@ -1,0 +1,23 @@
+---
+date: "2021-02-18T15:18:01+06:00"
+title: Meta-Data 
+weight: 1
+---
+
+```{r,include=FALSE}
+library(openMSE)
+printDesc <- function(slot, class="Fleet") {
+  Desc <- get(paste0(class, "Description"))
+  Desc$Description[which(Desc$Slot == slot)]
+}
+```
+
+### Name 
+`r printDesc("Name")`   
+
+### nyears 
+`r printDesc("nyears")`
+
+### CurrentYr
+`r printDesc("CurrentYr")`
+

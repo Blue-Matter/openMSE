@@ -1,0 +1,45 @@
+---
+date: "2021-02-18T15:18:01+06:00"
+title: Selectivity and Retention
+weight: 3
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+
+<p>Selectivity is defined as the size or age at which fish are vulnerable to the fishing gear used, and is usually influenced by gear specifications. Retention is defined as the size or age of the fish that are actually kept by the fleet, and usually reflects either management regulations or market preferences. Those fish that are selected but not retained are discarded, and are subject to the <a href="/object-stock/2-natural-mortality/#fdisc">discard mortality rate (<code>Fdisc</code>)</a>.</p>
+<p>The MSEtool can model either logistic or dome-shaped selectivity and retention curves. The parameters below specify a single selection and retention curve in terms of lengths for the entire simulation period (unless changed by an MP), but time varying or age-based selection and retention can be specified using custom parameters.</p>
+<div id="l5" class="section level3">
+<h3>L5</h3>
+<p>Shortest length at which 5% of the population is vulnerable to selection by the gear used in this fleet. Values can either be specified as lengths (in the same units used for the maturity and growth parameters in the stock object) or as a percentage of the size of maturity (see the parameter isRel for more information). For each simulation a single value is drawn from a uniform distribution specified by the upper and lower bounds provided. This value is the same in all years unless cpars is used to provide time-varying selection.</p>
+</div>
+<div id="lfs" class="section level3">
+<h3>LFS</h3>
+<p>Shortest length at which 100% of the population is vulnerable to selection by the gear used by this fleet. Values can either be specified as lengths (in the same units used for the maturity and growth parameters in the stock object) or as a percentage of the size of maturity (see the parameter isRel for more information). For each simulation a single value is drawn from a uniform distribution specified by the upper and lower bounds provided. This value is the same in all years unless cpars is used to provide time-varying selection.</p>
+</div>
+<div id="vmaxlen" class="section level3">
+<h3>Vmaxlen</h3>
+<p>Proportion of fish selected by the gear at the asymptotic length (‘<a href="mailto:Stock@Linf" class="email">Stock@Linf</a>’). Upper and Lower bounds between 0 and 1. A value of 1 indicates that 100% of fish are selected at the asymptotic length, and the selection curve is logistic. If Vmaxlen is less than 1 the selection curve is dome shaped. For example, if Vmaxlen is 0.4, then only 40% of fish are vulnerable to the fishing gear at the asymptotic length.</p>
+</div>
+<div id="isrel" class="section level3">
+<h3>isRel</h3>
+<p>Specify whether selection and retention parameters use absolute lengths or relative to the size of maturity. Single logical value (TRUE or FALSE).</p>
+</div>
+<div id="lr5" class="section level3">
+<h3>LR5</h3>
+<p>Shortest length at which 5% of the population is vulnerable to retention by the fleet. Values can either be specified as lengths (in the same units used for the maturity and growth parameters in the stock object) or as a percentage of the size of maturity (see the parameter isRel for more information). For each simulation a single value is drawn from a uniform distribution specified by the upper and lower bounds provided. This value is the same in all years unless cpars is used to provide time-varying selection.</p>
+</div>
+<div id="lfr" class="section level3">
+<h3>LFR</h3>
+<p>Shortest length where 100% of the population is vulnerable to retention by the fleet. Values can either be specified as lengths (in the same units used for the maturity and growth parameters in the stock object) or as a percentage of the size of maturity (see the parameter isRel for more information). For each simulation a single value is drawn from a uniform distribution specified by the upper and lower bounds provided. This value is the same in all years unless cpars is used to provide time-varying selection.</p>
+</div>
+<div id="rmaxlen" class="section level3">
+<h3>Rmaxlen</h3>
+<p>Proportion of fish retained at the asymptotic length (‘<a href="mailto:Stock@Linf" class="email">Stock@Linf</a>’). Upper and Lower bounds between 0 and 1. A value of 1 indicates that 100% of fish are retained at the asymptotic length, and the selection curve is logistic. If Rmaxlen is less than 1 the retention curve is dome shaped. For example, if Rmaxlen is 0.4, then only 40% of fish at the asymptotic length are retained.</p>
+</div>
+<div id="dr" class="section level3">
+<h3>DR</h3>
+<p>Discard rate, defined as the proportion of fully selected fish that are discarded by the fleet. Upper and Lower bounds between 0 and 1, with a value of 1 indicates that 100% of selected fish are discarded. For each simulation a single value is drawn from a uniform distribution specified by the upper and lower bounds provided.</p>
+</div>

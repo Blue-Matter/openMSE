@@ -1,0 +1,26 @@
+---
+date: "2021-02-18T15:18:01+06:00"
+title: Fishing Effort
+weight: 2
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+
+<p>This section includes parameters related to historical and future fishing effort. The MSEtool needs to determine how the fishing mortality rate, which is defined as the proportion of the stock that dies due to fishing, has changed over time. However, in many fisheries, especially those that are data poor, it is easier determine how fishing effort, which can be measured in terms of number of boats, traps, trips, etc., has changed. Fishing effort is related to the fishing mortality rate via the “catchability” parameter (q), and so with some information about historical fishing effort (along with the other information provided) the model is able to infer plausible historical fishing mortality rates.</p>
+<p>(include or link to equations?).</p>
+<p>This information is used to help guide the initialization of the model. When the model is initialized, it samples possible time series of fishing mortality rates and recruitment events that fit the information provided. Series that cannot achieve the specified current depletion level (D) are discarded. Note that, for data rich fisheries, estimates of yearly historical fishing mortality rates may be available from a stock assessment. These can be provided directly to the model by using the custom parameter <code>OM@cpars$F_Ind</code>. If <code>F_Ind</code> is provided there is no need to specify <code>EffLower</code>, <code>EffUpper</code>, and <code>Esd</code>.</p>
+<div id="name" class="section level3">
+<h3>Name</h3>
+<p>Name of the Fleet object. Single value. Character string.</p>
+</div>
+<div id="nyears" class="section level3">
+<h3>nyears</h3>
+<p>The number of years for the historical simulation. Single value. For example, if the simulated population is assumed to be unfished in 1975 and this is the year you want to start your historical simulations, and the most recent year for which there is data available is 2019, then nyears equals 45.</p>
+</div>
+<div id="currentyr" class="section level3">
+<h3>CurrentYr</h3>
+<p>The last historical year simulated before projections begin. Single value. Note that this should match the last historical year specified in the Data object, which is usually the last historical year for which data is available.</p>
+</div>

@@ -1,0 +1,41 @@
+---
+date: "2021-02-18T15:18:01+06:00"
+title: Selectivity and Retention
+weight: 3
+---
+
+```{r,include=FALSE}
+library(openMSE)
+printDesc <- function(slot, class="Fleet") {
+  Desc <- get(paste0(class, "Description"))
+  Desc$Description[which(Desc$Slot == slot)]
+}
+```
+
+Selectivity is defined as the size or age at which fish are vulnerable to the fishing gear used, and is usually influenced by gear specifications. Retention is defined as the size or age of the fish that are actually kept by the fleet, and usually reflects either management regulations or market preferences. Those fish that are selected but not retained are discarded, and are subject to the [discard mortality rate (`Fdisc`)](/object-stock/2-natural-mortality/#fdisc). 
+
+The MSEtool can model either logistic or dome-shaped selectivity and retention curves. The parameters below specify a single selection and retention curve in terms of lengths for the entire simulation period (unless changed by an MP), but time varying or age-based selection and retention can be specified using custom parameters.
+
+### L5
+`r printDesc("L5")` 
+
+### LFS 
+`r printDesc("LFS")`
+ 
+### Vmaxlen
+`r printDesc("Vmaxlen")`
+
+### isRel
+`r printDesc("isRel")`
+
+### LR5
+`r printDesc("LR5")`
+
+### LFR
+`r printDesc("LFR")`
+
+### Rmaxlen
+`r printDesc("Rmaxlen")`
+
+### DR
+`r printDesc("DR")`
