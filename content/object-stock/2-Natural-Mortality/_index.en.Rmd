@@ -30,5 +30,5 @@ TBD
 ### Interactive App
 
 ```{r, echo=FALSE, screenshot.opts = list(delay = 5)}
-knitr::include_app("https://apps.bluematterscience.com/openMSE/mortality",height="650px") 
+knitr::include_app("https://apps.bluematterscience.com/openMSE/stock/mortality",height="650px") 
 ```
