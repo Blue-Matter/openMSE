@@ -1,5 +1,5 @@
 ---
-date: "2021-02-10T11:35:01+06:00"
+date: "2021-02-26T11:35:01+06:00"
 description: Assessment models in the SAMtool package
 icon: far fa-function
 title: Stock Assessment Models
@@ -7,4 +7,6 @@ type: features
 weight: 3
 ---
 
-Coming soon!
+Assessment models are of class `Assess.` This section provides a brief description and references for the `Assess` objects. 
+
+Further details regarding parameterization, e.g., fixing parameters, and tuning, e.g., adjusting start parameters, are provided on the [SAMtool function documentation page](https://samtool.openmse.com/reference/index.html).

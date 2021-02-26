@@ -1,0 +1,96 @@
+---
+date: "2021-02-26T15:18:01+06:00"
+title: Surplus production model
+weight: 3
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+
+<div id="dynamics-equations" class="section level2">
+<h2>Dynamics equations</h2>
+<p>The surplus production model uses the Fletcher (1978) formulation. The biomass <span class="math inline">\(B_t\)</span> in year <span class="math inline">\(t\)</span> is
+<span class="math display">\[B_t = B_{t-1} + P_{t-1} - C_{t-1},\]</span>
+where <span class="math inline">\(C_t\)</span> is the observed catch and <span class="math inline">\(P_t\)</span> is the surplus production given by:
+<span class="math display">\[P_t = \gamma \times MSY \times \left(\dfrac{B_t}{K}-\left[\dfrac{B_t}{K}\right]^n\right), \]</span>
+where <span class="math inline">\(K\)</span> is the carrying capacity, <span class="math inline">\(MSY\)</span> is the estimated maximum sustainable yield, and <span class="math inline">\(n\)</span> is the parameter that controls shape of the production curve, and
+<span class="math inline">\(\gamma\)</span> is
+<span class="math display">\[\gamma = \dfrac{1}{n-1}n^{n/(n-1)}.\]</span></p>
+<p>By conditioning the model on observed catch, the predicted index <span class="math inline">\(\hat{I}_t\)</span> is
+<span class="math display">\[\hat{I}_t = \hat{q} \hat{B}_t \]</span>
+and the harvest rate is
+<span class="math display">\[\hat{F}_t = \dfrac{C_t}{\hat{B}_t}.\]</span>
+The dynamics equations above use an annual time step. Optionally, smaller time steps are used in the model to approximate continuous production and fishing. Given the biomass in the start of the year and assuming a constant fishing mortality over the time steps within a year, the fishing mortality that produces the observed annual catch is solved iteratively.</p>
+<p>The likelihood of the observed index <span class="math inline">\(I_t\)</span>, assuming a lognormal distribution, is
+<span class="math display">\[L = \sum_t \left(-\log(\sigma) - 0.5\left[\dfrac{\log(I_t) - \log(\hat{I}_t)}{\sigma}\right]^2\right).\]</span></p>
+</div>
+<div id="derived-parameters" class="section level2">
+<h2>Derived parameters</h2>
+<p>From estimates of leading parameters <span class="math inline">\(F_{MSY}\)</span> and <span class="math inline">\(MSY\)</span>, the biomass <span class="math inline">\(B_{MSY}\)</span> at <span class="math inline">\(MSY\)</span> is
+<span class="math display">\[B_{MSY} = \dfrac{MSY}{F_{MSY}},\]</span>
+the carrying capacity <span class="math inline">\(K\)</span> is
+<span class="math display">\[K = n^{1/(n-1)} \times B_{MSY} ,\]</span>
+and the intrinsic rate of population increase <span class="math inline">\(r\)</span> is
+<span class="math display">\[ r = n \times F_{MSY}.\]</span>
+The production parameter <span class="math inline">\(n\)</span> is typically fixed and the model has a symmetric productive curve (<span class="math inline">\(B_{MSY}/K = 0.5\)</span>) when <span class="math inline">\(n = 2\)</span>.</p>
+</div>
+<div id="schaefer-model" class="section level2">
+<h2>Schaefer model</h2>
+<p>The production parameter <span class="math inline">\(n\)</span> is typically fixed and the Schaefer model with a symmetric productive curve (<span class="math inline">\(B_{MSY}/K = 0.5\)</span>) is produced when <span class="math inline">\(n = 2\)</span>.</p>
+</div>
+<div id="fox-model" class="section level2">
+<h2>Fox model</h2>
+<p>The Fox model is the limiting case of the Fletcher parameterization as <span class="math inline">\(n \rightarrow 1\)</span>, where</p>
+<p><span class="math display">\[K = e \times B_{MSY}\]</span>
+<span class="math display">\[r = F_{MSY}\]</span>
+<span class="math display">\[P_t = -e \times MSY \times \dfrac{B_t}{K} \times \log\left(\dfrac{B_t}{K}\right) \]</span></p>
+</div>
+<div id="state-space-version-sp_ss" class="section level2">
+<h2>State-space version (SP_SS)</h2>
+<p>In the state-state version, annual biomass deviates are estimated as random effects. Similar to Meyer and Millar (1999), the biomass <span class="math inline">\(B_t\)</span> in year <span class="math inline">\(t\)</span> is
+<span class="math display">\[B_t = (B_{t-1} + P_{t-1} - C_{t-1})\exp(\delta_t - 0.5 \tau^2),\]</span>
+where <span class="math inline">\(\delta_t \sim N(0, \tau^2)\)</span> are biomass deviations in lognormal space and <span class="math inline">\(\tau\)</span> is the standard deviation of the biomass deviations.</p>
+<p>Log-recruitment deviations <span class="math inline">\(\hat{\delta}_t\)</span> are typically estimated as penalized parameters towards the likelihood, with the penalty:
+<span class="math display">\[L^{\delta} = \sum_t \left(-\log(\tau) - 0.5\left[\dfrac{\delta_t}{\tau}\right]^2\right).\]</span></p>
+</div>
+<div id="prior-for-r" class="section level2">
+<h2>Prior for r</h2>
+<p>To generate the prior for the intrinsic rate of increase, natural mortality <span class="math inline">\(M_a\)</span> and steepness <span class="math inline">\(h\)</span> are sampled from a distribution. Natural mortality is modelled to be age-invariant and is sampled from a lognormal distribution.
+Assuming either a Beverton-Holt or Ricker stock-recruit relationship, steepness is sampled from a transformed beta or transformed lognormal distribution, respectively.</p>
+<p>For each pair of sampled M and h values, the corresponding value of <span class="math inline">\(r\)</span> is obtained by solving a modified Euler-Lotka equation:
+<span class="math display">\[\Sigma_{a=1}^A l_a m_a \exp(-r \times a) = 1.\]</span></p>
+<p>Equation 15 is modified to include the <span class="math inline">\(\alpha\)</span> term from the stock-recruit relationship (Stanley et al. 2009). In this way, the recruits-per-spawner at low stock sizes, i.e., as spawning biomass approaches zero, is considered for calculating <span class="math inline">\(r\)</span>.</p>
+<p>The numbers-per-recruit at age <span class="math inline">\(a\)</span> is
+<span class="math display">\[
+l_a =
+\begin{cases}
+      1 &amp; a = 1\\
+      l_{a-1} \exp(-M_{a-1}) &amp; a = 2, \ldots, A-1\\
+      \dfrac{l_{a-1} \exp(-M_{a-1})}{1 - \exp(-M_a)} &amp; a = A \\
+\end{cases}.
+\]</span></p>
+<p>Fecundity at age <span class="math inline">\(m_a\)</span> is
+<span class="math display">\[m_a = \dfrac{\alpha w_a}{\left[1 + \exp\left(-\log(19) \dfrac{a - \tilde{a}_{50}}{\tilde{a}_{95} - \tilde{a}_{50}}\right)\right]}, \]</span>
+where <span class="math inline">\(\tilde{a}_{50}\)</span> and <span class="math inline">\(\tilde{a}_{95}\)</span> are the ages of 50% and 95% maturity, respectively.</p>
+<p>Weight-at-age <span class="math inline">\(w_a\)</span> is
+<span class="math display">\[w_a = W_{\infty}(1 - \exp[K\{a-a_0\}])^b.\]</span></p>
+<p>The recruits per spawner at the origin of the stock-recruit relationship <span class="math inline">\(\alpha\)</span> is
+<span class="math display">\[\alpha = \dfrac{4h}{(1-h)\phi_0}, \]</span>
+or
+<span class="math display">\[\alpha = \dfrac{(5h)^{1.25}}{\phi_0},\]</span>
+for a Beverton-Holt and Ricker stock-recruit relationship, respectively, where unfished recruits-per-spawner <span class="math inline">\(\phi_0\)</span>
+is
+<span class="math display">\[\phi_0 = \Sigma_{a=1}^A l_a w_a m_a.\]</span></p>
+<p>A normal distribution is assumed for the prior (a penalty to the likelihood) with the mean (<span class="math inline">\(\mu_r\)</span>) and standard deviation (<span class="math inline">\(\sigma_r\)</span>) calculated from the values of <span class="math inline">\(r\)</span> calculated using the above procedure:</p>
+<p><span class="math display">\[L^r = - 0.5\left(\dfrac{\hat{r} - \mu_r}{\sigma_r}\right)^2,\]</span></p>
+</div>
+<div id="references" class="section level2">
+<h2>References</h2>
+<p>Fletcher, R.I. 1978. On the restructuring of the Pella-Tomlinson system. Fishery Bulletin 76:515-521.</p>
+<p>Meyer, R., and Millar, R.B. 1999. BUGS in Bayesian stock assessments. Canadian Journal of Fisheries and Aquatic Science 56:1078-1086.</p>
+<p>Stanley, R.D., M. McAllister, P. Starr and N. Olsen. 2009. Stock assessment for bocaccio (Sebastes
+paucispinis) in British Columbia waters. DFO Can. Sci. Advis. Sec. Res. Doc. 2009/055.
+xiv + 200 p. </p>
+</div>

@@ -54,6 +54,11 @@
 {{ "<!-- jQuery Image Maps -->" | safeHTML }}
 <script src="https://mattstow.com/experiment/responsive-image-maps/jquery.rwdImageMaps.min.js"></script>
 
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({ TeX: { equationNumbers: {autoNumber: "all"} } });
+</script>
+
 {{ template "_internal/google_analytics.html" . }}
 
 {{ if templates.Exists ( printf "partials/overrides/header.html" ) }}
