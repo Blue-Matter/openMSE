@@ -42,4 +42,4 @@ TBD
 ### Interactive App 
 
 ```{r, echo=FALSE, screenshot.opts = list(delay = 5)} 
-knitr::include_app("https://apps.bluematterscience.com/openMSE/stock/growth",height="950px") 
+knitr::include_app("https://apps.bluematterscience.com/openMSE/stock/growth",height="1050px") 
