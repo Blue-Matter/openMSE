@@ -1,0 +1,160 @@
+---
+date: "2021-02-22T11:35:01+06:00"
+title: Performance Metrics Methods
+weight: 1
+---
+ 
+```{r, include=FALSE}
+library(openMSE)
+```
+
+`openMSE` includes a set of functions, of class `PM`, for calculating Performance Metrics. 
+
+The available `PM` functions (referred to as PMs) can be found using the `avail` function:
+
+```{r}
+avail("PM")
+```
+
+The PMs are used for summarizing the performance of the management procedures and plotting the results in trade-off plots. 
+
+Here we briefly describe the built-in Performance Metrics functions and demonstrate their use. In the next section we describe how users can develop their own `PM` methods. 
+
+Functions of class `PM` are used on an [objects of class `MSE`](/object-MSE), and return an object of class `PMobj`. Most of the time the `PM` functions are used internally in the `summary` or plotting functions, and it will not be necessary to access the `PMobj` directly. 
+
+To demonstrate the `PM` functions we first run a quick example MSE:
+
+```{r, include=FALSE}
+MSE <- runMSE(silent=TRUE)
+```
+
+```{r, eval=FALSE}
+MSE <- runMSE()
+```
+
+### Overview of the `PM` Functions
+
+We will use the `P50` function to demonstrate the `PM` methods. Help documentation on the PM methods can be accessed in the usual way: either `?P50` in the R console or on the [relevant page on the `MSEtool` function documentation site](https://msetool.openmse.com/reference/PerformanceMetric.html).
+
+The `P50` PM method calculates the probability that spawning biomass is above half of the spawning biomass that results in maximum sustainable yield $\left(\text{SB} > 0.5\text{SB}_\text{MSY}\right)$. 
+
+```{r P50int, include=FALSE}
+p50 <- P50(MSE)
+```
+
+Applying the `P50` function to our `MSE` object results in the following output:
+```{r P50}
+P50(MSE)
+```
+
+We can see that the `PM` function calculated, for the 6 MPs in the `MSE` object, the probability $\text{SB} > 0.5\text{SB}_\text{MSY}$ for all `r MSE@proyears` projection years. 
+
+The `PM` function prints out a summary table of the performance metrics statistics for the first 10 simulations and the last simulation (`r MSE@nsim` in this case) for each MP. The final line shows the overall probability of the performance metric, i.e the average performance across all simulations. 
+
+We will look into this output in a little more detail.
+
+We can see that the first MP is `r MSE@MPs[1]` and the performance statistics for the first and second simulations are `r p50@Prob[1,1]` and `r p50@Prob[2,1]`. How have these values been calculated and what do they mean?
+
+Let's first plot the spawning biomass relative to BMSY for the first two simulations of the `AvC` MP:
+
+```{r}
+par(mfrow=c(1,2))
+plot(1:MSE@proyears, MSE@SB_SBMSY[1,1,], type='l', 
+     xlab="Years", ylab="SB/SBMSY", lwd=2, bty="l", ylim=c(0,2),
+     main="MP = 'AvC'; Sim =  1")
+abline(h=0.5, lty=3)
+
+plot(1:MSE@proyears, MSE@SB_SBMSY[2,1,], type='l', 
+     xlab="Years", ylab='', lwd=2, bty="l", ylim=c(0,2),
+     main="MP = 'AvC'; Sim =  2")
+abline(h=0.5, lty=3)
+```
+
+Now we will calculate fraction of years where spawning biomass is above 0.5 $\text{SB}_\text{MSY}$ for the first and second simulations:
+
+```{r}
+mean(MSE@SB_SBMSY[1,1,] > 0.5) # first simulation
+mean(MSE@SB_SBMSY[2,1,] > 0.5) # second simulation
+
+# identical to: 
+sum(MSE@SB_SBMSY[1,1,] > 0.5)/MSE@proyears
+sum(MSE@SB_SBMSY[2,1,] > 0.5)/MSE@proyears
+```
+
+Notice how the performance statistics for each simulation correspond with the plot shown above? 
+
+The overall performance is then calculated by the probability over all simulations, i.e for the first MP `r MSE@MPs[1]`:
+```{r}
+mean(MSE@SB_SBMSY[,1,]>0.5)
+```
+
+And for `r MSE@nMPs` MPs:
+```{r}
+round(apply(MSE@SB_SBMSY >0.5, 2, mean),2)
+```
+which, reassuringly, is the same as the output of the `P50` function.
+
+### Customizing the `PM` Functions
+
+The `PM` functions allow for very quick calculation of performance metrics. For example, suppose that instead of calculating performance over all projection years, we are only interested in the long-term performance, say over the last 10 years. This can be easily achieved using the `Yrs` argument in the `PM` function:
+
+```{r}
+P50(MSE, Yrs=c(41,50))
+```
+
+Or the first 10 years:
+
+```{r}
+P50(MSE, Yrs=c(1,10))
+```
+
+The other biomass Performance Metric functions work in the same way:
+
+```{r}
+P10(MSE) # probability SB > 0.1SB_MSY for all years
+P100(MSE) # probability SB > SB_MSY for all years
+```
+
+Long-term, short-term and overall average yield are calculated using `LTY`, `STY` and `Yield` respectively:
+
+```{r}
+LTY(MSE)
+STY(MSE)
+Yield(MSE)
+```
+
+The `PNOF` PM function calculates the probability of not overfishing:
+```{r }
+PNOF(MSE)
+```
+
+
+Finally, the average annual variability in yield (AAVY) can be calculated with the `AAVY` function:
+
+```{r}
+AAVY(MSE)
+```
+
+By default the `AAVY` PM function calculates the probability that AAVY is less than 20%. This reference level can easily be modified using the `Ref` argument:
+
+```{r}
+AAVY(MSE, Ref=0.15) # prob. AAVY < 15%
+AAVY(MSE, Ref=0.30) # prob. AAVY < 30%
+```
+
+The other `PM` functions also have the `Ref` argument which can be used in the same way. For example, you may notice that the `P50` and `P100` functions are identical except for the value of the `Ref` argument:
+
+```{r}
+args(P50)
+args(P100)
+```
+
+It follows then that it is very simple to calculate a custom performance metric based on the built-in `PM` functions. For example, suppose we wanted to calculate the probability that spawning biomass was above 5% of BMSY. This can be achieved by using any of the biomass-based `PM` functions and modifying the `Ref` argument:
+
+```{r}
+P50(MSE, Ref=0.05)
+P100(MSE, Ref=0.05)
+```
+
+More information on customizing `PM` functions can be found in the [Custom Performance Metrics](../custom-performance-metrics) section.
+

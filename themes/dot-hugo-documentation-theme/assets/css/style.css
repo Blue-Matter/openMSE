@@ -903,3 +903,16 @@ pre code::-webkit-scrollbar-thumb {
 iframe {
   border: none;
 }
+
+.iframe-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.iframe-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}

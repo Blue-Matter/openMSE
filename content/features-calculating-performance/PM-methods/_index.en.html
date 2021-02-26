@@ -1,0 +1,222 @@
+---
+date: "2021-02-22T11:35:01+06:00"
+title: Performance Metrics Methods
+weight: 1
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+
+<p><code>openMSE</code> includes a set of functions, of class <code>PM</code>, for calculating Performance Metrics.</p>
+<p>The available <code>PM</code> functions (referred to as PMs) can be found using the <code>avail</code> function:</p>
+<pre class="r"><code>avail(&quot;PM&quot;)</code></pre>
+<pre><code>## Searching for objects of class PM in package: MSEtool</code></pre>
+<pre><code>## Searching for objects of class PM in package: SAMtool</code></pre>
+<pre><code>## Searching for objects of class PM in package: DLMtool</code></pre>
+<pre><code>## [1] &quot;AAVE&quot;  &quot;AAVY&quot;  &quot;LTY&quot;   &quot;P10&quot;   &quot;P100&quot;  &quot;P50&quot;   &quot;PNOF&quot;  &quot;STY&quot;   &quot;Yield&quot;</code></pre>
+<p>The PMs are used for summarizing the performance of the management procedures and plotting the results in trade-off plots.</p>
+<p>Here we briefly describe the built-in Performance Metrics functions and demonstrate their use. In the next section we describe how users can develop their own <code>PM</code> methods.</p>
+<p>Functions of class <code>PM</code> are used on an <a href="/object-MSE">objects of class <code>MSE</code></a>, and return an object of class <code>PMobj</code>. Most of the time the <code>PM</code> functions are used internally in the <code>summary</code> or plotting functions, and it will not be necessary to access the <code>PMobj</code> directly.</p>
+<p>To demonstrate the <code>PM</code> functions we first run a quick example MSE:</p>
+<pre class="r"><code>MSE &lt;- runMSE()</code></pre>
+<div id="overview-of-the-pm-functions" class="section level3">
+<h3>Overview of the <code>PM</code> Functions</h3>
+<p>We will use the <code>P50</code> function to demonstrate the <code>PM</code> methods. Help documentation on the PM methods can be accessed in the usual way: either <code>?P50</code> in the R console or on the <a href="https://msetool.openmse.com/reference/PerformanceMetric.html">relevant page on the <code>MSEtool</code> function documentation site</a>.</p>
+<p>The <code>P50</code> PM method calculates the probability that spawning biomass is above half of the spawning biomass that results in maximum sustainable yield <span class="math inline">\(\left(\text{SB} &gt; 0.5\text{SB}_\text{MSY}\right)\)</span>.</p>
+<p>Applying the <code>P50</code> function to our <code>MSE</code> object results in the following output:</p>
+<pre class="r"><code>P50(MSE)</code></pre>
+<pre><code>## Spawning Biomass relative to SBMSY
+##  Prob. SB &gt; 0.5 SBMSY (Years 1 - 50)
+##   curEref FMSYref FMSYref50 FMSYref75 NFref
+## 1    0.04    0.80      0.98      0.92  0.98
+## 2    0.14    1.00      1.00      1.00  1.00
+## 3    0.96    0.88      1.00      1.00  1.00
+## 
+## Mean
+## [1] 0.38 0.89 0.99 0.97 0.99</code></pre>
+<p>We can see that the <code>PM</code> function calculated, for the 6 MPs in the <code>MSE</code> object, the probability <span class="math inline">\(\text{SB} &gt; 0.5\text{SB}_\text{MSY}\)</span> for all 50 projection years.</p>
+<p>The <code>PM</code> function prints out a summary table of the performance metrics statistics for the first 10 simulations and the last simulation (3 in this case) for each MP. The final line shows the overall probability of the performance metric, i.e the average performance across all simulations.</p>
+<p>We will look into this output in a little more detail.</p>
+<p>We can see that the first MP is curEref and the performance statistics for the first and second simulations are 0.04 and 0.14. How have these values been calculated and what do they mean?</p>
+<p>Let’s first plot the spawning biomass relative to BMSY for the first two simulations of the <code>AvC</code> MP:</p>
+<pre class="r"><code>par(mfrow=c(1,2))
+plot(1:MSE@proyears, MSE@SB_SBMSY[1,1,], type=&#39;l&#39;, 
+     xlab=&quot;Years&quot;, ylab=&quot;SB/SBMSY&quot;, lwd=2, bty=&quot;l&quot;, ylim=c(0,2),
+     main=&quot;MP = &#39;AvC&#39;; Sim =  1&quot;)
+abline(h=0.5, lty=3)
+
+plot(1:MSE@proyears, MSE@SB_SBMSY[2,1,], type=&#39;l&#39;, 
+     xlab=&quot;Years&quot;, ylab=&#39;&#39;, lwd=2, bty=&quot;l&quot;, ylim=c(0,2),
+     main=&quot;MP = &#39;AvC&#39;; Sim =  2&quot;)
+abline(h=0.5, lty=3)</code></pre>
+<p><img src="/features-calculating-performance/PM-methods/_index.en_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p>Now we will calculate fraction of years where spawning biomass is above 0.5 <span class="math inline">\(\text{SB}_\text{MSY}\)</span> for the first and second simulations:</p>
+<pre class="r"><code>mean(MSE@SB_SBMSY[1,1,] &gt; 0.5) # first simulation</code></pre>
+<pre><code>## [1] 0.04</code></pre>
+<pre class="r"><code>mean(MSE@SB_SBMSY[2,1,] &gt; 0.5) # second simulation</code></pre>
+<pre><code>## [1] 0.14</code></pre>
+<pre class="r"><code># identical to: 
+sum(MSE@SB_SBMSY[1,1,] &gt; 0.5)/MSE@proyears</code></pre>
+<pre><code>## [1] 0.04</code></pre>
+<pre class="r"><code>sum(MSE@SB_SBMSY[2,1,] &gt; 0.5)/MSE@proyears</code></pre>
+<pre><code>## [1] 0.14</code></pre>
+<p>Notice how the performance statistics for each simulation correspond with the plot shown above?</p>
+<p>The overall performance is then calculated by the probability over all simulations, i.e for the first MP curEref:</p>
+<pre class="r"><code>mean(MSE@SB_SBMSY[,1,]&gt;0.5)</code></pre>
+<pre><code>## [1] 0.38</code></pre>
+<p>And for 5 MPs:</p>
+<pre class="r"><code>round(apply(MSE@SB_SBMSY &gt;0.5, 2, mean),2)</code></pre>
+<pre><code>## [1] 0.38 0.89 0.99 0.97 0.99</code></pre>
+<p>which, reassuringly, is the same as the output of the <code>P50</code> function.</p>
+</div>
+<div id="customizing-the-pm-functions" class="section level3">
+<h3>Customizing the <code>PM</code> Functions</h3>
+<p>The <code>PM</code> functions allow for very quick calculation of performance metrics. For example, suppose that instead of calculating performance over all projection years, we are only interested in the long-term performance, say over the last 10 years. This can be easily achieved using the <code>Yrs</code> argument in the <code>PM</code> function:</p>
+<pre class="r"><code>P50(MSE, Yrs=c(41,50))</code></pre>
+<pre><code>## Spawning Biomass relative to SBMSY
+##  Prob. SB &gt; 0.5 SBMSY (Years 41 - 50)
+##   curEref FMSYref FMSYref50 FMSYref75 NFref
+## 1     0.0     1.0         1         1     1
+## 2     0.0     1.0         1         1     1
+## 3     0.9     0.9         1         1     1
+## 
+## Mean
+## [1] 0.30 0.97 1.00 1.00 1.00</code></pre>
+<p>Or the first 10 years:</p>
+<pre class="r"><code>P50(MSE, Yrs=c(1,10))</code></pre>
+<pre><code>## Spawning Biomass relative to SBMSY
+##  Prob. SB &gt; 0.5 SBMSY (Years 1 - 10)
+##   curEref FMSYref FMSYref50 FMSYref75 NFref
+## 1     0.2     0.3       0.9       0.6   0.9
+## 2     0.7     1.0       1.0       1.0   1.0
+## 3     0.9     0.8       1.0       1.0   1.0
+## 
+## Mean
+## [1] 0.60 0.70 0.97 0.87 0.97</code></pre>
+<p>The other biomass Performance Metric functions work in the same way:</p>
+<pre class="r"><code>P10(MSE) # probability SB &gt; 0.1SB_MSY for all years</code></pre>
+<pre><code>## Spawning Biomass relative to SBMSY
+##  Prob. SB &gt; 0.1 SBMSY (Years 1 - 50)
+##   curEref FMSYref FMSYref50 FMSYref75 NFref
+## 1    0.90       1         1         1     1
+## 2    0.96       1         1         1     1
+## 3    1.00       1         1         1     1
+## 
+## Mean
+## [1] 0.95 1.00 1.00 1.00 1.00</code></pre>
+<pre class="r"><code>P100(MSE) # probability SB &gt; SB_MSY for all years</code></pre>
+<pre><code>## Spawning Biomass relative to SBMSY
+##  Prob. SB &gt; SBMSY (Years 1 - 50)
+##   curEref FMSYref FMSYref50 FMSYref75 NFref
+## 1    0.00    0.24      0.82      0.64  0.92
+## 2    0.00    0.40      0.94      0.94  0.96
+## 3    0.38    0.26      0.86      0.58  0.96
+## 
+## Mean
+## [1] 0.13 0.30 0.87 0.72 0.95</code></pre>
+<p>Long-term, short-term and overall average yield are calculated using <code>LTY</code>, <code>STY</code> and <code>Yield</code> respectively:</p>
+<pre class="r"><code>LTY(MSE)</code></pre>
+<pre><code>## Average Yield relative to Reference Yield (Years 41-50)
+##  Prob. Yield &gt; 0.5 Ref. Yield (Years 41-50)
+##   curEref FMSYref FMSYref50 FMSYref75 NFref
+## 1     0.2       1         1         1     0
+## 2     0.4       1         1         1     0
+## 3     1.0       1         1         1     0
+## 
+## Mean
+## [1] 0.53 1.00 1.00 1.00 0.00</code></pre>
+<pre class="r"><code>STY(MSE)</code></pre>
+<pre><code>## Average Yield relative to Reference Yield (Years 1-10)
+##  Prob. Yield &gt; 0.5 Ref. Yield (Years 1-10)
+##   curEref FMSYref FMSYref50 FMSYref75 NFref
+## 1     0.8     0.6       0.3       0.5     0
+## 2     1.0     1.0       0.9       1.0     0
+## 3     1.0     1.0       0.9       1.0     0
+## 
+## Mean
+## [1] 0.93 0.87 0.70 0.83 0.00</code></pre>
+<pre class="r"><code>Yield(MSE)</code></pre>
+<pre><code>## Yield relative to Reference Yield (Years 1-50)
+##  Mean Relative Yield (Years 1-50)
+##   curEref FMSYref FMSYref50 FMSYref75 NFref
+## 1    0.55    0.83      0.74      0.83     0
+## 2    0.77    1.07      0.86      1.01     0
+## 3    1.20    1.18      0.98      1.15     0
+## 
+## Mean
+## [1] 0.84 1.03 0.86 1.00 0.00</code></pre>
+<p>The <code>PNOF</code> PM function calculates the probability of not overfishing:</p>
+<pre class="r"><code>PNOF(MSE)</code></pre>
+<pre><code>## Probability of not overfishing (F&lt;FMSY)
+##  Prob. F &lt; FMSY (Years 1 - 50)
+##   curEref FMSYref FMSYref50 FMSYref75 NFref
+## 1    0.00    0.42         1      0.78     1
+## 2    0.00    0.54         1      0.98     1
+## 3    0.66    0.54         1      0.90     1
+## 
+## Mean
+## [1] 0.22 0.50 1.00 0.89 1.00</code></pre>
+<p>Finally, the average annual variability in yield (AAVY) can be calculated with the <code>AAVY</code> function:</p>
+<pre class="r"><code>AAVY(MSE)</code></pre>
+<pre><code>## Average Annual Variability in Yield (Years 1-50)
+##  Prob. AAVY &lt; 20% (Years 1-50)
+##   curEref FMSYref FMSYref50 FMSYref75 NFref
+## 1       0       0         0         0     0
+## 2       1       1         1         1     1
+## 3       0       0         0         0     0
+## 
+## Mean
+## [1] 0.33 0.33 0.33 0.33 0.33</code></pre>
+<p>By default the <code>AAVY</code> PM function calculates the probability that AAVY is less than 20%. This reference level can easily be modified using the <code>Ref</code> argument:</p>
+<pre class="r"><code>AAVY(MSE, Ref=0.15) # prob. AAVY &lt; 15%</code></pre>
+<pre><code>## Average Annual Variability in Yield (Years 1-50)
+##  Prob. AAVY &lt; 15% (Years 1-50)
+##   curEref FMSYref FMSYref50 FMSYref75 NFref
+## 1       0       0         0         0     0
+## 2       1       1         1         1     1
+## 3       0       0         0         0     0
+## 
+## Mean
+## [1] 0.33 0.33 0.33 0.33 0.33</code></pre>
+<pre class="r"><code>AAVY(MSE, Ref=0.30) # prob. AAVY &lt; 30%</code></pre>
+<pre><code>## Average Annual Variability in Yield (Years 1-50)
+##  Prob. AAVY &lt; 30% (Years 1-50)
+##   curEref FMSYref FMSYref50 FMSYref75 NFref
+## 1       1       1         1         1     1
+## 2       1       1         1         1     1
+## 3       1       1         1         1     1
+## 
+## Mean
+## [1] 1 1 1 1 1</code></pre>
+<p>The other <code>PM</code> functions also have the <code>Ref</code> argument which can be used in the same way. For example, you may notice that the <code>P50</code> and <code>P100</code> functions are identical except for the value of the <code>Ref</code> argument:</p>
+<pre class="r"><code>args(P50)</code></pre>
+<pre><code>## function (MSEobj = NULL, Ref = 0.5, Yrs = NULL) 
+## NULL</code></pre>
+<pre class="r"><code>args(P100)</code></pre>
+<pre><code>## function (MSEobj = NULL, Ref = 1, Yrs = NULL) 
+## NULL</code></pre>
+<p>It follows then that it is very simple to calculate a custom performance metric based on the built-in <code>PM</code> functions. For example, suppose we wanted to calculate the probability that spawning biomass was above 5% of BMSY. This can be achieved by using any of the biomass-based <code>PM</code> functions and modifying the <code>Ref</code> argument:</p>
+<pre class="r"><code>P50(MSE, Ref=0.05)</code></pre>
+<pre><code>## Spawning Biomass relative to SBMSY
+##  Prob. SB &gt; 0.05 SBMSY (Years 1 - 50)
+##   curEref FMSYref FMSYref50 FMSYref75 NFref
+## 1       1       1         1         1     1
+## 2       1       1         1         1     1
+## 3       1       1         1         1     1
+## 
+## Mean
+## [1] 1 1 1 1 1</code></pre>
+<pre class="r"><code>P100(MSE, Ref=0.05)</code></pre>
+<pre><code>## Spawning Biomass relative to SBMSY
+##  Prob. SB &gt; 0.05 SBMSY (Years 1 - 50)
+##   curEref FMSYref FMSYref50 FMSYref75 NFref
+## 1       1       1         1         1     1
+## 2       1       1         1         1     1
+## 3       1       1         1         1     1
+## 
+## Mean
+## [1] 1 1 1 1 1</code></pre>
+<p>More information on customizing <code>PM</code> functions can be found in the <a href="../custom-performance-metrics">Custom Performance Metrics</a> section.</p>
+</div>

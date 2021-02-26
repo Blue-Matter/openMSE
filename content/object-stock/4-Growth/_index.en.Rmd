@@ -27,6 +27,9 @@ printDesc <- function(slot, class="Stock") {
 ### Ksd
 `r printDesc("Ksd")`
 
+### LenCV 
+`r printDesc("LenCV")`
+
 ### a
 `r printDesc("a")`
 

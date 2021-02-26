@@ -1,0 +1,47 @@
+---
+date: "2021-02-22T15:18:01+06:00"
+title: The First Six Slots
+weight: 1
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+
+<p>The first six slots contain information on the structure of the MSE.</p>
+<div id="name" class="section level3">
+<h3>Name</h3>
+<p>Name of the MSE object. Single value. Character string</p>
+</div>
+<div id="nyears" class="section level3">
+<h3>nyears</h3>
+<p>The number of years for the historical simulation. Single value. Positive integer</p>
+<p>For example the first slot (<code>Name</code>), is a combination of the names of the <code>Stock</code>, <code>Fleet</code>, and <code>Obs</code> objects that were used in the MSE:</p>
+<pre class="r"><code>BSharkMSE@Name</code></pre>
+<pre><code>## [1] &quot;Stock:Blue shark  Fleet:Generic_Fleet  Obs model:Imprecise-Biased  Imp model:Perfect_Imp&quot;</code></pre>
+</div>
+<div id="proyears" class="section level3">
+<h3>proyears</h3>
+<p>The number of years for the projections - closed loop simulations. Single value. Positive integer</p>
+<pre class="r"><code>BSharkMSE@proyears</code></pre>
+<pre><code>## [1] 50</code></pre>
+</div>
+<div id="nmps" class="section level3">
+<h3>nMPs</h3>
+<p>Number of management procedures simulation tested. Single value. Positive integer.</p>
+<pre class="r"><code>BSharkMSE@nMPs</code></pre>
+<pre><code>## [1] 5</code></pre>
+</div>
+<div id="mps" class="section level3">
+<h3>MPs</h3>
+<p>The names of the MPs that were tested. Vector of length nMPs. Character strings.</p>
+<pre class="r"><code>BSharkMSE@MPs</code></pre>
+<pre><code>## [1] &quot;Fratio&quot;    &quot;DCAC&quot;      &quot;Fdem&quot;      &quot;DD&quot;        &quot;matlenlim&quot;</code></pre>
+</div>
+<div id="nsim" class="section level3">
+<h3>nsim</h3>
+<p>Number of simulations. Single value. Positive integer</p>
+<pre class="r"><code>BSharkMSE@nsim</code></pre>
+<pre><code>## [1] 200</code></pre>
+</div>
