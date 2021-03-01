@@ -1,5 +1,5 @@
 ---
-date: "2021-02-16T15:18:01+06:00"
+date: "2021-03-01T15:18:01+06:00"
 title: Maturity
 weight: 5
 ---
@@ -19,3 +19,11 @@ printDesc <- function(slot, class="Stock") {
 `r printDesc("L50_95")`
 
 
+### Custom Parameters
+TBD
+
+### Interactive App 
+
+```{r, echo=FALSE, screenshot.opts = list(delay = 5)} 
+knitr::include_app("https://apps.bluematterscience.com/openMSE/stock/maturity",height="850px") 
+```
