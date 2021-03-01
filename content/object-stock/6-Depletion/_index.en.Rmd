@@ -14,3 +14,11 @@ printDesc <- function(slot, class="Stock") {
 
 ### D
 `r printDesc("D")`
+
+### Custom Parameters
+TBD
+
+### Interactive App 
+
+```{r, echo=FALSE, screenshot.opts = list(delay = 5)} 
+knitr::include_app("https://apps.bluematterscience.com/openMSE/stock/depletion",height="850px") 
