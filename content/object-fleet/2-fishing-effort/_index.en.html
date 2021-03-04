@@ -10,17 +10,29 @@ weight: 2
 
 
 <p>This section includes parameters related to historical and future fishing effort. The MSEtool needs to determine how the fishing mortality rate, which is defined as the proportion of the stock that dies due to fishing, has changed over time. However, in many fisheries, especially those that are data poor, it is easier determine how fishing effort, which can be measured in terms of number of boats, traps, trips, etc., has changed. Fishing effort is related to the fishing mortality rate via the “catchability” parameter (q), and so with some information about historical fishing effort (along with the other information provided) the model is able to infer plausible historical fishing mortality rates.</p>
-<p>(include or link to equations?).</p>
 <p>This information is used to help guide the initialization of the model. When the model is initialized, it samples possible time series of fishing mortality rates and recruitment events that fit the information provided. Series that cannot achieve the specified current depletion level (D) are discarded. Note that, for data rich fisheries, estimates of yearly historical fishing mortality rates may be available from a stock assessment. These can be provided directly to the model by using the custom parameter <code>OM@cpars$F_Ind</code>. If <code>F_Ind</code> is provided there is no need to specify <code>EffLower</code>, <code>EffUpper</code>, and <code>Esd</code>.</p>
-<div id="name" class="section level3">
-<h3>Name</h3>
-<p>Name of the Fleet object. Single value. Character string.</p>
+<div id="effyears" class="section level3">
+<h3>EffYears</h3>
+<p>Vector indicating the historical years where there is information available to infer the relative fishing effort expended.This vector is specified in terms of the position of the year in the vector rather than the calendar year. For example, say our simulation starts with an unfished stock in 1975,and the current year (the last year for which there is data available) is 2019. Then there are 45 historical years simulated, and EffYears should include numbers between 1 and 45. Note that there may not be information available for every historical year, especially for data poor fisheries. In these situations, the EffYears vector should include only the positions of the years for which there is information, and the vector may be shorter than the total number of simulated historical years (nyears).</p>
 </div>
-<div id="nyears" class="section level3">
-<h3>nyears</h3>
-<p>The number of years for the historical simulation. Single value. For example, if the simulated population is assumed to be unfished in 1975 and this is the year you want to start your historical simulations, and the most recent year for which there is data available is 2019, then nyears equals 45.</p>
+<div id="efflower" class="section level3">
+<h3>EffLower</h3>
+<p>Lower bound on relative fishing effort corresponding to EffYears. EffLower must be a vector that is the same length as EffYears describing how fishing effort has changed over time. Information on relative fishing effort can be entered in any units provided they are consistent across the entire vector because the data provided will be scaled to 1 (divided by the maximum number provided).</p>
 </div>
-<div id="currentyr" class="section level3">
-<h3>CurrentYr</h3>
-<p>The last historical year simulated before projections begin. Single value. Note that this should match the last historical year specified in the Data object, which is usually the last historical year for which data is available.</p>
+<div id="effupper" class="section level3">
+<h3>EffUpper</h3>
+<p>Upper bound on relative fishing effort corresponding to EffYears. EffUpper must be a vector that is the same length as EffYears describing how fishing effort has changed over time. Information on relative fishing effort can be entered in any units provided they are consistent across the entire vector because the data provided will be scaled to 1 (divided by the maximum number provided).</p>
+</div>
+<div id="esd" class="section level3">
+<h3>Esd</h3>
+<p>Additional inter-annual variability in fishing mortality rate. For each historical simulation a single value is drawn from a uniform distribution specified by the upper and lower bounds provided. If this parameter has a positive (non-zero) value, the yearly fishing mortality rate is drawn from a log-normal distribution with a standard deviation (in log space) specified by the value of Esd drawn for that simulation. This parameter applies only to historical projections.</p>
+</div>
+<div id="custom-parameters" class="section level3">
+<h3>Custom Parameters</h3>
+<p>TBD</p>
+</div>
+<div id="interactive-app" class="section level3">
+<h3>Interactive App</h3>
+<iframe src="https://apps.bluematterscience.com/openMSE/fleet/effort?showcase=0" width="672" height="850px">
+</iframe>
 </div>

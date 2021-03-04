@@ -1,0 +1,46 @@
+---
+date: "2021-03-04T15:18:01+06:00"
+title: Biological Sampling
+weight: 3
+---
+
+```{r,include=FALSE}
+library(openMSE)
+printDesc <- function(slot, class="Obs") {
+  Desc <- get(paste0(class, "Description"))
+  Desc$Description[which(Desc$Slot == slot)]
+}
+```
+
+The parameters in this section are used to describe potential bias in estimated biological parameters. Frequently, estimates of biological parameters such as growth or natural mortality are treated as known values when assessing stock status and determining the need for changes in catch or effort (also known as applying an MP). The MSEtool already allows users to specify the uncertainty in these values when simulating fishery dynamics by inputting ranges into the [Stock object](/object-stock), but with these parameters users can explore how bias in an assumed value (which are included in the user-supplied data object) used in a stock assessment procedure affects long-term MP performance.
+
+
+### LenMbiascv
+`r printDesc("LenMbiascv")` 
+
+### Mbiascv 
+`r printDesc("Mbiascv")`
+
+### Kbiascv
+`r printDesc("Kbiascv")`
+
+### t0biascv
+`r printDesc("t0biascv")`
+
+### Linfbiascv
+`r printDesc("Linfbiascv")`
+
+### LFCbiascv
+`r printDesc("LFCbiascv")`
+
+### LFSbiascv
+`r printDesc("LFSbiascv")`
+
+### Custom Parameters
+TBD 
+
+### Interactive App
+
+```{r, echo=FALSE, screenshot.opts = list(delay = 5)}
+# knitr::include_app("https://apps.bluematterscience.com/openMSE/stock/mortality",height="950px") 
+```

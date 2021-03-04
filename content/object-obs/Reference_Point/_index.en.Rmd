@@ -1,0 +1,57 @@
+---
+date: "2021-03-04T15:18:01+06:00"
+title: Reference Point Estimates
+weight: 5
+---
+
+```{r,include=FALSE}
+library(openMSE)
+printDesc <- function(slot, class="Obs") {
+  Desc <- get(paste0(class, "Description"))
+  Desc$Description[which(Desc$Slot == slot)]
+}
+```
+
+The parameters in this section specify directional bias in externally estimated reference points.
+
+These are most commonly used in data-moderate MPs that require an externally supplied reference point. Note that the most robust way to test out MPs that require external reference points is to simulate the reference point estimation procedure within the MP, because this allows the values to be updated as more information becomes available. Using static values may introduce additional error into the simulation test. However, the parameters in this section allow the user to understand how being consistently wrong about the true value of the reference point may impact long-term MP performance.
+
+
+### FMSY_Mbiascv
+`r printDesc("FMSY_Mbiascv")` 
+
+### BMSY_B0biascv 
+`r printDesc("BMSY_B0biascv")`
+
+### Irefbiascv
+`r printDesc("Irefbiascv")`
+
+### Crefbiascv
+`r printDesc("Crefbiascv")`
+
+### Brefbiascv
+`r printDesc("Brefbiascv")`
+
+### Dbiascv
+`r printDesc("Dbiascv")`
+
+### Dobs
+`r printDesc("Dobs")`
+
+### hbiascv
+`r printDesc("hbiascv")`
+
+### Recbiascv
+`r printDesc("Recbiascv")`
+
+### sigmaRbiascv
+`r printDesc("sigmaRbiascv")`
+
+### Custom Parameters
+TBD 
+
+### Interactive App
+
+```{r, echo=FALSE, screenshot.opts = list(delay = 5)}
+# knitr::include_app("https://apps.bluematterscience.com/openMSE/stock/mortality",height="950px") 
+```

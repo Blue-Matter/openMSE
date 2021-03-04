@@ -1,0 +1,37 @@
+---
+date: "2021-03-04T15:18:01+06:00"
+title: Catch Composition
+weight: 2
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+
+<p>Simulated catches may be sampled for length and age compositions. Users must specify the number of age and length samples collected, as well as the effective sample size. These parameters allow the user to account for situations in which samples taken at the same time or location may be highly correlated. For example, it is possible to measure 100 fish from a single trawl pull, but if the fish sampled via the trawl are likely to school together based on size or age, these measurements are not independent samples of the age or size composition of the total population. As a result of this correlation, the number of independent samples may lower than the total number of samples collected.</p>
+<p>The effective sample size provided specifies the number of independent age draws from the multinomial catch-at-age distribution. Ages are converted to lengths using the von Bertalanffy growth parameters and <a href="/object-stock/4-growth/#lencv"><code>LenCV</code></a> provided in the Stock object.</p>
+<p>This observation model may be unrealistically well-behaved, and obscure the true underlying variation in the size at age of the population. As a result, MPs that estimate fishing mortality or other parameters from these data may perform better in simulation than with real-world data. The development team is considering adding a growth-type-group model to improve the realism of simulated length composition data.</p>
+<div id="caa_nsamp" class="section level3">
+<h3>CAA_nsamp</h3>
+<p>Number of catch-at-age observations collected per time step. For each time step a single value is drawn from a uniform distribution specified by the upper and lower bounds provided. Positive integers.</p>
+</div>
+<div id="caa_ess" class="section level3">
+<h3>CAA_ESS</h3>
+<p>Effective sample size of catch-at-age observations collected per time step. For each time step a single value is drawn from a uniform distribution specified by the upper and lower bounds provided. CAA_ESS should not exceed CAA_nsamp. Positive integers.</p>
+</div>
+<div id="cal_nsamp" class="section level3">
+<h3>CAL_nsamp</h3>
+<p>Number of catch-at-length observations collected per time step. For each time step a single value is drawn from a uniform distribution specified by the upper and lower bounds provided. Positive integers.</p>
+</div>
+<div id="cal_ess" class="section level3">
+<h3>CAL_ESS</h3>
+<p>Effective sample size. For each time step a single value is drawn from a uniform distribution specified by the upper and lower bounds provided. CAL_ESS should not exceed CAL_nsamp. Positive integers.</p>
+</div>
+<div id="custom-parameters" class="section level3">
+<h3>Custom Parameters</h3>
+<p>TBD</p>
+</div>
+<div id="interactive-app" class="section level3">
+<h3>Interactive App</h3>
+</div>

@@ -14,16 +14,27 @@ printDesc <- function(slot, class="Fleet") {
 
 This section includes parameters related to historical and future fishing effort. The MSEtool needs to determine how the fishing mortality rate, which is defined as the proportion of the stock that dies due to fishing, has changed over time. However, in many fisheries, especially those that are data poor, it is easier determine how fishing effort, which can be measured in terms of number of boats, traps, trips, etc., has changed. Fishing effort is related to the fishing mortality rate via the "catchability" parameter (q), and so with some information about historical fishing effort (along with the other information provided) the model is able to infer plausible historical fishing mortality rates. 
 
-(include or link to equations?). 
 
 This information is used to help guide the initialization of the model. When the model is initialized, it samples possible time series of fishing mortality rates and recruitment events that fit the information provided. Series that cannot achieve the specified current depletion level (D) are discarded. Note that, for data rich fisheries, estimates of yearly historical fishing mortality rates may be available from a stock assessment. These can be provided directly to the model by using the custom parameter `OM@cpars$F_Ind`. If `F_Ind` is provided there is no need to specify `EffLower`, `EffUpper`, and `Esd`.
 
-### Name
-`r printDesc("Name")`  
+### EffYears
+`r printDesc("EffYears")` 
 
-### nyears 
-`r printDesc("nyears")`
+### EffLower
+`r printDesc("EffLower")`  
 
-### CurrentYr
-`r printDesc("CurrentYr")`
+### EffUpper
+`r printDesc("EffUpper")` 
+
+### Esd
+`r printDesc("Esd")`
+
+### Custom Parameters
+TBD
+
+### Interactive App 
+
+```{r, echo=FALSE, screenshot.opts = list(delay = 5)} 
+knitr::include_app("https://apps.bluematterscience.com/openMSE/fleet/effort",height="850px") 
+```
 
