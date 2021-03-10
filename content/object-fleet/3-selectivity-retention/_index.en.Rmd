@@ -39,3 +39,13 @@ The MSEtool can model either logistic or dome-shaped selectivity and retention c
 
 ### DR
 `r printDesc("DR")`
+
+### Custom Parameters
+TBD
+
+### Interactive App 
+
+```{r, echo=FALSE, screenshot.opts = list(delay = 5)} 
+knitr::include_app("https://apps.bluematterscience.com/openMSE/fleet/selectivity",height="1150px") 
+```
+

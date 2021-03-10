@@ -35,6 +35,6 @@ TBD
 ### Interactive App 
 
 ```{r, echo=FALSE, screenshot.opts = list(delay = 5)} 
-knitr::include_app("https://apps.bluematterscience.com/openMSE/fleet/effort",height="850px") 
+knitr::include_app("https://apps.bluematterscience.com/openMSE/fleet/effort",height="1150px") 
 ```
 
