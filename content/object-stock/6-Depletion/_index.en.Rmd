@@ -12,6 +12,10 @@ printDesc <- function(slot, class="Stock") {
 }
 ```
 
+The Depletion parameter sets the current stock size relative to the historical unfished stock size. This value is used in the model initialization process. Based on the biological and fleet information given, the model selects possible parameter values and runs the historical simulation up to the most recent year. 
+
+<!-- Some parameter sets will be unable to reach the specified depletion level in the alloted time frame, and those are discarded.  -->
+
 ### D
 `r printDesc("D")`
 
@@ -19,6 +23,9 @@ printDesc <- function(slot, class="Stock") {
 TBD
 
 ### Interactive App 
+Choose upper and lower bounds for D and the scale in which the depletion should be plotted. Based on these ranges, the MSEtool will display  parameter values for 5 simulations in the table. Click on any line of the table to view the distribution of values for that simulation in the figures below.
+
+* Figure 1 shows the depletion level of an example stock that begins at an unfished stock size and is fished for 50 years. The current stock size is larger in those simulations with a higher depletion size and lower in those simulations with a higher depletion level.
 
 ```{r, echo=FALSE, screenshot.opts = list(delay = 5)} 
 knitr::include_app("https://apps.bluematterscience.com/openMSE/stock/depletion",height="850px") 

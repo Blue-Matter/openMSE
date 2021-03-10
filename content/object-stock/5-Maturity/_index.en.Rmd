@@ -12,6 +12,8 @@ printDesc <- function(slot, class="Stock") {
 }
 ```
 
+This section includes maturity parameters. The default parameters assume that maturation is size dependent and follows a logistic probability curve. However, age-based maturity or alternative length-maturity relationships can be specified using custom parameters.
+
 ### L50
 `r printDesc("L50")`
 
@@ -23,6 +25,9 @@ printDesc <- function(slot, class="Stock") {
 TBD
 
 ### Interactive App 
+Choose upper and lower bounds for L_50 and L50_95. Based on these ranges, the MSEtool will display  parameter values for 5 simulations in the table. Click on any line of the table to view the distribution of values for that simulation in the figures below. 
+
+* Figure 1 shows a logistic maturity function based on the size at 50% and 95% maturity values drawn in each simulation
 
 ```{r, echo=FALSE, screenshot.opts = list(delay = 5)} 
 knitr::include_app("https://apps.bluematterscience.com/openMSE/stock/maturity",height="850px") 

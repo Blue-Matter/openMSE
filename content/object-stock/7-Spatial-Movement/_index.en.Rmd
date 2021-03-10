@@ -12,6 +12,10 @@ printDesc <- function(slot, class="Stock") {
 }
 ```
 
+The MSEtool uses a two-box spatial model. Users can specify the percent of total habitat and fraction of the population in each area. Life-history characteristics do not vary across the two spatial areas. 
+
+The fleet allocates fishing effort across areas in response to catch rates unless [`Spat_targ`](/object-fleet/4-mpa-targeting/#spat_targ) is used to allow for additional targeting or avoidance behavior, or an area is closed to fishing (see [`Fleet@MPA`](/object-fleet/4-mpa-targeting) or [MPs that create closed areas](/features-management-procedures/)). Movement is parameterized as the probability of an individual staying in a given area for an entire time step.
+
 ### Size_area_1
 `r printDesc("Size_area_1")`
 
@@ -28,6 +32,9 @@ printDesc <- function(slot, class="Stock") {
  
 
 ### Interactive App 
+Choose upper and lower bounds for Size_area_1, Frac_area_1 and Prob_staying. Based on these ranges, the MSEtool will display  parameter values for 5 simulations in the table. Click on any line of the table to visualize the movement rate for that simulation in the figures below. 
+
+* Figure 1 shows the size and a distribution of the population between area 1 (blue dots) and area 2 (green dots) at a given movement rate over the course of 4 years. The initial population distribution is determined by the values selected for Size_area_1 and Frac_area_1. Users can select years 1, 2, 3 or 4 to visualize how individual fish are likely to move under the selected Prob_staying over multiple time steps.
 
 ```{r, echo=FALSE, screenshot.opts = list(delay = 5)} 
 knitr::include_app("https://apps.bluematterscience.com/openMSE/stock/spatial",height="850px") 

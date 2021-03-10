@@ -9,6 +9,8 @@ weight: 4
 <script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 
 
+<!-- 2021-03-09T15:51:43+6:00 -->
+<p>In the MSEtool the default model for individual growth is the von Bertalanffy growth curve. This section includes parameters to model this type of growth. However, please note that other types of growth models can be used by generating expected length-at-age and weight-at-age matrices and passing these directly to the model via the custom parameters slot.</p>
 <div id="linf" class="section level3">
 <h3>Linf</h3>
 <p>The von Bertalanffy growth parameter Linf, which specifies the average maximum size that would reached by adult fish if they lived indefinitely. For each simulation a single value is drawn from a uniform distribution specified by the upper and lower bounds provided. This value is the same in all years unless Linfsd is a positive number. Uniform distribution lower and upper bounds. Positive real numbers.</p>
@@ -47,6 +49,12 @@ weight: 4
 </div>
 <div id="interactive-app" class="section level3">
 <h3>Interactive App</h3>
+<p>Choose upper and lower bounds for each of the growth parameters. Based on these ranges, the MSEtool will display parameter values for 5 simulations in the table. Click on any line of the table to view the distribution of values for that simulation in the figures below.</p>
+<ul>
+<li><p>Figures 1 and 2 show the distribution of the Linf and K values drawn for each year of a 20 year simulation. The distribution shown in Figure 1 has a mean equal to Linf and a standard deviation equal to Linfsd (values shown in the table). The distribution shown in Figure 2 has a mean equal to K and a standard deviation equal to Ksd (values shown in the table).</p></li>
+<li><p>Figures 3 and 4 show the time series of Linf and K values drawn for each simulation. Simulations with low values of Linfsd or Ksd (close to 0) will have less interannual variation (flatter lines) than those with higher values.</p></li>
+<li><p>Figure 5 shows the expected length at each age for the parameter values selected in year 1, while Figure 6 shows the relationship for the last year of the simulation (year 20) . If Linfsd and Ksd are equal to zero, Figures 5 and 6 will be identical. The black line shows the mean length at age, while the dashed line shows the 95% confidence interval of length at age. If LenCV is low the dashed lines will be close to the mean, and if LenCV is high the dashed lines will be wider.</p></li>
+</ul>
 <iframe src="https://apps.bluematterscience.com/openMSE/stock/growth?showcase=0" width="672" height="1050px">
 </iframe>
 </div>

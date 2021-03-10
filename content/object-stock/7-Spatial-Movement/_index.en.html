@@ -9,6 +9,8 @@ weight: 7
 <script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 
 
+<p>The MSEtool uses a two-box spatial model. Users can specify the percent of total habitat and fraction of the population in each area. Life-history characteristics do not vary across the two spatial areas.</p>
+<p>The fleet allocates fishing effort across areas in response to catch rates unless <a href="/object-fleet/4-mpa-targeting/#spat_targ"><code>Spat_targ</code></a> is used to allow for additional targeting or avoidance behavior, or an area is closed to fishing (see <a href="/object-fleet/4-mpa-targeting"><code>Fleet@MPA</code></a> or <a href="/features-management-procedures/">MPs that create closed areas</a>). Movement is parameterized as the probability of an individual staying in a given area for an entire time step.</p>
 <div id="size_area_1" class="section level3">
 <h3>Size_area_1</h3>
 <p>The size of area 1 relative to area 2. The fraction of the unfished biomass in area 1. Please specify numbers between 0 and 1. For each simulation a single value is drawn from a uniform distribution specified by the upper and lower bounds provided. For example, if Size_area_1 is 0.2, then 20% of the total area is allocated to area 1. Fishing can occur in both areas, or can be turned off in one area to simulate the effects of a no take marine reserve. Uniform distribution lower and upper bounds. Positive real numbers.</p>
@@ -30,6 +32,10 @@ weight: 7
 </div>
 <div id="interactive-app" class="section level3">
 <h3>Interactive App</h3>
+<p>Choose upper and lower bounds for Size_area_1, Frac_area_1 and Prob_staying. Based on these ranges, the MSEtool will display parameter values for 5 simulations in the table. Click on any line of the table to visualize the movement rate for that simulation in the figures below.</p>
+<ul>
+<li>Figure 1 shows the size and a distribution of the population between area 1 (blue dots) and area 2 (green dots) at a given movement rate over the course of 4 years. The initial population distribution is determined by the values selected for Size_area_1 and Frac_area_1. Users can select years 1, 2, 3 or 4 to visualize how individual fish are likely to move under the selected Prob_staying over multiple time steps.</li>
+</ul>
 <iframe src="https://apps.bluematterscience.com/openMSE/stock/spatial?showcase=0" width="672" height="850px">
 </iframe>
 </div>

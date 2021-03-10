@@ -9,6 +9,7 @@ weight: 5
 <script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 
 
+<p>This section includes maturity parameters. The default parameters assume that maturation is size dependent and follows a logistic probability curve. However, age-based maturity or alternative length-maturity relationships can be specified using custom parameters.</p>
 <div id="l50" class="section level3">
 <h3>L50</h3>
 <p>Length at 50% maturity. For each simulation a single value is drawn from a uniform distribution specified by the upper and lower bounds provided. The L50 and L50_95 parameters are converted to ages using the growth parameters provided and used to construct a logistic curve to determine the proportion of the population that is mature in each age class. Uniform distribution lower and upper bounds. Positive real numbers.</p>
@@ -23,6 +24,10 @@ weight: 5
 </div>
 <div id="interactive-app" class="section level3">
 <h3>Interactive App</h3>
+<p>Choose upper and lower bounds for L_50 and L50_95. Based on these ranges, the MSEtool will display parameter values for 5 simulations in the table. Click on any line of the table to view the distribution of values for that simulation in the figures below.</p>
+<ul>
+<li>Figure 1 shows a logistic maturity function based on the size at 50% and 95% maturity values drawn in each simulation</li>
+</ul>
 <iframe src="https://apps.bluematterscience.com/openMSE/stock/maturity?showcase=0" width="672" height="850px">
 </iframe>
 </div>

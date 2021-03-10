@@ -9,6 +9,8 @@ weight: 3
 <script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 
 
+<p>Recruitment parameters determine the number young of the year (age 0) fish that enter the population in each year. Recruitment is determined by both deterministic and stochastic processes. The expected number of recruits is determined by the stock recruitment relationship, which specifies the mean number of young of the year fish produced at any given spawning stock size. Users may choose a Beverton-Holt or Ricker stock recruitment curve, and the shape of the curve is determined by the steepness value chosen.</p>
+<p>Process error, in the form of log-normally distributed random deviations, as well as autocorrelation on these deviations, is added to the expected number of recruits to determine the number of fish produced in each year of each simulation. Additional variation, such as cyclical recruitment patterns, can be added using custom parameters, as can direct estimates of recruitment deviations from a stock assessment.</p>
 <div id="r0" class="section level3">
 <h3>R0</h3>
 <p>Initial number of unfished recruits to age-0. This number is used to scale the size of the population to match catch or data, but does not affect any of the population dynamics unless the OM has been conditioned with data. As a result, for a data-limited fishery any number can be used for R0 . In data-rich stocks R0 may be estimated as part of a stock assessment, but for data limited stocks users can choose either an arbitrary number (say, 1000) or choose a number that produces simulated catches in recent historical years that are similar to real world catch data. Single value. Positive real number.</p>
@@ -31,6 +33,13 @@ weight: 3
 </div>
 <div id="interactive-app" class="section level3">
 <h3>Interactive App</h3>
+<p>Select the stock-recruit function you would like to visualize, and choose upper and lower bounds for h, Perr, and AC. Based on these ranges, the parameter values for 5 simulations will be displayed in the table. Click on any line of the table to view the distribution of values for that simulation in the figures below.</p>
+<ul>
+<li><p>Figure 1 shows the expected number of recruits produced at each stock size (defined in terms of spawning stock biomass) based on the stock-recruit function and steepness value selected.</p></li>
+<li><p>Figure 2 shows the distribution of the recruitment deviations based on the values of Perr and AC selected. Simulations with higher values of Perr will have longer tails than those with lower values, allowing more very high recruitment deviations to occur. Simulations with higher AC values will have more similar values drawn than those with lower AC.</p></li>
+<li><p>Figure 3 shows the time series of recruitment values drawn for each simulation over 20 years. These deviations account for both process error and autocorrelation. Simulations with lower values of Perr will be flatter, and those with higher values of Perr will show greater range in possible deviations, while those with lower autocorrelation will be more jagged and those with lower AC values will be smoother.</p></li>
+<li><p>Figure 4 shows the actual number of recruits produced. This figure combines the deviations shown in figure 3 with the expected number of recruits based on the population size. In this simulation, as the stock is fished down over 20 years fewer recruits are produced in the later years (subject to deviations).</p></li>
+</ul>
 <iframe src="https://apps.bluematterscience.com/openMSE/stock/recruitment?showcase=0" width="672" height="850px">
 </iframe>
 </div>

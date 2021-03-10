@@ -9,6 +9,9 @@ weight: 2
 <script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 
 
+<p>Natural mortality encapsulates mortality from any non-fishing source, including disease, predation, competition for resources, senescence, etc. The natural mortality rate dictates the expected lifespan of a species, and so the maximum age parameter is included in this section.</p>
+<p>Note that the <code>maxage</code> parameter is used to allocate storage space, and therefore can (and usually should) be larger than the maximum observed age. By default, individuals that survive beyond <code>maxage</code> are grouped together in the <code>maxage</code> age-class (i.e, <code>maxage</code> is the plus-group). The plus-group can be turned off using <code>cpars$plusgroup=0</code>, in which case no individuals will survive beyond <code>maxage</code>.</p>
+<p>This section also includes the discard mortality rate. Discard mortality rates may depend on both the life history of the species (for example, species that live in deep waters may not survive the barotrauma associated with being pulled up to the surface) as well as the type of gear and the handling practices employed by the fleet, so consider both biological and fishery conditions when selecting values for <code>Fdisc</code>.</p>
 <div id="maxage" class="section level3">
 <h3>maxage</h3>
 <p>The maximum age of individuals that is simulated. There are maxage+1 (recruitment to age-0) age classes in the storage matrices. maxage is the plus group where all age-classes &gt; maxage are grouped, unless option switched off with <a href="mailto:OM@cpars$plusgroup=0" class="email">OM@cpars$plusgroup=0</a> . Single value. Positive integer.</p>
@@ -31,6 +34,21 @@ weight: 2
 </div>
 <div id="interactive-app" class="section level3">
 <h3>Interactive App</h3>
-<iframe src="https://apps.bluematterscience.com/openMSE/stock/mortality?showcase=0" width="672" height="950px">
+<p>Choose upper and lower bounds for M and Msd. Based on these ranges, the MSEtool will display parameter values for 5 simulations in the table. Click on any line of the table to view the distribution of values for that simulation in the Figures below.</p>
+<ul>
+<li><p>Figure 1 shows a distribution of the M values drawn for each year of a 20 year simulation. Values will have a mean equal to M and a standard deviation equal to Msd (values shown in the table).</p></li>
+<li><p>Figure 2 shows the time series of M values drawn for each simulation. Simulations with low values of Msd (close to 0) will have less interannual variation than those with higher Msd values.</p></li>
+<li><p>Figure 3 shows the proportion of the population that lives to each age up to 20 years. Values with lower values of M experience lower natural mortality, and have more individuals surviving to older age classes. The maximum age functions as a plus-group, so simulation with very low M values may have large number of individuals accumulating in the plus-group.</p></li>
+</ul>
+<iframe src="https://apps.bluematterscience.com/openMSE/stock/mortality?showcase=0" width="672" height="750px">
 </iframe>
+<div id="suggested-exercises-for-understanding-the-parameters" class="section level4">
+<h4>Suggested Exercises for Understanding the Parameters:</h4>
+<ul>
+<li><p>Set the upper and lower bounds for M to 0.1, and the upper and lower bounds for Msd to 0. Note that all 5 simulations in the table have the same value of M and Msd. Click on each line of the table, and note that the figures for each simulation are identical. There is no variation in M in this example - all simulations and years have the same values of M.</p></li>
+<li><p>Set the lower bound for M to 0.1 and the upper bound to 0.4. Set the upper and lower bounds for Msd to 0. Note that each simulations shown in the table has a different value of M but the same value of Msd. Click on each line of the table, and note how the figures change between simulations. In line 1 of the table, the M value drawn is 0.21. Because Msd is set to 0, there is no year-to-year variation and all values of M are identical. In Figure 1 there is a single bar at the selected M value and in Figure 2, note that the value of M does not change over time. Click on a different line, and notice that while the position of the bar in Figure 1 and the line in Figure 2 changes, there is no variation in M from year to year.</p></li>
+<li><p>Figure 3, which shows the proportion of the population that lives to each age up to 20 years, varies markedly from simulation to simulation. Click on simulation 2, which shows a low value of M (0.11). This lower value means that fewer individuals die from natural causes each year, and so a greater number of individuals live to the maximum age (in this case, 20). Notice that, because of the plus group, the graph shows a large proportion of the population in this plus group. This suggests that a larger maximum age may be needed for this simulation. Click on simulation 3, which has a higher value of natural mortality, to see a contrast in how M affects the population’s life span. In this simulation, more animals die each year from natural causes, and so fewer animals survive to the maximum age, and there is no population build up in the plus group.</p></li>
+<li><p>Set the upper and lower bounds for M to 0.1, and the lower bound for Msd to 0 and the upper bound to 0.1. Note that all of the values for M shown in the table are identical, but each simulation has a different value of Msd. These two values specify the distribution for yearly M values, and so in this exercise Figure 1 will show distributions with the same mean value (M of 0.1) but different widths based on the value of Msd drawn. As Msd increases, the distribution shown in Figure 1 widens, and the time series of M values shown in Figure 2 becomes more variable</p></li>
+</ul>
+</div>
 </div>
