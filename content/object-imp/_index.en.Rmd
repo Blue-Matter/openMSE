@@ -6,3 +6,18 @@ title: Imp Object
 type: objects
 weight: 4
 ---
+
+The `Imp` object contains parameters capturing the management system's inability to perfectly implement and enforce different types of MPs. 
+
+It is possible that an MP could meet management objectives if it were implemented perfectly (for example, no TAC overages, no undersize fish taken, etc), but fails to meet those objectives under realistic implementation. As a result it is important to be able to accurately account for imperfect implementation when choosing an MP.
+
+```{r,include=FALSE}
+library(openMSE)
+printDesc <- function(slot, class="Imp") {
+  Desc <- get(paste0(class, "Description"))
+  Desc$Description[which(Desc$Slot == slot)]
+}
+```
+
+### Name
+`r printDesc("Name")` 

@@ -1,0 +1,34 @@
+---
+date: "2021-03-19T15:18:01+06:00"
+title: Implementation of MPs to Control Effort
+weight: 2
+---
+
+```{r,include=FALSE}
+library(openMSE)
+printDesc <- function(slot, class="Imp") {
+  Desc <- get(paste0(class, "Description"))
+  Desc$Description[which(Desc$Slot == slot)]
+}
+```
+
+This section includes parameters describing the management agency's ability to implement an MP that institutes an effort limit (TAE). For example, an MP may specify a certain TAE, but the managing agency may be unable to stop fishing at the exact moment that the effort limit is reached, resulting in underages or overages. 
+
+TAEFrac and TAESD allow the user to specify the actual effort employed as a fraction of the desired TAE in the form of a distribution that allows variability between simulations and years. 
+
+### TAEFrac
+`r printDesc("TAEFrac")` 
+
+### TAESD 
+`r printDesc("TAESD")`
+ 
+
+### Custom Parameters
+TBD
+
+### Interactive App 
+
+```{r, echo=FALSE, screenshot.opts = list(delay = 5)} 
+# knitr::include_app("https://apps.bluematterscience.com/openMSE/fleet/selectivity",height="1150px") 
+```
+

@@ -1,5 +1,5 @@
 ---
-date: "2021-02-18T15:18:01+06:00"
+date: "2021-03-19T15:18:01+06:00"
 title: Marine Protected Areas and Spatial Targeting
 weight: 4
 ---
@@ -12,10 +12,18 @@ weight: 4
 <div id="mpa" class="section level3">
 <h3>MPA</h3>
 <p>Logical argument (TRUE or FALSE). Creates an MPA in Area 1 for all years if true is selected. Defaults to FALSE.</p>
-<p>For the custom parameters section:
-Matrix specifying spatial closures for historical years. This parameter is different than creating an MP that closes an area to fishing in future projections. Instead, it allows the user to take into the account of a historical or existing closed area on the current biomass and future MP performance. (Link to Custom Pars).</p>
 </div>
 <div id="spat_targ" class="section level3">
 <h3>Spat_targ</h3>
 <p>Distribution of fishing in relation to vulnerable biomass (VB) across areas. The distribution of fishing effort is proportional to VB^Spat_targ. Upper and lower bounds of a uniform distribution. For each simulation a single value is drawn from a uniform distribution specified by the upper and lower bounds provided. This parameter allows the user to model either avoidance or spatial targeting behavior by the fleet. If the parameter value is 1, fishing effort is allocated across areas in proportion to the population density of that area. Values below 1 simulate an avoidance behavior and values above 1 simulate a targeting behavior.</p>
+</div>
+<div id="custom-parameters" class="section level3">
+<h3>Custom Parameters</h3>
+<p>TBD</p>
+<p>Matrix specifying spatial closures for historical years. This parameter is different than creating an MP that closes an area to fishing in future projections. Instead, it allows the user to take into the account of a historical or existing closed area on the current biomass and future MP performance.</p>
+</div>
+<div id="interactive-app" class="section level3">
+<h3>Interactive App</h3>
+<iframe src="https://apps.bluematterscience.com/openMSE/fleet/spatial?showcase=0" width="672" height="1150px">
+</iframe>
 </div>

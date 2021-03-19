@@ -1,5 +1,5 @@
 ---
-date: "2021-02-18T15:18:01+06:00"
+date: "2021-03-19T15:18:01+06:00"
 title: Marine Protected Areas and Spatial Targeting
 weight: 4
 ---
@@ -12,15 +12,18 @@ printDesc <- function(slot, class="Fleet") {
 }
 ```
 
-
-
 ### MPA
 `r printDesc("MPA")` 
-
-For the custom parameters section:
-Matrix specifying spatial closures for historical years. This parameter is different than creating an MP that closes an area to fishing in future projections. Instead, it allows the user to take into the account of a historical or existing closed area on the current biomass and future MP performance. (Link to Custom Pars).
 
 ### Spat_targ 
 `r printDesc("Spat_targ")`
 
- 
+### Custom Parameters
+TBD
+
+Matrix specifying spatial closures for historical years. This parameter is different than creating an MP that closes an area to fishing in future projections. Instead, it allows the user to take into the account of a historical or existing closed area on the current biomass and future MP performance. 
+
+### Interactive App
+
+```{r, echo=FALSE, screenshot.opts = list(delay = 5)} 
+knitr::include_app("https://apps.bluematterscience.com/openMSE/fleet/spatial",height="1150px") 

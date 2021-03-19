@@ -1,0 +1,34 @@
+---
+date: "2021-03-19T15:18:01+06:00"
+title: Implementation of MPs to Control Catch
+weight: 1
+---
+
+```{r,include=FALSE}
+library(openMSE)
+printDesc <- function(slot, class="Imp") {
+  Desc <- get(paste0(class, "Description"))
+  Desc$Description[which(Desc$Slot == slot)]
+}
+```
+
+This section includes parameters describing the management agency's ability to implement an MP that institutes a catch limit (TAC). For example, an MP may specify a certain TAC, but the managing agency may be unable to stop fishing at the exact moment that the quota is obtained, resulting in quota underages or overages. 
+
+TACFrac and TACSD allow the user to specify the actual catches that are taken as a fraction of the desired TAC in the form of a distribution that allows variability between simulations and years.
+
+### TACFrac
+`r printDesc("TACFrac")` 
+
+### TACSD 
+`r printDesc("TACSD")`
+ 
+
+### Custom Parameters
+TBD
+
+### Interactive App 
+
+```{r, echo=FALSE, screenshot.opts = list(delay = 5)} 
+# knitr::include_app("https://apps.bluematterscience.com/openMSE/fleet/selectivity",height="1150px") 
+```
+

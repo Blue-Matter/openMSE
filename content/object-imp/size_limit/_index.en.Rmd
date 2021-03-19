@@ -1,0 +1,33 @@
+---
+date: "2021-03-19T15:18:01+06:00"
+title: Implementation of MPs to Control Size Limits
+weight: 3
+---
+
+```{r,include=FALSE}
+library(openMSE)
+printDesc <- function(slot, class="Imp") {
+  Desc <- get(paste0(class, "Description"))
+  Desc$Description[which(Desc$Slot == slot)]
+}
+```
+
+This section includes parameters describing the management agency's ability to implement an MP that institutes an size limit. For example, an MP may specify a certain size limit, but the managing agency may be unable to limit all take of undersized fish. 
+
+SizeLimFrac and SizeLimSD allow the user to specify the actual size of fish retained as a fraction of the desired size limit in the form of a distribution that allows variability between simulations and years. 
+
+### SizeLimFrac
+`r printDesc("SizeLimFrac")` 
+
+### SizeLimSD 
+`r printDesc("SizeLimSD")`
+ 
+### Custom Parameters
+TBD
+
+### Interactive App 
+
+```{r, echo=FALSE, screenshot.opts = list(delay = 5)} 
+# knitr::include_app("https://apps.bluematterscience.com/openMSE/fleet/selectivity",height="1150px") 
+```
+
