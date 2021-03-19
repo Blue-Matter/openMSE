@@ -19,14 +19,15 @@ The "I" parameters indicate an index of abundance, while the "B" parameters indi
 ### Iobs
 `r printDesc("Iobs")` 
 
+### beta
+`r printDesc("beta")`
+
 ### Btobs 
 `r printDesc("Btobs")`
 
 ### Btbiascv
 `r printDesc("Btbiascv")`
 
-### beta
-`r printDesc("beta")`
 
 ### Custom Parameters
 TBD 
@@ -34,5 +35,5 @@ TBD
 ### Interactive App
 
 ```{r, echo=FALSE, screenshot.opts = list(delay = 5)}
-# knitr::include_app("https://apps.bluematterscience.com/openMSE/stock/mortality",height="950px") 
+knitr::include_app("https://apps.bluematterscience.com/openMSE/obs/indices",height="950px") 
 ```
