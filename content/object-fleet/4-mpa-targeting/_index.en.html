@@ -26,6 +26,10 @@ weight: 4
 </div>
 <div id="interactive-app" class="section level3">
 <h3>Interactive App</h3>
-<iframe src="https://apps.bluematterscience.com/openMSE/fleet/spatial?showcase=0" width="672" height="1150px">
+<p>Choose upper and lower bounds for Spat_targ. Based on these ranges, the MSEtool will display parameter values for 5 simulations in the table. Click on any line of the table to view how those parameter values affect spatial targeting behavior in the model.</p>
+<ul>
+<li>Figure 1 shows the relationship between the fraction of the vulnerable biomass (VB) currently located in Area 1 and the proportion of fishing effort allocated to that area for each simulation. Spat_targ values equal to 1 simulate a situation in which fishing effort in each area is proportional to the vulnerable biomass in the area. Values greater than 1 result in a higher proportion of fishing effort being allocated when the fraction of the VB is greater than 50% (and vice versa), simulating more intense spatial targeting. Values less than 1 but greater than 0 result in a lower proportion of fishing effort being allocated when the fraction of the VB is greater than (less spatial targeting). Values close to 0 result a situation where the amount of fishing effort is evenly divided between areas regardless of the population in each area. Values close to negative 1 result in an avoidance behavior, where the proportion of fishing effort allocated in an area decreases linearly as the VB in area 1 increases. Values below -1 intensify this avoidance behavior.</li>
+</ul>
+<iframe src="https://apps.bluematterscience.com/openMSE/fleet/spatial?showcase=0" width="672" height="850px">
 </iframe>
 </div>
