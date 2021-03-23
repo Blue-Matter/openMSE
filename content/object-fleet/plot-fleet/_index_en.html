@@ -1,0 +1,48 @@
+---
+date: "2021-03-22T15:18:01+06:00"
+title: Plotting Fleet Object
+weight: 6
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+
+<div id="generate-html-report" class="section level4">
+<h4>Generate HTML Report</h4>
+<p>The <code>plot</code> function will create a HTML report with plots of the contents of a <code>Fleet</code> object. Plotting a <code>Fleet</code> object also requires a <code>Stock</code> object as the second argument.</p>
+<p>For example, running the <code>plot</code> function on the example <code>Generic_DecE</code> Fleet object:</p>
+<pre class="r"><code>plot(Generic_DecE, Albacore)</code></pre>
+<p>will create <a href="/Generic_Declining_effort_Fleet.html">this HTML report</a>.</p>
+<p>See the <a href="https://msetool.openmse.com/reference/plot.Fleet.html">help documentation</a> or type <code>?plot.Fleet</code> in the R console for more information on plotting <code>Fleet</code> objects.</p>
+</div>
+<div id="plot-stock-components" class="section level4">
+<h4>Plot Stock Components</h4>
+<p>Individual plots of the components in the <code>Fleet</code> object can be generated using the <code>plot</code> function and specifying the name of the component to plot in the first argument and a stock object as the second argument.</p>
+<p>The options for plotting the components are shown by clicking the buttons below.</p>
+<div class="nav nav-tabs">
+<p><button class="tablinks" onclick="openPlot(event, 'Catchability')">Future Catchability</button>
+<button class="tablinks" onclick="openPlot(event, 'Effort')">Historical Effort</button>
+<button class="tablinks" onclick="openPlot(event, 'Selectivity')">Selectivity and Retention</button>
+<button class="tablinks" onclick="openPlot(event, 'MPA')">Historical MPA and Spatial Targeting</button></p>
+</div>
+<!-- Tab content -->
+<div id="Catchability" class="tabcontent">
+<pre class="r"><code>plot(&#39;Catchability&#39;, Generic_DecE, Albacore)</code></pre>
+<p><img src="/object-fleet/plot-fleet/_index_en_files/figure-html/unnamed-chunk-4-1.png" width="672" /><img src="/object-fleet/plot-fleet/_index_en_files/figure-html/unnamed-chunk-4-2.png" width="672" /></p>
+</div>
+<div id="Effort" class="tabcontent">
+<pre class="r"><code>plot(&#39;Effort&#39;, Generic_DecE, Albacore)</code></pre>
+<p><img src="/object-fleet/plot-fleet/_index_en_files/figure-html/unnamed-chunk-5-1.png" width="672" /><img src="/object-fleet/plot-fleet/_index_en_files/figure-html/unnamed-chunk-5-2.png" width="672" /></p>
+</div>
+<div id="Selectivity" class="tabcontent">
+<pre class="r"><code>plot(&#39;Selectivity&#39;, Generic_DecE, Albacore)</code></pre>
+<p><img src="/object-fleet/plot-fleet/_index_en_files/figure-html/unnamed-chunk-6-1.png" width="672" /><img src="/object-fleet/plot-fleet/_index_en_files/figure-html/unnamed-chunk-6-2.png" width="672" /><img src="/object-fleet/plot-fleet/_index_en_files/figure-html/unnamed-chunk-6-3.png" width="672" /><img src="/object-fleet/plot-fleet/_index_en_files/figure-html/unnamed-chunk-6-4.png" width="672" /></p>
+</div>
+<div id="MPA" class="tabcontent">
+<pre class="r"><code>plot(&#39;MPA&#39;, Generic_DecE, Albacore)</code></pre>
+<p><img src="/object-fleet/plot-fleet/_index_en_files/figure-html/unnamed-chunk-7-1.png" width="672" /></p>
+</div>
+<p>Unlike <code>plot(Fleet, Stock)</code> which generates a HTML report that opens in the web browser, <code>plot('character', Fleet, Stock)</code> will create the plots in the R console. See the <a href="https://msetool.openmse.com/reference/plot.Fleet.html">help documentation</a> or type <code>?plot.Fleet</code> in the R console for more information on plotting <code>Fleet</code> objects.</p>
+</div>

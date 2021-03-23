@@ -1,0 +1,24 @@
+---
+date: "2021-03-19T15:18:01+06:00"
+title: Example Fleet Objects
+weight: 5
+keywords:
+  - examples
+---
+
+```{r, include=FALSE}
+library(MSEtool)
+Fleet <- avail("Fleet")
+```
+
+MSEtool includes `r length(Fleet)` example Fleet objects. They can be listed using the `avail` function:
+
+  ```{r}
+avail('Fleet')
+```
+
+These objects can be used together with the example [Stock](/object-stock/8-example-stock-objects/_index_en/),  [Obs](/object-obs/example-objects/_index_en/), and [Imp](/object-imp/example-objects/_index_en/), to quickly create an operating model:
+
+```{r}
+OM <- new('OM', Albacore, FlatE_Dom, Generic_Obs, Overages, nsim=100)
+````

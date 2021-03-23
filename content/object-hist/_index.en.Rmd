@@ -1,5 +1,5 @@
 ---
-date: "2021-02-20T11:35:01+06:00"
+date: "2021-03-23T11:35:01+06:00"
 description: Information from the spool-up period
 icon: far fa-chart-line
 title: Hist Object
@@ -13,8 +13,6 @@ library(openMSE)
 
 Objects of class `Hist` contain all of the information from the spool up period. 
 
-
-#### Creating a `Hist` object 
 They are created by running the simulations for only the historical period using the `Simulate` function, for example:
 
 ```{r}
@@ -27,33 +25,11 @@ The `Hist` object contains all of the information from the historical spool-up p
 
 See the [Hist slots](1-contents) page for more details on the information stored in the `Hist` object.
 
-#### Plotting a `Hist` object
-The simulated dynamics for the historical spool-up period can be examined by plotting the `Hist` object:
-
-```{r, eval=FALSE}
-plot(myHist)
-```
-
-The `plot` function creates an HTML report with plots of the sampled OM parameters and the dynamics of the historical spool-up period.
 
 #### Historical data
-The first slot in the `Hist` object is an object of class `Data`. This is the [`Data` object](/object-data/) that was created at the end of the spool-up period, and will be used in the first year of the projection period. 
 
-Running an MP on `Hist@Data` will result in identical management recommendations as those in the first year of the projection period using the same `OM`. 
 
 
 #### Running the projections
-The projections can be run directly from a `Hist` object using the `Project` function:
 
-```{r}
-myMSE <- Project(myHist, MPs=c("AvC", "FMSYref", "Itarget1"))
-```
-
-Note that the `runMSE` function is a wrapper for `Simulate` and `Projects`, and:
-
-```{r, eval=FALSE}
-myMSE <- runMSE(OM, MPs=c("AvC", "FMSYref", "Itarget1"))
-```
-
-would result in an identical [`MSE` object](/object-mse).
 

@@ -12,6 +12,10 @@ printDesc <- function(slot, class="Fleet") {
 }
 ```
 
+The MSEtool allows for some paramterization of spatial differences in fishing. Users can close area 1 to fishing for all years (historical and projected) in area 1 by creating a Marine Protected Area (MPA). 
+
+More complex MPAs, such as those that are not present for all years of the simulation, can be created using custom parameters. Users can also specify spatial targeting or avoidance behavior by the fleet.
+
 ### MPA
 `r printDesc("MPA")` 
 

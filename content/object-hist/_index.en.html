@@ -1,5 +1,5 @@
 ---
-date: "2021-02-20T11:35:01+06:00"
+date: "2021-03-23T11:35:01+06:00"
 description: Information from the spool-up period
 icon: far fa-chart-line
 title: Hist Object
@@ -13,8 +13,6 @@ weight: 6
 
 
 <p>Objects of class <code>Hist</code> contain all of the information from the spool up period.</p>
-<div id="creating-a-hist-object" class="section level4">
-<h4>Creating a <code>Hist</code> object</h4>
 <p>They are created by running the simulations for only the historical period using the <code>Simulate</code> function, for example:</p>
 <pre class="r"><code>OM &lt;- new(&quot;OM&quot;, Albacore, Generic_IncE, Imprecise_Biased, Perfect_Imp)
 myHist &lt;- Simulate(OM, silent=TRUE)
@@ -24,30 +22,9 @@ class(myHist)</code></pre>
 ## [1] &quot;MSEtool&quot;</code></pre>
 <p>The <code>Hist</code> object contains all of the information from the historical spool-up period. This information will be used when the model is run in projection mode.</p>
 <p>See the <a href="1-contents">Hist slots</a> page for more details on the information stored in the <code>Hist</code> object.</p>
-</div>
-<div id="plotting-a-hist-object" class="section level4">
-<h4>Plotting a <code>Hist</code> object</h4>
-<p>The simulated dynamics for the historical spool-up period can be examined by plotting the <code>Hist</code> object:</p>
-<pre class="r"><code>plot(myHist)</code></pre>
-<p>The <code>plot</code> function creates an HTML report with plots of the sampled OM parameters and the dynamics of the historical spool-up period.</p>
-</div>
 <div id="historical-data" class="section level4">
 <h4>Historical data</h4>
-<p>The first slot in the <code>Hist</code> object is an object of class <code>Data</code>. This is the <a href="/object-data/"><code>Data</code> object</a> that was created at the end of the spool-up period, and will be used in the first year of the projection period.</p>
-<p>Running an MP on <code>Hist@Data</code> will result in identical management recommendations as those in the first year of the projection period using the same <code>OM</code>.</p>
 </div>
 <div id="running-the-projections" class="section level4">
 <h4>Running the projections</h4>
-<p>The projections can be run directly from a <code>Hist</code> object using the <code>Project</code> function:</p>
-<pre class="r"><code>myMSE &lt;- Project(myHist, MPs=c(&quot;AvC&quot;, &quot;FMSYref&quot;, &quot;Itarget1&quot;))</code></pre>
-<pre><code>## Checking MPs</code></pre>
-<pre><code>## 1 / 3 Running MSE for AvC</code></pre>
-<pre><code>## ..................................................</code></pre>
-<pre><code>## 2 / 3 Running MSE for FMSYref</code></pre>
-<pre><code>## ..................................................</code></pre>
-<pre><code>## 3 / 3 Running MSE for Itarget1</code></pre>
-<pre><code>## ..................................................</code></pre>
-<p>Note that the <code>runMSE</code> function is a wrapper for <code>Simulate</code> and <code>Projects</code>, and:</p>
-<pre class="r"><code>myMSE &lt;- runMSE(OM, MPs=c(&quot;AvC&quot;, &quot;FMSYref&quot;, &quot;Itarget1&quot;))</code></pre>
-<p>would result in an identical <a href="/object-mse"><code>MSE</code> object</a>.</p>
 </div>

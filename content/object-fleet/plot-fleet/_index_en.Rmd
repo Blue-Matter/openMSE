@@ -1,0 +1,68 @@
+---
+date: "2021-03-22T15:18:01+06:00"
+title: Plotting Fleet Object
+weight: 6
+---
+
+```{r, include=FALSE}
+library(openMSE)
+
+```
+
+#### Generate HTML Report
+The `plot` function will create a HTML report with plots of the contents of a `Fleet` object. Plotting a `Fleet` object also requires a `Stock` object as the second argument.
+
+For example, running the `plot` function on the example `Generic_DecE` Fleet object:
+
+```{r, eval=FALSE}
+plot(Generic_DecE, Albacore)
+```
+
+will create [this HTML report](/Generic_Declining_effort_Fleet.html). 
+
+See the [help documentation](https://msetool.openmse.com/reference/plot.Fleet.html) or type `?plot.Fleet` in the R console for more information on plotting `Fleet` objects.
+
+```{r, include=FALSE}
+output_dir <- '../../../static/'
+plot(Generic_DecE, Albacore, output_dir=output_dir, open=FALSE)
+```
+
+#### Plot Stock Components
+Individual plots of the components in the `Fleet` object can be generated using the `plot` function and specifying the name of the component to plot in the first argument and a stock object as the second argument. 
+
+The options for plotting the components are shown by clicking the buttons below. 
+
+<div class="nav nav-tabs">
+  <button class="tablinks" onclick="openPlot(event, 'Catchability')">Future Catchability</button>
+  <button class="tablinks" onclick="openPlot(event, 'Effort')">Historical Effort</button>
+  <button class="tablinks" onclick="openPlot(event, 'Selectivity')">Selectivity and Retention</button>
+  <button class="tablinks" onclick="openPlot(event, 'MPA')">Historical MPA and Spatial Targeting</button>
+</div>
+
+<!-- Tab content -->
+<div id="Catchability" class="tabcontent">
+```{r}
+plot('Catchability', Generic_DecE, Albacore)
+```
+</div>
+
+<div id="Effort" class="tabcontent">
+```{r}
+plot('Effort', Generic_DecE, Albacore)
+```
+</div>
+
+
+<div id="Selectivity" class="tabcontent">
+```{r}
+plot('Selectivity', Generic_DecE, Albacore)
+```
+</div>
+
+<div id="MPA" class="tabcontent">
+```{r}
+plot('MPA', Generic_DecE, Albacore)
+```
+</div>
+ 
+Unlike `plot(Fleet, Stock)` which generates a HTML report that opens in the web browser, `plot('character', Fleet, Stock)` will create the plots in the R console. See the [help documentation](https://msetool.openmse.com/reference/plot.Fleet.html) or type `?plot.Fleet` in the R console for more information on plotting `Fleet` objects.

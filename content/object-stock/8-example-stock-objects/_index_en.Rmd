@@ -1,10 +1,24 @@
 ---
-date: "2020-12-15T15:18:01+06:00"
+date: "2021-03-19T15:18:01+06:00"
 title: Example Stock Objects
 weight: 8
 keywords:
   - examples
 ---
 
-Coming soon!
+```{r, include=FALSE}
+library(MSEtool)
+stocks <- avail("Stock")
+```
 
+MSEtool includes `r length(stocks)` example stock objects. They can be listed using the `avail` function:
+
+```{r}
+avail('Stock')
+```
+
+These objects can be used together with the example [Fleet](/object-fleet/example-objects/_index_en/), [Obs](/object-obs/example-objects/_index_en/), and [Imp](/object-imp/example-objects/_index_en/), to quickly create an operating model:
+
+```{r}
+OM <- new('OM', Albacore, FlatE_Dom, Generic_Obs, Overages, nsim=100)
+````
