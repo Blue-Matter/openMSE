@@ -4,7 +4,7 @@ description: Equations for the Rapid Conditioning Model
 icon: far fa-sigma
 title: Mathematical description of the RCM
 type: tutorials
-weight: 1
+weight: 2
 ---
 
 The following sections describe the mathematical details of the [Rapid Conditioning Model](/features-rcm).

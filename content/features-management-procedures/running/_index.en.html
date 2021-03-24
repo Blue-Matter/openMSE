@@ -1,0 +1,99 @@
+---
+date: "2021-03-23T15:18:01+06:00"
+title: Applying Management Procedures
+weight: 3
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+
+<p>The <code>runMP</code> function can be used to apply a MP to a Data object. For example, to apply the <code>AvC</code> method:</p>
+<pre class="r"><code>runMP(Atlantic_mackerel, &quot;AvC&quot;, reps=1000)</code></pre>
+<pre><code>## Attempting to run 1 MPs:</code></pre>
+<pre><code>## AvC</code></pre>
+<pre><code>##       TAC
+## AvC 24.83</code></pre>
+<p>The <code>runMP</code> prints out the MP recommendations to the console. In the case of a TAC, where multiple repititions where (see <code>reps</code> = 1000 above) used the <code>runMP</code> function prints the median TAC recommendation.</p>
+<p>Although it only displays a summary, <code>runMP</code> invisibly returns the Data object with the TAC slot populated:</p>
+<pre class="r"><code>Recs &lt;- runMP(Atlantic_mackerel, &quot;AvC&quot;)</code></pre>
+<pre><code>## Attempting to run 1 MPs:</code></pre>
+<pre><code>## AvC</code></pre>
+<pre><code>##       TAC
+## AvC 24.54</code></pre>
+<pre class="r"><code>hist(Recs@TAC)</code></pre>
+<p><img src="/features-management-procedures/running/_index.en_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p><code>runMP</code> can be used to run several MPs:</p>
+<pre class="r"><code>runMP(Atlantic_mackerel, c(&quot;AvC&quot;, &quot;AvC_MLL&quot;))</code></pre>
+<pre><code>## Attempting to run 2 MPs:</code></pre>
+<pre><code>## AvC</code></pre>
+<pre><code>## AvC_MLL</code></pre>
+<pre><code>##          TAC   LR5 LFR
+## AvC     25.1          
+## AvC_MLL 25.1 90.25  95</code></pre>
+<p>Or all available MPs:</p>
+<pre class="r"><code>Atlantic_mackerel &lt;- runMP(Atlantic_mackerel, reps=1000, chkMPs=TRUE, silent=TRUE)</code></pre>
+<p>The TAC recommendations from each Output control can be plotted:</p>
+<pre class="r"><code>boxplot(Atlantic_mackerel)</code></pre>
+<p><img src="/features-management-procedures/running/_index.en_files/figure-html/unnamed-chunk-6-1.png" width="576" /></p>
+<pre><code>##              MP Median   SD           Units
+## 1       SP_4010   0.00 0.00 thousand tonnes
+## 2      SP_75MSY   0.00 0.00 thousand tonnes
+## 3        SP_MSY   0.00 0.00 thousand tonnes
+## 4     DDSS_4010   0.45 0.00 thousand tonnes
+## 5        DD4010   0.46 0.26 thousand tonnes
+## 6      DCAC4010   1.43 1.01 thousand tonnes
+## 7    Fratio4010   2.12 2.10 thousand tonnes
+## 8            DD   2.12 0.82 thousand tonnes
+## 9    DDSS_75MSY   2.60 0.00 thousand tonnes
+## 10         DAAC   2.82 1.27 thousand tonnes
+## 11        HDAAC   2.86 1.25 thousand tonnes
+## 12         DepF   2.93 2.06 thousand tonnes
+## 13     DDSS_MSY   3.47 0.00 thousand tonnes
+## 14       Fratio   3.74 2.59 thousand tonnes
+## 15    DBSRA4010   3.81 4.91 thousand tonnes
+## 16         Fdem   4.63 1.98 thousand tonnes
+## 17     Itarget4   4.93 0.43 thousand tonnes
+## 18         DynF   4.97 2.23 thousand tonnes
+## 19        DCACs   5.57 1.88 thousand tonnes
+## 20         DCAC   5.66 1.89 thousand tonnes
+## 21        DBSRA   5.81 4.56 thousand tonnes
+## 22        SPSRA   5.84 3.61 thousand tonnes
+## 23    SSS_75MSY   6.43 0.00 thousand tonnes
+## 24     Gcontrol   6.53 0.03 thousand tonnes
+## 25     Rcontrol   6.53 0.00 thousand tonnes
+## 26    Rcontrol2   6.53 0.00 thousand tonnes
+## 27     SSS_4010   6.77 0.00 thousand tonnes
+## 28     Itarget3   7.08 0.64 thousand tonnes
+## 29 Itarget1_MPA   7.09 0.65 thousand tonnes
+## 30     Itarget1   7.10 0.61 thousand tonnes
+## 31     Itarget2   7.13 0.60 thousand tonnes
+## 32      DCAC_40   7.15 2.16 thousand tonnes
+## 33          YPR   8.00 3.41 thousand tonnes
+## 34       Fadapt   8.13 0.05 thousand tonnes
+## 35      SSS_MSY   8.57 0.00 thousand tonnes
+## 36      MCD4010   9.24 7.73 thousand tonnes
+## 37     DBSRA_40   9.49 2.99 thousand tonnes
+## 38       Iratio  10.02 4.08 thousand tonnes
+## 39           BK  11.16 4.38 thousand tonnes
+## 40        SPMSY  12.47 7.88 thousand tonnes
+## 41      Islope3  12.70 1.14 thousand tonnes
+## 42      Islope4  13.31 1.17 thousand tonnes
+## 43      SPslope  13.86 1.39 thousand tonnes
+## 44          MCD  13.93 5.81 thousand tonnes
+## 45          ICI  13.94 3.03 thousand tonnes
+## 46         ICI2  14.00 2.87 thousand tonnes
+## 47          CC5  14.02 1.28 thousand tonnes
+## 48         SBT1  14.45 2.94 thousand tonnes
+## 49      Islope2  14.67 1.34 thousand tonnes
+## 50     GB_slope  15.14 1.58 thousand tonnes
+## 51        SPmod  15.86 3.87 thousand tonnes
+## 52          CC4  16.34 1.43 thousand tonnes
+## 53      Islope1  16.90 1.53 thousand tonnes
+## 54         CurC  18.58 3.89 thousand tonnes
+## 55          CC3  18.68 1.73 thousand tonnes
+## 56          CC2  20.91 1.93 thousand tonnes
+## 57          CC1  23.33 2.03 thousand tonnes
+## 58      AvC_MLL  24.70 4.95 thousand tonnes
+## 59          AvC  24.87 4.76 thousand tonnes</code></pre>

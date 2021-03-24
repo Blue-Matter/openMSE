@@ -4,7 +4,7 @@ description: Fleet and survey selectivity
 icon: far fa-fish
 title: Configuring selectivity for the RCM
 type: tutorials
-weight: 2
+weight: 3
 ---
 
 There are a multitude of options available in how selectivity for fleets and surveys is parameterized in the model. This vignette is designed to be a step-by-step guide for setup of selectivity. It is best to first think about fleet selectivity followed by survey selectivity. Familiarity with the more general [`RCM` documentation](/features-RCM) and the `RCM` function [help page](https://samtool.openmse.com/reference/RCM.html) will be helpful.

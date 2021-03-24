@@ -1,0 +1,32 @@
+---
+date: "2021-03-23T15:18:01+06:00"
+title: Populating a Data Object in R
+weight: 3
+---
+
+```{r, include=FALSE}
+library(MSEtool)
+
+```
+
+An alternative to importing a Data object from an Excel files is to can create a blank `Data` object and fill the slots directly in R. For example:
+
+```{r}
+Madeup <- new('Data')                                 #  Create a blank DLM object
+Madeup@Name <- 'Test'                                 #  Name it
+Madeup@Cat <- matrix(20:11*rlnorm(10,0,0.2),nrow=1)   #  Generate fake catch data
+Madeup@Units <- "Million metric tonnes"               #  State units of catch
+Madeup@AvC <- mean(Madeup@Cat)                        #  Average catches for time t (DCAC)
+Madeup@t <- ncol(Madeup@Cat)                          #  No. yrs for Av. catch (DCAC)
+Madeup@Dt <- 0.5                                      #  Depletion over time t (DCAC)
+Madeup@Dep <- 0.5                                     #  Depletion relative to unfished 
+Madeup@vbK <- 0.2                                     #  VB maximum growth rate
+Madeup@vbt0 <- (-0.5)                                 #  VB theoretical age at zero length
+Madeup@vbLinf <- 200                                  #  VB maximum length
+Madeup@Mort <- 0.1                                    #  Natural mortality rate
+Madeup@Abun <- 200                                    #  Current abundance
+Madeup@FMSY_M <- 0.75                                 #  Ratio of FMSY/M
+Madeup@L50 <- 100                                     #  Length at 50% maturity
+Madeup@L95 <- 120                                     #  Length at 95% maturity
+Madeup@BMSY_B0 <- 0.35                                #  BMSY relative to unfished
+```

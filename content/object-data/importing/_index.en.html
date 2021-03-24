@@ -1,0 +1,25 @@
+---
+date: "2021-03-23T15:18:01+06:00"
+title: Importing from Spreadsheet 
+weight: 2
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+
+<p>Once populated, the Excel Data file can be imported into R, for example:</p>
+<pre class="r"><code>MyData &lt;- XL2Data(&#39;MyData&#39;)</code></pre>
+<p>We will use some of the example Data files included in the MSEtool package.</p>
+<p>One example Data file is the China rockfish. You can <a href="/ExampleData/China_rockfish.csv">download</a> this Data file to your current working directory and import into R:</p>
+<pre class="r"><code>China_rockfish &lt;- XL2Data(&quot;China_rockfish.csv&quot;)</code></pre>
+<p>The CSV files for the other example Fishery Data objects are also included in the MSEtool package. To find the location where these files are located on your machine, use the <code>DataDir</code> function:</p>
+<pre class="r"><code>list.files(DataDir(), pattern=&quot;.csv&quot;)</code></pre>
+<pre><code>## [1] &quot;Atlantic_mackerel.csv&quot;  &quot;China_rockfish.csv&quot;     &quot;Cobia.csv&quot;             
+## [4] &quot;Gulf_blue_tilefish.csv&quot; &quot;ourReefFish.csv&quot;        &quot;Red_snapper.csv&quot;</code></pre>
+<p>You can then load one of the example CSV files using the <code>XL2Data</code> function:</p>
+<pre class="r"><code>China_rockfish2 &lt;- XL2Data(DataDir(&#39;China_rockfish&#39;))</code></pre>
+<p>or the <code>new</code> function:</p>
+<pre class="r"><code>China_rockfish2 &lt;- new(&quot;Data&quot;, DataDir(&#39;China_rockfish&#39;))</code></pre>
+<p>Alternatively, you can navigate to the data directory (<code>DataDir()</code>) on your machine and examine the contents and structure of the CSV data files in MS Excel or other software.</p>
