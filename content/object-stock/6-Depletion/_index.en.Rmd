@@ -20,7 +20,7 @@ The Depletion parameter sets the current stock size relative to the historical u
 `r printDesc("D")`
 
 ### Custom Parameters
-TBD
+See [Custom Stock Parameters](/features-custom-parameters/2-stock/) for information on specifying simulation-specific values for depletion.
 
 ### Interactive App 
 Choose upper and lower bounds for D and the scale in which the depletion should be plotted. Based on these ranges, the MSEtool will display  parameter values for 5 simulations in the table. Click on any line of the table to view the distribution of values for that simulation in the figures below.

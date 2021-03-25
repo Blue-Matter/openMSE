@@ -1,0 +1,53 @@
+---
+date: "2021-02-22T11:35:01+06:00"
+title: Custom Fleet Parameters
+weight: 3
+---
+
+```{r, include=FALSE}
+library(openMSE)
+library(dplyr)
+cpars <- validcpars(show=FALSE)
+```
+
+Simulation specific values for all [Fleet](/object-fleet/) parameters can be set with a vector of length `OM@nsim` in `OM@cpars$SLOT`. 
+
+Some (silly) examples:
+
+```{r, eval=FALSE}
+# assuming nsim = 3 
+OM@cpars$LFS <- c(100, 200, 300)
+OM@cpars$qcv <- c(0.1, 0.2, 0.3)
+```
+
+The correlations are maintained when the custom parameters are sampled. See [Generating Correlated Life-History Parameters](/features-custom-parameters/6-correlated-life-history/) for more examples.
+
+```{r, include=FALSE}
+printdim <- function(var) {
+  tt <- cpars %>% filter(Var.==var)
+  tt$Dim[1]
+}
+
+```
+
+### Fishing Effort
+Simulation and year-specific values for historical fishing effort/mortality can be set with `OM@cpars$Find` with dimensions `r printdim('Find')`.
+
+Note that is `OM@cpars$Find` contains actual apical *F* values (rather than scaled F), `OM@cpars$q <- rep(1,OM@nsim)` will skip the optimization for depletion (not necessary as depletion is simply calculated from the selectivity and pattern in F). 
+
+### Selectivity and Retention
+Simulation-, age-, and year- specific selectivity pattern can be set with `OM@cpars$V` with dimensions `r printdim('V')`.
+
+Simulation-, length-, and year- specific selectivity pattern can be set with `OM@cpars$SLarray` with dimensions `r printdim('SLarray')`. Note that you must supply `OM@cpars$CAL_bins` or `OM@cpars$CAL_binsmid` as well.
+
+Simulation-, age-, and year- specific retention pattern can be set with `OM@cpars$retA` with dimensions `r printdim('retA')`.
+
+Simulation-, length-, and year- specific retention pattern can be set with `OM@cpars$retL` with dimensions `r printdim('retL')`. Note that you must supply `OM@cpars$CAL_bins` or `OM@cpars$CAL_binsmid` as well.
+
+Simulation- and year-specific discard ratio can be set with `OM@cpars$DR_y` with dimensions: `r printdim('DR_y')`.
+
+### MPAs and Spatial Closures
+Time-varying spatial closures can be modeled with `OM@cpars$MPA` with dimensions `r printdim('MPA')`. 
+
+If more than two areas are modeled, `OM@cpars$mov` must also be specified. See [Spatial & Movement](features-custom-parameters/2-stock/#spatial-movement) for details. 
+

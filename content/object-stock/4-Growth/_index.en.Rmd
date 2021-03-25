@@ -41,7 +41,8 @@ In the MSEtool the default model for individual growth is the von Bertalanffy gr
 `r printDesc("b")` 
 
 ### Custom Parameters
-TBD
+See [Custom Stock Parameters](/features-custom-parameters/2-stock/) for information on specifying specific time-varying or age-specific size-at-age.
+
 
 ### Interactive App 
 Choose upper and lower bounds for each of the growth parameters. Based on these ranges, the MSEtool will display  parameter values for 5 simulations in the table. Click on any line of the table to view the distribution of values for that simulation in the figures below. 

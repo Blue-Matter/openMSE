@@ -12,4 +12,4 @@ Other features of `openMSE` include:
 4. Parallel processing to run the simulations quicker (see `?setup`);
 5. Operating Model, Data, and MSE reports (see `?OMdoc` and `?Report`).
 
-Documentation on these and more will be added to the `openMSE` site in the future.
+

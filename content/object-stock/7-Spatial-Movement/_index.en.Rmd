@@ -26,10 +26,7 @@ The fleet allocates fishing effort across areas in response to catch rates unles
 `r printDesc("Prob_staying")`
 
 ### Custom Parameters
-
-- more than 2 areas
-- spatial closures by year
- 
+See [Custom Stock Parameters](/features-custom-parameters/2-stock/) for information on specifying a custom movement matrix for more than 2 areas.
 
 ### Interactive App 
 Choose upper and lower bounds for Size_area_1, Frac_area_1 and Prob_staying. Based on these ranges, the MSEtool will display  parameter values for 5 simulations in the table. Click on any line of the table to visualize the movement rate for that simulation in the figures below. 

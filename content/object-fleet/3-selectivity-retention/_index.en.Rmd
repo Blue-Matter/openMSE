@@ -41,7 +41,7 @@ The MSEtool can model either logistic or dome-shaped selectivity and retention c
 `r printDesc("DR")`
 
 ### Custom Parameters
-TBD
+See [Custom Fleet Parameters](/features-custom-parameters/3-fleet/) for information on specifying simulation- year- and age/length-specific selectivity and retention.
 
 ### Interactive App 
 Choose upper and lower bounds for each of the 7 selectivity parameters. Based on these ranges, the MSEtool will display  parameter values for 5 simulations in the table. Click on any line of the table to view the the probability that a fish of a given size is selected by the gear, retained if selected, landed, or killed by the gear for that simulation.

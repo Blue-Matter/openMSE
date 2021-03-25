@@ -1,0 +1,94 @@
+---
+date: "2021-02-22T11:35:01+06:00"
+title: Generating Correlated Life-History Parameters
+weight: 6
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+
+<p>The <code>LH2OM</code> function can be used to force correlation between the life-history parameters, or predict values for missing life-history parameters.</p>
+<p><a href="https://esajournals.onlinelibrary.wiley.com/doi/abs/10.1002/eap.1606">Thorson et al. (2017)</a> developed a hierarchical model, based on records available in FishBase, to predict life-history parameters for all 33,000+ fish species listed within <a href="www.fishbase.org">FishBase</a>. The <code>LH2OM</code> function uses the Thorson et al. (2017) model to generate correlated samples of the life-history parameters based on the relevant taxonomic information (Class, Family, Genus, and Species) for the species being modelled in the MSE.</p>
+<p>The approach uses taxonomic information and any available information on the life-history parameters of the species in the OM to generate predictions of the missing parameters. For example, if no knowledge exists on the four life-history parameters (<em>Linf</em>, <em>L50</em>, <em>M</em>, and <em>K</em>), the model uses the taxonomic information (first Genus and Species, and if records don’t exist for this species in FishBase, then up a taxonomic level to Family, and so on) to generate predicted values for all four parameters. If information is available for some parameters, e.g., reasonable bounds on <em>Linf</em> and <em>M</em> for the species, the hierarchical model is used to generate predictions of the corresponding <em>L50</em> and <em>K</em> values. That is, the observed ratios of <em>L50</em>/<em>Linf</em> and <em>M</em>/<em>K</em> are maintained. In this way the simulated life-history strategies are biologically realistic, and are appropriate for the species being modelled in the MSE.</p>
+<div id="predicting-all-life-history-parameters" class="section level3">
+<h3>Predicting all life-history parameters</h3>
+<p>The <code>LH2OM</code> function can be used to predict the four correlated life-history parameters (<em>Linf</em>, <em>L50</em>, <em>M</em>, and <em>K</em>) using only the available taxonomic information (only for fish species).</p>
+<p>For example, here we create an empty <code>OM</code> object, populate the <code>Species</code> slot and use the <code>LH2OM</code> function to predict the life-history parameters using hierarchical model:</p>
+<pre class="r"><code>OM &lt;- new(&quot;OM&quot;)
+OM@Species &lt;- &quot;Scomber japonicus&quot;
+OM &lt;- LH2OM(OM)</code></pre>
+<pre><code>## Predicting Linf</code></pre>
+<pre><code>## Predicting L50</code></pre>
+<pre><code>## Predicting K</code></pre>
+<pre><code>## Predicting M</code></pre>
+<pre><code>## Species match: Actinopterygii Perciformes Scombridae Scomber japonicus</code></pre>
+<p><img src="/features-custom-parameters/6-correlated-life-history/_index.en_files/figure-html/LH2OMexample1-1.png" width="672" /></p>
+<p>After using the <code>LH2OM</code> function, the <code>cpars</code> slot is populated with <code>OM@nsim</code> correlated samples of the life-history parameters:</p>
+<pre class="r"><code>str(OM@cpars)</code></pre>
+<pre><code>## List of 4
+##  $ Linf: num [1:48] 42.5 40.9 42.4 47.7 40.7 ...
+##  $ M   : num [1:48] 0.357 0.523 0.582 0.483 0.498 ...
+##  $ K   : num [1:48] 0.27 0.258 0.316 0.25 0.334 ...
+##  $ L50 : num [1:48] 28.5 24.7 23.6 22.5 27.6 ...</code></pre>
+<p>Notice also that the <code>OM@M</code> slot is no longer used <em>after</em> the <code>LH2OM</code> function has been run on the OM object:</p>
+<pre class="r"><code>OM@M</code></pre>
+<pre><code>## [1] 0 0</code></pre>
+</div>
+<div id="predicting-some-life-history-parameters" class="section level3">
+<h3>Predicting some life-history parameters</h3>
+<p>In some cases local estimates of life-history parameters may be available which are more reliable and less variable than those predicted from the FishBase database. For example, suppose that we had estimates of the natural mortality rate (<em>M</em>) for our stock that ranged between 0.3 and 0.4. We populate the <code>OM@M</code> slot with these values and use <code>LH2OM</code> to predict the correlated <em>K</em> parameter values:</p>
+<pre class="r"><code>OM &lt;- new(&quot;OM&quot;)
+OM@Species &lt;- &quot;Scomber japonicus&quot;
+OM@M &lt;- c(0.3, 0.4)
+OM &lt;- LH2OM(OM)</code></pre>
+<pre><code>## Predicting Linf</code></pre>
+<pre><code>## Predicting L50</code></pre>
+<pre><code>## Predicting K</code></pre>
+<pre><code>## Predicting K from M</code></pre>
+<pre><code>## Species match: Actinopterygii Perciformes Scombridae Scomber japonicus</code></pre>
+<p><img src="/features-custom-parameters/6-correlated-life-history/_index.en_files/figure-html/LH2OMexample2-1.png" width="672" /></p>
+</div>
+<div id="predicting-correlated-parameters" class="section level3">
+<h3>Predicting correlated parameters</h3>
+<p>If bounds for all life-history parameters are specified in the OM, the <code>LH2OM</code> function will predict values of <em>L50</em> and <em>K</em> which may fall outside of the bounds specified in the OM. For example, here we specify bounds for all life-history parameters and see that the predicted values for <em>L50</em> and <em>K</em> are mostly above and below the bounds we specied in the OM slots (vertical lines and shading). This is because the predictions of the <em>L50</em>/<em>Linf</em> and <em>M</em>/<em>K</em> ratios from the FishBase database were outside the ranges specified in the OM; in other words, the ranges specified in the OM have rarely been observed in nature.</p>
+<pre class="r"><code>OM &lt;- new(&quot;OM&quot;)
+OM@Species &lt;- &quot;Scomber japonicus&quot;
+OM@M &lt;- c(0.3, 0.4)
+OM@K &lt;- c(0.2, 0.3)
+OM@Linf &lt;- c(35, 40)
+OM@L50 &lt;- c(15, 20)
+OM &lt;- LH2OM(OM)</code></pre>
+<pre><code>## Predicting L50 from Linf</code></pre>
+<pre><code>## Predicting K from M</code></pre>
+<pre><code>## Species match: Actinopterygii Perciformes Scombridae Scomber japonicus</code></pre>
+<p><img src="/features-custom-parameters/6-correlated-life-history/_index.en_files/figure-html/LH2OMexample4-1.png" width="672" /></p>
+<p>We can force the <code>LH2OM</code> function to only return values within the <em>M</em> and <em>K</em> bounds by using the <code>filterMK</code> argument:</p>
+<pre class="r"><code>OM &lt;- new(&quot;OM&quot;)
+OM@Species &lt;- &quot;Scomber japonicus&quot;
+OM@M &lt;- c(0.3, 0.4)
+OM@K &lt;- c(0.2, 0.3)
+OM@Linf &lt;- c(35, 40)
+OM@L50 &lt;- c(15, 20)
+OM &lt;- LH2OM(OM, filterMK=TRUE)</code></pre>
+<pre><code>## Predicting L50 from Linf</code></pre>
+<pre><code>## Predicting K from M</code></pre>
+<pre><code>## Filtering predicted K within bounds: 0.2 
+## Filtering predicted K within bounds: 0.3</code></pre>
+<pre><code>## Species match: Actinopterygii Perciformes Scombridae Scomber japonicus</code></pre>
+<p><img src="/features-custom-parameters/6-correlated-life-history/_index.en_files/figure-html/LH2OMexample5-1.png" width="672" /></p>
+<p>Notice that the sampled <em>M</em> values are within the bounds specified in <code>OM@M</code> (vertical lines).</p>
+<p>Similarly, if information is also available for asymptotic length <em>Linf</em>:</p>
+<pre class="r"><code>OM &lt;- new(&quot;OM&quot;)
+OM@Species &lt;- &quot;Scomber japonicus&quot;
+OM@M &lt;- c(0.3, 0.4)
+OM@Linf &lt;- c(35, 40)
+OM &lt;- LH2OM(OM)</code></pre>
+<pre><code>## Predicting L50</code></pre>
+<pre><code>## Predicting K</code></pre>
+<pre><code>## Predicting L50 from Linf</code></pre>
+<pre><code>## Predicting K from M</code></pre>
+<pre><code>## Species match: Actinopterygii Perciformes Scombridae Scomber japonicus</code></pre>
+<p><img src="/features-custom-parameters/6-correlated-life-history/_index.en_files/figure-html/LH2OMexample3-1.png" width="672" /></p>
+</div>

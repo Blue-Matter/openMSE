@@ -30,7 +30,7 @@ The "I" parameters indicate an index of abundance, while the "B" parameters indi
 
 
 ### Custom Parameters
-TBD 
+See [Custom Obs Parameters](/features-custom-parameters/4-obs/) for information on specifying simulation- and year-specific observation error values.
 
 ### Interactive App
 

@@ -4,7 +4,7 @@ description: Examining the MSE results
 icon: fas fa-calculator-alt
 title: Calculating Performance
 type: features
-weight: 3
+weight: 7
 ---
 
 A key use of the `openMSE` packages is to evaluate the trade-offs in the performance of different potential [Management Procedures](/features-management-procedures) and to assist in the decision-making process as to which MP is most likely to satisfy the various management objectives under realistic range of uncertainty and variability in the system. 

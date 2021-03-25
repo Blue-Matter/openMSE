@@ -23,7 +23,7 @@ It is important to recognize that performance metrics can vary considerably betw
 
 `openMSE` includes a number of commonly used performance metrics and a series of functions to summarize MP performance. The MSE results can be examined either graphically in a plot or summarized in a table. Advanced users can also develop their own plotting and summary functions (see the [Custom Performance Metrics](/features-calculating-performance/custom-performance-metrics/) section for more details).
 
-Here we briefly demonstrate some of the plotting and summary functions in DLMtool. The [Calculating Performance section](/features-calculating-performance/) section describe the process of evaluating MSE results in more detail. 
+Here we briefly demonstrate some of the plotting and summary functions in `openMSE`. The [Calculating Performance section](/features-calculating-performance/) section describe the process of evaluating MSE results in more detail. 
 
 
 

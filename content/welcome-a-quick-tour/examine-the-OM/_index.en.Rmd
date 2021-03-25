@@ -28,7 +28,7 @@ ourOM@nyears # number of historical years
 ourOM@proyears # number of projection years
 ```
 
-The operating model in `openMSE` is a fully stochastic model, where each parameter is drawn from a distribution. By default, the parameters are sampled from a uniform distribution, with the lower and upper bounds for each parameter specified in the relevant slot in the `OM` object (alternative distributions, including correlated samples for multiple parameters, can be used with the [Custom Parameters](#custom-parameters) feature).  
+The operating model in `openMSE` is a fully stochastic model, where each parameter is drawn from a distribution. By default, the parameters are sampled from a uniform distribution, with the lower and upper bounds for each parameter specified in the relevant slot in the `OM` object (alternative distributions, including correlated samples for multiple parameters, can be used with the [Custom Parameters](/features-custom-parameters/) feature).  
 
 For example, the natural mortality parameter (*M*) is stored in the `M` slot:
 

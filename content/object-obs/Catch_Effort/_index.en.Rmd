@@ -28,7 +28,7 @@ Catches are sampled for both total catch (by weight). Users may add two kinds of
 `r printDesc("Ebiascv")`
 
 ### Custom Parameters
-TBD 
+See [Custom Obs Parameters](/features-custom-parameters/4-obs/) for information on specifying simulation- and year-specific observation error values.
 
 ### Interactive App
 

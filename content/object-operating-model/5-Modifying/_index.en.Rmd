@@ -1,0 +1,58 @@
+---
+date: "2021-03-24T11:35:01+06:00"
+title: Modifying an OM
+weight: 5
+---
+
+```{r, include=FALSE}
+library(openMSE)
+```
+
+It is often desirable to created modified versions of an OM for testing purposes such as series of robustness tests or to evaluate whether an MP is performing as expected under ideal conditions. 
+
+`openMSE` includes several functions for this purpose.
+
+### The `tinyErr` function 
+The `tinyErr` function can be used to remove observation, implementation, and process error, as well as any gradients in life-history parameters. For example, we first create an [Operating Model](/object-operating-model/) using some example [Stock](/object-stock/8-example-stock-objects/_index_en/), [Fleet](/object-fleet/example-objects/_index_en/), [Obs](/object-obs/example-objects/_index_en/), and [Imp](/object-imp/example-objects/_index_en/) objects : 
+
+```{r tinyerr1}
+OM <- new("OM", Albacore, Generic_IncE, Imprecise_Biased, Overages)
+```
+
+Notice that our OM includes process error in the life-history parameters, as well as observation and implementation error:
+
+```{r tinyerr2}
+OM@Perr # recruitment process error
+OM@Msd  # inter-annual variability in M
+OM@Cobs # error in observations
+OM@TACFrac # implementation error in TAC
+```
+
+The `tinyErr` function will remove all sources of uncertainty and variability:
+```{r tinyerr3}
+OM2 <- tinyErr(OM)
+OM2@Perr # no recruitment process error
+OM2@Msd  # no inter-annual variability in M
+OM2@Cobs # very low observation error
+OM2@TACFrac # no implementation error 
+```
+
+The `obs`, `imp`, and `proc` arguments to the `tinyErr` function can be used to control which sources of error and variability to remove from the OM. See `?tinyErr` for more details.
+
+
+### The `Replace` function
+The can be used to replace individual `Stock`, `Fleet`, `Obs`, or `Imp` components in an Operating Model.
+
+For example, to replace the `Stock` object in an OM we provide `Replace` with a new Stock object:
+```{r Replace1}
+ OM1 <- new("OM", Albacore, Generic_DecE, Generic_Obs, Overages)
+ OM2 <- Replace(OM1, Blue_shark, Name="Blue_shark OM based on OM1")
+```
+
+Likewise, to replace any of the other OM components:
+```{r Replace2}
+ OM1 <- new("OM", Albacore, Generic_DecE, Generic_Obs, Overages)
+ OM2 <- Replace(OM1, Generic_IncE, Name="OM1 with new Fleet")
+ OM3 <- Replace(OM2, Perfect_Info, Name="OM2 with new Obs")
+ OM4 <- Replace(OM3, Perfect_Imp, Name="OM2 with new Imp")
+```

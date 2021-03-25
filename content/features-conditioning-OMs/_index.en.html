@@ -1,0 +1,23 @@
+---
+date: "2021-01-19T11:35:01+06:00"
+description: Conditioning the observation model
+icon: fas fa-wrench
+title: Conditioning OMs with Data
+type: features
+weight: 5
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+
+<p>In this section we demonstrate how the <a href="/object-obs">Observation model</a> in an operating model can be conditioned with real data.</p>
+<p>For conditioning the population dynamics in the operating model, see the <a href="">Rapid Conditioning Model</a>.</p>
+<div id="create-example-om-and-real-data" class="section level4">
+<h4>Create Example OM and Real Data</h4>
+<p>First we create an operating model using example <a href="/object-stock/8-example-stock-objects/_index_en/">Stock</a>, <a href="/object-fleet/example-objects/_index_en/">Fleet</a>, <a href="/object-obs/example-objects/_index_en/">Obs</a>, and <a href="/object-imp/example-objects/_index_en/">Imp</a> objects. As it’s only an example, we will set only 4 simulations:</p>
+<pre class="r"><code>OM &lt;- new(&#39;OM&#39;, Albacore, Generic_IncE, Generic_Obs, Perfect_Imp, nsim=4)</code></pre>
+<p>Then we create an example of our ‘real’ fishery data (in this case data simulated from a different OM):</p>
+<pre class="r"><code>RealData &lt;- SimulatedData</code></pre>
+</div>

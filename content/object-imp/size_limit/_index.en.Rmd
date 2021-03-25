@@ -23,7 +23,7 @@ SizeLimFrac and SizeLimSD allow the user to specify the actual size of fish reta
 `r printDesc("SizeLimSD")`
  
 ### Custom Parameters
-TBD
+See [Custom Imp Parameters](/features-custom-parameters/5-imp/) for information on specifying simulation- and year-specific implementation error values.
 
 ### Interactive App 
 

@@ -1,0 +1,17 @@
+---
+date: "2021-02-22T11:35:01+06:00"
+title: Adding Data to OM
+weight: 7
+---
+
+```{r, include=FALSE}
+library(openMSE)
+```
+
+Real fishery data can be added to the `OM` with `OM@cpars$Data <- Data`.
+
+When a real [Data object](/object-data) is detected in the OM, the observation model is conditioned on this data. 
+
+You can learn more about this in the [Conditioning OMs with Data](/features-conditioning-oms/) section.
+
+In the following sub-sections we demonstrate how to condition the observation model with catch, index, composition, and life-history data. 

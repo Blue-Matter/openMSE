@@ -22,7 +22,7 @@ This section includes maturity parameters. The default parameters assume that ma
 
 
 ### Custom Parameters
-TBD
+See [Custom Stock Parameters](/features-custom-parameters/2-stock/) for information on specifying time-varying maturity.
 
 ### Interactive App 
 Choose upper and lower bounds for L_50 and L50_95. Based on these ranges, the MSEtool will display  parameter values for 5 simulations in the table. Click on any line of the table to view the distribution of values for that simulation in the figures below. 

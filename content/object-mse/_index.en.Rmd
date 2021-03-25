@@ -38,7 +38,7 @@ setup()
 
 And run the MSE using parallel processing and save the output to an object called `BSharkMSE`:
 ```{r, cache=TRUE}
-BSharkMSE <- runMSE(OM, MPs, parallel = TRUE)
+BSharkMSE <- runMSE(OM, MPs, parallel = TRUE, silent=TRUE)
 ```
 
 ```{r, include=FALSE}
@@ -50,6 +50,6 @@ The names of the slots in an object of class `MSE` can be displayed using the `s
 ```{r}
 slotNames(BSharkMSE)
 ```
-As you can see, `MSE` objects contain all of the information from the MSE, stored in `r nslots` slots.
+`MSE` objects contain all of the information from the MSE, stored in `r nslots` slots.
 
-The following sub-sections describe the contents of the MSE object.
+The following section describe the contents of the MSE object.

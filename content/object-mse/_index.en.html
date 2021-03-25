@@ -29,27 +29,7 @@ weight: 9
 ## Library DLMtool loaded.
 ## Library SAMtool loaded.</code></pre>
 <p>And run the MSE using parallel processing and save the output to an object called <code>BSharkMSE</code>:</p>
-<pre class="r"><code>BSharkMSE &lt;- runMSE(OM, MPs, parallel = TRUE)</code></pre>
-<pre><code>## Checking MPs</code></pre>
-<pre><code>## Loading operating model</code></pre>
-<pre><code>## Optimizing for user-specified movement</code></pre>
-<pre><code>## Optimizing for user-specified depletion in last historical year</code></pre>
-<pre><code>## Calculating historical stock and fishing dynamics</code></pre>
-<pre><code>## Calculating MSY reference points for each year</code></pre>
-<pre><code>## Calculating B-low reference points</code></pre>
-<pre><code>## Calculating reference yield - best fixed F strategy</code></pre>
-<pre><code>## Simulating observed data</code></pre>
-<pre><code>## Running forward projections</code></pre>
-<pre><code>## 1 / 5 Running MSE for Fratio</code></pre>
-<pre><code>## ..................................................</code></pre>
-<pre><code>## 2 / 5 Running MSE for DCAC</code></pre>
-<pre><code>## ..................................................</code></pre>
-<pre><code>## 3 / 5 Running MSE for Fdem</code></pre>
-<pre><code>## ..................................................</code></pre>
-<pre><code>## 4 / 5 Running MSE for DD</code></pre>
-<pre><code>## ..................................................</code></pre>
-<pre><code>## 5 / 5 Running MSE for matlenlim</code></pre>
-<pre><code>## ..................................................</code></pre>
+<pre class="r"><code>BSharkMSE &lt;- runMSE(OM, MPs, parallel = TRUE, silent=TRUE)</code></pre>
 <p>The names of the slots in an object of class <code>MSE</code> can be displayed using the <code>slotNames</code> function:</p>
 <pre class="r"><code>slotNames(BSharkMSE)</code></pre>
 <pre><code>##  [1] &quot;Name&quot;     &quot;nyears&quot;   &quot;proyears&quot; &quot;nMPs&quot;     &quot;MPs&quot;      &quot;nsim&quot;    
@@ -57,5 +37,5 @@ weight: 9
 ## [13] &quot;SSB&quot;      &quot;VB&quot;       &quot;FM&quot;       &quot;SPR&quot;      &quot;Catch&quot;    &quot;Removals&quot;
 ## [19] &quot;Effort&quot;   &quot;TAC&quot;      &quot;TAE&quot;      &quot;BioEco&quot;   &quot;RefPoint&quot; &quot;CB_hist&quot; 
 ## [25] &quot;FM_hist&quot;  &quot;SSB_hist&quot; &quot;Hist&quot;     &quot;PPD&quot;      &quot;Misc&quot;</code></pre>
-<p>As you can see, <code>MSE</code> objects contain all of the information from the MSE, stored in 29 slots.</p>
-<p>The following sub-sections describe the contents of the MSE object.</p>
+<p><code>MSE</code> objects contain all of the information from the MSE, stored in 29 slots.</p>
+<p>The following section describe the contents of the MSE object.</p>

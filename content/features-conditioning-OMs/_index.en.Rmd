@@ -1,0 +1,28 @@
+---
+date: "2021-01-19T11:35:01+06:00"
+description: Conditioning the observation model
+icon: fas fa-wrench
+title: Conditioning OMs with Data
+type: features
+weight: 5
+---
+
+```{r, include=FALSE}
+library(openMSE)
+```
+
+In this section we demonstrate how the [Observation model](/object-obs) in an operating model can be conditioned with real data.
+
+For conditioning the population dynamics in the operating model, see the [Rapid Conditioning Model]().
+
+#### Create Example OM and Real Data
+First we create an operating model using example [Stock](/object-stock/8-example-stock-objects/_index_en/), [Fleet](/object-fleet/example-objects/_index_en/), [Obs](/object-obs/example-objects/_index_en/), and [Imp](/object-imp/example-objects/_index_en/) objects. As it's only an example, we will set only 4 simulations:
+
+```{r}
+OM <- new('OM', Albacore, Generic_IncE, Generic_Obs, Perfect_Imp, nsim=4)
+```
+
+Then we create an example of our 'real' fishery data (in this case data simulated from a different OM):
+```{r}
+RealData <- SimulatedData
+```

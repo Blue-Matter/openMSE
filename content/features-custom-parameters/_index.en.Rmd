@@ -4,13 +4,12 @@ description: Dive under the hood for full flexibility
 icon: fas fa-cogs
 title: Custom Parameters
 type: features
-weight: 5
+weight: 4
 ---
 
 ```{r, include=FALSE}
 library(openMSE)
 ```
-
 
 By default, the operating model parameters are sampled independently from uniform distributions with the lower and upper bounds defined by the two values in the slots in the [Stock](/object-stock), [Fleet](/object-fleet), [Obs](/object-obs), and [Imp](/object-imp) objects. 
 

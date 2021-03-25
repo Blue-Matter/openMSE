@@ -1,8 +1,23 @@
 ---
-date: "2021-01-19T11:35:01+06:00"
+date: "2021-03-25T11:35:01+06:00"
 description: Simulating and projecting the fishery
 icon: fas fa-laptop-code
 title: Running the MSE
 type: features
-weight: 2
+weight: 1
 ---
+
+```{r, include=FALSE}
+library(openMSE)
+```
+
+This section provides a brief overview of running a management strategy evaluation (MSE) with `openMSE`.
+
+Running a MSE in `openMSE` requires two components:
+
+1. An [Operating Model](/object-operating-model/) that describes the characteristics of the fishery, including [stock](/object-stock/) and [fleet](/object-fleet/) dynamics, the [observation](/object-obs/) process (i.e., sampling of the data), and [implementation](/object-imp/) of the management advice.
+
+1. A set of candidate [management procedures](/features-management-procedures/) that will tested in the MSE.
+
+
+

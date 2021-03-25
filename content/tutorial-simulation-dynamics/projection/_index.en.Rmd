@@ -1,0 +1,36 @@
+---
+date: "2021-03-24T11:35:01+06:00"
+title: Simulate Projection Period
+weight: 2
+---
+
+```{r, include=FALSE}
+library(openMSE)
+library(MSEextra)
+OM <- MSEextra::Hogfish_PR_NOAA
+OM@Eobs <- c(0,0)
+OM@Ebiascv <- 0
+OM@nsim <- 3
+```
+
+The `Project` function takes the [Hist object](/object-hist) returned by the `Simulate` function, projects the fishery system forward in time, and applies the management procedures.
+
+For example:
+```{r, eval=FALSE}
+MPs <- c('AvC', 'DCAC')
+MSE <- Project(Hist, MPs=MPs)
+```
+
+As mentioned elsewhere, the `runMSE` function is a wrapper for `Simulate` and `Project`. In other words, this will result in an identical MSE object:
+
+```{r, }
+MPs <- c('AvC', 'DCAC')
+MSE <- runMSE(OM, MPs=MPs)
+```
+
+#### Branched Design
+The operating model uses a branched design, where it iteratively applies each [Management Procedure](/features-management-procedures/). This has the advantage that exactly the same process and observation error values are used for each simulation. 
+
+This means the management procedures can be compared on a simulation-by-simulation basis, and any difference in biological or yield outcomes is due only to the properties of the management procedure. 
+
+

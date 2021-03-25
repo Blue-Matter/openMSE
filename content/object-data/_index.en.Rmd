@@ -13,10 +13,7 @@ library(openMSE)
 
 `Data` is an object class that contains all of the fishery information that can be used by the Management Procedure.  You find the documentation for the `Data` class by typing:
 
-You find the documentation for the `Data` class by typing:
-```{r, eval=FALSE}
-class?Data
-```
+You find the documentation for the `Data` class by typing `class?Data` in the R console, or by visiting the [documentation page for the Data object](https://msetool.openmse.com/reference/Data-class.html).
 
 You can see from the documentation that the `Data` object, or Fishery Data object, contains many slots, and a lot of information can be stored in this object, including biological parameters, fishery statistics such as time-series of catch, and past management recommendations.
 
@@ -42,7 +39,7 @@ In contrast to the MSE, in the real world application of a Management Procedure,
 The Fishery Data object contains all of the fishery information that can be used by a Management Procedure.  By definition, many sources of data are not available in data-limited fisheries, and the Fishery Data object may not be completely populated.  
 
 Functions in `openMSE` can be used to determine which Management Procedures are available to be used given the data in the Fishery Data object, which methods cannot be used, and what data are required to make these methods available. 
-See the [Determining Feasible and Available Management Procedures section](/object-data/available/) for more details.
+See the [Determining Available Management Procedures section](/features-management-procedures/available/) for more details.
 
 
 

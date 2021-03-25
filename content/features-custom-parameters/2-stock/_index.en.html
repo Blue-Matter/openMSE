@@ -1,0 +1,58 @@
+---
+date: "2021-02-22T11:35:01+06:00"
+title: Custom Stock Parameters
+weight: 2
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+
+<p>Simulation specific values for all <a href="/object-stock/">Stock</a> parameters can be set with a vector of length <code>OM@nsim</code> in <code>OM@cpars$SLOT</code>.</p>
+<p>Some (silly) examples:</p>
+<pre class="r"><code># assuming nsim = 3 
+OM@cpars$M &lt;- c(0.1, 0.2, 0.3)
+OM@cpars$Linf &lt;- c(100, 200, 300)
+OM@cpars$K &lt;- c(0.3, 0.2, 0.1)</code></pre>
+<p>The correlations are maintained when the custom parameters are sampled. See <a href="/features-custom-parameters/6-correlated-life-history/">Generating Correlated Life-History Parameters</a> for more examples.</p>
+<div id="natural-mortality" class="section level3">
+<h3>Natural Mortality</h3>
+<p>For simulation-, age- and year-specific values, use <code>OM@cpars$M_ageArray</code> with dimensions: numeric array dim = c(nsim, maxage+1, nyears+proyears).</p>
+</div>
+<div id="discard-mortality" class="section level3">
+<h3>Discard Mortality</h3>
+<p>For simulation-, age- and year-specific discard mortality use <code>OM@cpars$Fdisc_array1</code> with dimensions: numeric array dim=c(nsim, maxage+1, nyears+proyears).</p>
+<p>For simulation-, length- and year-specific discard mortality use <code>OM@cpars$Fdisc_array2</code> with dimensions: numeric array dim=c(nsim, nLengthBins, nyears+proyears). Note that you must supply <code>OM@cpars$CAL_bins</code> or <code>OM@cpars$CAL_binsmid</code> as well.</p>
+</div>
+<div id="virgin-recruitment-r0" class="section level3">
+<h3>Virgin Recruitment (R0)</h3>
+<p>By default <code>OM@R0</code> is a single value that applies to all simulations.</p>
+<p>Simulation-specific values for R0 can be set with <code>OM@cpars$R0</code>, e.g., <code>OM@cpars$R0 &lt;- c(1000, 2000, 1000)</code>.</p>
+</div>
+<div id="recruitment-deviations" class="section level3">
+<h3>Recruitment Deviations</h3>
+<p>For simulation- and year-specific recruitment deviations, use <code>OM@cpars$Perr_y</code> with dimensions: numeric matrix dim = c(nsim, maxage+proyears+nyears).</p>
+<p>The first <code>maxage</code> values are the recruitment deviations for the age-classes in the initial year.</p>
+<p>Note that when <code>OM@cpars$Perr_y</code> is populated, <code>OM@Perr</code> and <code>OM@AC</code> are ignored.</p>
+</div>
+<div id="size-at-age" class="section level3">
+<h3>Size-at-Age</h3>
+<p>For simulation-, age- and year-specific values for mean length-at-age, use <code>OM@cpars$Len_age</code> with dimensions: numeric array dim = c(nsim, maxage+1, nyears+proyears).</p>
+<p>For simulation-, age- and year-specific values for standard deviation of length-at-age, use <code>OM@cpars$LatASD</code> with dimensions: numeric array dim = c(nsim, maxage+1, nyears+proyears).</p>
+<p>For simulation-, age- and year-specific values for mean weight-at-age, use <code>OM@cpars$Wt_age</code> with dimensions: numeric array dim = c(nsim, maxage+1, nyears+proyears).</p>
+</div>
+<div id="maturity-at-age" class="section level3">
+<h3>Maturity-at-Age</h3>
+<p>For simulation-, age- and year-specific values for maturity-at-age, use <code>OM@cpars$Mat_age</code> with dimensions: numeric array dim = c(nsim, maxage+1, nyears+proyears).</p>
+</div>
+<div id="depletion-initial-depletion" class="section level3">
+<h3>Depletion &amp; Initial Depletion</h3>
+<p>Simulation specific values for depletion can be set as a numeric vector of length <code>OM@nsim</code> in <code>OM@cpars$D</code>.</p>
+<p><a href="/tutorial-reference-points/initial_depletion/">Initial depletion</a> (depletion in first year) can be set with <code>OM@cpars$initD</code>.</p>
+</div>
+<div id="spatial-movement" class="section level3">
+<h3>Spatial &amp; Movement</h3>
+<p>Custom movement matrix can be included with <code>OM@cpars$mov</code> with dimensions: numeric array dim = c(nsim, maxage+1, narea, narea) OR dim = c(nsim, maxage+1, narea, narea, nyears+proyears).</p>
+<p>Custom area size (for more than 2 areas) can be set with <code>OM@cpars$Asize</code> with dimensions: numeric matrix dim = c(nsim, narea).</p>
+</div>

@@ -1,0 +1,29 @@
+---
+date: "2021-03-23T15:18:01+06:00"
+title: Conditioning with Additional Indices
+weight: 3
+---
+
+The [Data object](/object-data) has slots for indices of total (`Data@Ind`), spawning (`Data@SpInd`), and vulnerable biomass (`Data@VInd`). In the MSE, these slots are populated with simulated data based on the [relevant observation model parameters](/object-obs/indices/). We saw in the previous section how to condition the observation model in the OM with real index data. 
+
+If users wish to use more than these three indices (e.g. multiple indices of total abundance), or have greater control over the simulated indices (e.g., index of numbers rather than biomass), they can use the slots for [Additional Indices](/tutorial-populating-data/timeseries/).
+
+#### Additional Index Slots
+There are five slots in the [Data object](/object-data) related to additional indices:
+
+* `Data@AddInd`: An array with dimensions `c(1, n.ind, OM@nyears`), where `n.ind` is the number of additional indices. All indices must be length `OM@nyears`, although there can be gaps in the indices.
+
+* `Data@AddIndType`: A numeric vector of length `n.ind` specifying if the simulated index should be generated from total biomass (1; default), spawning biomass (2), or vulnerable biomass (3).
+
+* `Data@AddIunits`: A numeric vector of length `n.ind` specifying if the simulated index should be generated from biomass (1; default) or numbers (0).
+
+* `Data@AddIndV`: Vulnerability-at-age schedules for the additional indices. Array with dimensions `c(1, n.ind, OM@maxage+1`). 
+
+* `Data@CV_AddInd`: Coefficient of variation for additional indices. Array of same dimensions as `Data@AddInd`.
+
+See the [Populating the Data Object](/tutorial-populating-data/timeseries/) section for details on entering fishery data into these slots.
+
+#### Condition Observation Model with Additional Indices
+If a Data object with the additional indices slots populated is included in an OM (`OM@cpars$Data`), the additional indices will be included in the simulated data for the [historical spool-up period](/tutorial-simulation-dynamics/spool-up/) and continue to be generated in the [projection period](/tutorial-simulation-dynamics/projection/) using the same conditioning methods described in [Conditioning with Index Data](/features-conditioning-oms/indices/).
+
+If the additional indices slot (`Data@AddInd`) does not contain any data, the additional indices will not be generated; i.e., the slot `AddInd` in the simulated data provided to the MPs will be empty.

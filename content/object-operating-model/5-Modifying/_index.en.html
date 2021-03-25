@@ -1,0 +1,58 @@
+---
+date: "2021-03-24T11:35:01+06:00"
+title: Modifying an OM
+weight: 5
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+
+<p>It is often desirable to created modified versions of an OM for testing purposes such as series of robustness tests or to evaluate whether an MP is performing as expected under ideal conditions.</p>
+<p><code>openMSE</code> includes several functions for this purpose.</p>
+<div id="the-tinyerr-function" class="section level3">
+<h3>The <code>tinyErr</code> function</h3>
+<p>The <code>tinyErr</code> function can be used to remove observation, implementation, and process error, as well as any gradients in life-history parameters. For example, we first create an <a href="/object-operating-model/">Operating Model</a> using some example <a href="/object-stock/8-example-stock-objects/_index_en/">Stock</a>, <a href="/object-fleet/example-objects/_index_en/">Fleet</a>, <a href="/object-obs/example-objects/_index_en/">Obs</a>, and <a href="/object-imp/example-objects/_index_en/">Imp</a> objects :</p>
+<pre class="r"><code>OM &lt;- new(&quot;OM&quot;, Albacore, Generic_IncE, Imprecise_Biased, Overages)</code></pre>
+<p>Notice that our OM includes process error in the life-history parameters, as well as observation and implementation error:</p>
+<pre class="r"><code>OM@Perr # recruitment process error</code></pre>
+<pre><code>## [1] 0.15 0.30</code></pre>
+<pre class="r"><code>OM@Msd  # inter-annual variability in M</code></pre>
+<pre><code>## [1] 0.0 0.1</code></pre>
+<pre class="r"><code>OM@Cobs # error in observations</code></pre>
+<pre><code>## [1] 0.2 0.6</code></pre>
+<pre class="r"><code>OM@TACFrac # implementation error in TAC</code></pre>
+<pre><code>## [1] 1.1 1.2</code></pre>
+<p>The <code>tinyErr</code> function will remove all sources of uncertainty and variability:</p>
+<pre class="r"><code>OM2 &lt;- tinyErr(OM)</code></pre>
+<pre><code>## Removing all Observation Error</code></pre>
+<pre><code>## Removing all Implementation Error</code></pre>
+<pre><code>## Removing all Process Error</code></pre>
+<pre><code>## Removing all Gradients</code></pre>
+<pre class="r"><code>OM2@Perr # no recruitment process error</code></pre>
+<pre><code>## [1] 0 0</code></pre>
+<pre class="r"><code>OM2@Msd  # no inter-annual variability in M</code></pre>
+<pre><code>## [1] 0 0</code></pre>
+<pre class="r"><code>OM2@Cobs # very low observation error</code></pre>
+<pre><code>## [1] 0.00 0.05</code></pre>
+<pre class="r"><code>OM2@TACFrac # no implementation error </code></pre>
+<pre><code>## [1] 1 1</code></pre>
+<p>The <code>obs</code>, <code>imp</code>, and <code>proc</code> arguments to the <code>tinyErr</code> function can be used to control which sources of error and variability to remove from the OM. See <code>?tinyErr</code> for more details.</p>
+</div>
+<div id="the-replace-function" class="section level3">
+<h3>The <code>Replace</code> function</h3>
+<p>The can be used to replace individual <code>Stock</code>, <code>Fleet</code>, <code>Obs</code>, or <code>Imp</code> components in an Operating Model.</p>
+<p>For example, to replace the <code>Stock</code> object in an OM we provide <code>Replace</code> with a new Stock object:</p>
+<pre class="r"><code> OM1 &lt;- new(&quot;OM&quot;, Albacore, Generic_DecE, Generic_Obs, Overages)
+ OM2 &lt;- Replace(OM1, Blue_shark, Name=&quot;Blue_shark OM based on OM1&quot;)</code></pre>
+<pre><code>## Replacing sub-model: Stock</code></pre>
+<p>Likewise, to replace any of the other OM components:</p>
+<pre class="r"><code> OM1 &lt;- new(&quot;OM&quot;, Albacore, Generic_DecE, Generic_Obs, Overages)
+ OM2 &lt;- Replace(OM1, Generic_IncE, Name=&quot;OM1 with new Fleet&quot;)</code></pre>
+<pre><code>## Replacing sub-model: Fleet</code></pre>
+<pre class="r"><code> OM3 &lt;- Replace(OM2, Perfect_Info, Name=&quot;OM2 with new Obs&quot;)</code></pre>
+<pre><code>## Replacing sub-model: Obs</code></pre>
+<pre class="r"><code> OM4 &lt;- Replace(OM3, Perfect_Imp, Name=&quot;OM2 with new Imp&quot;)</code></pre>
+<pre><code>## Replacing sub-model: Imp</code></pre>
+</div>

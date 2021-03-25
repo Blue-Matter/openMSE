@@ -4,7 +4,7 @@ description: Methods for determining management action
 icon: far fa-wave-square
 title: Management Procedures
 type: features
-weight: 1
+weight: 2
 ---
 
 A key purpose of an MSE is to compare the performance of alternative management approaches, or ***Management Procedures*** to identify the method that is most likely to meet the management objectives for a fishery.
@@ -19,7 +19,4 @@ To be included in an MSE, a Management Procedure must be reproducible and able t
 
 The MPs are functions of class `MP` that take an object of class [`Data`](/object-data) and return an object of class [`Rec`](/object-rec) which contains the management recommendation(s).
 
-The first two arguments of an MP are always: 
 
-1. `x` - the simulation number;
-2. `Data` - a [`Data object`](/object-data) containing either `OM@nsim` sets of simulated data, or a set of real fishery data (`x` is always one in this case).

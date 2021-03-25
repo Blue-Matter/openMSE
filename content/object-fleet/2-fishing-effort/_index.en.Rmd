@@ -34,7 +34,7 @@ The width of the upper and lower bounds can be used to indicate the level of con
 `r printDesc("Esd")`
 
 ### Custom Parameters
-TBD
+See [Custom Fleet Parameters](/features-custom-parameters/3-fleet/) for information on specifying simulation- and year-specific values for historical fishing effort/mortality.
 
 ### Interactive App 
 Choose from one of three historical effort patterns. 

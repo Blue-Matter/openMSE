@@ -36,7 +36,7 @@ weight: 5
 <pre><code>## ..................................................</code></pre>
 <p>The <code>runMSE</code> function first runs the historical simulations (the spool-up period) and then runs the MSE for the specified MPs. Messages are printed in the console to show the progress.</p>
 <p>The <code>runMSE</code> function returns an object of class <code>MSE</code>, an S4 object with all of the information from the MSE run.</p>
-<p>For example, the slot <code>SB_SBMSY</code> is a 3-dimensional array with the spawning biomass (<span class="math inline">\(\text{SB}\)</span>) relative to the spawning biomass corresponding to maximum sustainable yield (<span class="math inline">\(\text{SB}_{\text{MSY}}\)</span>; see <a href="/tutorial-reference_points/">Reference Points</a> for more details) for each simulation, MP, and projection year:</p>
+<p>For example, the slot <code>SB_SBMSY</code> is a 3-dimensional array with the spawning biomass (<span class="math inline">\(\text{SB}\)</span>) relative to the spawning biomass corresponding to maximum sustainable yield (<span class="math inline">\(\text{SB}_{\text{MSY}}\)</span>; see <a href="/tutorial-reference-points/">Reference Points</a> for more details) for each simulation, MP, and projection year:</p>
 <pre class="r"><code>class(MSE@SB_SBMSY)</code></pre>
 <pre><code>## [1] &quot;array&quot;</code></pre>
 <pre class="r"><code>dim(MSE@SB_SBMSY)</code></pre>

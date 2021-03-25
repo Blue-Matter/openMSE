@@ -26,7 +26,7 @@ The `runMSE` function first runs the historical simulations (the spool-up period
 
 The `runMSE` function returns an object of class `MSE`, an S4 object with all of the information from the MSE run.
 
-For example, the slot `SB_SBMSY` is a 3-dimensional array with the spawning biomass ($\text{SB}$) relative to the spawning biomass corresponding to maximum sustainable yield ($\text{SB}_{\text{MSY}}$; see [Reference Points](/tutorial-reference_points/) for more details) for each simulation, MP, and projection year:
+For example, the slot `SB_SBMSY` is a 3-dimensional array with the spawning biomass ($\text{SB}$) relative to the spawning biomass corresponding to maximum sustainable yield ($\text{SB}_{\text{MSY}}$; see [Reference Points](/tutorial-reference-points/) for more details) for each simulation, MP, and projection year:
 
 ```{r}
 class(MSE@SB_SBMSY)

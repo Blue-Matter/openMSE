@@ -1,0 +1,119 @@
+---
+date: "2021-03-24T11:35:01+06:00"
+title: Simulate Historical Fishery
+weight: 1
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+
+<p>We’ll use the <code>Hogfish_PR_NOAA</code> OM from the <a href="/om-library/">OM library</a> to demonstrate the simulation of the fishery.</p>
+<pre class="r"><code># download MSEextra from GitHub
+MSEextra()
+
+library(MSEextra)
+OM &lt;- MSEextra::Hogfish_PR_NOAA</code></pre>
+<p>For demonstration purposes, we will set <code>nsim</code> to 3:</p>
+<pre class="r"><code>OM@nsim &lt;- 3</code></pre>
+<p>The <code>Simulate</code> function simulates the historical fishery and returns an object of <a href="/object-hist/">class <code>Hist</code></a>:</p>
+<pre class="r"><code>Hist &lt;- Simulate(OM, silent=TRUE)</code></pre>
+<p>We will step through the key calculations that take place inside the <code>Simulate</code> function.</p>
+<div id="ensuring-results-are-reproducible" class="section level4">
+<h4>Ensuring Results are Reproducible</h4>
+<p>To ensure the simulations are consistent across machines, <code>OM@seed</code> is used to set the seed for the random number generator:</p>
+<pre class="r"><code>set.seed(OM@seed)</code></pre>
+</div>
+<div id="sampling-custom-parameters" class="section level4">
+<h4>Sampling Custom Parameters</h4>
+<p>Next <code>nsim</code> values of the OM parameters are sampled from the operating model.</p>
+<p>First, the <a href="/features-custom-parameters/">Custom Parameters</a> slot (<code>OM@cpars</code>) is sampled:</p>
+<pre class="r"><code>SampCpars &lt;- SampleCpars(cpars=OM@cpars, OM@nsim)</code></pre>
+<pre><code>## No valid names found in custompars. Ignoring `OM@cpars`</code></pre>
+<p><code>OM@cpars</code> is not used in this operating model, so <code>SampCpars</code> is a empty list. If <code>OM@cpars</code> was populated with <a href="/features-custom-parameters/1-validcpars/">Valid Custom Parameters</a> <code>nsim</code> samples of each custom parameter would be drawn from <code>OM@cpars</code>.</p>
+<p><a href="/features-custom-parameters/6-correlated-life-history/">Correlations</a> are maintained when sampling from <code>OM@cpars</code>.</p>
+</div>
+<div id="sampling-om-objects" class="section level4">
+<h4>Sampling OM Objects</h4>
+<p>Next, the <a href="/object-stock/">Stock</a>, <a href="/object-fleet">Fleet</a>, <a href="/object-obs">Obs</a>, and <a href="/object-imp">Imp</a> parameters are sampled from the OM:</p>
+<pre class="r"><code>StockPars &lt;- SampleStockPars(OM, cpars=SampCpars)</code></pre>
+<pre><code>## Note: Maximum age ( 23 ) is lower than assuming 1% of cohort survives 
+## to maximum age ( 32 )</code></pre>
+<pre><code>## Optimizing for user-specified movement</code></pre>
+<pre class="r"><code>FleetPars &lt;- SampleFleetPars(OM, StockPars, cpars=SampCpars)
+ObsPars &lt;- SampleObsPars(OM, cpars=SampCpars, Stock=StockPars)
+ImpPars &lt;- SampleImpPars(OM, cpars=SampCpars)</code></pre>
+<p>A few things to notice here:</p>
+<ul>
+<li><p>There is a message alerting us that <code>OM@maxage</code> is lower than the age where about 1% of a cohort would survive to. This is usually not a problem because the model groups all age-classes beyond <code>OM@maxage</code> into a <a href="/object-stock/2-natural-mortality/">plus-group</a>. But given there is little computational cost in increasing maximum age, users may wish to set <code>OM@maxage &lt;- 32</code> so that more age-classes are explicitly modeled.</p></li>
+<li><p><code>SampCpars</code> is provided to each of the functions that sample the Stock, Fleet, Obs, and Imp parameters. Parameters that are included in the <a href="/features-custom-parameters/">Custom Parameters</a> are used and these parameters are not sampled from the OM object.</p></li>
+<li><p><code>StockPars</code> contains the biological parameters for the spool-up and projection periods, e.g., <code>StockPars$M_ageArray</code> is
+an array with M-at-age with dimensions <code>c(OM@nsim, OM@maxage+1, OM@nyears+OM@proyears)</code>.</p></li>
+<li><p><code>FleetPars</code> contains the exploitation parameters for the spool-up period (e.g, <code>FleetPars$Find</code>) and the selectivity/retention parameters for the spool-up and projection period, e.g., <code>FleetPars$V</code> is an array with vulnerability-at-age with dimensions <code>c(OM@nsim, OM@maxage+1, OM@nyears+OM@proyears)</code>. The selectivity and retention parameters may be updated in the projection period if an MP changes the selectivity/retention pattern.</p></li>
+<li><p><code>ObsPars</code> contains the observation parameters for all years (e.g., <code>ObsPars$Cobs_y</code>) is a matrix with dimensions <code>c(OM@nsim, OM@nyears+OM@proyears</code>) with catch observation error.</p></li>
+<li><p><code>ImpPars</code> contains the implementation error for the projection years; e.g., <code>ImpPars$TAC_y</code> is a matrix with dimensions <code>c(OM@nsim, OM@proyears</code>) with TAC implementation error.</p></li>
+</ul>
+</div>
+<div id="calculate-unfished-reference-points" class="section level4">
+<h4>Calculate Unfished Reference Points</h4>
+<p>The <a href="/tutorial-reference-points/depletion/">unfished reference points</a> are calculated by running the simulation model with no fishing mortality and no recruitment deviations.</p>
+<p>The equilibrium unfished reference points are calculated for each year. For example, the annual unfished spawning stock biomass (SSB0) is calculated for the 75 historical years and the 40 projection years:</p>
+<pre class="r"><code>matplot(t(Hist@Ref$ByYear$SSB0), type=&quot;l&quot;, xlab=&quot;Year&quot;, ylab=&quot;SSB0&quot;, lwd=2)</code></pre>
+<p><img src="/tutorial-simulation-dynamics/spool-up/_index.en_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p>The small amount of inter-annual variability in <code>SSB0</code> is caused by inter-annual variability in the life-history parameters (e.g., <a href="/object-stock/2-natural-mortality/#msd"><code>OM@Msd</code></a>). The inter-annual variability in <code>SSB0</code> would be greater if there was more variability in <code>OM@Msd</code>, <code>OM@Linfsd</code>, and <code>OM@Ksd</code>.</p>
+<p>The SSB0 used to determine depletion is calculated by averaging <code>Hist@Ref$ByYear$SSB0</code> over several years. See <a href="/tutorial-reference-points/depletion/">Depletion and Unfished Reference Points</a> for details.</p>
+<p>Dynamic unfished reference points (i.e., including recruitment deviations) are also calculated and returned in <code>Hist@Ref$Dynamic_Unfished</code>. For example, the dynamic unfished spawning stock biomass is:</p>
+<pre class="r"><code>matplot(t(Hist@Ref$Dynamic_Unfished$SSB0), type=&quot;l&quot;, xlab=&quot;Year&quot;,
+        ylab=&quot;Dynamic SSB0&quot;, lwd=2)</code></pre>
+<p><img src="/tutorial-simulation-dynamics/spool-up/_index.en_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+</div>
+<div id="calculate-msy-reference-points" class="section level4">
+<h4>Calculate MSY Reference Points</h4>
+<p>Maximum sustainable yield (MSY) reference points are calculated using the information in <code>StockPars</code> and <code>FleetPars</code>. MSY reference points are calculated in each year, assuming equilbrium conditions (no recruitment deviations) and the life-history and selectivity parameters in each year.</p>
+<p>For example,</p>
+<pre class="r"><code>matplot(t(Hist@Ref$ByYear$MSY), type=&quot;l&quot;, xlab=&quot;Year&quot;, ylab=&quot;MSY&quot;, lwd=2)</code></pre>
+<p><img src="/tutorial-simulation-dynamics/spool-up/_index.en_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p>See <a href="/tutorial-reference-points/msy_ref_points/">MSY Reference Points</a> for more details.</p>
+</div>
+<div id="optimize-for-depletion" class="section level4">
+<h4>Optimize for Depletion</h4>
+<p><code>openMSE</code> was designed to allow easy access to MSE modeling for data-limited fisheries. By definition, historical fishing mortality and current depletion is not known in a data-limited fishery.</p>
+<p>Instead, the general pattern in fishing mortality is specified in the <a href="/object-fleet/2-fishing-effort/">Fleet Object</a> and a range of depletion values in the <a href="/object-stock/6-depletion/">Stock Object</a> (or in <a href="/features-custom-parameters/">Custom Parameters</a> if distributions other than uniform are required).</p>
+<p>For each simulation, the model uses the relevant parameters (relative pattern in fishing mortality, size-at-age in each year, selectivity, recruitment deviations, etc) and optimizes for the catchability coefficient <em>q</em> so that the depletion at the end of the spool-up period matches the value drawn from <code>OM@D</code>.</p>
+<p>We demonstrate with an example for a single simulation:</p>
+<pre class="r"><code>sim &lt;- 1
+# Depletion value for this simulation
+Hist@SampPars$Stock$Depletion[sim]</code></pre>
+<pre><code>## [1] 0.06173859</code></pre>
+<pre class="r"><code># SSB time-series (sum over areas)
+SSB &lt;- rowSums(Hist@TSdata$SBiomass[sim,,])
+
+# SSB0 for this sim
+SSB0 &lt;- Hist@Ref$ReferencePoints$SSB0[sim]
+
+plot(1:OM@nyears, SSB/SSB0, ylim=c(0, 1), lwd=2, 
+     xlab=&quot;Year&quot;, ylab=&quot;Depletion (SB/SB0)&quot;, type=&quot;l&quot;, las=1,
+     bty=&quot;n&quot;)
+abline(h=Hist@SampPars$Stock$Depletion[sim], lty=3)</code></pre>
+<p><img src="/tutorial-simulation-dynamics/spool-up/_index.en_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>Stocks where historical fishing mortality and depletion are known can skip this step by specifying the apical fishing mortality in <code>OM@cpars$Find</code> and setting catchability coefficient to 1 (<code>OM@cpars$qs &lt;- rep(1, OM@nsim)</code>). See <a href="/features-custom-parameters/3-fleet/#fishing-effort">Custom Fleet Parameters</a> for more details.</p>
+</div>
+<div id="calculate-reference-yield" class="section level4">
+<h4>Calculate Reference Yield</h4>
+<p>Reference yield is calculated by projecting the population forward from the end of the spool-up period for <code>OM@proyears</code> with a fixed F policy and optimizing for the F that results in the highest long-term yield.</p>
+<p>In other words, reference yield is the highest yield obtainable for a given set of OM parameters under a policy of constant fishing mortality.</p>
+<p>Reference yield is returned in <code>Hist@Ref$ReferencePoints$RefY</code>. It is usually reasonably close to MSY (i.e., <code>Hist@Ref$ReferencePoints$MSY</code>) but as MSY is an equilibrium value, it does not account for the impact of recruitment deviations in the simulations.</p>
+<p>Reference yield can be useful for standardizing the yield outcomes of management procedures. In data-limited fisheries, the OM is often scale-less (i.e., <code>OM@R0</code> is in arbitrary units) and absolute yield outcomes may not be meaningful.</p>
+<p>Yield relative to reference yield can be more useful. If your management procedure results in yield outcomes that are close to reference yield, it means it is performing (in terms of long-term yield at least) pretty close to the optimal fixed-F policy. Can’t do a lot better than that!</p>
+</div>
+<div id="calculate-catch-and-removals" class="section level4">
+<h4>Calculate Catch and Removals</h4>
+<p>Catch is calculated using the Baranov equation (i.e., assuming continuous fishing):</p>
+<p><span class="math display">\[ C_y = \frac{F_y}{Z_y} N_y(1-e^{-Z_y})\]</span></p>
+</div>
+<div id="generate-data" class="section level4">
+<h4>Generate Data</h4>
+<p>Fishery data is generated by applying the <a href="/object-obs/">observation model</a> to the simulated fishery dynamics (e.g., simulated true catches, etc).</p>
+<p>If the OM has been conditioned with data the <a href="/object-data/">Data Object</a> provided in <code>OM@cpars$Data</code> will be used in the simulations. See <a href="features-conditioning-oms/">Conditioning OMs with Data</a> for more details.</p>
+</div>

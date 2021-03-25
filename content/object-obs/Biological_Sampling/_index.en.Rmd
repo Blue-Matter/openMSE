@@ -37,7 +37,7 @@ The parameters in this section are used to describe potential bias in estimated 
 `r printDesc("LFSbiascv")`
 
 ### Custom Parameters
-TBD 
+See [Custom Obs Parameters](/features-custom-parameters/4-obs/) for information on specifying simulation- and year-specific observation error values.
 
 ### Interactive App
 

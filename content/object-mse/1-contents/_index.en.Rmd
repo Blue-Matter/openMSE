@@ -1,59 +1,23 @@
 ---
-date: "2021-02-22T15:18:01+06:00"
-title: The First Six Slots
+date: "2021-03-24T15:18:01+06:00"
+title: Slots in the MSE object
 weight: 1
 ---
 
 ```{r,include=FALSE}
-
-BSharkMSE <- readRDS("../../../../BSharkMSE.rda")
-
 library(openMSE)
-printDesc <- function(slot, class="MSE") {
-  Desc <- get(paste0(class, "Description"))
-  Desc$Description[which(Desc$Slot == slot)]
+```
+
+The `MSE` object has `r length(slotNames('MSE'))` slots. As it is an [S4 object](/faq/#what-are-s4-objects?) the slots are accessed with the `@` symbol, e.g., `MSE@Name`.
+
+```{r, results='asis', echo=FALSE}
+for (i in 1:nrow(MSEDescription)) {
+  slot <- MSEDescription[i,1]
+  desc <- MSEDescription[i,2]
+  if (nchar(slot)>0) {
+    cat("###", slot, '\n\n')
+  }
+  cat(desc, '\n\n')
 }
+
 ```
-
-The first six slots contain information on the structure of the MSE.
-
-### Name
-`r printDesc("Name")`
-
-### nyears
-`r printDesc("nyears")`
-
-For example the first slot (`Name`),  is a combination of the names of the `Stock`, `Fleet`, and `Obs` objects that were used in the MSE:
-
-```{r}
-BSharkMSE@Name
-```
-
-### proyears
-`r printDesc("proyears")`
-
-```{r}
-BSharkMSE@proyears
-```
-
-### nMPs
-`r printDesc("nMPs")`
-
-```{r}
-BSharkMSE@nMPs
-```
-
-### MPs
-`r printDesc("MPs")`
-
-```{r}
-BSharkMSE@MPs
-```
-
-### nsim
-`r printDesc("nsim")`
-
-```{r}
-BSharkMSE@nsim
-```
-

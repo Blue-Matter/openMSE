@@ -27,9 +27,7 @@ logo = "images/OpenMSE.png"
 logo_white = "images/OpenMSE_white.png"
 # when logo is empty, it will shown your site title
 
-intro_text = """This website is in development and will be updated soon.
-
-"""
+intro_text = ""
 
 # customize color
 primary_color = "#02007e"

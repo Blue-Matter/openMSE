@@ -1,0 +1,66 @@
+---
+date: "2021-03-23T15:18:01+06:00"
+title: Conditioning with Life-History Information
+weight: 5
+---
+
+```{r, include=FALSE}
+library(openMSE)
+OM <- new('OM', Albacore, Generic_IncE, Generic_Obs, Perfect_Imp, nsim=4)
+RealData <- SimulatedData
+
+printDesc <- function(slot, class="Data") {
+  Desc <- get(paste0(class, "Description"))
+  Desc$Description[which(Desc$Slot == slot)]
+}
+```
+
+By default, the life-history information provided to the [Management Procedures](/features-management-procedures/) is determined by the real life-history values specified in the OM (e.g., `OM@Linf`) and the [bias specified in the observation model](/object-obs/biological_sampling/). 
+
+For example:
+
+```{r}
+OM <- new('OM', Albacore, Generic_IncE, Generic_Obs, Perfect_Imp, nsim=4)
+Hist <- Simulate(OM, silent=TRUE)
+
+# OM Linf values in last historical year
+Hist@SampPars$Stock$Linfarray[,OM@nyears]
+
+# Linf values provided to MP in this year (ie in simulated Data)
+Hist@Data@vbLinf
+
+# Observation error applied to OM values
+Hist@SampPars$Stock$Linfarray[,OM@nyears] * Hist@SampPars$Obs$Linfbias
+```
+
+Users can provide specific values for the life-history parameters by including them in the Data object. We demonstrate here with `Linf`, but the same concept applies for all life-history parameters (`M`, `K`, `L50`, etc).
+
+#### Add Life-History Data to OM
+
+Create a blank [Data object](/object-data):
+```{r}
+Data <- new('Data')
+```
+
+Add our 'observed` values for `Linf` - i.e., the values we wish to provide to the MPs:
+```{r}
+Data@vbLinf <- 100
+```
+
+Add `Data` to `OM`:
+```{r}
+OM@cpars$Data <- Data
+```
+
+Simulate the [spool-up period](/tutorial-simulation-dynamics/spool-up/) (now with Data included in the OM):
+```{r}
+Hist <- Simulate(OM, silent=TRUE)
+```
+
+Our 'observed' life-history parameters are now provided to the MPs:
+```{r}
+Hist@Data@vbLinf
+```
+
+Similar to conditioning with other data, when real life-history values are provided in the `Data` object, the observation parameters (e.g., `Obs@Linfbiascv`) are ignored.
+

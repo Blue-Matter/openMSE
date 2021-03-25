@@ -1,0 +1,19 @@
+---
+date: "2021-03-25T11:35:01+06:00"
+title: Operating Models
+weight: 1
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+
+<p><code>openMSE</code> is designed to be flexible and extensible. Users create <a href="/features-custom-parameters/">fully customized</a> operating models, or <a href="/om-data-rich/">import operating models from stock assessments</a>.</p>
+<p><code>openMSE</code> includes a <a href="/om-library/">library</a> of existing operating models that can be used or modified, as well as a range of <a href="/object-stock/8-example-stock-objects/_index_en/">example</a> OM components for quickly building operating models.</p>
+<p>The OMs in the <a href="/om-library/">OM library</a> are available in the <code>MSEextra</code> package:</p>
+<pre class="r"><code># download MSEextra from Github
+MSEextra()</code></pre>
+<p>We’ll use the <code>Lane_Snapper_GOM_NOAA</code> OM from <code>MSEextra</code> as an example:</p>
+<pre class="r"><code>library(MSEextra)
+OM &lt;- Lane_Snapper_GOM_NOAA</code></pre>

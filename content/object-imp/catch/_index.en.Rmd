@@ -24,7 +24,7 @@ TACFrac and TACSD allow the user to specify the actual catches that are taken as
  
 
 ### Custom Parameters
-TBD
+See [Custom Imp Parameters](/features-custom-parameters/5-imp/) for information on specifying simulation- and year-specific implementation error values.
 
 ### Interactive App 
 

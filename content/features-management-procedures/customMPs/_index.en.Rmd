@@ -1,7 +1,215 @@
 ---
 date: "2021-03-23T15:18:01+06:00"
 title: Custom Management Procedures
-weight: 1
+weight: 5
 ---
  
-Coming soon!
+```{r, include=FALSE}
+library(openMSE)
+Data <-  SimulatedData
+```
+
+
+`openMSE` was designed to be extensible in order to promote the development of new Management Procedures. In this section we design a series of new Management Procedures that include spatial controls and input controls in the form of size limit restrictions. 
+
+If you wish, you can also add your newly developed MPs to the package so they are accessible to other uses. Of course you will be credited as the author. Please [contact us](/contact/) for details how to do this. 
+
+As described in the [Populating the Data object](/tutorial-populating-data/) section, real data are stored in a class of objects `Data`.
+
+The [`runMSE` function](/features-running-mse/) generates simulated data and puts it in exactly the same format as real data. This is highly desirable because
+it means that the same MP code that is tested in the MSE can then be used to make management recommendations. 
+
+If an MP is coded incorrectly it may catastrophically fail MSE testing and will therefore be excluded from use in management. 
+
+### A Constant Catch MP 
+We've now got a better idea of the [anatomy of an MP](/features-management-procedures/anatomy/). It is a function that must accept three arguments (we will ignore `plot` for now):
+
+* x: a simulation number 
+* Data: an object of class `Data` 
+* reps: the MP can provide a sample of TACs `reps` long. 
+
+Let's have a go at designing our own custom MP that can work with `openMSE` We're going to develop an MP that sets the TAC as the '3rd highest catch'.
+
+We decide to call our function `THC` 
+
+```{r}
+THC<-function(x, Data, reps){
+  
+  # Find the position of third highest catch
+  
+  THCpos<-order(Data@Cat[x,],decreasing=T)[3]
+  
+  # Make this the mean TAC recommendation
+  
+  THCmu<-Data@Cat[x,THCpos]
+  
+  # A sample of the THC is taken according to a fixed CV of 10%
+  TACs <- THCmu * exp(rnorm(reps, -0.1^2/2, 0.1)) # this is a lognormal distribution
+
+  Rec <- new("Rec") # create a 'Rec'object
+  Rec@TAC <- TACs # assign the TACs to the TAC slot
+  Rec # return the Rec object
+}
+```
+
+To recap that's just seven lines of code: 
+
+```{r}
+THC<-function(x, Data, reps){
+  THCpos<-order(Data@Cat[x,],decreasing=T)[3]
+  THCmu<-Data@Cat[x,THCpos]
+  Rec <- new("Rec")
+  Rec@TAC <- THCmu * exp(rnorm(reps, -0.1^2/2, 0.1))
+  Rec
+}
+```
+
+We can quickly test our new MP for the example Data object
+```{r}
+THC(x=1,Data,reps=10)@TAC
+```
+
+Now that we know it works, to make the function compatible with the DLMtool package we have to assign it the class 'MP' so that DLMtool recognizes the function as a management procedure
+
+```{r}
+class(THC)<-"MP"
+```
+
+
+### A More Complex MP
+The THC MP is simple and frankly not a great performer (depending on depletion, life-history, adherence to TAC recommendations).
+
+Let's innovate and create a brand new MP that could suit a catch-data-only stock like Indian Ocean Longtail tuna!
+
+It may be possible to choose a single fleet and establish a catch rate that is 'reasonable' or 'fairly productive' relative to current catch rates. This could be for example, 40% of the 
+highest catch rate observed for this fleet or, for example, 150% of current cpue levels.
+
+It is straightforward to design an MP that will aim for this target index level by making adjustments to the TAC.
+
+We will call this MP `TCPUE`, short for target catch per unit effort:
+
+```{r}
+TCPUE<-function(x,Data,reps=100){
+  
+  mc<-0.05                             # max change in TAC 
+  frac<-0.3                            # target index is 30% of max
+  nyears<-length(Data@Ind[x,])         # number of years of data
+  
+  smoothI<-smooth.spline(Data@Ind[x,]) # smoothed index  
+  targetI<-max(smoothI$y)*frac         # target 
+  
+  currentI<-mean(Data@Ind[x,(nyears-2):nyears]) # current index
+  
+  ratio<-currentI/targetI              # ratio currentI/targetI
+  
+  if(ratio < (1 - mc)) ratio <- 1 - mc # if currentI < targetI
+  if(ratio > (1 + mc)) ratio <- 1 + mc # if currentI > targetI
+ 
+  Rec <- new("Rec")
+  Rec@TAC <- Data@MPrec[x] * ratio * exp(rnorm(reps, -Data@CV_Ind[x]^2/2, Data@CV_Ind[x]))
+  Rec
+}
+```
+
+The `TCPUE` function simply decreases the past TAC (stored in `Data@MPrec`) if the index is lower than the target and  increases the TAC if the index is higher than the target.
+
+All that is left is to assign the function as class `MP` so that `openMSE` recognizes it as a management procedure:
+
+```{r}
+class(TCPUE)<-"MP"
+```
+
+
+### Beyond the Catch Limit
+All management procedures return an [object of class `Rec`](/object-rec/) that contains 13 slots:
+
+```{r}
+slotNames("Rec")
+```
+
+We've already seen the TAC slot in the previous example. The remaining slots relate to various forms of input control:
+
+* Effort (total allowable effort (TAE) relative to last historical year)
+* Spatial - Fraction of each area that is open
+* Allocate - Allocation of effort from closed areas to open areas
+* LR5 - Length at 5% retention
+* LFR - Length at 100% retention
+* HS - Upper slot limit
+* Rmaxlen - Retention of the maximum length class
+* L5 - Length at 5% selection (e.g a change in gear type)
+* LFS - Length at 100% selection (e.g a change in gear type)
+* Vmaxlen - Selectivity of the maximum length class
+* Fdisc - Update the discard mortality if required
+* Misc - An optional slot for storing additional information
+
+See the [help documentation](https://msetool.openmse.com/reference/Rec-class.html) or type `class?Rec` in the R console for more information on the contents of the `Rec` object.
+
+The `curE` MP just keeps effort constant at current levels:
+```{r}
+curE
+```
+Note that only the `Effort` slot in the `Rec` object is populated in this case.
+     
+
+To highlight the differences among Input control MPs, examine the spatial control MP `MRreal` that closes area 1 to fishing and reallocates  fishing to the open area 2:
+
+```{r}
+MRreal
+```
+
+In contrast `MRnoreal` does not reallocate fishing effort:
+
+```{r}
+MRnoreal
+```
+
+The MP `matlenlim` only specifies the parameters of length retention using an estimate of length at 50% maturity (`Stock@L50`):
+
+```{r}
+matlenlim
+```
+
+#### An Example Effort Control
+Here we will copy and modify the MP we developed earlier to specify a new version of the target catch per unit effort MP (`TCPUE`) that provides effort recommendations:
+
+```{r}
+TCPUE_e<-function(x,Data,reps=100){
+  
+  mc<-0.05                             # max change in TAC 
+  frac<-0.3                            # target index is 30% of max
+  nyears<-length(Data@Ind[x,])         # number of years of data
+  
+  smoothI<-smooth.spline(Data@Ind[x,]) # smoothed index  
+  targetI<-max(smoothI$y)*frac         # target 
+  
+  currentI<-mean(Data@Ind[x,(nyears-2):nyears]) # current index
+  
+  ratio<-currentI/targetI              # ratio currentI/targetI
+  
+  if(ratio < (1 - mc)) ratio <- 1 - mc # if currentI < targetI
+  if(ratio > (1 + mc)) ratio <- 1 + mc # if currentI > targetI
+  
+  rec <- new("Rec")
+  rec@Effort <- Data@MPeff[x] * ratio
+  rec
+  
+}
+```
+
+There have been surprisingly few changes to make TCPUE an input control MP that sets total allowable effort. 
+
+1. We have had to use stored recommendations of effort in the `Data@MPeff` slot, and
+2. The final line of the MP is our input control recommendation that only modified the Effort.
+
+That is all. 
+Again, we need to assign our new function to class `MP`:
+
+```{r}
+class(TCPUE_e)<-"MP"
+```
+
+Let's test the two MPs and see how they [perform](/welcome-a-quick-tour/examining-results/:
+```{r}
+testMSE<-runMSE(testOM,MPs=c("TCPUE","TCPUE_e"))
+NOAA_plot(testMSE)
+```

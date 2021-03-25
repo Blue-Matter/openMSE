@@ -1,6 +1,6 @@
 ---
-date: "2021-02-22T15:18:01+06:00"
-title: The First Six Slots
+date: "2021-03-24T15:18:01+06:00"
+title: Slots in the MSE object
 weight: 1
 ---
 
@@ -9,7 +9,7 @@ weight: 1
 <script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 
 
-<p>The first six slots contain information on the structure of the MSE.</p>
+<p>The <code>MSE</code> object has 29 slots. As it is an <a href="/faq/#what-are-s4-objects?">S4 object</a> the slots are accessed with the <code>@</code> symbol, e.g., <code>MSE@Name</code>.</p>
 <div id="name" class="section level3">
 <h3>Name</h3>
 <p>Name of the MSE object. Single value. Character string</p>
@@ -17,31 +17,112 @@ weight: 1
 <div id="nyears" class="section level3">
 <h3>nyears</h3>
 <p>The number of years for the historical simulation. Single value. Positive integer</p>
-<p>For example the first slot (<code>Name</code>), is a combination of the names of the <code>Stock</code>, <code>Fleet</code>, and <code>Obs</code> objects that were used in the MSE:</p>
-<pre class="r"><code>BSharkMSE@Name</code></pre>
-<pre><code>## [1] &quot;Stock:Blue shark  Fleet:Generic_Fleet  Obs model:Imprecise-Biased  Imp model:Perfect_Imp&quot;</code></pre>
 </div>
 <div id="proyears" class="section level3">
 <h3>proyears</h3>
 <p>The number of years for the projections - closed loop simulations. Single value. Positive integer</p>
-<pre class="r"><code>BSharkMSE@proyears</code></pre>
-<pre><code>## [1] 50</code></pre>
 </div>
 <div id="nmps" class="section level3">
 <h3>nMPs</h3>
 <p>Number of management procedures simulation tested. Single value. Positive integer.</p>
-<pre class="r"><code>BSharkMSE@nMPs</code></pre>
-<pre><code>## [1] 5</code></pre>
 </div>
 <div id="mps" class="section level3">
 <h3>MPs</h3>
 <p>The names of the MPs that were tested. Vector of length nMPs. Character strings.</p>
-<pre class="r"><code>BSharkMSE@MPs</code></pre>
-<pre><code>## [1] &quot;Fratio&quot;    &quot;DCAC&quot;      &quot;Fdem&quot;      &quot;DD&quot;        &quot;matlenlim&quot;</code></pre>
 </div>
 <div id="nsim" class="section level3">
 <h3>nsim</h3>
 <p>Number of simulations. Single value. Positive integer</p>
-<pre class="r"><code>BSharkMSE@nsim</code></pre>
-<pre><code>## [1] 200</code></pre>
+</div>
+<div id="om" class="section level3">
+<h3>OM</h3>
+<p>Operating model parameters (last historical year used for time-varying parameters). Data.frame with nsim rows</p>
+</div>
+<div id="obs" class="section level3">
+<h3>Obs</h3>
+<p>Observation parameters (last historical year used for time-varying parameters). Data.frame with nsim rows</p>
+</div>
+<div id="sb_sbmsy" class="section level3">
+<h3>SB_SBMSY</h3>
+<p>Simulated spawning biomass relative to spawning BMSY over the projection. An array with dimensions: nsim, nMPs, proyears. Non-negative real numbers</p>
+</div>
+<div id="f_fmsy" class="section level3">
+<h3>F_FMSY</h3>
+<p>Simulated fishing mortality rate relative to FMSY over the projection. An array with dimensions: nsim, nMPs, proyears. Non-negative real numbers</p>
+</div>
+<div id="n" class="section level3">
+<h3>N</h3>
+<p>Simulated total numbers over the projection. An array with dimensions: nsim, maxage+1, nMPs, proyears, nareas. Non-negative real numbers.</p>
+</div>
+<div id="b" class="section level3">
+<h3>B</h3>
+<p>Simulated stock biomass over the projection. An array with dimensions: nsim, nMPs, proyears. Non-negative real numbers</p>
+</div>
+<div id="ssb" class="section level3">
+<h3>SSB</h3>
+<p>Simulated spawning stock biomass over the projection. An array with dimensions: nsim, nMPs, proyears. Non-negative real numbers</p>
+</div>
+<div id="vb" class="section level3">
+<h3>VB</h3>
+<p>Simulated vulnerable biomass over the projection. An array with dimensions: nsim, nMPs, proyears. Non-negative real numbers</p>
+</div>
+<div id="fm" class="section level3">
+<h3>FM</h3>
+<p>Simulated fishing mortality rate over the projection. An array with dimensions: nsim, nMPs, proyears. Non-negative real numbers</p>
+</div>
+<div id="spr" class="section level3">
+<h3>SPR</h3>
+<p>Currently not used.</p>
+</div>
+<div id="catch" class="section level3">
+<h3>Catch</h3>
+<p>Simulated catches (landings) over the projection. An array with dimensions: nsim, nMPs, proyears. Non-negative real numbers</p>
+</div>
+<div id="removals" class="section level3">
+<h3>Removals</h3>
+<p>Simulated removals (catch + discards) over the projection. An array with dimensions: nsim, nMPs, proyears. Non-negative real numbers</p>
+</div>
+<div id="effort" class="section level3">
+<h3>Effort</h3>
+<p>Simulated relative fishing effort in the projection years. An array with dimensions: nsim, nMPs, proyears. Non-negative real numbers</p>
+</div>
+<div id="tac" class="section level3">
+<h3>TAC</h3>
+<p>Simulated Total Allowable Catch prescribed by MPs. An array with dimensions: nsim, nMPs, proyears. Non-negative real numbers</p>
+</div>
+<div id="tae" class="section level3">
+<h3>TAE</h3>
+<p>Simulated Total Allowable Effort prescribed by MPs. An array with dimensions: nsim, nMPs, proyears. Non-negative real numbers</p>
+</div>
+<div id="bioeco" class="section level3">
+<h3>BioEco</h3>
+<p>Named list with bio-economic output Only used if bio-economic parameters are included in OM</p>
+</div>
+<div id="refpoint" class="section level3">
+<h3>RefPoint</h3>
+<p>Named list of annual MSY reference points MSY, FMSY, and SBMSY. Array with dimensions: nsim, nMPs, nyears+proyears. Will be the same as <a href="mailto:Hist@Ref$ByYear" class="email">Hist@Ref$ByYear</a> unless selectivity is changed by MP</p>
+</div>
+<div id="cb_hist" class="section level3">
+<h3>CB_hist</h3>
+<p>Simulated catches (landings) from the spool-up period. An array with dimensions: nsim, nyears. Non-negative real numbers</p>
+</div>
+<div id="fm_hist" class="section level3">
+<h3>FM_hist</h3>
+<p>Simulated fishing mortality rate from the spool-up period. An array with dimensions: nsim, nyears Non-negative real numbers</p>
+</div>
+<div id="ssb_hist" class="section level3">
+<h3>SSB_hist</h3>
+<p>Simulated spawning stock biomass from the spool-up period. An array with dimensions: nsim, nyears. Non-negative real numbers</p>
+</div>
+<div id="hist" class="section level3">
+<h3>Hist</h3>
+<p>Information from the historical spool-up period. Object of class Hist . Only returned if extended=TRUE in runMSE</p>
+</div>
+<div id="ppd" class="section level3">
+<h3>PPD</h3>
+<p>Posterior predictive data. List of Data objects at the end of the projection period (length nMPs )</p>
+</div>
+<div id="misc" class="section level3">
+<h3>Misc</h3>
+<p>Miscellaneous output</p>
 </div>

@@ -1,0 +1,85 @@
+---
+date: "2021-02-22T11:35:01+06:00"
+title: Generating Correlated Life-History Parameters
+weight: 6
+---
+
+```{r, include=FALSE}
+library(openMSE)
+```
+
+The `LH2OM` function can be used to force correlation between the life-history parameters, or predict values for missing life-history parameters. 
+
+[Thorson et al. (2017)](https://esajournals.onlinelibrary.wiley.com/doi/abs/10.1002/eap.1606) developed a hierarchical model, based on records available in FishBase, to predict life-history parameters for all 33,000+ fish species listed within [FishBase](www.fishbase.org). The `LH2OM` function uses the Thorson et al. (2017) model to generate correlated samples of the life-history parameters based on the relevant taxonomic information (Class, Family, Genus, and Species) for the species being modelled in the MSE.
+
+The approach uses taxonomic information and any available information on the life-history parameters of the species in the OM to generate predictions of the missing parameters. For example, if no knowledge exists on the four life-history parameters (*Linf*, *L50*, *M*, and *K*), the model uses the taxonomic information (first Genus and Species, and if records don’t exist for this species in FishBase, then up a taxonomic level to Family, and so on) to generate predicted values for all four parameters. If information is available for some parameters, e.g., reasonable bounds on *Linf* and *M* for the species, the hierarchical model is used to generate predictions of the corresponding *L50* and *K* values. That is, the observed ratios of *L50*/*Linf* and *M*/*K* are maintained. In this way the simulated life-history strategies are biologically realistic, and are appropriate for the species being modelled in the MSE.
+
+### Predicting all life-history parameters
+The `LH2OM` function can be used to predict the four correlated life-history parameters (*Linf*, *L50*, *M*, and *K*) using only the available taxonomic information (only for fish species).
+
+For example, here we create an empty `OM` object, populate the `Species` slot and use the `LH2OM` function to predict the life-history parameters using hierarchical model:
+
+```{r LH2OMexample1}
+OM <- new("OM")
+OM@Species <- "Scomber japonicus"
+OM <- LH2OM(OM)
+```
+
+After using the `LH2OM` function, the `cpars` slot is populated with `OM@nsim` correlated samples of the life-history parameters:
+```{r}
+str(OM@cpars)
+```
+
+Notice also that the `OM@M` slot is no longer used *after* the `LH2OM` function has been run on the OM object:
+```{r}
+OM@M
+```
+
+### Predicting some life-history parameters
+In some cases local estimates of life-history parameters may be available which are more reliable and less variable than those predicted from the FishBase database. For example, suppose that we had estimates of the natural mortality rate (*M*) for our stock that ranged between 0.3 and 0.4. We populate the `OM@M` slot with these values and use `LH2OM` to predict the correlated *K* parameter values:
+
+```{r LH2OMexample2}
+OM <- new("OM")
+OM@Species <- "Scomber japonicus"
+OM@M <- c(0.3, 0.4)
+OM <- LH2OM(OM)
+```
+
+
+### Predicting correlated parameters
+If bounds for all life-history parameters are specified in the OM, the `LH2OM` function will predict values of *L50* and *K* which may fall outside of the bounds specified in the OM. For example, here we specify bounds for all life-history parameters and see that the predicted values for *L50* and *K* are mostly above and below the bounds we specied in the OM slots (vertical lines and shading). This is because the predictions of the *L50*/*Linf* and *M*/*K* ratios from the FishBase database were outside the ranges specified in the OM; in other words, the ranges specified in the OM have rarely been observed in nature.
+
+```{r LH2OMexample4}
+OM <- new("OM")
+OM@Species <- "Scomber japonicus"
+OM@M <- c(0.3, 0.4)
+OM@K <- c(0.2, 0.3)
+OM@Linf <- c(35, 40)
+OM@L50 <- c(15, 20)
+OM <- LH2OM(OM)
+```
+
+
+We can force the `LH2OM` function to only return values within the *M* and *K* bounds by using the `filterMK` argument:
+
+```{r LH2OMexample5}
+OM <- new("OM")
+OM@Species <- "Scomber japonicus"
+OM@M <- c(0.3, 0.4)
+OM@K <- c(0.2, 0.3)
+OM@Linf <- c(35, 40)
+OM@L50 <- c(15, 20)
+OM <- LH2OM(OM, filterMK=TRUE)
+```
+
+Notice that the sampled *M* values are within the bounds specified in `OM@M` (vertical lines).
+
+Similarly, if information is also available for asymptotic length *Linf*:
+
+```{r LH2OMexample3}
+OM <- new("OM")
+OM@Species <- "Scomber japonicus"
+OM@M <- c(0.3, 0.4)
+OM@Linf <- c(35, 40)
+OM <- LH2OM(OM)
+```

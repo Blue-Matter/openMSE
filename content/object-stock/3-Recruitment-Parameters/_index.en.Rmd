@@ -29,7 +29,7 @@ Process error, in the form of log-normally distributed random deviations, as wel
 `r printDesc("AC")`
 
 ### Custom Parameters
-TBD
+See [Custom Stock Parameters](/features-custom-parameters/2-stock/) for information on specifying specific values for recruitment deviations. 
 
 ### Interactive App
 Select the stock-recruit function you would like to visualize, and choose upper and lower bounds for h, Perr, and AC. Based on these ranges, the parameter values for 5 simulations will be displayed in the table. Click on any line of the table to view the distribution of values for that simulation in the figures below.

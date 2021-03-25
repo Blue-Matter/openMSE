@@ -23,9 +23,7 @@ More complex MPAs, such as those that are not present for all years of the simul
 `r printDesc("Spat_targ")`
 
 ### Custom Parameters
-TBD
-
-Matrix specifying spatial closures for historical years. This parameter is different than creating an MP that closes an area to fishing in future projections. Instead, it allows the user to take into the account of a historical or existing closed area on the current biomass and future MP performance. 
+See [Custom Fleet Parameters](/features-custom-parameters/3-fleet/) for information on specifying spatial closures for specific historical years.  
 
 ### Interactive App
 Choose upper and lower bounds for Spat_targ. Based on these ranges, the MSEtool will display  parameter values for 5 simulations in the table. Click on any line of the table to view how those parameter values affect spatial targeting behavior in the model.

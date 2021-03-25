@@ -32,7 +32,7 @@ This observation model may be unrealistically well-behaved, and obscure the true
 `r printDesc("CAL_ESS")`
 
 ### Custom Parameters
-TBD 
+See [Custom Obs Parameters](/features-custom-parameters/4-obs/) for information on specifying simulation- and year-specific observation error values.
 
 ### Interactive App
 

@@ -19,7 +19,7 @@ weight: 6
 </ul>
 <p>It is important to recognize that performance metrics can vary considerably between different fisheries and management structures, but are a crucial component of the MSE and must be carefully defined before the analysis is carried out. The <a href="/features-calculating-performance/">Calculating Performance section</a> section discusses this topic in more detail.</p>
 <p><code>openMSE</code> includes a number of commonly used performance metrics and a series of functions to summarize MP performance. The MSE results can be examined either graphically in a plot or summarized in a table. Advanced users can also develop their own plotting and summary functions (see the <a href="/features-calculating-performance/custom-performance-metrics/">Custom Performance Metrics</a> section for more details).</p>
-<p>Here we briefly demonstrate some of the plotting and summary functions in DLMtool. The <a href="/features-calculating-performance/">Calculating Performance section</a> section describe the process of evaluating MSE results in more detail.</p>
+<p>Here we briefly demonstrate some of the plotting and summary functions in <code>openMSE</code>. The <a href="/features-calculating-performance/">Calculating Performance section</a> section describe the process of evaluating MSE results in more detail.</p>
 <div id="summary-table" class="section level4">
 <h4>Summary Table</h4>
 <p>The <code>summary</code> function can be used to generate a table of MP performance with respect to a set of performance metrics:</p>
@@ -94,7 +94,7 @@ weight: 6
 <p>The <code>Tplot</code> function includes minimum acceptable risk thresholds indicated by the horizontal and vertical gray shading. These thresholds can be adjusted be the <code>Lims</code> argument to the <code>Tplot</code> function. See <code>?Tplot</code> for more information on adjusting the risk thresholds.</p>
 <p>MPs that fail to meet one or both of the risk thresholds for each axis are shown in <em>italics</em> text. The <code>Tplot</code> function returns a data frame showing the performance of each MP with respect to the 5 performance metrics, and whether the MP is <em>Satisificed</em>, i.e., if it meets the minimum performance criteria for <strong>all</strong> performance metrics.</p>
 <pre class="r"><code>Tplot(MSE)</code></pre>
-<p><img src="/a-quick-tour/examining-results/_index.en_files/figure-html/unnamed-chunk-6-1.png" width="768" /></p>
+<p><img src="/welcome-a-quick-tour/examining-results/_index.en_files/figure-html/unnamed-chunk-6-1.png" width="768" /></p>
 <pre><code>##        MP PNOF  LTY P100  P50  P10 Satisificed
 ## 1     AvC 0.74 0.69 0.72 0.80 0.85        TRUE
 ## 2      BK 0.54 0.56 0.48 0.64 0.86       FALSE
@@ -103,7 +103,7 @@ weight: 6
 ## 5 Islope1 0.50 0.47 0.49 0.58 0.69       FALSE</code></pre>
 <p>The <code>Tplot2</code> function shows the trade-off between long-term and short-term yield, and the trade-off between biomass being above <span class="math inline">\(0.1B_{MSY}\)</span> and the expected variability in the yield:</p>
 <pre class="r"><code>Tplot2(MSE)</code></pre>
-<p><img src="/a-quick-tour/examining-results/_index.en_files/figure-html/unnamed-chunk-7-1.png" width="768" /></p>
+<p><img src="/welcome-a-quick-tour/examining-results/_index.en_files/figure-html/unnamed-chunk-7-1.png" width="768" /></p>
 <pre><code>##        MP  STY  LTY  P10 AAVY Satisificed
 ## 1     AvC 0.89 0.69 0.85 1.00        TRUE
 ## 2      BK 0.74 0.56 0.86 0.67       FALSE
@@ -116,7 +116,7 @@ weight: 6
 <h5>Wormplot</h5>
 <p>The <code>wormplot</code> function plots the likelihood of meeting biomass targets in future years:</p>
 <pre class="r"><code>wormplot(MSE)</code></pre>
-<p><img src="/a-quick-tour/examining-results/_index.en_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="/welcome-a-quick-tour/examining-results/_index.en_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p>The arguments to the <code>wormplot</code> function allow you to choose the reference level for the biomass relative to <span class="math inline">\(B_{MSY}\)</span>, as well as the upper and lower bounds of the colored bands.</p>
 </div>
 <div id="projection-plots" class="section level5">
@@ -124,13 +124,13 @@ weight: 6
 <p>The <code>Pplot</code> function plots the trajectories of biomass, fishing mortality, and relative yield for the Management Procedures.</p>
 <p>By default, the <code>Pplot</code> function shows the individual trajectories of <span class="math inline">\(B/B_{MSY}\)</span> and <span class="math inline">\(F/F_{MSY}\)</span> for each simulation:</p>
 <pre class="r"><code>Pplot(MSE)</code></pre>
-<p><img src="/a-quick-tour/examining-results/_index.en_files/figure-html/projection-plot-1.png" width="672" /></p>
+<p><img src="/welcome-a-quick-tour/examining-results/_index.en_files/figure-html/projection-plot-1.png" width="672" /></p>
 <p>The <code>Pplot2</code> function has several additional arguments. The <code>YVar</code> argument can be used to specify additional variables of interest. For example, here we have included the projections of yield relative to the long-term optimum yield:</p>
 <pre class="r"><code>Pplot2(MSE, YVar=c(&quot;B_BMSY&quot;, &quot;F_FMSY&quot;, &quot;Yield&quot;))</code></pre>
-<p><img src="/a-quick-tour/examining-results/_index.en_files/figure-html/projection-plot2-1.png" width="672" /></p>
+<p><img src="/welcome-a-quick-tour/examining-results/_index.en_files/figure-html/projection-plot2-1.png" width="672" /></p>
 <p>The <code>traj</code> argument can be used to summarize the projections into quantiles. Here we show the 20th and 80th percentiles of the distributions (the median (50th percentile) is included by default):</p>
 <pre class="r"><code>Pplot2(MSE, traj=&quot;quant&quot;, quants=c(0.2, 0.8))</code></pre>
-<p><img src="/a-quick-tour/examining-results/_index.en_files/figure-html/projection-plot3-1.png" width="672" /></p>
+<p><img src="/welcome-a-quick-tour/examining-results/_index.en_files/figure-html/projection-plot3-1.png" width="672" /></p>
 <p>Details on additional controls for the <code>Pplot</code> and <code>Pplot2</code> functions can be found in the help documentation associated with this function.</p>
 </div>
 </div>
@@ -138,11 +138,11 @@ weight: 6
 <h4>Kobe-style Plots</h4>
 <p>Kobe-style plots are often used in stock assessment and MSE to examine the proportion of time the stock spends in different states. A Kobe-style plot of the MSE results can be produced with the <code>Kplot</code> function:</p>
 <pre class="r"><code>Kplot(MSE)</code></pre>
-<p><img src="/a-quick-tour/examining-results/_index.en_files/figure-html/kobe-plot-1.png" width="672" /></p>
+<p><img src="/welcome-a-quick-tour/examining-results/_index.en_files/figure-html/kobe-plot-1.png" width="672" /></p>
 </div>
 <div id="compare-to-current-conditions" class="section level3">
 <h3>Compare to Current Conditions</h3>
 <p>The <code>Cplot</code> shows a scatter plot of the median biomass and median yield over the last five years of the projection relative to the current conditions (the last year in the historical period):</p>
 <pre class="r"><code>Cplot(MSE)</code></pre>
-<p><img src="/a-quick-tour/examining-results/_index.en_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<p><img src="/welcome-a-quick-tour/examining-results/_index.en_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 </div>

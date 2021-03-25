@@ -1,0 +1,137 @@
+---
+date: "2021-03-24T15:18:01+06:00"
+title: Conditioning with Index Data
+weight: 2
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
+<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
+
+
+<div id="add-data-to-om" class="section level4">
+<h4>Add Data to OM</h4>
+<p>To condition our OM with index data, we create a blank <a href="/object-data">Data object</a>:</p>
+<pre class="r"><code>Data &lt;- new(&#39;Data&#39;)</code></pre>
+<p>and populate the <code>Year</code>, <code>Ind</code>, and <code>CV_Ind</code> slots with our observed data:</p>
+<pre class="r"><code># years - must be length(OM@nyears)
+Data@Year &lt;- RealData@Year 
+
+# &#39;real&#39; index (can be patchy)
+Data@Ind &lt;- RealData@Ind[1,,drop=FALSE] 
+
+# assumed CV=0.2 all years
+Data@CV_Ind &lt;- matrix(0.2, nrow=1, ncol=length(Data@Year))</code></pre>
+<p>and add the <code>Data</code> object to the <code>cpars</code> slot:</p>
+<pre class="r"><code>OM@cpars$Data &lt;- Data</code></pre>
+<p>In this example, we are using the index of total abundance (<code>Data@Ind</code>). The same process is followed to add a real spawning index (<code>Data@SpInd</code>) or vulnerable biomass index (<code>Data@VInd</code>) (or, if you’re feeling brave, all three at the same time!).</p>
+</div>
+<div id="condition-index-observation-model" class="section level4">
+<h4>Condition Index Observation Model</h4>
+<p>The observation model is conditioned on the index data when the historical spool-up period is simulated:</p>
+<pre class="r"><code>Hist &lt;- Simulate(OM, silent=TRUE)</code></pre>
+<p>We can now compare our simulated index with our ‘real’ observed index:</p>
+<pre class="r"><code># The index data that are passed to the MPs
+ObsInd &lt;- Hist@Data@Ind
+
+# first 5 years of the &#39;real&#39; index data
+OM@cpars$Data@Ind[1,1:5]</code></pre>
+<pre><code>## [1] 2.474687 3.161074 2.628440 2.215063 2.494472</code></pre>
+<pre class="r"><code># first 5 years of simulated &#39;observed&#39; index data passed to MPs
+ObsInd[,1:5]</code></pre>
+<pre><code>##          [,1]     [,2]    [,3]     [,4]     [,5]
+## [1,] 2.474687 3.161074 2.62844 2.215063 2.494472
+## [2,] 2.474687 3.161074 2.62844 2.215063 2.494472
+## [3,] 2.474687 3.161074 2.62844 2.215063 2.494472
+## [4,] 2.474687 3.161074 2.62844 2.215063 2.494472</code></pre>
+<pre class="r"><code># first 5 years of index data simulated from OM
+Biomass &lt;- apply(Hist@TSdata$Biomass, 1:2, sum) # sum over areas
+Index &lt;- Biomass/apply(Biomass,1, mean)
+Index[,1:5]</code></pre>
+<pre><code>##           [,1]      [,2]     [,3]     [,4]     [,5]
+## [1,] 1.5580913 1.3945556 1.577345 1.783264 1.226909
+## [2,] 1.4965929 1.6967884 1.540443 1.394663 1.389259
+## [3,] 0.9432994 0.8984943 1.002991 1.044759 1.095903
+## [4,] 1.2517973 1.1888758 1.171071 1.190840 1.227618</code></pre>
+<p>The index observation error <code>Iobs_y</code> in the observation model is updated based on the difference between the ‘real’ index data and the index data simulated from the OM. We demonstrate how the index observation error is calculated here for one simulation:</p>
+<pre class="r"><code># simulated index from 1 simulation
+sim &lt;- 2
+SimIndex &lt;- Index[sim,1:OM@nyears] 
+
+# our &#39;real&#39; index data
+ObsIndex &lt;- Data@Ind[1,]</code></pre>
+<p>Use the internal function <code>indfit</code> to calculate hyper-stability parameter <a href="/object-obs/indices/#beta">beta</a>, and autocorrelation and standard deviation in the log residuals:</p>
+<pre class="r"><code>ind.prop &lt;- MSEtool:::indfit(SimIndex, ObsIndex, plot=T, Year=1:OM@nyears)</code></pre>
+<p><img src="/features-conditioning-OMs/indices/_index.en_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<pre class="r"><code>ind.prop</code></pre>
+<pre><code>##       beta        AC        sd       cor      AC2       sd2
+## 1 3.291333 0.4758299 0.6079967 0.8154966 0.873177 0.7613037</code></pre>
+<p>And then calculate the observation error for the index in the historical years.</p>
+<pre class="r"><code># internal function to log and standardise to mean 0
+lcs &lt;- MSEtool:::lcs 
+
+# Index observation error
+Ierr_y &lt;- exp(lcs(ObsIndex))/exp(lcs(SimIndex))^ind.prop$beta</code></pre>
+<p>You can confirm that the updated index observation error parameters match <code>Ierr_y</code> for simulation 2:</p>
+<pre class="r"><code># check Obs$Iobs_y is the same
+cbind(Ierr_y,Hist@SampPars$Obs$Ierr_y[sim,1:OM@nyears])</code></pre>
+<p>and by checking that the simulated standardized biomass multiplied by the index observation error is the same as the real index data provided in the OM:</p>
+<pre class="r"><code>plot(Data@Ind[1,], pch=16, xlab=&quot;Year&quot;, ylab=&quot;Index&quot;)
+SimIndex &lt;- exp(lcs(SimIndex))^ind.prop$beta* Hist@SampPars$Obs$Ierr_y[sim,1:OM@nyears]
+SimIndex &lt;- SimIndex/mean(SimIndex)
+lines(SimIndex)</code></pre>
+<p><img src="/features-conditioning-OMs/indices/_index.en_files/figure-html/unnamed-chunk-11-1.png" width="672" /></p>
+<p>Note that observation parameters that are related to <a href="/object-obs/indices/">Index Sampling</a> (e.g., <code>OM@Iobs</code>) are ignored when the OM is conditioned on index data.</p>
+</div>
+<div id="generate-index-observation-error-for-projection-period" class="section level4">
+<h4>Generate Index Observation Error for Projection Period</h4>
+<p>The statistical properties of the index observation error, conditioned on the observed real index as demonstrated above, are used to generate the index observation error for the projection years.</p>
+<p>Although all these calculations occur internally, we demonstrate the code here, again for simplicity just showing a single simulation (sim 2).</p>
+<p>We use the internal function <code>generateRes</code> to generate the residuals with the specified autocorrelation and standard deviation (in log space):</p>
+<pre class="r"><code>MSEtool:::generateRes</code></pre>
+<pre><code>## function(df, nsim, proyears, lst.err) {
+##   sd &lt;- df$sd
+##   ac &lt;- df$AC
+##   if (all(is.na(sd))) return(rep(NA, nsim))
+##   mu &lt;- -0.5 * (sd)^2 * (1 - ac)/sqrt(1 - ac^2)
+##   Res &lt;- matrix(rnorm(proyears*nsim, mu, sd), nrow=proyears, ncol=nsim, byrow=TRUE)
+##   # apply a pseudo AR1 autocorrelation
+##   Res &lt;- sapply(1:nsim, applyAC, res=Res, ac=ac, max.years=proyears, lst.err=lst.err) # log-space
+##   exp(t(Res))
+## }
+## &lt;bytecode: 0x000000002b7feb68&gt;
+## &lt;environment: namespace:MSEtool&gt;</code></pre>
+<pre class="r"><code>Ierr_proj &lt;- MSEtool:::generateRes(ind.prop, nsim=1, proyears=50,
+                                   lst.err=log(Hist@SampPars$Obs$Ierr[sim,OM@nyears]))</code></pre>
+<p>We can demonstrate that the simulated observed catches in the projection period maintain the same statistical properties as the catch observation error calculated from the historical period.</p>
+<p>First, simulate the projection period with an <a href="/features-management-procedures/builtin/#msetool-mps">example reference MP</a>:</p>
+<pre class="r"><code>MSE &lt;- Project(Hist, MPs=&quot;FMSYref&quot;, silent=TRUE)</code></pre>
+<p>Then we plot the simulated ‘observed’ data (i.e., data passed internally to the MPs) and ‘real’ catches (provided in OM for historical period) (note the last projection year of ‘observed’ data is not available and is replaced with NAs):</p>
+<pre class="r"><code>library(ggplot2)
+library(tidyr)
+library(dplyr)
+
+HistBiomass &lt;- apply(Hist@TSdata$Biomass, 1:2, sum)
+ProjBiomass &lt;- MSE@B[,1,]
+AllBiomass &lt;- cbind(HistBiomass, ProjBiomass)
+
+Simulated &lt;- AllBiomass/apply(AllBiomass, 1, mean)
+Observed &lt;- cbind(MSE@PPD[[1]]@Ind, rep(NA, OM@nsim))
+Observed &lt;- Observed/apply(Observed, 1, mean, na.rm=TRUE)
+
+DF &lt;- data.frame(Sim=1:OM@nsim,
+                 Year=rep(1:(OM@nyears+OM@proyears), each=OM@nsim),
+                 Simulated=as.vector(Simulated),
+                 Observed=as.vector(Observed)) %&gt;% 
+  tidyr::pivot_longer(cols=3:4) 
+
+ggplot(DF, aes(x=Year, y=value, color=name)) +
+  facet_wrap(~Sim, scales=&quot;free&quot;) +
+  geom_line(size=1.2) +
+  theme_classic() +
+  geom_vline(xintercept = OM@nyears, linetype=2) + 
+  labs(y=&quot;Index&quot;, color=&quot;&quot;)</code></pre>
+<pre><code>## Warning: Removed 1 row(s) containing missing values (geom_path).</code></pre>
+<p><img src="/features-conditioning-OMs/indices/_index.en_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>These plots visually demonstrate that the statistical relationship between the simulated and observed index data in the historical period (years 1–50) is maintained in the projection period (years 51–100).</p>
+</div>

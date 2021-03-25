@@ -13,8 +13,7 @@ weight: 7
 
 
 <p><code>Data</code> is an object class that contains all of the fishery information that can be used by the Management Procedure. You find the documentation for the <code>Data</code> class by typing:</p>
-<p>You find the documentation for the <code>Data</code> class by typing:</p>
-<pre class="r"><code>class?Data</code></pre>
+<p>You find the documentation for the <code>Data</code> class by typing <code>class?Data</code> in the R console, or by visiting the <a href="https://msetool.openmse.com/reference/Data-class.html">documentation page for the Data object</a>.</p>
 <p>You can see from the documentation that the <code>Data</code> object, or Fishery Data object, contains many slots, and a lot of information can be stored in this object, including biological parameters, fishery statistics such as time-series of catch, and past management recommendations.</p>
 <div id="in-the-mse" class="section level4">
 <h4>In the MSE</h4>
@@ -33,5 +32,5 @@ weight: 7
 <p>In contrast to the MSE, in the real world application of a Management Procedure, we only have one version of the fishery data: the data that has been collected from the fishery.</p>
 <p>The Fishery Data object contains all of the fishery information that can be used by a Management Procedure. By definition, many sources of data are not available in data-limited fisheries, and the Fishery Data object may not be completely populated.</p>
 <p>Functions in <code>openMSE</code> can be used to determine which Management Procedures are available to be used given the data in the Fishery Data object, which methods cannot be used, and what data are required to make these methods available.
-See the <a href="/object-data/available/">Determining Feasible and Available Management Procedures section</a> for more details.</p>
+See the <a href="/features-management-procedures/available/">Determining Available Management Procedures section</a> for more details.</p>
 </div>

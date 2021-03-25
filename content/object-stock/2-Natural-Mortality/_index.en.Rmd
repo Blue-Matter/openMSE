@@ -31,7 +31,7 @@ This section also includes the discard mortality rate. Discard mortality rates m
 `r printDesc("Fdisc")`
 
 ### Custom Parameters
-TBD
+See [Custom Stock Parameters](/features-custom-parameters/2-stock/) for information on specifying specific time-varying or age-specific natural mortality.
 
 ### Interactive App
 
