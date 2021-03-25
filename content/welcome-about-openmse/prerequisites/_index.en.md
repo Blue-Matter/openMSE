@@ -61,6 +61,6 @@ To install and load the Stock Assessment Methods toolkit use: `install.packages(
 
 The `openMSE` packages have been designed to be accessible for all users and do not assume a high level of knowledge of R.  The functions and help documentation material have been constructed in such a way that a user with little experience with R should be able to run the MSE and apply the methods to their data.
 
-No programming experience is required to use the package. However, users of the `openMSE` packages should have some familiarity with R, and be comfortable with using the command line. The help documentation attempts to explain the use of the `openMSE` functions and features in easy to follow steps, but familiarity with the most common R functions is assumed. 
+Little programming experience is required to use the package. However, users of the `openMSE` packages should have some familiarity with R, and be comfortable with using the command line. The help documentation attempts to explain the use of the `openMSE` functions and features in easy to follow steps, but familiarity with the most common R functions is assumed. 
 
-The package is fully extensible, and more experienced R users are able to design their own management procedures, develop new plotting functions, and other customizations. 
+The package is fully extensible, and more experienced R users are able to design their [own management procedures](/features-management-procedures/custommps/), develop new [plotting functions](/welcome-a-quick-tour/examining-results/), and other [customizations](/features-custom-parameters/). 

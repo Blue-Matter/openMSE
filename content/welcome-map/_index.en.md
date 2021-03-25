@@ -10,7 +10,7 @@ weight: 3
 
 <div class=col-9>
 
-The `openMSE` packages use an object-oriented design. In essence this means that most functions take objects with an openMSE-specific class as arguments (e.g., `OM`) and return other objects with an openMSE-specific class (e.g., `MSE`). 
+The `openMSE` packages use an object-oriented design. In essence this means that most functions take objects with an openMSE-specific class as arguments (e.g., `OM`) and return other objects with a different openMSE-specific class (e.g., `MSE`). 
 
 You can learn more about [object-oriented design](https://adv-r.hadley.nz/oo.html), although this isn't required to use `openMSE`. 
 
@@ -18,11 +18,11 @@ More important, is an understanding how the various [openMSE objects](/#objects)
 
 The colors indicate:
 
-1. yellow - openMSE objects
+1. yellow: openMSE objects
 
-2. green - openMSE functions that operate on the openMSE objects
+2. green: openMSE functions that operate on the openMSE objects
 
-3. blue - features of the openMSE framework.
+3. blue: features of the openMSE framework.
 
 
 Clicking on various parts of the diagram will take you to the relevant pages that explain the objects, functions, and features in more detail. 

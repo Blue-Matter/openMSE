@@ -17,7 +17,7 @@ keywords:
  </tr>
 </table>
 
-<a href="/about-openmse/prerequisites/#installing-the-packages">Installing and loading</a> the `openMSE` package will all functions in the `openMSE` universe available in the R session.
+<a href="/welcome-about-openmse/prerequisites/#installing-the-packages">Installing and loading</a> the `openMSE` package will all functions in the `openMSE` universe available in the R session.
 
 
 
