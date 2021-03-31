@@ -5,8 +5,6 @@ weight: 4
 ---
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
-<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
-<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 
 
 <p>This section includes parameters describing the management agency’s ability to implement an MP that institutes an size limit. For example, an MP may specify a certain size limit, but the managing agency may be unable to limit all take of undersized fish.</p>
@@ -25,6 +23,11 @@ weight: 4
 </div>
 <div id="interactive-app" class="section level3">
 <h3>Interactive App</h3>
+<p>Choose upper and lower bounds for <code>SizeLimFrac</code> and <code>SizeLimSD</code>, as well as the desired minimum size limit. Based on these ranges, the parameter values for 5 simulations will show in the table. Click on any line of the table to view how those parameter values affect the implemented size limit in a hypothetical situation where the desired size limit is specified in the ‘Size Limit’ box.</p>
+<ul>
+<li><p>Figure 1 shows the effects of size limit implementation error over 50 projection years in a single simulation. The red line shows the size limit recommended by a hypothetical MP, while the blue line shows the actual minimum size of fish retained in each year. The location of the blue line relative to the red line is influenced by whether <code>SizeLimFrac</code> is greater or less than 1, and the variability of the blue line over time is influenced by the value of <code>SizeLimSD</code>, with larger values resulting in greater variation between years.</p></li>
+<li><p>Figure 2 shows an example size frequency of the catch under the recommended (pink) and implemented (blue) size limits (note that sizes where the colors overlap show up as a darker blue color). Size structures are a product of the biological parameters, fishing mortality history, and selectivity of the gear, so this size structure is for illustration purposes only and may look different from real-world data.</p></li>
+</ul>
 <iframe src="https://apps.bluematterscience.com/openMSE/imp/sizelimit?showcase=0" width="672" height="850px">
 </iframe>
 </div>

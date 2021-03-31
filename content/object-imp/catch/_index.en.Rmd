@@ -27,6 +27,9 @@ TACFrac and TACSD allow the user to specify the actual catches that are taken as
 See [Custom Imp Parameters](/features-custom-parameters/5-imp/) for information on specifying simulation- and year-specific implementation error values.
 
 ### Interactive App 
+Choose upper and lower bounds for `TACFrac` and `TACSD.` Based on these ranges, the parameter values for 5 simulations will show in the table. Click on any line of the table to view how those parameter values affect the implemented vs. desired TAC in a hypothetical catch limit MP.
+
+* Figure 1 shows the effects of implementation error in the recommended TAC over 50 projection years in a single simulation. The red line shows the TAC recommended by the MP, while the blue line shows the actual effort limit applied by the model. The location of the blue line relative to the red line is influenced by whether `TACFrac` is greater or less than 1, and the variability of the blue line over time is influenced by the value of `TACSD`, with larger values resulting in greater variation between years.
 
 ```{r, echo=FALSE, screenshot.opts = list(delay = 5)} 
 knitr::include_app("https://apps.bluematterscience.com/openMSE/imp/catch",height="750px") 
