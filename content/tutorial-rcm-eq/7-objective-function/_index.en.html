@@ -5,8 +5,6 @@ weight: 7
 ---
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
-<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
-<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 
 
 <div id="total-objective-function" class="section level3">
@@ -58,18 +56,7 @@ V^{L_{\infty}}_b &amp;\sim \textrm{Beta}(1.01, 1.01)
 </div>
 <div id="optional-priors" class="section level3">
 <h3>Optional priors</h3>
-<p>A lognormal prior on <span class="math inline">\(R_0\)</span> can be specified. The penalty term <span class="math inline">\(\textrm{pr}\)</span> to the objective function is:
-<span class="math display">\[\textrm{pr}^{R_0} = -\log(\sigma^{R_0}) - 0.5\left[\dfrac{\log(R_0/\mu^{R_0})}{\sigma^{R_0}}\right]^2,\]</span>
-where <span class="math inline">\(\mu^{R_0}\)</span> and <span class="math inline">\(\sigma^{R_0}\)</span> are the mean and standard deviations for the prior provided by the user.</p>
-<p>Recall that the parameter corresponding to Beverton-Holt steepness <span class="math inline">\(x^h\)</span> is estimable over all real numbers and is transformed such that <span class="math inline">\(h = 0.8 \times \textrm{logit}^{-1}(x^h) + 0.2\)</span>. The prior uses a beta distribution on <span class="math inline">\(y = (h - 0.2)/0.8\)</span>. The penalty to the objective function is:
-<span class="math display">\[\textrm{pr}^{h} = \log(y) (\alpha-1) + \log(1-y) * (\beta-1) - \log(y - y^2),\]</span>
-where <span class="math inline">\(\alpha = \mu^h \left(\frac{\mu^h (1 - \mu^h)}{(\sigma^h)^2} - 1\right)\)</span>, <span class="math inline">\(\beta = (1-\mu^h)\left(\frac{\mu^h (1 - \mu^h)}{(\sigma^h)^2} - 1\right)\)</span>, and the last term is the log Jacobian transform of the logit function.</p>
-<p>With a Ricker SR function, a normal distribution is used:
-<span class="math display">\[\textrm{pr}^{h} = -\log(\sigma^{h}) - 0.5\left(\dfrac{h - \mu^{h}}{\sigma^{h}}\right)^2.\]</span></p>
-<p>The prior for <span class="math inline">\(M\)</span> is lognormal:
-<span class="math display">\[\textrm{pr}^{M} = -\log(\sigma^{M}) - 0.5\left[\dfrac{\log(M/\mu^{M})}{\sigma^{M}}\right]^2.\]</span></p>
-<p>Priors for survey catchability <span class="math inline">\(q_s\)</span> are normally distributed:
-<span class="math display">\[\textrm{pr}^{q} = \sum_s\left(-\log(\sigma^{q}_s) - 0.5\left(\dfrac{q_s - \mu^{q}_s}{\sigma^{q}_s}\right)^2\right).\]</span></p>
+<p>See sub-article on <a href="../../features-assessment-models/5-priors/">priors</a>.</p>
 </div>
 <div id="penalties" class="section level3">
 <h3>Penalties</h3>

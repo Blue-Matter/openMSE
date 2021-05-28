@@ -1,0 +1,40 @@
+---
+title: "Priors"
+date: '2021-02-26T15:18:01+06:00'
+weight: 5
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<p>Various models may use priors <span class="math inline">\(pr\)</span> on biological (e.g., steepness, natural mortality) and scaling (i.e., index catchability) parameters.</p>
+<div id="unfished-recruitment-r0" class="section level3">
+<h3>Unfished recruitment (R0)</h3>
+<p>A lognormal prior on <span class="math inline">\(R_0\)</span> can be specified. The penalty term <span class="math inline">\(\textrm{pr}\)</span> to the objective function is:
+<span class="math display">\[\textrm{pr}^{R_0} = -\log(\sigma^{R_0}) - 0.5\left[\dfrac{\log(R_0/\mu^{R_0})}{\sigma^{R_0}}\right]^2,\]</span>
+where <span class="math inline">\(\mu^{R_0}\)</span> and <span class="math inline">\(\sigma^{R_0}\)</span> are the mean and standard deviations for the prior provided by the user.</p>
+</div>
+<div id="steepness-h" class="section level3">
+<h3>Steepness (h)</h3>
+<p>The parameter corresponding to Beverton-Holt steepness <span class="math inline">\(x^h\)</span> is estimable over all real numbers and is transformed such that <span class="math inline">\(h = 0.8 \times \textrm{logit}^{-1}(x^h) + 0.2\)</span>. The prior uses a beta distribution on <span class="math inline">\(y = (h - 0.2)/0.8\)</span>. The penalty to the objective function is:
+<span class="math display">\[\textrm{pr}^{h} = (\alpha-1)\log(y)  + (\beta-1)\log(1-y) - \log(y - y^2),\]</span>
+where</p>
+<p><span class="math display">\[\begin{align}
+\alpha &amp;= \mu^h \left(\frac{\mu^h (1 - \mu^h)}{(\sigma^h)^2} - 1\right)\\
+\beta &amp;= (1-\mu^h)\left(\frac{\mu^h (1 - \mu^h)}{(\sigma^h)^2} - 1\right)
+\end{align}
+\]</span></p>
+<p>and the last term <span class="math inline">\(\log(y-y^2)\)</span> is the log Jacobian transform of the logit function.</p>
+<p>With a Ricker SR function, a normal distribution is used:
+<span class="math display">\[\textrm{pr}^{h} = -\log(\sigma^{h}) - 0.5\left(\dfrac{h - \mu^{h}}{\sigma^{h}}\right)^2.\]</span></p>
+</div>
+<div id="natural-mortality-m" class="section level3">
+<h3>Natural mortality (M)</h3>
+<p>The prior for <span class="math inline">\(M\)</span> is lognormal:
+<span class="math display">\[\textrm{pr}^{M} = -\log(\sigma^{M}) - 0.5\left[\dfrac{\log(M/\mu^{M})}{\sigma^{M}}\right]^2.\]</span></p>
+</div>
+<div id="index-catchability-q" class="section level3">
+<h3>Index catchability (q)</h3>
+<p>Priors for index catchability <span class="math inline">\(q_s\)</span> is also lognormally distributed:
+<span class="math display">\[\textrm{pr}^{q} = \sum_s\left(-\log(\sigma^{q}_s) - 0.5\left(\dfrac{\log(q_s/\mu^{q}_s)}{\sigma^{q}_s}\right)^2\right).\]</span></p>
+</div>

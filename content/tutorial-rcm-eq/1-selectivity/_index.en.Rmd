@@ -28,10 +28,10 @@ Selectivity can also be parameterized where $v_{y,a,b}$ are free independent par
 
 Total mortality $Z$ in year $y$ and for age $a$ is the sum of fishing mortality $F$ from all fleets and natural mortality $M$,
 
-$$ Z_{y,a} = M_{y,a} + \Sigma_f v_{y,a,f} F_{y,f},$$
+$$ Z_{y,a} = M_{y,a} + \sum_f v_{y,a,f} F_{y,f},$$
 
 where $v_{y,a,f}$ is the fleet selectivity after assigning blocks to fleets.
 
 
-### Survey selectivity
-Survey selectivity is constant over time and is denoted as $v_{a,s}$ with either logistic, dome, or free parameterizations.
+### Index selectivity
+Index selectivity is constant over time and is denoted as $v_{a,s}$, using either logistic, dome, or free parameterizations.

@@ -7,14 +7,10 @@ type: tutorials
 weight: 3
 ---
 
-There are a multitude of options available in how selectivity for fleets and surveys is parameterized in the model. This vignette is designed to be a step-by-step guide for setup of selectivity. It is best to first think about fleet selectivity followed by survey selectivity. Familiarity with the more general [`RCM` documentation](/features-RCM) and the `RCM` function [help page](https://samtool.openmse.com/reference/RCM.html) will be helpful.
+There are a multitude of options available in how selectivity for fleets and indices is parameterized in the model. This vignette is designed to be a step-by-step guide for setup of selectivity. 
 
 This article is designed to provide step-by-step information on possible model configurations, but of course it is up to the user to decide whether those configurations are appropriate for the operating model conditioning.
 
-The general function call for `RCM` is:
+It will be best to first think about fleet selectivity followed by index selectivity. 
 
-```{r eval = FALSE}
-output <- RCM(OM, data, ...)
-```
-
-where the `output` is of class RCModel, `OM` is a class OM object, `data` is a list, and `...` are additional function arguments explained below. 
+Familiarity with the more general [`RCM` documentation](../tutorial-RCM), [model equations](../tutorial-rcm-eq), and  function [help page](https://samtool.openmse.com/reference/RCM.html) will be helpful.

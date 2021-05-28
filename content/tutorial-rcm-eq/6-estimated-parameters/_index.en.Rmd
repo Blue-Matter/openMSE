@@ -19,7 +19,7 @@ $$ V^{L_{\infty}}_b = \textrm{logit}^{-1}(x^V_b)$$
 If selectivity is parameterized as free parameters, then
 $$ v_{y,a,f} = \textrm{logit}^{-1}(x^v_{y,a,f}).$$
 
-For surveys, parameterizations are identical except with indexing for survey $s$.
+For indices, parameterizations are identical except with indexing for survey $s$.
 
 
 ### Fishing mortality
@@ -37,7 +37,7 @@ If `condition = "effort"`, then $q_f$ is estimated in log space, where $$F_{y,f}
 
 ### Index catchability
 
-To scale biomass to index values, the index catchability $q_s$ is solved analytically in the model:
+To scale stock size to index values, the index catchability $q_s$ is solved analytically in the model as
 
 $$ q_s = \exp\left(\dfrac{\sum_y \log(I^{\textrm{obs}}_{y,s}) - \sum_y \log(\sum_a v_{y,a,s}N_{y,a,s})}{n_s}\right),$$
 
@@ -59,4 +59,7 @@ $$ h = \exp(x^h) + 0.2.$$
 
 Steepness is fixed unless a prior is used.
 
-Age- and time-constant natural mortality $M$ can be estimated with a prior. Otherwise, it is fixed to values specified in the OM object. The parameter $x^M$ is estimated in log space.
+Age- and time-constant natural mortality $M$ can be estimated with a prior. Otherwise, it is fixed to values specified in the OM object. The parameter $x^M$ is estimated in log space, i.e.,
+
+$$ M = \exp(x^M)$$
+

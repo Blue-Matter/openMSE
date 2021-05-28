@@ -65,23 +65,8 @@ If free selectivity parameters are estimated, then
 $$v_{y,a,f} \sim \textrm{Beta}(1.01, 1.01)$$
 
 ### Optional priors 
-A lognormal prior on $R_0$ can be specified. The penalty term $\textrm{pr}$ to the objective function is:
-$$\textrm{pr}^{R_0} = -\log(\sigma^{R_0}) - 0.5\left[\dfrac{\log(R_0/\mu^{R_0})}{\sigma^{R_0}}\right]^2,$$
-where $\mu^{R_0}$ and $\sigma^{R_0}$ are the mean and standard deviations for the prior provided by the user.
 
-Recall that the parameter corresponding to Beverton-Holt steepness $x^h$ is estimable over all real numbers and is transformed such that $h = 0.8 \times \textrm{logit}^{-1}(x^h) + 0.2$. The prior uses a beta distribution on $y = (h - 0.2)/0.8$. The penalty to the objective function is:
-$$\textrm{pr}^{h} = \log(y) (\alpha-1) + \log(1-y) * (\beta-1) - \log(y - y^2),$$
-where $\alpha = \mu^h \left(\frac{\mu^h (1 - \mu^h)}{(\sigma^h)^2} - 1\right)$, $\beta = (1-\mu^h)\left(\frac{\mu^h (1 - \mu^h)}{(\sigma^h)^2} - 1\right)$, and the last term is the log Jacobian transform of the logit function.
-
-With a Ricker SR function, a normal distribution is used:
-$$\textrm{pr}^{h} = -\log(\sigma^{h}) - 0.5\left(\dfrac{h - \mu^{h}}{\sigma^{h}}\right)^2.$$
-
-The prior for $M$ is lognormal:
-$$\textrm{pr}^{M} = -\log(\sigma^{M}) - 0.5\left[\dfrac{\log(M/\mu^{M})}{\sigma^{M}}\right]^2.$$
-
-
-Priors for survey catchability $q_s$ are normally distributed:
-$$\textrm{pr}^{q} = \sum_s\left(-\log(\sigma^{q}_s) - 0.5\left(\dfrac{q_s - \mu^{q}_s}{\sigma^{q}_s}\right)^2\right).$$
+See sub-article on [priors](../../features-assessment-models/5-priors/).
 
 ### Penalties
 A penalty to the likelihood is added when $F_{y,f} \ge F_{\textrm{max}}$ for any year and fleet. The penalty is

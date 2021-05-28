@@ -4,59 +4,62 @@ title: Surplus production model
 weight: 3
 ---
 
-## Dynamics equations
+### Dynamics equations
 The surplus production model uses the Fletcher (1978) formulation. The biomass $B_t$ in year $t$ is
 $$B_t = B_{t-1} + P_{t-1} - C_{t-1},$$
 where $C_t$ is the observed catch and $P_t$ is the surplus production given by:
 $$P_t = \gamma \times MSY \times \left(\dfrac{B_t}{K}-\left[\dfrac{B_t}{K}\right]^n\right), $$
-where $K$ is the carrying capacity, $MSY$ is the estimated maximum sustainable yield, and $n$ is the parameter that controls shape of the production curve, and
+where $K$ is the carrying capacity, $MSY$ is the maximum sustainable yield, and $n$ is the parameter that controls shape of the production curve, and
 $\gamma$ is
 $$\gamma = \dfrac{1}{n-1}n^{n/(n-1)}.$$
 
-By conditioning the model on observed catch, the predicted index $\hat{I}_t$ is
-$$\hat{I}_t = \hat{q} \hat{B}_t $$
-and the harvest rate is
-$$\hat{F}_t = \dfrac{C_t}{\hat{B}_t}.$$
-The dynamics equations above use an annual time step. Optionally, smaller time steps are used in the model to approximate continuous production and fishing. Given the biomass in the start of the year and assuming a constant fishing mortality over the time steps within a year, the fishing mortality that produces the observed annual catch is solved iteratively.
+The fishing mortality $F_t$ is conditioned on the observed catch $C_t$. If fishing occurs as a pulse fishery, then
+$$\hat{F}_t = \dfrac{C_t}{\hat{B}_t},$$
+where $F_t$ is effectively an exploitation rate. Alternatively, smaller time steps are used in the model to approximate continuous production and fishing. Given the biomass in the start of the year and assuming a constant fishing mortality over the time steps within a year, the fishing mortality that produces the observed annual catch is solved iteratively. By default, four sub-annual time steps are used to solve for $F_t$.
 
-The likelihood of the observed index $I_t$, assuming a lognormal distribution, is
-$$L = \sum_t \left(-\log(\sigma) - 0.5\left[\dfrac{\log(I_t) - \log(\hat{I}_t)}{\sigma}\right]^2\right).$$
+### Estimated and derived parameters
 
-## Derived parameters
+The model is configured with $F_{MSY}$ and $MSY$ as leading parameters to be estimated. 
 
-From estimates of leading parameters $F_{MSY}$ and $MSY$, the biomass $B_{MSY}$ at $MSY$ is
+The biomass $B_{MSY}$ at $MSY$ is
 $$B_{MSY} = \dfrac{MSY}{F_{MSY}},$$
 the carrying capacity $K$ is
 $$K = n^{1/(n-1)} \times B_{MSY} ,$$
 and the intrinsic rate of population increase $r$ is
 $$ r = n \times F_{MSY}.$$
-The production parameter $n$ is typically fixed and the model has a symmetric productive curve ($B_{MSY}/K = 0.5$) when $n = 2$.
 
-## Schaefer model
+#### Schaefer model
+The production parameter $n$ is typically fixed, and the Schaefer model with a symmetric productive curve ($B_{MSY}/K = 0.5$) is produced when $n = 2$ (default).
 
-The production parameter $n$ is typically fixed and the Schaefer model with a symmetric productive curve ($B_{MSY}/K = 0.5$) is produced when $n = 2$.
-
-## Fox model
+#### Fox model (SP_Fox)
 The Fox model is the limiting case of the Fletcher parameterization as $n \rightarrow 1$, where
 
 $$K = e \times B_{MSY}$$ 
 $$r = F_{MSY}$$
 $$P_t = -e \times MSY \times \dfrac{B_t}{K} \times \log\left(\dfrac{B_t}{K}\right) $$
+where $e$ is Euler's number.
 
-## State-space version (SP_SS)
+### State-space version (SP_SS)
 In the state-state version, annual biomass deviates are estimated as random effects. Similar to Meyer and Millar (1999), the biomass $B_t$ in year $t$ is
 $$B_t = (B_{t-1} + P_{t-1} - C_{t-1})\exp(\delta_t - 0.5 \tau^2),$$
 where $\delta_t \sim N(0, \tau^2)$ are biomass deviations in lognormal space and $\tau$ is the standard deviation of the biomass deviations.
 
-Log-recruitment deviations $\hat{\delta}_t$ are typically estimated as penalized parameters towards the likelihood, with the penalty:
+### Likelihood
+
+By conditioning the model on observed catch, the model is fitted to the indices of abundance $I_{s,t}$. The likelihood of the observed indices, using assuming a lognormal distribution, is
+$$L^I = \sum_s \lambda_s \sum_t \left(-\log(\sigma_{s,t}) - 0.5\left[\dfrac{\log(I_{s,t}) - \log(\hat{q}_s \hat{B}_t)}{\sigma_{s,t}}\right]^2\right)$$
+where $lamba_s$ is the weighting coefficient of index $s$, $q_s$ is the cathabilitiy coefficient, and the circumflex denotes an estimate. 
+
+Log-biomass deviations $\hat{\delta}_t$ are typically estimated as penalized parameters towards the likelihood, with the penalty:
 $$L^{\delta} = \sum_t \left(-\log(\tau) - 0.5\left[\dfrac{\delta_t}{\tau}\right]^2\right).$$
 
-## Prior for r
-To generate the prior for the intrinsic rate of increase, natural mortality $M_a$ and steepness $h$ are sampled from a distribution. Natural mortality is modelled to be age-invariant and is sampled from a lognormal distribution.
-Assuming either a Beverton-Holt or Ricker stock-recruit relationship, steepness is sampled from a transformed beta or transformed lognormal distribution, respectively.
+#### Prior for r
+To generate the prior for the intrinsic rate of increase, natural mortality $M$ and steepness $h$ are sampled from a distribution. Natural mortality is modelled to be age-invariant and is sampled from a lognormal distribution.
+
+With either a Beverton-Holt or Ricker stock-recruit relationship, steepness is sampled from a transformed beta or transformed lognormal distribution, respectively.
 
 For each pair of sampled M and h values, the corresponding value of $r$ is obtained by solving a modified Euler-Lotka equation:
-$$\Sigma_{a=1}^A l_a m_a \exp(-r \times a) = 1.$$
+$$\alpha \sum_a l_a f_a \exp(-r \times a) = 1.$$
 
 Equation 15 is modified to include the $\alpha$ term from the stock-recruit relationship (Stanley et al. 2009). In this way, the recruits-per-spawner at low stock sizes, i.e., as spawning biomass approaches zero, is considered for calculating $r$.
 
@@ -70,8 +73,8 @@ l_a =
 \end{cases}.
 $$
 
-Fecundity at age $m_a$ is
-$$m_a = \dfrac{\alpha w_a}{\left[1 + \exp\left(-\log(19) \dfrac{a - \tilde{a}_{50}}{\tilde{a}_{95} - \tilde{a}_{50}}\right)\right]}, $$
+Fecundity at age $f_a$ is
+$$m_a = w_a\left[1 + \exp\left(-\log(19) \dfrac{a - \tilde{a}_{50}}{\tilde{a}_{95} - \tilde{a}_{50}}\right)\right]^{-1}, $$
 where $\tilde{a}_{50}$ and $\tilde{a}_{95}$ are the ages of 50% and 95% maturity, respectively.
 
 Weight-at-age $w_a$ is
@@ -81,15 +84,15 @@ The recruits per spawner at the origin of the stock-recruit relationship $\alpha
 $$\alpha = \dfrac{4h}{(1-h)\phi_0}, $$
 or
 $$\alpha = \dfrac{(5h)^{1.25}}{\phi_0},$$
-for a Beverton-Holt and Ricker stock-recruit relationship, respectively, where unfished recruits-per-spawner $\phi_0$
+for a Beverton-Holt and Ricker stock-recruit relationship, respectively. Unfished recruits-per-spawner $\phi_0$
 is
-$$\phi_0 = \Sigma_{a=1}^A l_a w_a m_a.$$
+$$\phi_0 = \sum_a l_a f_a.$$
 
 A normal distribution is assumed for the prior (a penalty to the likelihood) with the mean ($\mu_r$) and standard deviation ($\sigma_r$) calculated from the values of $r$ calculated using the above procedure:
 
 $$L^r = - 0.5\left(\dfrac{\hat{r} - \mu_r}{\sigma_r}\right)^2,$$
 
-## References
+### References
 Fletcher, R.I. 1978. On the restructuring of the Pella-Tomlinson system. Fishery Bulletin 76:515-521.
 
 Meyer, R., and Millar, R.B. 1999. BUGS in Bayesian stock assessments. Canadian Journal of Fisheries and Aquatic Science 56:1078-1086.

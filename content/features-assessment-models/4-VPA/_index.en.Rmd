@@ -30,17 +30,19 @@ where $\alpha$ is a numeric constant either fixed (often to 1) or estimated in t
 
 From $N_{A,t+1}$, $C_{A,t}$, $C_{A-1,t}$, $M_A$, and $M_{A-1}$, we can solve $F_{A-1,t}$ and $F_{A,t}$ as the values that satisfy equations 3-6. The corresponding abundances $N_{A-1,t}$ and $N_{A,t}$ are then obtained with equation 2.
 
-The VPA is tuned to an index via maximum likelihood. The predicted biomass index is
-$$ \hat{I}_t = \hat{q}\sum_a N_{a,t} w_a.$$
-The likelihood of the observed index is
+### Likelihoods
+The VPA is tuned to an index via maximum likelihood. The predicted index $s$ is
+$$ \hat{I}_{s,t} = \hat{q_s}\sum_a N_{a,t} \tilde{v}_{a,s} w_a$$
+and 
+$$ \hat{I}_{s,t} = \hat{q_s}\sum_a N_{a,t} \tilde{v}_{a,s}$$
+for a biomass-based and abundance-based index, respectively. Index selectivity $\tilde{v}_{a,s}$ is fixed in the model.
 
-$$L^I = \sum_t \left(-\log(\sigma) - 0.5\left[\dfrac{\log(I_t) - \log(\hat{I}_t)}{\sigma}\right]^2\right),$$
+The likelihood of the observed indices is
 
-$$\log(I_t) \sim N(\log(\hat{I}_t), \sigma^2).$$
+$$L^I = \sum_s \lambda_s \sum_t \left(-\log(\sigma_{s,t}) - 0.5\left[\dfrac{\log(I_{s,t}) - \log(\hat{I}_{s,t})}{\sigma_{s,t}}\right]^2\right),$$
+with $\lambda_s$ as the weighting coefficient for index $s$.
 
-From the VPA output, reference points can be calculated. Estimates of recruitment (the youngest age class $\tilde{a}$) and spawning biomass are used to estimate a stock-recruitment relationship to obtain MSY and unfished reference points.
-
-### Additional constraints
+#### Additional constraints
 In any VPA model, estimates of F and N of the youngest age classes are highly uncertain. To stabilize estimates, random walk penalties can be applied to the  recruitment and vulnerability estimates in the most recent years:
 $$ \begin{align}
 \log(N_{\tilde{a},t}) &\sim N(\log(N_{\tilde{a}, t-1}), \sigma_{\tilde{a}}^2)\\
@@ -50,6 +52,9 @@ where $\tilde{a}$ is the smallest age in the VPA and $v_{a,t} = F_{a,t}/\max_a F
 
 Note that these penalties can significantly alter model results, and generate spurious trends in F and N especially if there are significantly shifts in recent vulnerability and recruitment. The implications of incorporating these random walk penalties need to be evaluated on a case-by-case basis.
 
-## References
+### Reference points
+From the VPA output, reference points can be calculated. Estimates of recruitment (the youngest age class $\tilde{a}$) and spawning biomass are used to estimate a stock-recruitment relationship to obtain MSY and unfished reference points.
+
+### References
 
 Porch, C.E. 2018. VPA-2BOX 4.01 User Guide. NOAA Tech. Memo. NMFS-SEFSC-726. 67 pp.

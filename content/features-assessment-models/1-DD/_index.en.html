@@ -1,12 +1,10 @@
 ---
 date: "2021-02-26T15:18:01+06:00"
-title: Delay-difference and delay-differential models
+title: Delay-difference and continuous delay-differential models
 weight: 1
 ---
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
-<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
-<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 
 
 <div id="delay-difference-dd_tmb-model" class="section level2">
@@ -15,14 +13,14 @@ weight: 1
 <div id="growth" class="section level3">
 <h3>Growth</h3>
 <p>Growth in weight-at-age <span class="math inline">\(w_a\)</span> follows the recursive Ford-Brody equation:
-<span class="math display">\[w_a = \rho + \tilde\alpha w_{a-1}.\]</span></p>
-<p>We can obtain <span class="math inline">\(\tilde\alpha\)</span> and <span class="math inline">\(\rho\)</span> for the delay difference model if weight is also described by the equation
-<span class="math display">\[w_a = W_{\infty}(1 - \exp[K\{a-a_0\}])^b.\]</span></p>
-<p>Parameter <span class="math inline">\(\tilde\alpha\)</span> is solved in the limiting case where <span class="math inline">\(w_a = w_{a-1} = W_{\infty}\)</span> as <span class="math inline">\(t \rightarrow \infty\)</span>,
-<span class="math display">\[\tilde\alpha = W_{\infty}(1 - \rho). \]</span></p>
-<p>Substitution of equation 3 into equation 1 solves for <span class="math inline">\(\rho\)</span>,
-<span class="math display">\[\rho = \dfrac{w_a - W_{\infty}}{w_{a-1} - W_{\infty}}.\]</span></p>
-<p>In SAMtool, <span class="math inline">\(a = k+2\)</span> is arbitrarily chosen to calculate <span class="math inline">\(\rho\)</span>, where <span class="math inline">\(k\)</span> is the age of knife-edge selectivity. From catch and effort data alone, the age corresponding to the length of 50% maturity is chosen for <span class="math inline">\(k\)</span>.</p>
+<span class="math display">\[w_a = \rho + \tilde\alpha w_{a-1}.\]</span>
+We can obtain <span class="math inline">\(\tilde\alpha\)</span> and <span class="math inline">\(\rho\)</span> for the delay difference model if weight is also described by the equation
+<span class="math display">\[w_a = W_{\infty}(1 - \exp[K\{a-a_0\}])^b.\]</span>
+Parameter <span class="math inline">\(\tilde\alpha\)</span> is solved in the limiting case where <span class="math inline">\(w_a = w_{a-1} = W_{\infty}\)</span> as <span class="math inline">\(t \rightarrow \infty\)</span>,
+<span class="math display">\[\tilde\alpha = W_{\infty}(1 - \rho). \]</span>
+Substitution of equation 3 into equation 1 solves for <span class="math inline">\(\rho\)</span>,
+<span class="math display">\[\rho = \dfrac{w_a - W_{\infty}}{w_{a-1} - W_{\infty}}.\]</span>
+In SAMtool, <span class="math inline">\(a = k+2\)</span> is arbitrarily chosen to calculate <span class="math inline">\(\rho\)</span>, where <span class="math inline">\(k\)</span> is the age of knife-edge selectivity. The age corresponding to the length of 50% maturity is chosen for <span class="math inline">\(k\)</span>.</p>
 </div>
 <div id="dynamics-equations" class="section level3">
 <h3>Dynamics equations</h3>
@@ -31,31 +29,31 @@ weight: 1
 B_t &amp;= s_{t-1}(\tilde{\alpha} N_{t-1} + \rho B_{t-1}) + w_k R_t\\
 N_t &amp;= s_{t-1} N_{t-1} + R_t,
 \end{align}\]</span>
-where <span class="math inline">\(R_t\)</span> is the recruitment (defined in the next section) at age <span class="math inline">\(k\)</span> and <span class="math inline">\(w_k\)</span> is the weight of recruits. Survival <span class="math inline">\(s_t\)</span> is defined as
+where <span class="math inline">\(R_t\)</span> is the recruitment (defined later) at age <span class="math inline">\(k\)</span> and <span class="math inline">\(w_k\)</span> is the weight of recruits. Survival <span class="math inline">\(s_t\)</span> is defined as
 <span class="math display">\[ s_t = (1 - u_t)\exp(-M), \]</span>
-where <span class="math inline">\(u_t\)</span> is the annual harvest rate and <span class="math inline">\(M\)</span> is the instantaneous natural mortality rate.</p>
+where <span class="math inline">\(u_t\)</span> is the annual exploitation rate and <span class="math inline">\(M\)</span> is the instantaneous natural mortality rate.</p>
 <div id="conditioning-on-catch" class="section level4">
 <h4>Conditioning on catch</h4>
-<p>If the model is conditioned on catch (<span class="math inline">\(C_t\)</span>), the harvest rate <span class="math inline">\(u_t\)</span> is
+<p>If the model is conditioned on catch (<span class="math inline">\(C_t\)</span>), the exploitation rate <span class="math inline">\(u_t\)</span> is
 <span class="math display">\[ u_t = C_t/B_t. \]</span></p>
-<p>The predicted biomass-based index is
-<span class="math display">\[\hat{I}_t = \hat{q}^I \hat{B}_t ,\]</span>
-where the circumflex <span class="math inline">\(^\)</span> denotes the model estimate. Otherwise, the predicted abundance-based index, is
-<span class="math display">\[\hat{I}_t = \hat{q}^I \hat{N}_t .\]</span></p>
-<p>The likelihood <span class="math inline">\(L\)</span> of the observed index <span class="math inline">\(I_t\)</span>, assuming a lognormal distribution, is
-<span class="math display">\[L^I = \sum_t \left(-\log(\sigma) - 0.5\left[\dfrac{\log(I_t) - \log(\hat{I}_t)}{\sigma}\right]^2\right),\]</span>
-where <span class="math inline">\(\sigma\)</span> is the standard deviation of the index.</p>
+<p>The predicted biomass-based index for survey <span class="math inline">\(s\)</span> is
+<span class="math display">\[\hat{I}_{s,t} = \hat{q}^I_s \hat{B}_t ,\]</span>
+where <span class="math inline">\(q^I_s\)</span> is the catchability coefficient scaling the stock size to the index and the circumflex <span class="math inline">\(^\)</span> denotes the model estimate. Otherwise, the predicted abundance-based index, is
+<span class="math display">\[\hat{I}_{s,t} = \hat{q}^I_s \hat{N}_t .\]</span></p>
+<p>The likelihood <span class="math inline">\(L^I\)</span> of the observed indices <span class="math inline">\(I_{s,t}\)</span>, using a lognormal distribution, is
+<span class="math display">\[L^I = \sum_s \lambda_s \sum_t \left(-\log(\sigma_{s,t}) - 0.5\left[\dfrac{\log(I_{s,t}) - \log(\hat{I}_{s,t})}{\sigma_{s,t}}\right]^2\right),\]</span>
+where <span class="math inline">\(\sigma_{s,t}\)</span> is the standard deviation of the index.</p>
 </div>
 <div id="conditioning-on-effort" class="section level4">
 <h4>Conditioning on effort</h4>
-<p>Otherwise, if the model is conditioned on effort (as the ratio of the catch and index), the harvest rate is
+<p>Otherwise, if the model is conditioned on effort (as the ratio of the catch and index), the exploitation rate is
 <span class="math display">\[ u_t = 1 - \exp(-q^f f_t), \]</span>
-where <span class="math inline">\(q\)</span> is the estimated coefficient that scales effort and <span class="math inline">\(f_t\)</span> is the effort in year <span class="math inline">\(t\)</span>.</p>
+where <span class="math inline">\(q^f\)</span> is the coefficient that scales effort and <span class="math inline">\(f_t\)</span> is the effort in year <span class="math inline">\(t\)</span>.</p>
 <p>The predicted catch is
 <span class="math display">\[\hat{C}_t = \hat{u}_t \hat{B}_t,\]</span>
 where the circumflex <span class="math inline">\(^\)</span> denotes the model estimate.</p>
-<p>The likelihood <span class="math inline">\(L\)</span> of the observed catch <span class="math inline">\(C_t\)</span>, assuming a lognormal distribution, is
-<span class="math display">\[L^I = \sum_t \left(-\log(\omega) - 0.5\left[\dfrac{\log(C_t) - log(\hat{C}_t)}{\omega}\right]^2\right).\]</span>
+<p>The likelihood <span class="math inline">\(L^C\)</span> of the observed catch <span class="math inline">\(C_t\)</span>, following a lognormal distribution, is
+<span class="math display">\[L^C = \sum_t \left(-\log(\omega) - 0.5\left[\dfrac{\log(C_t) - log(\hat{C}_t)}{\omega}\right]^2\right).\]</span>
 where <span class="math inline">\(\omega\)</span> is the standard deviation of the catch.</p>
 </div>
 </div>
@@ -63,29 +61,29 @@ where <span class="math inline">\(\omega\)</span> is the standard deviation of t
 <h3>Stock-recruit parameters</h3>
 <div id="beverton-holt-relationship" class="section level4">
 <h4>Beverton-Holt relationship</h4>
-<p>Assuming a Beverton-Holt stock recruit relationship and spawning occurring after fishing in each annual time step, then recruitment (at age <span class="math inline">\(k\)</span>) in year <span class="math inline">\(t\)</span> is:
+<p>With a Beverton-Holt stock recruit relationship, and spawning occurring before fishing in each annual time step, the recruitment (at age <span class="math inline">\(k\)</span>) in year <span class="math inline">\(t\)</span> is:
 <span class="math display">\[ R_t = \dfrac{\alpha B_{t-k}}{1 + \beta B_{t-k}},\]</span>
 where
 <span class="math display">\[ \begin{align}
 \alpha &amp;= \dfrac{4hR_0}{(1-h)B_0}\\
 \beta &amp;= \dfrac{5h-1}{(1-h)B_0},
 \end{align}\]</span></p>
-<p>Unfished recruitment <span class="math inline">\(R_0\)</span> and steepness <span class="math inline">\(h\)</span> are estimated parameters, with unfished biomass <span class="math inline">\(B_0\)</span> calculated as
-<span class="math display">\[B_0 =  R_0 \phi_0.\]</span>
+<p>Unfished recruitment <span class="math inline">\(R_0\)</span> is an estimated parameter and steepness <span class="math inline">\(h\)</span> can either be fixed or estimated. Unfished biomass <span class="math inline">\(B_0\)</span> is calculated as
+<span class="math display">\[B_0 = R_0 \phi_0.\]</span>
 The unfished biomass per recruit <span class="math inline">\(\phi_0\)</span> is
 <span class="math display">\[\phi_0 = \dfrac{\tilde{\alpha} \exp(-M) + w_k (1 - \exp(-M))}{1 - \rho \exp(-M)}\]</span>
 and is obtained by solving the equilibrium equation for biomass, <span class="math inline">\(B_0 = \exp(-M)(\tilde{\alpha}N_0 + \rho B_0) + w_k R_0\)</span>, is solved for <span class="math inline">\(B_0/R_0\)</span>, with <span class="math inline">\(N_0 = R_0/(1−\exp(-M))\)</span>.</p>
 </div>
 <div id="ricker-equation" class="section level4">
 <h4>Ricker equation</h4>
-<p>Assuming a Ricker stock-recruit relationship, the recruitment is
+<p>With a Ricker stock-recruit relationship, the recruitment is
 <span class="math display">\[ R_t = \alpha B_{t-k}\exp[-\beta B_{t-k}],\]</span>
 where
 <span class="math display">\[ \begin{align}
 \alpha &amp;= \dfrac{(5h)^{1.25} R_0}{B_0}\\
 \beta &amp;= \dfrac{5}{4B_0}\log(5h),
 \end{align}\]</span></p>
-<p>and <span class="math inline">\(B_0\)</span> is calculated as in equation 14.</p>
+<p>and <span class="math inline">\(B_0\)</span> is calculated as in equation 18.</p>
 </div>
 </div>
 </div>
@@ -119,32 +117,32 @@ After substitution and evaluation of the integrals, the governing equations are
 \dfrac{dB_t}{dt} &amp;= w_k R_t + \kappa W_{\infty} N_t - (Z_t + \kappa) B_t,
 \end{align}\]</span>
 where <span class="math inline">\(R_t\)</span> is the abundance of recruits and <span class="math inline">\(w_k R_t\)</span> is the weight of recruits, both of which serve as the constants of integration describing the input of abundance and biomass, respectively, to the population.</p>
-<p>Solving the differential equations 25 and 26 leads to the dynamics equations:
+<p>Solving the differential equations 29 and 30 leads to the dynamics equations:
 <span class="math display">\[ \begin{align}
-N_{t+\delta} &amp;= N_{\infty,t} + (N_t - N_{\infty,t})\exp(-Z_t\delta)\\
-B_{t+\delta} &amp;= B_{\infty,t} + (N_t - N_{\infty,t}) \dfrac{\kappa W_{\infty}}{Z_t + \kappa} + \left[B_t - B_{\infty,t} - (N_t - N_{\infty,t}) \dfrac{\kappa W_{\infty}}{Z_t + \kappa}\right]\exp(-[Z_t+\kappa]\delta),
+N_{t+\Delta} &amp;= N_{\infty,t} + (N_t - N_{\infty,t})\exp(-Z_t\Delta)\\
+B_{t+\Delta} &amp;= B_{\infty,t} + (N_t - N_{\infty,t}) \dfrac{\kappa W_{\infty}}{Z_t + \kappa} + \left[B_t - B_{\infty,t} - (N_t - N_{\infty,t}) \dfrac{\kappa W_{\infty}}{Z_t + \kappa}\right]\exp(-[Z_t+\kappa]\Delta),
 \end{align}\]</span>
-where <span class="math inline">\(Z_t = F_t + M\)</span>, and <span class="math inline">\(N_{\infty,t} = R_t/Z_t\)</span> and <span class="math inline">\(B_{\infty,t} = \dfrac{w_k + \dfrac{\kappa W_{\infty}}{Z_t}}{Z_t + \kappa}R_t\)</span> are the equilibrium abundance and biomass respectively, conditional on <span class="math inline">\(R_t\)</span> and <span class="math inline">\(Z_t\)</span>.</p>
-<p>With a constant and continuous fishing mortality rate <span class="math inline">\(F_t\)</span> over time step <span class="math inline">\(s = t\)</span> to <span class="math inline">\(s = t + \delta\)</span>, the accumulated catch in weight <span class="math inline">\(C_t\)</span> is
+where <span class="math inline">\(Z_t = F_t + M\)</span>, and <span class="math inline">\(N_{\infty,t} = R_t/Z_t\)</span> and <span class="math inline">\(B_{\infty,t} = \dfrac{w_k + \dfrac{\kappa W_{\infty}}{Z_t}}{Z_t + \kappa}R_t\)</span> are the equilibrium abundance and biomass respectively, conditional on <span class="math inline">\(R_t\)</span> and <span class="math inline">\(Z_t\)</span>, and <span class="math inline">\(\Delta\)</span> is the length of the time step, i.e., <span class="math inline">\(\Delta = 1\)</span> for an annual time step.</p>
+<p>With a constant and continuous fishing mortality rate <span class="math inline">\(F_t\)</span> over time step <span class="math inline">\(s = t\)</span> to <span class="math inline">\(s = t + \Delta\)</span>, the accumulated catch in weight <span class="math inline">\(C_t\)</span> is
 <span class="math display">\[\begin{align}
 C_t &amp;= \int F_t B_s ds\\
-&amp;= F_t\left[B_{\infty,t}\delta + (N_t - N_{\infty,t}) \dfrac{\kappa W_{\infty}}{Z_t + \kappa} \delta + \dfrac{B_t - B_{\infty,t} - (N_t - N_{\infty,t}) \dfrac{\kappa W_{\infty}}{Z_t + \kappa}[1 - \exp(-[Z_t+\kappa]\delta)]}{Z_t + \kappa} \right]
+&amp;= F_t\left[B_{\infty,t}\Delta + (N_t - N_{\infty,t}) \dfrac{\kappa W_{\infty}}{Z_t + \kappa} \Delta + \dfrac{B_t - B_{\infty,t} - (N_t - N_{\infty,t}) \dfrac{\kappa W_{\infty}}{Z_t + \kappa}[1 - \exp(-[Z_t+\kappa]\Delta)]}{Z_t + \kappa} \right]
 \end{align}\]</span>
 To match the predicted catch to the observed catch in the model, <span class="math inline">\(F_t\)</span> is solved iteratively.</p>
-<p>The predicted index is
-<span class="math display">\[\hat{I}_t=\hat{q}\hat{B}_t\]</span>
+<p>The predicted index for survey <span class="math inline">\(s\)</span> is
+<span class="math display">\[\hat{I}_{s,t}=\hat{q}_s \hat{B}_{s,t}\]</span>
 or
-<span class="math display">\[\hat{I}_t=\hat{q}\hat{N}_t\]</span>
+<span class="math display">\[\hat{I}_{s,t}=\hat{q}_s \hat{N}_{s,t}\]</span>
 for a biomass and abundance-based index, respectively.</p>
-<p>The likelihood of the observed index <span class="math inline">\(I_t\)</span>, assuming a lognormal distribution, is
-<span class="math display">\[L^I = \sum_t \left(-\log(\sigma) - 0.5\left[\dfrac{\log(I_t) - \log(\hat{I}_t)}{\sigma}\right]^2\right),\]</span>
-where <span class="math inline">\(\sigma\)</span> is the standard deviation of the index.</p>
+<p>The likelihood of the observed index <span class="math inline">\(I_t\)</span>, using a lognormal distribution, is
+<span class="math display">\[L^I = \sum_s \lambda_s \sum_t \left(-\log(\sigma_{s,t}) - 0.5\left[\dfrac{\log(I_{s,t}) - \log(\hat{I}_{s,t})}{\sigma_{s,t}}\right]^2\right),\]</span>
+where <span class="math inline">\(\lambda_s\)</span> is a weighting coefficient and <span class="math inline">\(\sigma_{s,t}\)</span> is the standard deviation of the index.</p>
 </div>
 <div id="stock-recruit-parameters-1" class="section level3">
 <h3>Stock-recruit parameters</h3>
 <p>The stock-recruit parameters are estimated in the same way as the delay difference model, except unfished abundance <span class="math inline">\(N_0\)</span> and biomass <span class="math inline">\(B_0\)</span> are calculated as
 <span class="math display">\[\begin{align}
-B_0 &amp;= \dfrac{w_k + \dfrac{\kappa W_{\infty}}{M}}{M + \kappa}R_0\\
+B_0 &amp;= R_0 \phi_0 = R_0 \dfrac{w_k + \dfrac{\kappa W_{\infty}}{M}}{M + \kappa}\\
 N_0 &amp;= \dfrac{R_0}{M}.
 \end{align}\]</span></p>
 </div>

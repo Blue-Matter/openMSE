@@ -4,21 +4,21 @@ title: Statistical catch-at-age (SCA) model
 weight: 2
 ---
 
+The statistical catch-at-age model uses a time series of total catch (in weight), index, and catch-at-age observations, as well as information on weight, maturity, natural mortality at age.
 
 ### Dynamics equations
-The statistical catch-at-age model uses a time series of total catch (in weight), index, and catch-at-age observations, as well as information on weight, maturity, natural mortality at age.
 
 The population abundance $N_{a,t}$ of age $a$ in year $t$ is
 $$ N_{a,t} =
 \begin{cases}
-      R_t & a = 1\\
-      N_{a-1,t-1} \exp(- v_{a-1} F_{t-1} - M_{a-1}) & a = 2, \ldots, A-1\\
+      R_t & a = 0\\
+      N_{a-1,t-1} \exp(- v_{a-1} F_{t-1} - M_{a-1}) & a = 1, \ldots, A-1\\
       N_{a-1,t-1} \exp(- v_{a-1} F_{t-1} - M_{a-1}) + N_{a,t-1} \exp(- v_a F_{t-1} - M_a) & a = A
 \end{cases},
 $$
 where $R_t$ is the recruitment (age-1), $v_a$ is the vulnerability at age $a$, $F_t$ is the apical fishing mortality rate, $M_a$ is the instantaneous natural mortality rate at age $a$, and $A$ is the maximum age in the model as a plus-group accumulator age.
 
-### Selectivity
+#### Selectivity
 Assuming logistic vulnerability, the vulnerability is:
 $$v_a = \left[1 + \exp\left(-\log(19) \dfrac{a - a_{50}}{a_{95} - a_{50}}\right)\right]^{-1}, $$
 where $a_{50}$ and $a_{95}$ are the estimated ages of 50% and 95% vulnerability, respectively.
@@ -33,9 +33,9 @@ $$ v_a =
 $$
 where $f(a; \mu, \sigma) = \exp(-0.5 (a - \mu)^2/\sigma^2)$ is the normal probability density function scaled to one at $\mu$. Four parameters are estimated: $a_{50}$ the age of 50% vulnerability (ascending limb), $a_{asc}$ the first age of full vulnerability, $a_{des}$ the last age of full vulnerability, and $v_A$ the vulnerability at the maximum age in the model. The $\mu$ and $\sigma$ for both the ascending and descending limbs of the double-normal equation are estimated parameters. From these four parameters, $\sigma_{asc} = \sqrt{(a_{50} - \mu_{asc})^2/\log(4)}$ and $\sigma_{des} = \sqrt{-0.5(A - \mu_{des})^2/\log(v_A)}$ can be derived. The default option sets $a_{asc} = a_{des}$.
 
-### Biomass
-The vulnerable biomass $VB_t$ at the beginning of year $t$ is
-$$VB_t = \sum_{a=1}^A v_a w_a N_{a,t},$$
+#### Biomass
+The vulnerable biomass $V_t$ at the beginning of year $t$ is
+$$V_t = \sum_{a=1}^A v_a w_a N_{a,t},$$
 where weight-at-age $w_a$ is given by
 $$w_a = W_{\infty}(1 - \exp[K\{a-a_0\}])^b.$$
 
@@ -45,34 +45,23 @@ where maturity at age $m_a$ is
 $$m_a = \left[1 + \exp\left(-\log(19) \dfrac{a - \tilde{a}_{50}}{\tilde{a}_{95} - \tilde{a}_{50}}\right)\right]^{-1}, $$
 where $\tilde{a}_{50}$ and $\tilde{a}_{95}$ are the ages of 50% and 95% maturity, respectively.
 
-### Catch-at-age
+#### Catch-at-age
 The estimated catch-at-age $\hat{C}_{a,t}$ (CAA) is obtained from the Baranov equation:
 $$\hat{C}_{a,t} = \dfrac{\hat{v}_a \hat{F}_t}{\hat{v}_a \hat{F}_t + M_a} [1 - \exp(- \hat{v}_a \hat{F}_t - M_a)] \hat{N}_{a,t}.$$
 The predicted total catch in weight $\hat{Y}_t$ is
 $\hat{Y}_t = \sum_a w_a \hat{C}_{a,t}.$
 
-The estimated index $\hat{I}_t$, assuming that it is an index for total biomass, is
-$$ \hat{I}_t = \hat{q} \hat{B}_t,$$
-where $B_t = \sum_{a=1}^A w_a N_{a,t}$. A function argument allows for the user to specify that the observed index is for vulnerable or spawning biomass.
+#### Index
+Index selectivity $\tilde{v}_{a,s}$ is fixed in the model.
 
-### Likelihoods
-The likelihood of the observed catch at age $C_{a,t}$, assuming a multinomial distribution, is
-$$L^{CAA} = \sum_t O_t \sum_a p_{a,t} \log(\hat{p}_{a,t}),$$ 
+The estimated $s$-th index $\hat{I}_{s,t}$ is
+$$ \hat{I}_{s,t} = \hat{q_s} \sum_a \tilde{v}_{a,s} w_a \hat{N}_{a,t}$$
+and
+$$ \hat{I}_{s,t} = \hat{q_s} \sum_a \tilde{v}_{a,s} \hat{N}_{a,t}$$
+for a biomass and abundance-based index, respectively.
 
-where $O_t$ is the assumed sample size of catch-at-age observations in year $t$ and $\hat{p}_{a,t} = \hat{C}_{a,t}/\sum_a\hat{C}_{a,t}$ is annual predicted
-proportions of catch-at-age.
-
-If a lognormal distribution for the observed proportions at age is assumed, then the likelihood is
-$$L^{CAA} = \sum_t \left(-\log(0.01/\hat{p}_{a,t}) - 0.5\left[\dfrac{\log(p_{a,t}) - \log(\hat{p}_{a,t})}{0.01/\hat{p}_{a,t}}\right]^2\right)$$.
-
-The likelihood of the observed catch $Y_t$, assuming a lognormal distribution, is
-$$L^Y = \sum_t \left(-\log(\omega) - 0.5\left[\dfrac{\log(Y_t) - \log(\hat{Y}_t)}{\omega}\right]^2\right).$$
-
-The likelihood of the observed index $I_t$, assuming a lognormal distribution, is
-$$L^I = \sum_t \left(-\log(\sigma) - 0.5\left[\dfrac{\log(I_t) - \log(\hat{I}_t)}{\sigma}\right]^2\right).$$
-
-#### SCA with Pope's approximation (SCA_Pope)
-A variant of the SCA is the `SCA_Pope` function, which fixes the predicted catches to the observed catches and uses Pope's approximation to calculate the annual harvest rate in the midpoint of the year.
+#### Pope's approximation (SCA_Pope)
+A variant of the SCA is the `SCA_Pope` function, which fixes the predicted catches to the observed catches and uses Pope's approximation to calculate the annual exploitation rate in the midpoint of the year.
 
 The abundance at age is
 
@@ -83,29 +72,46 @@ $$ N_{a,t} =
       N_{a-1,t-1} (1 - v_{a-1} u_{t-1}) \exp(-M_{a-1}) + N_{a,t-1} (1 - v_a u_{t-1}) \exp(-M_a) & a = A
 \end{cases},
 $$
-where $u_t$ is the harvest rate.
+where $u_t$ is the exploitation rate.
 
 The vulnerable biomass in the midpoint of the year is
-$$VB^{mid}_t = \sum_{a=1}^A v_a w_a N_{a,t} \exp(-0.5 M_a).$$
+$$V^{mid}_t = \sum_{a=1}^A v_a w_a N_{a,t} \exp(-0.5 M_a).$$
 
-By conditioning the model on catch in weight $Y_t$, the estimated annual harvest rate $\hat{u}_t$ is
-$$\hat{u}_t = Y_t / \widehat{VB^{mid}}_t .$$
-The estimated catch at age $\hat{C}_{a,t}$ is
+By conditioning the model on catch in weight $Y_t$, the estimated annual exploitation rate $\hat{u}_t$ is
+$$\hat{u}_t = Y_t / \widehat{V^{mid}}_t .$$
+
+The predicted catch at age $\hat{C}_{a,t}$ is
 $$\hat{C}_{a,t} = \hat{v}_a \hat{u}_t \hat{N}_{a,t} \exp(-0.5 M_a).$$
+#### Time-varying natural mortality
 
+##### Random walk in M (SCA_RWM)
 
-### Estimation of recruitment and reference points
+Annual $M_t$ (age-invariant) can be configured as a random walk in logit space where
 
-There are two variants of the statistical catch-at-age model for estimation of recruitment and reference points. In function `SCA`, productivity parameters $R_0$ and $h$ are estimated in the assessment model. Annual recruitment is estimated as deviations from the resulting stock-recruitment relationship within the model. MSY reference points are derived from the estimates of $R_0$ and $h$.
+$$\tilde{x}^M_{t+1} = \tilde{x}^M_t + x^M_t$$.
 
-In `SCA2`, no stock-recruit relationship is assumed in the assessment model, i.e., annual recruitment is estimated as deviations from the mean recruitment over the observed time series, similar to Cadigan (2016). After the assessment, a stock-recruit function can be fitted post-hoc to the recruitment and spawning stock biomass estimates from the assessment model to obtain MSY reference points.
+From $\tilde{x}^M_t$, $M_t$, which is bounded between $M^{\textrm{low}}$ and $M^{\textrm{high}}$, is calculated as
 
-#### Stock-recruit function in assessment model (SCA)
+$$ M_t = \dfrac{M^{\textrm{high}} - M^{\textrm{low}}}{1 - \left[\dfrac{M^{\textrm{high}} - M^{\textrm{low}}}{M_{t=1} - M^{\textrm{low}}}-1\right]\exp(-\tilde{x}^M_t)} + M^{\textrm{low}}$$
+where the M in the first year $M_{t=1}$ is either fixed or estimated with a prior.
+
+The penalty function for constraining the random walk is
+
+$$L^M = \sum_t \left(-\log(\tau^M) - 0.5\left[\dfrac{\hat{x}^M_t}{\tau^M}\right]^2\right).$$
+
+##### Density dependent M (SCA_DDM)
+
+Annual $M_t$ can be a function of biomass depletion ($B_t/B_0$),
+$$ M_t = M_0 + (M_1 - M_0) (1 - B_t/B_0)$$
+
+where $M_0$ and $M_1$ are the bounds of natural mortality as depletion approaches one and zero, respectively (Forrest et al. 2018). Density-dependence is compensatory if $M_0 > M_1$ (M decreases as biomass decreases) and is depensatory if $M_0 < M_1$ (M increases as biomass decreases).
+
+#### Stock-recruit function
 
 ##### Beverton-Holt stock-recruit function
 
-Recruitment $R_t$ in year $t$ is
-$$ R_t = \dfrac{\alpha E_{t-1}}{1 + \beta E_{t-1}} \exp(\delta_t - 0.5 \tau^2),$$
+Age-0 recruitment $R_t$ in year $t$ is
+$$ R_t = \dfrac{\alpha E_t}{1 + \beta E_t} \exp(\delta_t - 0.5 \tau^2),$$
 where $\delta_t \sim N(0, \tau^2)$ are recruitment deviations from the stock-recruit relationship in lognormal space and $\tau$ is the standard deviation of the recruitment deviations. Parameters $\alpha$ and $\beta$ are defined as
 $$ \begin{align}
 \alpha &= \dfrac{4hR_0}{(1-h)B_0}\\
@@ -115,8 +121,8 @@ where $B_0 = R_0 \phi_0$. The biomass per recruit $\phi_0$ is calculated as $\ph
 $$
 l_a =
 \begin{cases}
-      1 & a = 1\\
-      l_{a-1} \exp(-M_{a-1}) & a = 2, \ldots, A-1\\
+      1 & a = 0\\
+      l_{a-1} \exp(-M_{a-1}) & a = 1, \ldots, A-1\\
       \dfrac{l_{a-1} \exp(-M_{a-1})}{1 - \exp(-M_a)} & a = A \\
 \end{cases}.
 $$
@@ -124,25 +130,61 @@ $$
 ##### Ricker stock-recruit function
 
 Recruitment $R_t$ in year $t$ is
-$$ R_t = \alpha E_{t-1} \exp(-\beta E_{t-1}) \exp(\delta_t - 0.5 \tau^2),$$
+$$ R_t = \alpha E_t \exp(-\beta E_t) \exp(\delta_t - 0.5 \tau^2),$$
 where
 $$ \begin{align}
 \alpha &= \dfrac{(5h)^{1.25} R_0}{B_0}\\
 \beta &= \dfrac{5}{4B_0}\log(5h).
 \end{align}$$
 
-
-#### No stock-recruit function in assessment model (SCA2)
+##### No stock-recruit function in assessment model (SCA2)
 
 Recruitment $R_t$ in year $t$ is
 $$R_t = \bar{R} \exp(\delta_t - 0.5 \tau^2), $$
 where $\delta_t \sim N(0, \tau^2)$ are recruitment deviations in lognormal space from the estimated mean recruitment $\bar{R}$ and $\tau$ is the standard deviation of the recruitment deviations. Typically, $\tau$ is set to 1 so that recruitment is estimated almost as free parameters (Cadigan, 2016).
 
-#### Likelihood of recruitment deviations
+### Likelihoods
+The likelihood of the observed catch at age $C_{a,t}$, assuming a multinomial distribution, is
+$$L^{CAA} = \sum_t O_t \sum_a p_{a,t} \log(\hat{p}_{a,t}),$$ 
+
+where $O_t$ is the assumed sample size of catch-at-age observations in year $t$ and $\hat{p}_{a,t} = \hat{C}_{a,t}/\sum_a\hat{C}_{a,t}$ is annual predicted proportions of catch-at-age.
+
+If a lognormal distribution for the observed proportions at age is assumed, then the likelihood is
+$$L^{CCAA} = \sum_t \sum_a \left(-\log(0.01/\hat{p}_{a,t}) - 0.5\left[\dfrac{\log(p_{a,t}) - \log(\hat{p}_{a,t})}{0.01/\hat{p}_{a,t}}\right]^2\right)$$.
+
+The likelihood of the observed catch $Y_t$, assuming a lognormal distribution, is
+$$L^Y = \sum_t \left(-\log(\omega) - 0.5\left[\dfrac{\log(Y_t) - \log(\hat{Y}_t)}{\omega}\right]^2\right).$$
+
+The likelihood of the observed index $I_{s,t}$, assuming a lognormal distribution, is
+$$L^I = \sum_s \lambda_s \sum_t \left(-\log(\sigma_{s,t}) - 0.5\left[\dfrac{\log(I_{s,t}) - \log(\hat{I}_{s,t})}{\sigma_{s,t}}\right]^2\right)$$
+with $\lambda_s$ as a weighting coefficient for survey $s$.
 
 The likelihood of the estimated log-recruitment deviations $\hat{\delta}_t$ (penalized parameters) is
 $$L^{\delta} = \sum_t \left(-\log(\tau) - 0.5\left[\dfrac{\hat{\delta}_t}{\tau}\right]^2\right).$$
 
-## References
+### Reference points
+
+#### Time-invariant M
+
+There are two variants. When the stock-recruit relationship is built into the model, productivity parameters $R_0$ and $h$ can be estimated in the assessment model. MSY reference points are derived from the estimates of $R_0$ and $h$.
+
+When no stock-recruit relationship is used in the assessment model, i.e., annual recruitment is estimated as deviations from the mean recruitment over the observed time series, similar to Cadigan (2016). After the assessment, a stock-recruit function can be fitted post-hoc to the recruitment and spawning stock biomass estimates from the assessment model to obtain MSY reference points.
+
+#### Time-varying M
+
+##### Random walk in M
+In this case, $phi_0$ is calculated from $M_{t=1}$. Annual MSY reference points can be calculated for the corresponding $M_t$ with constant stock-recruit $\alpha$ and $\beta$. Thus, all MSY reference points decrease as $M_t$ increases.
+
+##### Density-dependent M
+In this case, $phi_0$ is calculated from $M = M_0$. MSY is calculated by searching for the $F$ that maximizes yield. The corresponding biomass and natural mortality, subject to the density-dependent relationship and conditional on $F_{\textrm{MSY}}$, is solved iteratively such that
+
+$$ M_{\textrm{MSY}} = M_0 + (M_1 - M_0) (1 - B_{\textrm{MSY}}/B_0).$$
+
+### Priors
+See the sub-article on priors.
+
+### References
 
 Cadigan, N.G. 2016. A state-space stock assessment model for northern cod, including under-reported catches and variable natural mortality rates. Canadian Journal of Fisheries and Aquatic Science 72:296-308.
+
+Forrest, R.E., Holt, K.R., and Kronlund, A.R. 2018. Performance of alternative harvest control rules for two Pacific groundfish stocks with uncertain natural mortality: Bias, robustness and trade-offs. Fisheries Research 2016: 259-286.

@@ -1,6 +1,6 @@
 ---
 date: "2021-02-26T15:18:01+06:00"
-title: Delay-difference and delay-differential models
+title: Delay-difference and continuous delay-differential models
 weight: 1
 ---
 
@@ -12,17 +12,13 @@ There has been a rich history of development for the delay difference model for 
 ### Growth
 Growth in weight-at-age $w_a$ follows the recursive Ford-Brody equation:
 $$w_a = \rho + \tilde\alpha w_{a-1}.$$
-
 We can obtain $\tilde\alpha$ and $\rho$ for the delay difference model if weight is also described by the equation 
 $$w_a = W_{\infty}(1 - \exp[K\{a-a_0\}])^b.$$ 
-
 Parameter $\tilde\alpha$ is solved in the limiting case where $w_a = w_{a-1} = W_{\infty}$ as $t \rightarrow \infty$,
 $$\tilde\alpha = W_{\infty}(1 - \rho). $$
-
 Substitution of equation 3 into equation 1 solves for $\rho$, 
 $$\rho = \dfrac{w_a - W_{\infty}}{w_{a-1} - W_{\infty}}.$$
-
-In SAMtool, $a = k+2$ is arbitrarily chosen to calculate $\rho$, where $k$ is the age of knife-edge selectivity. From catch and effort data alone, the age corresponding to the length of 50% maturity is chosen for $k$.
+In SAMtool, $a = k+2$ is arbitrarily chosen to calculate $\rho$, where $k$ is the age of knife-edge selectivity. The age corresponding to the length of 50% maturity is chosen for $k$.
 
 ### Dynamics equations
 The population biomass $B_t$ and abundance $N_t$ in year $t$ is given by
@@ -30,43 +26,43 @@ $$ \begin{align}
 B_t &= s_{t-1}(\tilde{\alpha} N_{t-1} + \rho B_{t-1}) + w_k R_t\\
 N_t &= s_{t-1} N_{t-1} + R_t,
 \end{align}$$
-where $R_t$ is the recruitment (defined in the next section) at age $k$ and $w_k$ is the weight of recruits. Survival $s_t$ is defined as
+where $R_t$ is the recruitment (defined later) at age $k$ and $w_k$ is the weight of recruits. Survival $s_t$ is defined as
 $$ s_t = (1 - u_t)\exp(-M), $$
-where $u_t$ is the annual harvest rate and $M$ is the instantaneous natural mortality rate. 
+where $u_t$ is the annual exploitation rate and $M$ is the instantaneous natural mortality rate. 
 
 #### Conditioning on catch
 
-If the model is conditioned on catch ($C_t$), the harvest rate $u_t$ is
+If the model is conditioned on catch ($C_t$), the exploitation rate $u_t$ is
 $$ u_t = C_t/B_t. $$
 
-The predicted biomass-based index is 
-$$\hat{I}_t = \hat{q}^I \hat{B}_t ,$$
-where the circumflex $^$ denotes the model estimate. Otherwise, the predicted abundance-based index, is
-$$\hat{I}_t = \hat{q}^I \hat{N}_t .$$
+The predicted biomass-based index for survey $s$ is 
+$$\hat{I}_{s,t} = \hat{q}^I_s \hat{B}_t ,$$
+where $q^I_s$ is the catchability coefficient scaling the stock size to the index and the circumflex $^$ denotes the model estimate. Otherwise, the predicted abundance-based index, is
+$$\hat{I}_{s,t} = \hat{q}^I_s \hat{N}_t .$$
 
-The likelihood $L$ of the observed index $I_t$, assuming a lognormal distribution, is
-$$L^I = \sum_t \left(-\log(\sigma) - 0.5\left[\dfrac{\log(I_t) - \log(\hat{I}_t)}{\sigma}\right]^2\right),$$
-where $\sigma$ is the standard deviation of the index.
+The likelihood $L^I$ of the observed indices $I_{s,t}$, using a lognormal distribution, is
+$$L^I = \sum_s \lambda_s \sum_t \left(-\log(\sigma_{s,t}) - 0.5\left[\dfrac{\log(I_{s,t}) - \log(\hat{I}_{s,t})}{\sigma_{s,t}}\right]^2\right),$$
+where $\sigma_{s,t}$ is the standard deviation of the index.
 
 
 #### Conditioning on effort
 
-Otherwise, if the model is conditioned on effort (as the ratio of the catch and index), the harvest rate is
+Otherwise, if the model is conditioned on effort (as the ratio of the catch and index), the exploitation rate is
 $$ u_t = 1 - \exp(-q^f f_t), $$
-where $q$ is the estimated coefficient that scales effort and $f_t$ is the effort in year $t$. 
+where $q^f$ is the coefficient that scales effort and $f_t$ is the effort in year $t$. 
 
 The predicted catch is 
 $$\hat{C}_t = \hat{u}_t \hat{B}_t,$$
 where the circumflex $^$ denotes the model estimate.
 
-The likelihood $L$ of the observed catch $C_t$, assuming a lognormal distribution, is
-$$L^I = \sum_t \left(-\log(\omega) - 0.5\left[\dfrac{\log(C_t) - log(\hat{C}_t)}{\omega}\right]^2\right).$$
+The likelihood $L^C$ of the observed catch $C_t$, following a lognormal distribution, is
+$$L^C = \sum_t \left(-\log(\omega) - 0.5\left[\dfrac{\log(C_t) - log(\hat{C}_t)}{\omega}\right]^2\right).$$
 where $\omega$ is the standard deviation of the catch.
 
 ### Stock-recruit parameters
 
 #### Beverton-Holt relationship
-Assuming a Beverton-Holt stock recruit relationship and spawning occurring after fishing in each annual time step, then recruitment (at age $k$) in year $t$ is:
+With a Beverton-Holt stock recruit relationship, and spawning occurring before fishing in each annual time step, the recruitment (at age $k$) in year $t$ is:
 $$ R_t = \dfrac{\alpha B_{t-k}}{1 + \beta B_{t-k}},$$
 where 
 $$ \begin{align}
@@ -74,15 +70,15 @@ $$ \begin{align}
 \beta &= \dfrac{5h-1}{(1-h)B_0},
 \end{align}$$
 
-Unfished recruitment $R_0$ and steepness $h$ are estimated parameters, with unfished biomass $B_0$ calculated as
-$$B_0 =  R_0 \phi_0.$$
+Unfished recruitment $R_0$ is an estimated parameter and steepness $h$ can either be fixed or estimated. Unfished biomass $B_0$ is calculated as
+$$B_0 = R_0 \phi_0.$$
 The unfished biomass per recruit $\phi_0$ is
 $$\phi_0 = \dfrac{\tilde{\alpha} \exp(-M) + w_k (1 - \exp(-M))}{1 - \rho \exp(-M)}$$
 and is obtained by solving the equilibrium equation for biomass, $B_0 = \exp(-M)(\tilde{\alpha}N_0 + \rho B_0) + w_k R_0$, is solved for $B_0/R_0$, with $N_0 = R_0/(1−\exp(-M))$.
 
 
 #### Ricker equation
-Assuming a Ricker stock-recruit relationship, the recruitment is
+With a Ricker stock-recruit relationship, the recruitment is
 $$ R_t = \alpha B_{t-k}\exp[-\beta B_{t-k}],$$
 where
 $$ \begin{align}
@@ -90,7 +86,7 @@ $$ \begin{align}
 \beta &= \dfrac{5}{4B_0}\log(5h),
 \end{align}$$
 
-and $B_0$ is calculated as in equation 14.
+and $B_0$ is calculated as in equation 18.
 
 ## Continuous Delay-Differential model (cDD)
 Compared to the discrete delay-difference (annual time-step in production and fishing), the delay-differential model (cDD) is based on continuous recruitment and fishing mortality within a time-step. The continuous model works much better for populations with high turnover (e.g. high F or M, continuous reproduction). 
@@ -122,34 +118,34 @@ $$ \begin{align}
 \end{align}$$
 where $R_t$ is the abundance of recruits and $w_k R_t$ is the weight of recruits, both of which serve as the constants of integration describing the input of abundance and biomass, respectively, to the population. 
 
-Solving the differential equations 25 and 26 leads to the dynamics equations:
+Solving the differential equations 29 and 30 leads to the dynamics equations:
 $$ \begin{align}
-N_{t+\delta} &= N_{\infty,t} + (N_t - N_{\infty,t})\exp(-Z_t\delta)\\
-B_{t+\delta} &= B_{\infty,t} + (N_t - N_{\infty,t}) \dfrac{\kappa W_{\infty}}{Z_t + \kappa} + \left[B_t - B_{\infty,t} - (N_t - N_{\infty,t}) \dfrac{\kappa W_{\infty}}{Z_t + \kappa}\right]\exp(-[Z_t+\kappa]\delta),
+N_{t+\Delta} &= N_{\infty,t} + (N_t - N_{\infty,t})\exp(-Z_t\Delta)\\
+B_{t+\Delta} &= B_{\infty,t} + (N_t - N_{\infty,t}) \dfrac{\kappa W_{\infty}}{Z_t + \kappa} + \left[B_t - B_{\infty,t} - (N_t - N_{\infty,t}) \dfrac{\kappa W_{\infty}}{Z_t + \kappa}\right]\exp(-[Z_t+\kappa]\Delta),
 \end{align}$$
-where $Z_t = F_t + M$, and $N_{\infty,t} = R_t/Z_t$ and $B_{\infty,t} = \dfrac{w_k + \dfrac{\kappa W_{\infty}}{Z_t}}{Z_t + \kappa}R_t$ are the equilibrium abundance and biomass respectively, conditional on $R_t$ and $Z_t$.
+where $Z_t = F_t + M$, and $N_{\infty,t} = R_t/Z_t$ and $B_{\infty,t} = \dfrac{w_k + \dfrac{\kappa W_{\infty}}{Z_t}}{Z_t + \kappa}R_t$ are the equilibrium abundance and biomass respectively, conditional on $R_t$ and $Z_t$, and $\Delta$ is the length of the time step, i.e., $\Delta = 1$ for an annual time step.
 
-With a constant and continuous fishing mortality rate $F_t$ over time step $s = t$ to $s = t + \delta$, the accumulated catch in weight $C_t$ is
+With a constant and continuous fishing mortality rate $F_t$ over time step $s = t$ to $s = t + \Delta$, the accumulated catch in weight $C_t$ is
 $$\begin{align}
 C_t &= \int F_t B_s ds\\
-&= F_t\left[B_{\infty,t}\delta + (N_t - N_{\infty,t}) \dfrac{\kappa W_{\infty}}{Z_t + \kappa} \delta + \dfrac{B_t - B_{\infty,t} - (N_t - N_{\infty,t}) \dfrac{\kappa W_{\infty}}{Z_t + \kappa}[1 - \exp(-[Z_t+\kappa]\delta)]}{Z_t + \kappa} \right]
+&= F_t\left[B_{\infty,t}\Delta + (N_t - N_{\infty,t}) \dfrac{\kappa W_{\infty}}{Z_t + \kappa} \Delta + \dfrac{B_t - B_{\infty,t} - (N_t - N_{\infty,t}) \dfrac{\kappa W_{\infty}}{Z_t + \kappa}[1 - \exp(-[Z_t+\kappa]\Delta)]}{Z_t + \kappa} \right]
 \end{align}$$
-To match the predicted catch to the observed catch in the model, $F_t$ is solved iteratively.
+To match the predicted catch to the observed catch in the model, $F_t$ is solved iteratively using Newton's method.
 
-The predicted index is
-$$\hat{I}_t=\hat{q}\hat{B}_t$$
+The predicted index for survey $s$ is
+$$\hat{I}_{s,t}=\hat{q}_s \hat{B}_{s,t}$$
 or
-$$\hat{I}_t=\hat{q}\hat{N}_t$$
+$$\hat{I}_{s,t}=\hat{q}_s \hat{N}_{s,t}$$
 for a biomass and abundance-based index, respectively.
 
-The likelihood of the observed index $I_t$, assuming a lognormal distribution, is
-$$L^I = \sum_t \left(-\log(\sigma) - 0.5\left[\dfrac{\log(I_t) - \log(\hat{I}_t)}{\sigma}\right]^2\right),$$
-where $\sigma$ is the standard deviation of the index.
+The likelihood of the observed index $I_t$, using a lognormal distribution, is
+$$L^I = \sum_s \lambda_s \sum_t \left(-\log(\sigma_{s,t}) - 0.5\left[\dfrac{\log(I_{s,t}) - \log(\hat{I}_{s,t})}{\sigma_{s,t}}\right]^2\right),$$
+where $\lambda_s$ is a weighting coefficient and $\sigma_{s,t}$ is the standard deviation of the index.
 
 ### Stock-recruit parameters
 The stock-recruit parameters are estimated in the same way as the delay difference model, except unfished abundance $N_0$ and biomass $B_0$ are calculated as
 $$\begin{align}
-B_0 &= \dfrac{w_k + \dfrac{\kappa W_{\infty}}{M}}{M + \kappa}R_0\\
+B_0 &= R_0 \phi_0 = R_0 \dfrac{w_k + \dfrac{\kappa W_{\infty}}{M}}{M + \kappa}\\
 N_0 &= \dfrac{R_0}{M}.
 \end{align}$$
 
