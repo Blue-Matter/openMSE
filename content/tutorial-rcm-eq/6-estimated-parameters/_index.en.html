@@ -5,8 +5,6 @@ weight: 6
 ---
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
-<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
-<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 
 
 <div id="selectivity" class="section level3">
@@ -20,7 +18,7 @@ L^5_b &amp;= L^{\textrm{FS}}_b - \exp(x^{L5}_b)
 <span class="math display">\[ V^{L_{\infty}}_b = \textrm{logit}^{-1}(x^V_b)\]</span></p>
 <p>If selectivity is parameterized as free parameters, then
 <span class="math display">\[ v_{y,a,f} = \textrm{logit}^{-1}(x^v_{y,a,f}).\]</span></p>
-<p>For surveys, parameterizations are identical except with indexing for survey <span class="math inline">\(s\)</span>.</p>
+<p>For indices, parameterizations are identical except with indexing for survey <span class="math inline">\(s\)</span>.</p>
 </div>
 <div id="fishing-mortality" class="section level3">
 <h3>Fishing mortality</h3>
@@ -35,7 +33,7 @@ L^5_b &amp;= L^{\textrm{FS}}_b - \exp(x^{L5}_b)
 </div>
 <div id="index-catchability" class="section level3">
 <h3>Index catchability</h3>
-<p>To scale biomass to index values, the index catchability <span class="math inline">\(q_s\)</span> is solved analytically in the model:</p>
+<p>To scale stock size to index values, the index catchability <span class="math inline">\(q_s\)</span> is solved analytically in the model as</p>
 <p><span class="math display">\[ q_s = \exp\left(\dfrac{\sum_y \log(I^{\textrm{obs}}_{y,s}) - \sum_y \log(\sum_a v_{y,a,s}N_{y,a,s})}{n_s}\right),\]</span></p>
 <p>or
 <span class="math display">\[ q_s = \exp\left(\dfrac{\sum_y \log(I^{\textrm{obs}}_{y,s}) - \sum_y \log(\sum_a v_{y,a,s}N_{y,a,s}w_{y,a})}{n_s}\right),\]</span>
@@ -50,5 +48,6 @@ for an abundance or biomass based index, respectively, where <span class="math i
 <p>With a Ricker SR function:
 <span class="math display">\[ h = \exp(x^h) + 0.2.\]</span></p>
 <p>Steepness is fixed unless a prior is used.</p>
-<p>Age- and time-constant natural mortality <span class="math inline">\(M\)</span> can be estimated with a prior. Otherwise, it is fixed to values specified in the OM object. The parameter <span class="math inline">\(x^M\)</span> is estimated in log space.</p>
+<p>Age- and time-constant natural mortality <span class="math inline">\(M\)</span> can be estimated with a prior. Otherwise, it is fixed to values specified in the OM object. The parameter <span class="math inline">\(x^M\)</span> is estimated in log space, i.e.,</p>
+<p><span class="math display">\[ M = \exp(x^M)\]</span></p>
 </div>
