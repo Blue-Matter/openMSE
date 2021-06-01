@@ -7,7 +7,7 @@ weight: 2
 The population numbers at age $N_{y=1,a}$ in the first year of the model $y=1$ for ages $a=0,1,\ldots,A$ is
 $$ N_{y=1,a} = 
 \begin{cases}
-      R^{\textrm{eq}} \exp(\delta_1 - 0.5 \tau^2) & a = 0\\ 
+      R^{\textrm{eq}} \exp(\delta_{y=1} - 0.5 \tau^2) & a = 0\\ 
       R^{\textrm{eq}} \exp(-\sum_{i=1}^{a}Z^{\textrm{eq}}_i)\exp(\delta^{\textrm{init}}_a-0.5\tau^2) & a = 1, \ldots, A-1\\
       \dfrac{R^{\textrm{eq}} \exp(-\sum_{i=1}^{a}Z^{\textrm{eq}}_i)\exp(\delta^{\textrm{init}}_a-0.5\tau^2)}{1 - \exp(-Z^{\textrm{eq}}_A)} & a = A,
 \end{cases}

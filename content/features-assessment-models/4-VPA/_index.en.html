@@ -5,8 +5,6 @@ weight: 4
 ---
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
-<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
-<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 
 
 <p>The VPA model reconstructs the historical population based on an expanded catch at age matrix and an index of abundance. From an estimate of the fishing mortality in the terminal year, historical abundance and fishing mortality are back-calculated. Natural mortality is a required input parameter. For a biomass-based index, weight at age is also required. Maturity at age is also required if spawning biomass is to be calculated. The dynamics equations are based on VPA-2BOX (Porch 2018), although 2-stock mixing and diffusion processes are not modeled here. The maximum age in the model is a plus-group accumulator age.</p>
@@ -29,24 +27,35 @@ N_{A-1,t} &amp;= \dfrac{C_{A-1,t}Z_{A-1,t}}{F_{A-1,t}[1 - \exp(-Z_{A-1,t})]}
 <span class="math display">\[F_{A,t} = \alpha F_{A-1,t},\]</span>
 where <span class="math inline">\(\alpha\)</span> is a numeric constant either fixed (often to 1) or estimated in the model.</p>
 <p>From <span class="math inline">\(N_{A,t+1}\)</span>, <span class="math inline">\(C_{A,t}\)</span>, <span class="math inline">\(C_{A-1,t}\)</span>, <span class="math inline">\(M_A\)</span>, and <span class="math inline">\(M_{A-1}\)</span>, we can solve <span class="math inline">\(F_{A-1,t}\)</span> and <span class="math inline">\(F_{A,t}\)</span> as the values that satisfy equations 3-6. The corresponding abundances <span class="math inline">\(N_{A-1,t}\)</span> and <span class="math inline">\(N_{A,t}\)</span> are then obtained with equation 2.</p>
-<p>The VPA is tuned to an index via maximum likelihood. The predicted biomass index is
-<span class="math display">\[ \hat{I}_t = \hat{q}\sum_a N_{a,t} w_a.\]</span>
-The likelihood of the observed index is</p>
-<p><span class="math display">\[L^I = \sum_t \left(-\log(\sigma) - 0.5\left[\dfrac{\log(I_t) - \log(\hat{I}_t)}{\sigma}\right]^2\right),\]</span></p>
-<p><span class="math display">\[\log(I_t) \sim N(\log(\hat{I}_t), \sigma^2).\]</span></p>
-<p>From the VPA output, reference points can be calculated. Estimates of recruitment (the youngest age class <span class="math inline">\(\tilde{a}\)</span>) and spawning biomass are used to estimate a stock-recruitment relationship to obtain MSY and unfished reference points.</p>
+<p>Fishery selectivity <span class="math inline">\(v_{a,t}\)</span> can derived from <span class="math inline">\(F_{a,t}\)</span>:
+<span class="math display">\[v_{a,t} = \dfrac{F_{a,t}}{\max \limits_a F_{a,t}}\]</span></p>
 </div>
-<div id="additional-constraints" class="section level3">
-<h3>Additional constraints</h3>
+<div id="likelihoods" class="section level3">
+<h3>Likelihoods</h3>
+<p>The VPA is tuned to an index via maximum likelihood. The predicted index <span class="math inline">\(s\)</span> is
+<span class="math display">\[ \hat{I}_{s,t} = \hat{q_s}\sum_a N_{a,t} \tilde{v}_{a,s} w_a\]</span>
+and
+<span class="math display">\[ \hat{I}_{s,t} = \hat{q_s}\sum_a N_{a,t} \tilde{v}_{a,s}\]</span>
+for a biomass-based and abundance-based index, respectively. Index selectivity <span class="math inline">\(\tilde{v}_{a,s}\)</span> is fixed in the model.</p>
+<p>The likelihood of the observed indices is</p>
+<p><span class="math display">\[L^I = \sum_s \lambda_s \sum_t \left(-\log(\sigma_{s,t}) - 0.5\left[\dfrac{\log(I_{s,t}) - \log(\hat{I}_{s,t})}{\sigma_{s,t}}\right]^2\right),\]</span>
+with <span class="math inline">\(\lambda_s\)</span> as the weighting coefficient for index <span class="math inline">\(s\)</span>.</p>
+<div id="additional-constraints" class="section level4">
+<h4>Additional constraints</h4>
 <p>In any VPA model, estimates of F and N of the youngest age classes are highly uncertain. To stabilize estimates, random walk penalties can be applied to the recruitment and vulnerability estimates in the most recent years:
 <span class="math display">\[ \begin{align}
-\log(N_{\tilde{a},t}) &amp;\sim N(\log(N_{\tilde{a}, t-1}), \sigma_{\tilde{a}}^2)\\
-\log(v_{a,t}) &amp;\sim N(\log(v_{a,t-1}, \sigma_v^2)
+\textrm{pen}_N &amp;= \sum_{i=T-\tilde{t}}^T \left(-\log(\sigma_{\tilde{a}}) - 0.5 \left[\dfrac{\log(N_{\tilde{a},i}) - \log(N_{\tilde{a},i-1})}{\sigma_{\tilde{a}}}\right]^2\right) \\
+\textrm{pen}_v &amp;= \sum_{i=T-\tilde{t}}^T \left(-\log(\sigma_v) - 0.5 \left[\dfrac{\log(v_{a,i}) - \log(v_{v,i-1})}{\sigma_v}\right]^2\right) 
 \end{align},\]</span>
-where <span class="math inline">\(\tilde{a}\)</span> is the smallest age in the VPA and <span class="math inline">\(v_{a,t} = F_{a,t}/\max_a F_{a,t}\)</span>.</p>
+where <span class="math inline">\(\tilde{a}\)</span> is the smallest age in the VPA.</p>
 <p>Note that these penalties can significantly alter model results, and generate spurious trends in F and N especially if there are significantly shifts in recent vulnerability and recruitment. The implications of incorporating these random walk penalties need to be evaluated on a case-by-case basis.</p>
 </div>
-<div id="references" class="section level2">
-<h2>References</h2>
+</div>
+<div id="reference-points" class="section level3">
+<h3>Reference points</h3>
+<p>From the VPA output, reference points can be calculated. Estimates of recruitment (the youngest age class <span class="math inline">\(\tilde{a}\)</span>) and spawning biomass are used to estimate a stock-recruitment relationship to obtain MSY and unfished reference points.</p>
+</div>
+<div id="references" class="section level3">
+<h3>References</h3>
 <p>Porch, C.E. 2018. VPA-2BOX 4.01 User Guide. NOAA Tech. Memo. NMFS-SEFSC-726. 67 pp.</p>
 </div>

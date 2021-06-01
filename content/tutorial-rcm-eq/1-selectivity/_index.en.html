@@ -5,8 +5,6 @@ weight: 1
 ---
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
-<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
-<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 
 
 <div id="fleet-selectivity" class="section level3">
@@ -25,10 +23,10 @@ weight: 1
 <p>In this parameterization, length-based selectivity is constant over time. The corresponding age-based selectivity within each block is constant so long as growth is not time-varying.</p>
 <p>Selectivity can also be parameterized where <span class="math inline">\(v_{y,a,b}\)</span> are free independent parameters. In this case, selectivity does not vary among years.</p>
 <p>Total mortality <span class="math inline">\(Z\)</span> in year <span class="math inline">\(y\)</span> and for age <span class="math inline">\(a\)</span> is the sum of fishing mortality <span class="math inline">\(F\)</span> from all fleets and natural mortality <span class="math inline">\(M\)</span>,</p>
-<p><span class="math display">\[ Z_{y,a} = M_{y,a} + \Sigma_f v_{y,a,f} F_{y,f},\]</span></p>
+<p><span class="math display">\[ Z_{y,a} = M_{y,a} + \sum_f v_{y,a,f} F_{y,f},\]</span></p>
 <p>where <span class="math inline">\(v_{y,a,f}\)</span> is the fleet selectivity after assigning blocks to fleets.</p>
 </div>
-<div id="survey-selectivity" class="section level3">
-<h3>Survey selectivity</h3>
-<p>Survey selectivity is constant over time and is denoted as <span class="math inline">\(v_{a,s}\)</span> with either logistic, dome, or free parameterizations.</p>
+<div id="index-selectivity" class="section level3">
+<h3>Index selectivity</h3>
+<p>Index selectivity is constant over time and is denoted as <span class="math inline">\(v_{a,s}\)</span>, using either logistic, dome, or free parameterizations.</p>
 </div>

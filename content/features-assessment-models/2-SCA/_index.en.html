@@ -85,7 +85,7 @@ where <span class="math inline">\(u_t\)</span> is the exploitation rate.</p>
 <h5>Random walk in M (SCA_RWM)</h5>
 <p>Annual <span class="math inline">\(M_t\)</span> (age-invariant) can be configured as a random walk in logit space where</p>
 <p><span class="math display">\[\tilde{x}^M_{t+1} = \tilde{x}^M_t + x^M_t\]</span>.</p>
-<p>From <span class="math inline">\(\tild{x}^M_t\)</span>, <span class="math inline">\(M_t\)</span>, which is bounded between <span class="math inline">\(M^{\textrm{low}}\)</span> and <span class="math inline">\(M^{\textrm{high}}\)</span>, is calculated as</p>
+<p>From <span class="math inline">\(\tilde{x}^M_t\)</span>, <span class="math inline">\(M_t\)</span>, which is bounded between <span class="math inline">\(M^{\textrm{low}}\)</span> and <span class="math inline">\(M^{\textrm{high}}\)</span>, is calculated as</p>
 <p><span class="math display">\[ M_t = \dfrac{M^{\textrm{high}} - M^{\textrm{low}}}{1 - \left[\dfrac{M^{\textrm{high}} - M^{\textrm{low}}}{M_{t=1} - M^{\textrm{low}}}-1\right]\exp(-\tilde{x}^M_t)} + M^{\textrm{low}}\]</span>
 where the M in the first year <span class="math inline">\(M_{t=1}\)</span> is either fixed or estimated with a prior.</p>
 <p>The penalty function for constraining the random walk is</p>
@@ -102,8 +102,8 @@ where the M in the first year <span class="math inline">\(M_{t=1}\)</span> is ei
 <h4>Stock-recruit function</h4>
 <div id="beverton-holt-stock-recruit-function" class="section level5">
 <h5>Beverton-Holt stock-recruit function</h5>
-<p>Recruitment <span class="math inline">\(R_t\)</span> in year <span class="math inline">\(t\)</span> is
-<span class="math display">\[ R_t = \dfrac{\alpha E_{t-1}}{1 + \beta E_{t-1}} \exp(\delta_t - 0.5 \tau^2),\]</span>
+<p>Age-0 recruitment <span class="math inline">\(R_t\)</span> in year <span class="math inline">\(t\)</span> is
+<span class="math display">\[ R_t = \dfrac{\alpha E_t}{1 + \beta E_t} \exp(\delta_t - 0.5 \tau^2),\]</span>
 where <span class="math inline">\(\delta_t \sim N(0, \tau^2)\)</span> are recruitment deviations from the stock-recruit relationship in lognormal space and <span class="math inline">\(\tau\)</span> is the standard deviation of the recruitment deviations. Parameters <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span> are defined as
 <span class="math display">\[ \begin{align}
 \alpha &amp;= \dfrac{4hR_0}{(1-h)B_0}\\
@@ -122,7 +122,7 @@ l_a =
 <div id="ricker-stock-recruit-function" class="section level5">
 <h5>Ricker stock-recruit function</h5>
 <p>Recruitment <span class="math inline">\(R_t\)</span> in year <span class="math inline">\(t\)</span> is
-<span class="math display">\[ R_t = \alpha E_{t-1} \exp(-\beta E_{t-1}) \exp(\delta_t - 0.5 \tau^2),\]</span>
+<span class="math display">\[ R_t = \alpha E_t \exp(-\beta E_t) \exp(\delta_t - 0.5 \tau^2),\]</span>
 where
 <span class="math display">\[ \begin{align}
 \alpha &amp;= \dfrac{(5h)^{1.25} R_0}{B_0}\\
@@ -163,11 +163,11 @@ with <span class="math inline">\(\lambda_s\)</span> as a weighting coefficient f
 <h4>Time-varying M</h4>
 <div id="random-walk-in-m" class="section level5">
 <h5>Random walk in M</h5>
-<p>In this case, <span class="math inline">\(phi_0\)</span> is calculated from <span class="math inline">\(M_{t=1}\)</span>. Annual MSY reference points can be calculated for the corresponding <span class="math inline">\(M_t\)</span> with constant stock-recruit <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>. Thus, all MSY reference points decrease as <span class="math inline">\(M_t\)</span> increases.</p>
+<p>In this case, <span class="math inline">\(\phi_0\)</span> is calculated from <span class="math inline">\(M_{t=1}\)</span>. Annual MSY reference points can be calculated for the corresponding <span class="math inline">\(M_t\)</span> with constant stock-recruit <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>. Thus, all MSY reference points decrease as <span class="math inline">\(M_t\)</span> increases.</p>
 </div>
 <div id="density-dependent-m" class="section level5">
 <h5>Density-dependent M</h5>
-<p>In this case, <span class="math inline">\(phi_0\)</span> is calculated from <span class="math inline">\(M = M_0\)</span>. MSY is calculated by searching for the <span class="math inline">\(F\)</span> that maximizes yield. The corresponding biomass and natural mortality, subject to the density-dependent relationship and conditional on <span class="math inline">\(F_{\textrm{MSY}}\)</span>, is solved iteratively such that</p>
+<p>In this case, <span class="math inline">\(\phi_0\)</span> is calculated from <span class="math inline">\(M = M_0\)</span>. MSY is calculated by searching for the <span class="math inline">\(F\)</span> that maximizes yield. The corresponding biomass and natural mortality, subject to the density-dependent relationship and conditional on <span class="math inline">\(F_{\textrm{MSY}}\)</span>, is solved iteratively such that</p>
 <p><span class="math display">\[ M_{\textrm{MSY}} = M_0 + (M_1 - M_0) (1 - B_{\textrm{MSY}}/B_0).\]</span></p>
 </div>
 </div>

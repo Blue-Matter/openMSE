@@ -5,27 +5,24 @@ weight: 3
 ---
 
 <script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
-<link href="/rmarkdown-libs/anchor-sections/anchor-sections.css" rel="stylesheet" />
-<script src="/rmarkdown-libs/anchor-sections/anchor-sections.js"></script>
 
 
 <p>After setting the equilibrium population age distribution in the first year of the model, the population abundance <span class="math inline">\(N_{y,a}\)</span> in subsequent years is
 <span class="math display">\[ N_{y,a} =
 \begin{cases}
-      R_y &amp; a = 1\\
-      N_{y-1,a-1} \exp(-Z_{y-1,a-1}) &amp; a = 2, \ldots, A - 1,\\
+      R_y \exp(\delta_y - 0.5 \tau^2) &amp; a = 0\\
+      N_{y-1,a-1} \exp(-Z_{y-1,a-1}) &amp; a = 1, \ldots, A - 1,\\
       N_{y-1,a-1} \exp(-Z_{y-1,a-1}) + N_{y-1,a} \exp(-Z_{y-1,a}) &amp; a = A
 \end{cases}
 \]</span>
-where <span class="math inline">\(R_y\)</span> is the recruitment and <span class="math inline">\(A\)</span> is the maximum-age as the plus-group.</p>
+where <span class="math inline">\(R_y\)</span> is the recruitment, <span class="math inline">\(\delta_y\)</span> are recruitment deviates, and <span class="math inline">\(A\)</span> is the maximum-age as the plus-group.</p>
 <p>Recruitment is modelled as
 <span class="math display">\[ R_y = 
 \begin{cases}
-      \dfrac{\alpha^{\textrm{BH}} B^S_{y-1}}{1 + \beta^{\textrm{BH}}B^S_{y-1}} \exp(\delta_y - 0.5 \tau^2) &amp; \textrm{if Beverton-Holt stock-recruit relationship}\\
-      \alpha^{\textrm{Ricker}} B^S_{y-1} \exp(-\beta^{\textrm{Ricker}} B^S_{y-1})\exp(\delta_y - 0.5 \tau^2) &amp; \textrm{if Ricker stock-recruit relationship}
-\end{cases},
-\]</span>
-where <span class="math inline">\(\delta_y\)</span> are recruitment deviates and <span class="math inline">\(\tau\)</span> is the standard deviation of the deviates.</p>
+      \dfrac{\alpha^{\textrm{B}} B^S_{y-1}}{1 + \beta^{\textrm{B}}B^S_{y-1}} &amp; \textrm{if Beverton-Holt stock-recruit relationship}\\
+      \alpha^{\textrm{R}} B^S_{y-1} \exp(-\beta^{\textrm{R}} B^S_{y-1})&amp; \textrm{if Ricker stock-recruit relationship}
+\end{cases}.
+\]</span></p>
 <p>The spawning biomass is <span class="math inline">\(B^S_y\)</span> is
 <span class="math display">\[B^S_y = \sum_a w_{y,a} m_{y,a} N_{y,a},\]</span>
 where <span class="math inline">\(m_{y,a}\)</span> and <span class="math inline">\(w_{y,a}\)</span> are the maturity at age and weight at age, respectively.</p>

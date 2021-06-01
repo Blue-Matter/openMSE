@@ -30,6 +30,10 @@ where $\alpha$ is a numeric constant either fixed (often to 1) or estimated in t
 
 From $N_{A,t+1}$, $C_{A,t}$, $C_{A-1,t}$, $M_A$, and $M_{A-1}$, we can solve $F_{A-1,t}$ and $F_{A,t}$ as the values that satisfy equations 3-6. The corresponding abundances $N_{A-1,t}$ and $N_{A,t}$ are then obtained with equation 2.
 
+Fishery selectivity $v_{a,t}$ can derived from $F_{a,t}$:
+$$v_{a,t} = \dfrac{F_{a,t}}{\max \limits_a F_{a,t}}$$
+
+
 ### Likelihoods
 The VPA is tuned to an index via maximum likelihood. The predicted index $s$ is
 $$ \hat{I}_{s,t} = \hat{q_s}\sum_a N_{a,t} \tilde{v}_{a,s} w_a$$
@@ -45,10 +49,10 @@ with $\lambda_s$ as the weighting coefficient for index $s$.
 #### Additional constraints
 In any VPA model, estimates of F and N of the youngest age classes are highly uncertain. To stabilize estimates, random walk penalties can be applied to the  recruitment and vulnerability estimates in the most recent years:
 $$ \begin{align}
-\log(N_{\tilde{a},t}) &\sim N(\log(N_{\tilde{a}, t-1}), \sigma_{\tilde{a}}^2)\\
-\log(v_{a,t}) &\sim N(\log(v_{a,t-1}, \sigma_v^2)
+\textrm{pen}_N &= \sum_{i=T-\tilde{t}}^T \left(-\log(\sigma_{\tilde{a}}) - 0.5 \left[\dfrac{\log(N_{\tilde{a},i}) - \log(N_{\tilde{a},i-1})}{\sigma_{\tilde{a}}}\right]^2\right) \\
+\textrm{pen}_v &= \sum_{i=T-\tilde{t}}^T \left(-\log(\sigma_v) - 0.5 \left[\dfrac{\log(v_{a,i}) - \log(v_{v,i-1})}{\sigma_v}\right]^2\right) 
 \end{align},$$
-where $\tilde{a}$ is the smallest age in the VPA and $v_{a,t} = F_{a,t}/\max_a F_{a,t}$.
+where $\tilde{a}$ is the smallest age in the VPA.
 
 Note that these penalties can significantly alter model results, and generate spurious trends in F and N especially if there are significantly shifts in recent vulnerability and recruitment. The implications of incorporating these random walk penalties need to be evaluated on a case-by-case basis.
 

@@ -7,21 +7,20 @@ weight: 3
 After setting the equilibrium population age distribution in the first year of the model, the population abundance $N_{y,a}$ in subsequent years is
 $$ N_{y,a} =
 \begin{cases}
-      R_y & a = 1\\
-      N_{y-1,a-1} \exp(-Z_{y-1,a-1}) & a = 2, \ldots, A - 1,\\
+      R_y \exp(\delta_y - 0.5 \tau^2) & a = 0\\
+      N_{y-1,a-1} \exp(-Z_{y-1,a-1}) & a = 1, \ldots, A - 1,\\
       N_{y-1,a-1} \exp(-Z_{y-1,a-1}) + N_{y-1,a} \exp(-Z_{y-1,a}) & a = A
 \end{cases}
 $$
-where $R_y$ is the recruitment and $A$ is the maximum-age as the plus-group.
+where $R_y$ is the recruitment, $\delta_y$ are recruitment deviates, and $A$ is the maximum-age as the plus-group.
 
 Recruitment is modelled as
 $$ R_y = 
 \begin{cases}
-      \dfrac{\alpha^{\textrm{B}} B^S_{y-1}}{1 + \beta^{\textrm{B}}B^S_{y-1}} \exp(\delta_y - 0.5 \tau^2) & \textrm{if Beverton-Holt stock-recruit relationship}\\
-      \alpha^{\textrm{R}} B^S_{y-1} \exp(-\beta^{\textrm{R}} B^S_{y-1})\exp(\delta_y - 0.5 \tau^2) & \textrm{if Ricker stock-recruit relationship}
-\end{cases},
+      \dfrac{\alpha^{\textrm{B}} B^S_{y-1}}{1 + \beta^{\textrm{B}}B^S_{y-1}} & \textrm{if Beverton-Holt stock-recruit relationship}\\
+      \alpha^{\textrm{R}} B^S_{y-1} \exp(-\beta^{\textrm{R}} B^S_{y-1})& \textrm{if Ricker stock-recruit relationship}
+\end{cases}.
 $$
-where $\delta_y$ are recruitment deviates.
 
 The spawning biomass is $B^S_y$ is
 $$B^S_y = \sum_a w_{y,a} m_{y,a} N_{y,a},$$

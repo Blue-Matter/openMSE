@@ -173,10 +173,10 @@ When no stock-recruit relationship is used in the assessment model, i.e., annual
 #### Time-varying M
 
 ##### Random walk in M
-In this case, $phi_0$ is calculated from $M_{t=1}$. Annual MSY reference points can be calculated for the corresponding $M_t$ with constant stock-recruit $\alpha$ and $\beta$. Thus, all MSY reference points decrease as $M_t$ increases.
+In this case, $\phi_0$ is calculated from $M_{t=1}$. Annual MSY reference points can be calculated for the corresponding $M_t$ with constant stock-recruit $\alpha$ and $\beta$. Thus, all MSY reference points decrease as $M_t$ increases.
 
 ##### Density-dependent M
-In this case, $phi_0$ is calculated from $M = M_0$. MSY is calculated by searching for the $F$ that maximizes yield. The corresponding biomass and natural mortality, subject to the density-dependent relationship and conditional on $F_{\textrm{MSY}}$, is solved iteratively such that
+In this case, $\phi_0$ is calculated from $M = M_0$. MSY is calculated by searching for the $F$ that maximizes yield. The corresponding biomass and natural mortality, subject to the density-dependent relationship and conditional on $F_{\textrm{MSY}}$, is solved iteratively such that
 
 $$ M_{\textrm{MSY}} = M_0 + (M_1 - M_0) (1 - B_{\textrm{MSY}}/B_0).$$
 
