@@ -30,12 +30,12 @@ B_t &amp;= s_{t-1}(\tilde{\alpha} N_{t-1} + \rho B_{t-1}) + w_k R_t\\
 N_t &amp;= s_{t-1} N_{t-1} + R_t,
 \end{align}\]</span>
 where <span class="math inline">\(R_t\)</span> is the recruitment (defined later) at age <span class="math inline">\(k\)</span> and <span class="math inline">\(w_k\)</span> is the weight of recruits. Survival <span class="math inline">\(s_t\)</span> is defined as
-<span class="math display">\[ s_t = (1 - u_t)\exp(-M), \]</span>
-where <span class="math inline">\(u_t\)</span> is the annual exploitation rate and <span class="math inline">\(M\)</span> is the instantaneous natural mortality rate.</p>
+<span class="math display">\[ s_t = \exp(-Z_t), \]</span>
+where the total mortality rate <span class="math inline">\(Z_t = F_t + M\)</span> is the sum of fishing mortality <span class="math inline">\(F_t\)</span> and natural mortality <span class="math inline">\(M\)</span>.</p>
 <div id="conditioning-on-catch" class="section level4">
 <h4>Conditioning on catch</h4>
-<p>If the model is conditioned on catch (<span class="math inline">\(C_t\)</span>), the exploitation rate <span class="math inline">\(u_t\)</span> is
-<span class="math display">\[ u_t = C_t/B_t. \]</span></p>
+<p>If the model is conditioned on catch (<span class="math inline">\(C_t\)</span>), then <span class="math inline">\(F_t\)</span> is solved iteratively such that
+<span class="math display">\[ C_t = \dfrac{F_t}{Z_t} [1 - \exp(-Z_t)]B_t. \]</span></p>
 <p>The predicted biomass-based index for survey <span class="math inline">\(s\)</span> is
 <span class="math display">\[\hat{I}_{s,t} = \hat{q}^I_s \hat{B}_t ,\]</span>
 where <span class="math inline">\(q^I_s\)</span> is the catchability coefficient scaling the stock size to the index and the circumflex <span class="math inline">\(^\)</span> denotes the model estimate. Otherwise, the predicted abundance-based index, is
@@ -46,14 +46,14 @@ where <span class="math inline">\(\sigma_{s,t}\)</span> is the standard deviatio
 </div>
 <div id="conditioning-on-effort" class="section level4">
 <h4>Conditioning on effort</h4>
-<p>Otherwise, if the model is conditioned on effort (as the ratio of the catch and index), the exploitation rate is
-<span class="math display">\[ u_t = 1 - \exp(-q^f f_t), \]</span>
+<p>Otherwise, if the model is conditioned on effort (as the ratio of the catch and index), then fishing mortality is set proportional to effort
+<span class="math display">\[ F_t = q^f f_t, \]</span>
 where <span class="math inline">\(q^f\)</span> is the coefficient that scales effort and <span class="math inline">\(f_t\)</span> is the effort in year <span class="math inline">\(t\)</span>.</p>
 <p>The predicted catch is
-<span class="math display">\[\hat{C}_t = \hat{u}_t \hat{B}_t,\]</span>
+<span class="math display">\[\hat{C}_t = \frac{\hat{F}_t}{\hat{Z}_t} [1 - \exp(-\hat{Z}_t)] \hat{B}_t,\]</span>
 where the circumflex <span class="math inline">\(^\)</span> denotes the model estimate.</p>
 <p>The likelihood <span class="math inline">\(L^C\)</span> of the observed catch <span class="math inline">\(C_t\)</span>, following a lognormal distribution, is
-<span class="math display">\[L^C = \sum_t \left(-\log(\omega) - 0.5\left[\dfrac{\log(C_t) - log(\hat{C}_t)}{\omega}\right]^2\right).\]</span>
+<span class="math display">\[L^C = \sum_t \left(-\log(\omega) - 0.5\left[\dfrac{\log(C_t) - \log(\hat{C}_t)}{\omega}\right]^2\right).\]</span>
 where <span class="math inline">\(\omega\)</span> is the standard deviation of the catch.</p>
 </div>
 </div>
@@ -128,7 +128,7 @@ where <span class="math inline">\(Z_t = F_t + M\)</span>, and <span class="math 
 C_t &amp;= \int F_t B_s ds\\
 &amp;= F_t\left[B_{\infty,t}\Delta + (N_t - N_{\infty,t}) \dfrac{\kappa W_{\infty}}{Z_t + \kappa} \Delta + \dfrac{B_t - B_{\infty,t} - (N_t - N_{\infty,t}) \dfrac{\kappa W_{\infty}}{Z_t + \kappa}[1 - \exp(-[Z_t+\kappa]\Delta)]}{Z_t + \kappa} \right]
 \end{align}\]</span>
-To match the predicted catch to the observed catch in the model, <span class="math inline">\(F_t\)</span> is solved iteratively.</p>
+To match the predicted catch to the observed catch in the model, <span class="math inline">\(F_t\)</span> is solved iteratively using Newton’s method.</p>
 <p>The predicted index for survey <span class="math inline">\(s\)</span> is
 <span class="math display">\[\hat{I}_{s,t}=\hat{q}_s \hat{B}_{s,t}\]</span>
 or
@@ -156,6 +156,12 @@ or
 where <span class="math inline">\(\delta_t\)</span> are recruitment deviations in lognormal space and <span class="math inline">\(\tau\)</span> is the standard deviation of the recruitment deviations.</p>
 <p>Log-recruitment deviations <span class="math inline">\(\hat{\delta}_t\)</span> are typically estimated as penalized parameters towards the likelihood, with the penalty:
 <span class="math display">\[L^{\delta} = \sum_t \left(-\log(\tau) - 0.5\left[\dfrac{\hat{\delta}_t}{\tau}\right]^2\right).\]</span></p>
+</div>
+<div id="mean-weight" class="section level2">
+<h2>Mean weight</h2>
+<p>If either model is fitted to mean weight data <span class="math inline">\(\bar{w}_t\)</span>, then the corresponding likelihood is</p>
+<p><span class="math display">\[L^W = \sum_t \left(-\log(\sigma^W) - 0.5\left[\dfrac{\log(\bar{w}_t) - \log(\hat{B_t}/\hat{N_t})}{\sigma^W}\right]^2\right)\]</span>
+where <span class="math inline">\(\sigma_W\)</span> is the mean weight standard deviation and <span class="math inline">\(\hat{B_t}/\hat{N_t}\)</span> is the model predicted mean weight.</p>
 </div>
 <div id="references" class="section level2">
 <h2>References</h2>

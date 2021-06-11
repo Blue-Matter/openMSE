@@ -27,13 +27,13 @@ B_t &= s_{t-1}(\tilde{\alpha} N_{t-1} + \rho B_{t-1}) + w_k R_t\\
 N_t &= s_{t-1} N_{t-1} + R_t,
 \end{align}$$
 where $R_t$ is the recruitment (defined later) at age $k$ and $w_k$ is the weight of recruits. Survival $s_t$ is defined as
-$$ s_t = (1 - u_t)\exp(-M), $$
-where $u_t$ is the annual exploitation rate and $M$ is the instantaneous natural mortality rate. 
+$$ s_t = \exp(-Z_t), $$
+where the total mortality rate $Z_t = F_t + M$ is the sum of fishing mortality $F_t$ and natural mortality $M$. 
 
 #### Conditioning on catch
 
-If the model is conditioned on catch ($C_t$), the exploitation rate $u_t$ is
-$$ u_t = C_t/B_t. $$
+If the model is conditioned on catch ($C_t$), then $F_t$ is solved iteratively such that
+$$ C_t = \dfrac{F_t}{Z_t} [1 - \exp(-Z_t)]B_t. $$
 
 The predicted biomass-based index for survey $s$ is 
 $$\hat{I}_{s,t} = \hat{q}^I_s \hat{B}_t ,$$
@@ -47,16 +47,16 @@ where $\sigma_{s,t}$ is the standard deviation of the index.
 
 #### Conditioning on effort
 
-Otherwise, if the model is conditioned on effort (as the ratio of the catch and index), the exploitation rate is
-$$ u_t = 1 - \exp(-q^f f_t), $$
+Otherwise, if the model is conditioned on effort (as the ratio of the catch and index), then fishing mortality is set proportional to effort
+$$ F_t = q^f f_t, $$
 where $q^f$ is the coefficient that scales effort and $f_t$ is the effort in year $t$. 
 
 The predicted catch is 
-$$\hat{C}_t = \hat{u}_t \hat{B}_t,$$
+$$\hat{C}_t = \frac{\hat{F}_t}{\hat{Z}_t} [1 - \exp(-\hat{Z}_t)] \hat{B}_t,$$
 where the circumflex $^$ denotes the model estimate.
 
 The likelihood $L^C$ of the observed catch $C_t$, following a lognormal distribution, is
-$$L^C = \sum_t \left(-\log(\omega) - 0.5\left[\dfrac{\log(C_t) - log(\hat{C}_t)}{\omega}\right]^2\right).$$
+$$L^C = \sum_t \left(-\log(\omega) - 0.5\left[\dfrac{\log(C_t) - \log(\hat{C}_t)}{\omega}\right]^2\right).$$
 where $\omega$ is the standard deviation of the catch.
 
 ### Stock-recruit parameters
@@ -158,6 +158,12 @@ where $\delta_t$ are recruitment deviations in lognormal space and $\tau$ is the
 
 Log-recruitment deviations $\hat{\delta}_t$ are typically estimated as penalized parameters towards the likelihood, with the penalty:
 $$L^{\delta} = \sum_t \left(-\log(\tau) - 0.5\left[\dfrac{\hat{\delta}_t}{\tau}\right]^2\right).$$
+
+## Mean weight
+If either model is fitted to mean weight data $\bar{w}_t$, then the corresponding likelihood is
+
+$$L^W = \sum_t \left(-\log(\sigma^W) - 0.5\left[\dfrac{\log(\bar{w}_t) - \log(\hat{B_t}/\hat{N_t})}{\sigma^W}\right]^2\right)$$
+where $\sigma_W$ is the mean weight standard deviation and $\hat{B_t}/\hat{N_t}$ is the model predicted mean weight.
 
 ## References
 
