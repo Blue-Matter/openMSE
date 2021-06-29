@@ -11,10 +11,10 @@ There has been a rich history of development for the delay difference model for 
 
 ### Growth
 Growth in weight-at-age $w_a$ follows the recursive Ford-Brody equation:
-$$w_a = \rho + \tilde\alpha w_{a-1}.$$
+$$w_a = \tilde\alpha + \rho w_{a-1}.$$
 We can obtain $\tilde\alpha$ and $\rho$ for the delay difference model if weight is also described by the equation 
 $$w_a = W_{\infty}(1 - \exp[K\{a-a_0\}])^b.$$ 
-Parameter $\tilde\alpha$ is solved in the limiting case where $w_a = w_{a-1} = W_{\infty}$ as $t \rightarrow \infty$,
+Parameter $\tilde\alpha$ is solved in the limiting case where $w_a = w_{a-1} = W_{\infty}$ as $a \rightarrow \infty$,
 $$\tilde\alpha = W_{\infty}(1 - \rho). $$
 Substitution of equation 3 into equation 1 solves for $\rho$, 
 $$\rho = \dfrac{w_a - W_{\infty}}{w_{a-1} - W_{\infty}}.$$

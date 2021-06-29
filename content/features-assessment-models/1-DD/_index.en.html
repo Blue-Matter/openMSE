@@ -13,10 +13,10 @@ weight: 1
 <div id="growth" class="section level3">
 <h3>Growth</h3>
 <p>Growth in weight-at-age <span class="math inline">\(w_a\)</span> follows the recursive Ford-Brody equation:
-<span class="math display">\[w_a = \rho + \tilde\alpha w_{a-1}.\]</span>
+<span class="math display">\[w_a = \tilde\alpha + \rho w_{a-1}.\]</span>
 We can obtain <span class="math inline">\(\tilde\alpha\)</span> and <span class="math inline">\(\rho\)</span> for the delay difference model if weight is also described by the equation
 <span class="math display">\[w_a = W_{\infty}(1 - \exp[K\{a-a_0\}])^b.\]</span>
-Parameter <span class="math inline">\(\tilde\alpha\)</span> is solved in the limiting case where <span class="math inline">\(w_a = w_{a-1} = W_{\infty}\)</span> as <span class="math inline">\(t \rightarrow \infty\)</span>,
+Parameter <span class="math inline">\(\tilde\alpha\)</span> is solved in the limiting case where <span class="math inline">\(w_a = w_{a-1} = W_{\infty}\)</span> as <span class="math inline">\(a \rightarrow \infty\)</span>,
 <span class="math display">\[\tilde\alpha = W_{\infty}(1 - \rho). \]</span>
 Substitution of equation 3 into equation 1 solves for <span class="math inline">\(\rho\)</span>,
 <span class="math display">\[\rho = \dfrac{w_a - W_{\infty}}{w_{a-1} - W_{\infty}}.\]</span>
