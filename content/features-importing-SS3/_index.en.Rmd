@@ -1,0 +1,68 @@
+---
+date: "2021-06-14T11:35:01+06:00"
+description: Importing OMs from Stock Synthesis 3
+icon: fas fa-file-import
+title: Importing from SS3
+type: features
+weight: 8
+---
+
+```{r, include=FALSE}
+library(openMSE)
+```
+
+## Introduction
+
+
+Words and stuff 
+
+---
+date: "2021-06-14T11:35:01+06:00"
+title: Importing MOM from Stock Synthesis 3
+weight: 1
+---
+
+```{r, include=FALSE}
+library(openMSE)
+SS.dir <- 'C:/Users/User/Downloads/cabezon-ors-model-files-zip-file'
+```
+
+
+```{r}
+MOM <- SS2MOM(SS.dir, nsim=4, proyears=30)
+```
+
+```{r}
+str(MOM)
+
+```
+
+---
+date: "2021-06-14T11:35:01+06:00"
+title: Importing OM from Stock Synthesis 3
+weight: 2
+---
+
+```{r, include=FALSE}
+library(openMSE)
+```
+
+---
+date: "2021-06-14T11:35:01+06:00"
+title: Converting MOM to OM
+weight: 3
+---
+
+```{r, include=FALSE}
+library(openMSE)
+```
+
+---
+date: "2021-06-14T11:35:01+06:00"
+title: Importing Data from SS3 
+weight: 4
+---
+
+```{r, include=FALSE}
+library(openMSE)
+```
