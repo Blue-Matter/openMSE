@@ -30,14 +30,13 @@ Please [contact us](/contact) if you would like to add your operating model(s) i
 library(dplyr)
 library(knitr)
 library(kableExtra)
-
 DF <- readRDS("../../../MSEextra/build_package/DF.rda")
 
 DF <- DF %>% 
   mutate('OM R Data'=paste0("<a href='", DF$OMpathout,"'> Link</a>")) %>% 
   mutate('OM Excel'=paste0("<a href='", DF$OM.XL,"'download> Link</a>")) %>% 
   mutate('OM Report'=paste0("<a href='", DF$OM.Report,"'target='_blank' download> Link</a>")) %>%
-  mutate('MSE Report'=paste0("<a href='", DF$MSE.Report,"'download> Link</a>")) 
+  mutate('Data Report'=paste0("<a href='", DF$Data.Report,"'download> Link</a>")) 
 
 ind <- !DF$hasOMrep
 if (sum(ind)>0) DF['OM Report'][ind,1] <- ''
@@ -45,11 +44,10 @@ if (sum(ind)>0) DF['OM Report'][ind,1] <- ''
 ind <- !DF$hasOMxl
 if (sum(ind)>0) DF['OM Excel'][ind,1] <- ''
 
+ind <- !DF$hasDatarep
+if (sum(ind)>0) DF['Data Report'][ind,1] <- ''
 
-ind <- !DF$hasMSErep
-if (sum(ind)>0) DF['MSE Report'][ind,1] <- ''
-
-DFout <- DF %>% select(Name, Species, Region, Agency, 'OM Report', 'MSE Report', 'OM Excel', 'OM R Data', Class, Family) 
+DFout <- DF %>% select(Name, Species, Region, Agency, 'OM Report', 'Data Report', 'OM Excel', 'OM R Data', Class, Family) 
 
 # htmlTable::htmlTable(DFout, css.cell = "padding-left: 1em; padding-right: 1em;", align = "rrrr")
 
