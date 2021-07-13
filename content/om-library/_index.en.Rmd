@@ -28,7 +28,7 @@ Please [contact us](/contact) if you would like to add your operating model(s) i
 
 ```{r include=FALSE, message=FALSE, warning=FALSE}
 library(dplyr)
-library(knitr)
+library(knitr) 
 library(kableExtra)
 DF <- readRDS("../../../MSEextra/build_package/DF.rda")
 
