@@ -11,7 +11,7 @@ library(openMSE)
 ```{r, include=FALSE}
 library(openMSE)
 
-SSdir <- 'G:/Shared drives/BM shared/4. Resources/9_SS_examples/Simple_discard'
+SSdir <- 'G:/Shared drives/BM shared/4. Resources/9_SS_examples/Simple'
 ```
 
 
@@ -20,7 +20,7 @@ The `SS2OM` function is used to import an operating model from SS3 output to an 
 The `SS2OM` function requires an argument specifying the location of the SS3 output:
 
 ```{r, eval=FALSE}
-SSdir <- 'C:/SS_examples/Simple_discard'
+SSdir <- 'C:/SS_examples/Simple'
 ```
 
 Then `SS2OM` is used to create the `OM` object from the SS3 output:
