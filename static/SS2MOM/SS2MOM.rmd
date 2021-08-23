@@ -1,0 +1,76 @@
+---
+title: "Operating model summary"
+subtitle: "Comparison of MOM historical period and Stock Synthesis output"
+date: "`r Sys.Date()`"
+---
+<style type="text/css">
+h1 { /* Header 1 */
+  font-size: 24px;
+}
+</style>
+
+```{r setup, include = FALSE, echo = FALSE}
+  knitr::opts_chunk$set(collapse = TRUE, echo = FALSE, message = FALSE,
+  fig.width = 6, fig.height = 4.5, out.width = "650px", comment = "#>")
+  library(dplyr)
+  library(ggplot2)
+```
+
+# {.tabset}
+
+## Number-at-Age 
+
+```{r, fig.cap = "Comparision of total numbers from the multi-stock/fleet operating model (solid lines) and Stock Synthesis (dashed lines)."}
+compareNmulti(replist, multiHist)
+```
+
+## Spawning biomass
+
+```{r, fig.cap = "Comparision of spawning biomass (female) from the multi-stock/fleet operating model (solid lines) and Stock Synthesis (dashed lines)."}
+compareSBmulti(replist, multiHist)
+```
+
+
+```{r, fig.cap = "Comparision of spawning depletion (female) from the multi-stock/fleet operating model (solid lines) and Stock Synthesis (dashed lines)."}
+compareSB_depmulti(replist, multiHist)
+```
+
+## Total Biomass
+
+```{r, fig.cap = "Comparision of total biomass from the multi-stock/fleet operating model (solid lines) and Stock Synthesis (dashed lines)."}
+compareBmulti(replist, multiHist)
+```
+
+
+## Catch
+
+```{r, fig.cap = "Comparision of catch (removals) by fleet from the multi-stock/fleet operating model (solid lines) and Stock Synthesis (dashed lines)."}
+compareCmulti(replist, multiHist)
+```
+
+```{r, fig.cap = "Comparision of total catch (removals) from the multi-stock/fleet operating model (solid lines) and Stock Synthesis (dashed lines)."}
+compareC_overallmulti(replist, multiHist)
+```
+
+## Abundance-at-age {.tabset}
+
+### Recruitment 
+
+```{r, fig.cap = "Comparision of recruitment from the multi-stock/fleet operating model (solid lines) and Stock Synthesis (dashed lines)."}
+compareRecmulti(replist, multiHist)
+```
+
+### Absolute abundance
+
+
+```{r, fig.cap = "Comparision of annual numbers-at-age from the multi-stock/fleet operating model (solid lines) and Stock Synthesis (dashed lines)."}
+compareAmulti(replist, multiHist)
+```
+
+
+## About
+
+This report was generated on: `r Sys.time()`<br />
+MSEtool version `r packageVersion("MSEtool")`<br />
+`r R.version.string`<br />
+

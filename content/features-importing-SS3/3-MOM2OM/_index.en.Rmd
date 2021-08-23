@@ -1,0 +1,73 @@
+---
+date: "2021-08-20T11:35:01+06:00"
+title: Converting MOM to OM
+weight: 4
+---
+
+```{r, include=FALSE}
+library(openMSE)
+```
+
+Many SS3 models include multiple fleets and include separate female and male stock dynamics. However, the `openMSE` [OM object](/object-operating-model/) includes only a single stock and single fleet. When imported into `openMSE`, output from an SS3 model is first converted to an 'MOM' object which reproduces the predicted stock and fleet dynamics from the SS3 model in `openMSE` (see [Importing MOM from SS3](/features-importing-ss3/1-mom/)).
+
+When an `MOM` object is converted by the `SSMOM2OM` function to an `OM` object, the overall fleet characteristics are calculated from the individual fleets within the `MOM` object, and the stock characteristics are calculated as averages from the sex-specific values in the SS3 model.
+
+This page provides details on how the sex-structured, multi-fleet SS3 model is converted to a combined-sex, single-fleet `OM` object.
+
+## Biological Properties
+
+### Unfished Recruitment (R0)
+
+The equilibrium recruitment to age-0 in the unfished state is calculated as the sum of the sex-specific R0s from the SS3 model.
+
+### Natural Mortality
+
+Natural mortality for the combined sex model is calculated as the mean of the sex-specific M-at-age values in the SS3 model.
+
+### Weight-at-Age
+
+Weight-at-age for the combined sex model is calculated as the mean of the sex-specific weight-at-age values in the SS3 model.
+
+### Length-at-Age
+
+Length-at-age for the combined sex model is calculated as the mean of the sex-specific length-at-age values in the SS3 model.
+
+### Fecundity-at-Age
+
+Fecundity-at-age in the combined model is taken from the female component of the sex-specific SS3 model.
+
+### Maturity-at-Age
+
+Maturity-at-age in the combined model is taken from the female component of the sex-specific SS3 model.
+
+### Growth Parameters
+
+Following above, the growth parameters for the von Bertalanffy growth model are calculated as averages of the sex-specific values in the SS3 model.
+
+### Length-Weight Parameters
+
+The 2 parameters of the length-weight relationship are calculated as averages from the sex-specific values in the SS3 model.
+
+## Fleet Characteristics
+
+### Selectivity-at-Age
+The overall sex-specific fishing mortality-at-age is calculated as:
+
+$$F_{a,i,y} = \sum_n^N{S_{a,i,n,y} f_{y,n}}  $$
+where $F_{a,i,y}$ is fishing mortality for age $a$, sex $i$, in year $y$, $S_{a,i,n,y}$ is sex- and fleet-specific selectivity-at-age, and $f_{y,n}$ is the apical fishing mortality for fleet $n$ in year $y$. 
+
+Overall selectivity-at-age for sex $i$ then:
+$$V_{a,i,y} = \frac{F_a,i,y}{\max{F_a,i,y}}$$
+where $\max$ represents the maximum value. 
+
+Finally, the combined selectivity-at-age is calculated as the average of the $I$ sex-specific values:
+$$V_{a,y} = \frac{V_{a,i,y}}{\sum_i^I{V_{a,i,y}}}$$
+
+### Retention-at-Age
+Overall retention-at-age is calculated with the same method described above, except using the sex- and fleet-specific retention-at-age values predicted by the SS3 model.
+
+### Fishing Mortality-at-Age
+Overall fishing mortality-at-age is calculated by multiplying the apical fishing mortality in each year (calculated as the maximum of $F_{a,i,y}$ across $a$ and $i$) by the overall selectivity-at-age schedule. 
+
+
+
