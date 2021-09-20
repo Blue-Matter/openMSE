@@ -1,7 +1,10 @@
 ---
-date: "2021-03-24T11:35:01+06:00"
-title: Depletion and Unfished Reference Points 
+title: "Depletion and Averaged Unfished Reference Points"
+date: '2021-09-20T11:35:01+06:00'
 weight: 1
+output:
+  html_document:
+    df_print: paged
 ---
 
 The Depletion parameter in the Stock Object (`Stock@D`) is used to initialize the historical simulations. Although the term *Depletion* is used frequently in fisheries science, it is rarely clearly defined. In most contexts, *Depletion* is used to mean *the biomass today relative to the average unfished biomass*. This raises two questions: 
@@ -23,9 +26,9 @@ In `openMSE` the operating model is specified based on the assumed or estimated 
 $$
 SB_0 = \frac{\sum_{y=1}^{A_{50}} SB_y^{\text{unfished}}}{A_{50}}
 $$
-where $A_{50}$ is rounded up to the nearest integer and $SB_y^{\text{unfished}}$ is the equilibrium unfished spawning biomass in year $y$. The same calculation is used to calculate other unfished reference points (e.g, $B_0$, $VB_0$), as well as the unfished spawning-per-recruit parameters used in the Ricker stock-recruitment relationship.
+where $A_{50}$ is rounded up to the nearest integer and $SB_y^{\text{unfished}}$ is the equilibrium unfished spawning biomass in year $y$ calculated as the product of $R_0$ (specified in `Stock@R0`) and $\phi_{0(y)}$, the unfished spawners-per-recruit calculated from the biological parameters corresponding to year $y$. Similar calculations are used to calculate other averaged unfished reference points (e.g, $B_0$, $VB_0$).
 
-The unfished reference points and unfished biomass and numbers by year are returned as a list in the MSE and Hist objects; i.e `MSE@RefPoint$Dynamic_Unfished` and `MSE@RefPoint$ByYear` respectively. 
+These averaged unfished reference points, as well as the unfished biomass $B_0$ and numbers $N_0$, are returned as a list in the Hist object in `Hist@Ref$ReferencePoints`. 
 
 
 

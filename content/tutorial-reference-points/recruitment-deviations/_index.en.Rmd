@@ -1,0 +1,241 @@
+---
+date: "2021-09-20T11:35:01+06:00"
+title: Change in stock-recruit relationship
+weight: 6
+---
+
+While the stock-recruit relationship is constant in `openMSE`, it is possible to change the effective stock-recruit relationship by changing the mean $\mu$ of the recruitment deviations through `OM@cpars$Perr_y`. This article describes how reference points implicitly change with $\mu$. The internal code used to calculate annual reference points in `MSEtool::runMSE` is not altered when the mean of `OM@cpars$Perr_y` is altered, so it is up to the user to decide whether reference points (see code below) need to be re-calculated.
+
+## Stock-recruit parameters
+
+With the Beverton-Holt stock recruit relationship, the recruitment in year $y$ is:
+
+$$ R_y = \dfrac{\alpha SB_y}{1 + \beta SB_y} \delta_y$$
+
+where $\delta_y$ are recruitment deviates. For stationary productivity around the recruitment predicted by the S-R curve, we sample $\delta_y$ from a lognormal distribution with $E[\delta_y] = 1$ and $V[\delta_y] = \exp(\sigma^2-1)$. Parameters $\alpha$ and $\beta$, along with $\phi_0$, can be used to calculate the corresponding unfished recruitment $R_0$ and steepness $h$:
+
+$$ h = \dfrac{\alpha \phi_0}{4 + \alpha \phi_0}$$
+
+$$ R_0 = \dfrac{1}{\beta}\left(\alpha - \dfrac{1}{\phi_0}\right)$$
+
+We define the unfished biomass as $SB_0 = R_0 \phi_0$. For easier reading, we have dropped the superscript $\textrm{SR}$ associated with $R_0$ and $h$.
+
+If we want to change the productivity via recruitment deviations, we can sample recruitment deviations such that $E[\delta_y] = \mu$. For a less productive system, set $\mu < 1$. In effect, we will have created a new stock-recruit relationship:
+
+$$ R_y = \dfrac{\alpha SB_y}{1 + \beta SB_y} \mu\delta_y = \dfrac{\alpha' SB_y}{1 + \beta SB_y} \varepsilon_y$$
+
+where $\alpha' = \mu \alpha$, $\varepsilon_y = \delta_y/\mu$ with $E[\varepsilon_y] = 1$ and $V[\varepsilon_y] = \exp(\sigma^2-1)/\mu^2$, and $\beta$ is unchanged.
+
+## Implied reference points
+
+With a new implied stock-recruit relationship, annual unfished and MSY reference points can be re-calculated accordingly with $\alpha'$, $\beta$, and $\phi_0$. The implications on the reference points can be seen in "new" parameters $R_0'$ and $h'$ corresponding to "new" $\alpha'$:
+
+$$ h' = \dfrac{\alpha' \phi_0}{4 + \alpha' \phi_0} =\dfrac{\mu h}{1 + h (\mu - 1)}$$
+
+$$ R_0 = \dfrac{1}{\beta}\left(\alpha' - \dfrac{1}{\phi_0}\right) = R_0\dfrac{h(4\mu + 1) - 1}{5h-1}$$
+Then, $SB_0 = R_0 \phi_0$.
+
+In the simplest case with constant $\phi_0$, we expect $h' < h$ and $R_0' < R_0$ when $\mu < 1$, and also expect $SB_0$, $F_{\textrm{MSY}}$, $\textrm{MSY}$, and $SB_\textrm{MSY}$ to decrease.
+
+The new $SPR_{\textrm{crash}} = (\alpha'\phi_0)^{-1} = (\mu \alpha \phi_0)^{-1}$ increases ($F_{\textrm{crash}}$ decreases) when $\mu < 1$.
+
+## Examples
+
+### Contour plots
+
+Let's explore the ratio of the new and old values of $R_0$ and $h$ as a function of $\mu$ and the original steepness, with $\beta = 1$ and $\phi_0 = 1$:
+
+```{r echo = FALSE}
+mu_vec <- seq(0.1, 2, 0.1)
+alpha <- seq(1, 100, 1)
+beta <- phi0 <- 1
+
+calc_h <- function(a, mu) mu * alpha * phi0 / (4 + mu * a * phi0)
+
+h_prime <- outer(alpha, mu_vec, calc_h) #mu_vec * alpha * phi0 / (4 + mu_vec * alpha * phi0)
+h <- calc_h(alpha, 1)
+
+contour(x = h, y = mu_vec, z = h_prime/h, xlab = "Original steepness (h)", ylab = expression(mu), main = "h'/h", nlevels = 20)
+
+calc_R0 <- function(a, mu) (mu * a - 1/phi0)/beta
+R0_prime <- outer(alpha, mu_vec, calc_R0) #; R0_prime[R0_prime < 0] <- NA
+R0 <- calc_R0(alpha, 1)
+
+R0_prime_neg <- R0_prime_pos <- R0_prime
+R0_prime_pos[R0_prime_pos <= 0] <- NA
+R0_prime_neg[R0_prime_neg > 0] <- NA
+contour(x = h[-1], y = mu_vec, z = R0_prime_pos[-1, ]/R0[-1], xlab = "Original steepness (h)", ylab = expression(mu), 
+        main = "R0'/R0", nlevels = 20)
+par(new = TRUE)
+contour(x = h[-1], y = mu_vec, z = R0_prime_neg[-1, ]/R0[-1], xlab = "", ylab = "", nlevels = 5, col = "red")
+
+
+S0_prime <- R0_prime * phi0
+S0 <- R0 * phi0
+
+contour(x = h[-1], y = mu_vec, z = S0_prime[-1, ]/S0[-1], xlab = "Original steepness (h)", ylab = expression(mu), main = "S0'/S0",
+        nlevels = 20)
+```
+
+Interestingly, there can exist a combination of low steepness and low $\mu$ such that the population crashes, as implied by $R_0' \le 0$ in red.
+
+### Forward projections
+
+Let's explore the dynamics in a forward projecting model in MSEtool. We'll create an operating model with 4 simulations with varying $\mu$ but constant stock-recruit parameters among simulations. Then we'll project the model using the `NFref` (no fishing) MP.
+
+```{r}
+library(MSEtool)
+OM <- MSEtool::testOM
+
+# Generate four simulations with same alpha, beta, and phi_0
+OM@nsim <- 4
+OM@Linfsd <- OM@Msd <- OM@Ksd <- c(0, 0)
+OM@Linf <- mean(OM@Linf) |> rep(2)
+OM@K <- mean(OM@K) |> rep(2)
+OM@t0 <- mean(OM@t0) |> rep(2)
+OM@M <- mean(OM@M) |> rep(2)
+OM@L50 <- mean(OM@L50) |> rep(2)
+OM@L50_95 <- mean(OM@L50_95) |> rep(2)
+OM@h <- mean(OM@h) |> rep(2)
+
+OM@Prob_staying <- OM@Frac_area_1 <- OM@Size_area_1 <- c(0.5, 0.5)
+
+# With four simulations, let's set the projection Perr_y to these values:
+mu_vec <- c(0.01, 0.75, 1, 1.5)
+OM@cpars$Perr_y <- matrix(1, OM@nsim, OM@maxage + OM@nyears + OM@proyears)
+OM@cpars$Perr_y[, OM@maxage + OM@nyears + 1:OM@proyears] <- mu_vec
+
+Hist <- Simulate(OM, silent = TRUE)
+MSE <- Project(Hist, MPs = "NFref", silent = TRUE)
+```
+
+Let's see what happens with the `NFref` MP:
+```{r echo = FALSE}
+matplot(t(MSE@SSB[, 1, ]), xlab = "Year", ylab = "Spawning biomass (SB)")
+```
+
+Despite the same stock-recruit parameters, the spawning biomass all diverge with $\mu$:
+
+```{r echo = FALSE}
+terminal_SB <- MSE@SSB[, 1, 50]
+plot(mu_vec, terminal_SB, xlab = expression(mu), ylab = "Terminal SB")
+```
+
+This terminal SB should be the new $SB_0$, so let's create a function to calculate these values analytically instead of projecting:
+
+```{r}
+recalc_ref_pt <- function(Hist, mu = rep(1, Hist@OM@nsim)) {
+  StockPars <- Hist@SampPars$Stock
+  FleetPars <- Hist@SampPars$Fleet
+  R0 <- StockPars$R0
+  hs <- StockPars$hs
+  
+  if(StockPars$SRrel[1] == 1) {
+    R0_new <- R0 * (hs * (4 * mu + 1) - 1)/(5 * hs - 1)
+    hs_new <- mu * hs /(1 + hs * (mu - 1))
+  } else {
+    R0_new <- 1 + 0.8 * R0 * log(mu)/log(5 * hs)
+    hs_new <- hs * mu^0.8
+  }
+  
+  MSY_ref_pt <- lapply(1:Hist@OM@nsim, function(x) { # Internal function for calculating unfished and MSY reference points
+    sapply(Hist@OM@nyears + 1:Hist@OM@proyears, function(y) {
+      MSEtool:::optMSY_eq(x, 
+                          M_ageArray=StockPars$M_ageArray, 
+                          Wt_age=StockPars$Wt_age, 
+                          Mat_age=StockPars$Mat_age,
+                          Fec_age=StockPars$Fec_Age, 
+                          V=FleetPars$V_real, 
+                          maxage=StockPars$maxage, 
+                          R0=R0_new,
+                          SRrel=StockPars$SRrel, 
+                          hs=hs_new, 
+                          SSBpR=StockPars$SSBpR,
+                          yr.ind=y, 
+                          plusgroup=StockPars$plusgroup)
+    })
+  })
+  
+  crash_ref_pt <- local({ # Internal function for calculating SPR crash
+    boundsF <- c(1E-3, 3)
+    F_search <- exp(seq(log(min(boundsF)), log(max(boundsF)), length.out = 50))
+    
+    lapply(1:Hist@OM@nsim, function(x) {
+      sapply(Hist@OM@nyears + 1:Hist@OM@proyears, function(y) {
+        Ref_search <- MSEtool:::Ref_int_cpp(F_search, 
+                                            M_at_Age = StockPars$M_ageArray[x, , y],
+                                            Wt_at_Age = StockPars$Wt_age[x, , y], 
+                                            Mat_at_Age = StockPars$Mat_age[x, , y],
+                                            Fec_at_Age = StockPars$Fec_Age[x, , y], 
+                                            V_at_Age = FleetPars$V_real[x, , y],
+                                            maxage = StockPars$maxage,
+                                            plusgroup = StockPars$plusgroup)
+        SPR_search <- Ref_search[2, ]
+        RPS <- Ref_search[3, ]
+        
+        if(StockPars$SRrel[x] == 1) {
+          CR <- 4 * StockPars$hs[x]/(1 - StockPars$hs[x])
+        } else if(StockPars$SRrel[x] == 2) {
+          CR <- (5 * StockPars$hs[x])^1.25
+        }
+        alpha <- mu[x] * CR/StockPars$SSBpR[x, 1] # New alpha
+        
+        if(min(RPS) >= alpha) { # Unfished RPS is steeper than alpha
+          SPRcrash <- min(1, RPS[1]/alpha) # Should be 1
+          Fcrash <- 0
+        } else {
+          SPRcrash <- MSEtool:::LinInterp_cpp(RPS, SPR_search, xlev = alpha)
+          Fcrash <- MSEtool:::LinInterp_cpp(RPS, F_search, xlev = alpha)
+        }
+        c(SPRcrash = SPRcrash, Fcrash = Fcrash)
+      })
+    })
+  })
+  ref_pt <- abind::abind(simplify2array(MSY_ref_pt), simplify2array(crash_ref_pt), along = 1)
+  dimnames(ref_pt)[[1]] <- c("MSY", "FMSY", "SBMSY", "SBMSY_SB0", "BMSY_B0", "BMSY", "VBMSY", "VBMSY_VB0", "RMSY", "SB0", "B0", "R0", "h",
+                             "N0", "SN0", "SPRcrash", "Fcrash")
+  return(ref_pt)
+}
+```
+
+Let's compare the ratio of the calculated $SB_0$ and the projected terminal SSB:
+
+```{r}
+new_ref_pt <- recalc_ref_pt(Hist, mu = mu_vec)
+SSB0_prime <- new_ref_pt["SB0", OM@proyears, ]
+plot(mu_vec, SSB0_prime/terminal_SB, xlab = expression(mu), ylab = "SB0/Terminal SB")
+```
+
+Looks like our new reference points match the values from the projections. Note with $\mu = 0.01$, the population crashes so $SB_0 = 0$.
+
+Now let's map out $h'/h$ and $R_0'/R_0$ as a function of $\mu$:
+
+```{r echo = FALSE}
+mu <- seq(0.01, 2, 0.01)
+R0 <- Hist@SampPars$Stock$R0[1]
+hs <- Hist@SampPars$Stock$hs[1]
+
+R0_new <- R0 * (hs * (4 * mu + 1) - 1)/(5 * hs - 1)
+hs_new <- mu * hs /(1 + hs * (mu - 1))
+
+plot(mu, hs_new/hs, xlab = expression(mu), ylab = "h'/h", typ = 'l')
+plot(mu, R0_new/R0, xlab = expression(mu), ylab = "R0'/R0", typ = 'l')
+abline(h = 0, lty = 3)
+```
+
+If $\mu < 0.08$, our population crashes because $R_0' < 0$, and $SPR_{\textrm{crash}} = 1$:
+
+```{r}
+SPRcrash <- new_ref_pt["SPRcrash", OM@proyears, ]
+plot(mu_vec, SPRcrash, xlab = expression(mu), ylim = c(0, 1))
+```
+
+## Ricker function
+With a Ricker function where $R_y = \alpha SB_y \exp(-\beta SB_y) \delta_y$, steepness is $h = 0.2(\alpha\phi_0)^{0.8}$ and $R_0 = \log(\alpha\phi_0)/(\beta \phi_0)$.
+
+The new SR relationship is $R_y = \alpha' SB_y \exp(-\beta SB_y) \varepsilon_y$, with
+
+$$h' = 0.2 (\alpha' \phi_0)^{0.8} = \mu^{0.8} h$$
+
+$$R_0' = 1 + \dfrac{0.8 R_0\log(\mu)}{\log(5h)}$$
+

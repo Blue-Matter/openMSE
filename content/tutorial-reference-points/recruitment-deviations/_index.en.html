@@ -1,0 +1,165 @@
+---
+date: "2021-09-20T11:35:01+06:00"
+title: Change in stock-recruit relationship
+weight: 6
+---
+
+<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
+
+
+<p>While the stock-recruit relationship is constant in <code>openMSE</code>, it is possible to change the effective stock-recruit relationship by changing the mean <span class="math inline">\(\mu\)</span> of the recruitment deviations through <code>OM@cpars$Perr_y</code>. This article describes how reference points implicitly change with <span class="math inline">\(\mu\)</span>. The internal code used to calculate annual reference points in <code>MSEtool::runMSE</code> is not altered when the mean of <code>OM@cpars$Perr_y</code> is altered, so it is up to the user to decide whether reference points (see code below) need to be re-calculated.</p>
+<div id="stock-recruit-parameters" class="section level2">
+<h2>Stock-recruit parameters</h2>
+<p>With the Beverton-Holt stock recruit relationship, the recruitment in year <span class="math inline">\(y\)</span> is:</p>
+<p><span class="math display">\[ R_y = \dfrac{\alpha SB_y}{1 + \beta SB_y} \delta_y\]</span></p>
+<p>where <span class="math inline">\(\delta_y\)</span> are recruitment deviates. For stationary productivity around the recruitment predicted by the S-R curve, we sample <span class="math inline">\(\delta_y\)</span> from a lognormal distribution with <span class="math inline">\(E[\delta_y] = 1\)</span> and <span class="math inline">\(V[\delta_y] = \exp(\sigma^2-1)\)</span>. Parameters <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>, along with <span class="math inline">\(\phi_0\)</span>, can be used to calculate the corresponding unfished recruitment <span class="math inline">\(R_0\)</span> and steepness <span class="math inline">\(h\)</span>:</p>
+<p><span class="math display">\[ h = \dfrac{\alpha \phi_0}{4 + \alpha \phi_0}\]</span></p>
+<p><span class="math display">\[ R_0 = \dfrac{1}{\beta}\left(\alpha - \dfrac{1}{\phi_0}\right)\]</span></p>
+<p>We define the unfished biomass as <span class="math inline">\(SB_0 = R_0 \phi_0\)</span>. For easier reading, we have dropped the superscript <span class="math inline">\(\textrm{SR}\)</span> associated with <span class="math inline">\(R_0\)</span> and <span class="math inline">\(h\)</span>.</p>
+<p>If we want to change the productivity via recruitment deviations, we can sample recruitment deviations such that <span class="math inline">\(E[\delta_y] = \mu\)</span>. For a less productive system, set <span class="math inline">\(\mu &lt; 1\)</span>. In effect, we will have created a new stock-recruit relationship:</p>
+<p><span class="math display">\[ R_y = \dfrac{\alpha SB_y}{1 + \beta SB_y} \mu\delta_y = \dfrac{\alpha&#39; SB_y}{1 + \beta SB_y} \varepsilon_y\]</span></p>
+<p>where <span class="math inline">\(\alpha&#39; = \mu \alpha\)</span>, <span class="math inline">\(\varepsilon_y = \delta_y/\mu\)</span> with <span class="math inline">\(E[\varepsilon_y] = 1\)</span> and <span class="math inline">\(V[\varepsilon_y] = \exp(\sigma^2-1)/\mu^2\)</span>, and <span class="math inline">\(\beta\)</span> is unchanged.</p>
+</div>
+<div id="implied-reference-points" class="section level2">
+<h2>Implied reference points</h2>
+<p>With a new implied stock-recruit relationship, annual unfished and MSY reference points can be re-calculated accordingly with <span class="math inline">\(\alpha&#39;\)</span>, <span class="math inline">\(\beta\)</span>, and <span class="math inline">\(\phi_0\)</span>. The implications on the reference points can be seen in “new” parameters <span class="math inline">\(R_0&#39;\)</span> and <span class="math inline">\(h&#39;\)</span> corresponding to “new” <span class="math inline">\(\alpha&#39;\)</span>:</p>
+<p><span class="math display">\[ h&#39; = \dfrac{\alpha&#39; \phi_0}{4 + \alpha&#39; \phi_0} =\dfrac{\mu h}{1 + h (\mu - 1)}\]</span></p>
+<p><span class="math display">\[ R_0 = \dfrac{1}{\beta}\left(\alpha&#39; - \dfrac{1}{\phi_0}\right) = R_0\dfrac{h(4\mu + 1) - 1}{5h-1}\]</span>
+Then, <span class="math inline">\(SB_0 = R_0 \phi_0\)</span>.</p>
+<p>In the simplest case with constant <span class="math inline">\(\phi_0\)</span>, we expect <span class="math inline">\(h&#39; &lt; h\)</span> and <span class="math inline">\(R_0&#39; &lt; R_0\)</span> when <span class="math inline">\(\mu &lt; 1\)</span>, and also expect <span class="math inline">\(SB_0\)</span>, <span class="math inline">\(F_{\textrm{MSY}}\)</span>, <span class="math inline">\(\textrm{MSY}\)</span>, and <span class="math inline">\(SB_\textrm{MSY}\)</span> to decrease.</p>
+<p>The new <span class="math inline">\(SPR_{\textrm{crash}} = (\alpha&#39;\phi_0)^{-1} = (\mu \alpha \phi_0)^{-1}\)</span> increases (<span class="math inline">\(F_{\textrm{crash}}\)</span> decreases) when <span class="math inline">\(\mu &lt; 1\)</span>.</p>
+</div>
+<div id="examples" class="section level2">
+<h2>Examples</h2>
+<div id="contour-plots" class="section level3">
+<h3>Contour plots</h3>
+<p>Let’s explore the ratio of the new and old values of <span class="math inline">\(R_0\)</span> and <span class="math inline">\(h\)</span> as a function of <span class="math inline">\(\mu\)</span> and the original steepness, with <span class="math inline">\(\beta = 1\)</span> and <span class="math inline">\(\phi_0 = 1\)</span>:</p>
+<p><img src="/tutorial-reference-points/recruitment-deviations/_index.en_files/figure-html/unnamed-chunk-1-1.png" width="672" /><img src="/tutorial-reference-points/recruitment-deviations/_index.en_files/figure-html/unnamed-chunk-1-2.png" width="672" /><img src="/tutorial-reference-points/recruitment-deviations/_index.en_files/figure-html/unnamed-chunk-1-3.png" width="672" /></p>
+<p>Interestingly, there can exist a combination of low steepness and low <span class="math inline">\(\mu\)</span> such that the population crashes, as implied by <span class="math inline">\(R_0&#39; \le 0\)</span> in red.</p>
+</div>
+<div id="forward-projections" class="section level3">
+<h3>Forward projections</h3>
+<p>Let’s explore the dynamics in a forward projecting model in MSEtool. We’ll create an operating model with 4 simulations with varying <span class="math inline">\(\mu\)</span> but constant stock-recruit parameters among simulations. Then we’ll project the model using the <code>NFref</code> (no fishing) MP.</p>
+<pre class="r"><code>library(MSEtool)</code></pre>
+<pre><code>## Loading required package: snowfall</code></pre>
+<pre><code>## Loading required package: snow</code></pre>
+<pre class="r"><code>OM &lt;- MSEtool::testOM
+
+# Generate four simulations with same alpha, beta, and phi_0
+OM@nsim &lt;- 4
+OM@Linfsd &lt;- OM@Msd &lt;- OM@Ksd &lt;- c(0, 0)
+OM@Linf &lt;- mean(OM@Linf) |&gt; rep(2)
+OM@K &lt;- mean(OM@K) |&gt; rep(2)
+OM@t0 &lt;- mean(OM@t0) |&gt; rep(2)
+OM@M &lt;- mean(OM@M) |&gt; rep(2)
+OM@L50 &lt;- mean(OM@L50) |&gt; rep(2)
+OM@L50_95 &lt;- mean(OM@L50_95) |&gt; rep(2)
+OM@h &lt;- mean(OM@h) |&gt; rep(2)
+
+OM@Prob_staying &lt;- OM@Frac_area_1 &lt;- OM@Size_area_1 &lt;- c(0.5, 0.5)
+
+# With four simulations, let&#39;s set the projection Perr_y to these values:
+mu_vec &lt;- c(0.01, 0.75, 1, 1.5)
+OM@cpars$Perr_y &lt;- matrix(1, OM@nsim, OM@maxage + OM@nyears + OM@proyears)
+OM@cpars$Perr_y[, OM@maxage + OM@nyears + 1:OM@proyears] &lt;- mu_vec
+
+Hist &lt;- Simulate(OM, silent = TRUE)
+MSE &lt;- Project(Hist, MPs = &quot;NFref&quot;, silent = TRUE)</code></pre>
+<p>Let’s see what happens with the <code>NFref</code> MP:
+<img src="/tutorial-reference-points/recruitment-deviations/_index.en_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>Despite the same stock-recruit parameters, the spawning biomass all diverge with <span class="math inline">\(\mu\)</span>:</p>
+<p><img src="/tutorial-reference-points/recruitment-deviations/_index.en_files/figure-html/unnamed-chunk-4-1.png" width="672" /></p>
+<p>This terminal SB should be the new <span class="math inline">\(SB_0\)</span>, so let’s create a function to calculate these values analytically instead of projecting:</p>
+<pre class="r"><code>recalc_ref_pt &lt;- function(Hist, mu = rep(1, Hist@OM@nsim)) {
+  StockPars &lt;- Hist@SampPars$Stock
+  FleetPars &lt;- Hist@SampPars$Fleet
+  R0 &lt;- StockPars$R0
+  hs &lt;- StockPars$hs
+  
+  if(StockPars$SRrel[1] == 1) {
+    R0_new &lt;- R0 * (hs * (4 * mu + 1) - 1)/(5 * hs - 1)
+    hs_new &lt;- mu * hs /(1 + hs * (mu - 1))
+  } else {
+    R0_new &lt;- 1 + 0.8 * R0 * log(mu)/log(5 * hs)
+    hs_new &lt;- hs * mu^0.8
+  }
+  
+  MSY_ref_pt &lt;- lapply(1:Hist@OM@nsim, function(x) { # Internal function for calculating unfished and MSY reference points
+    sapply(Hist@OM@nyears + 1:Hist@OM@proyears, function(y) {
+      MSEtool:::optMSY_eq(x, 
+                          M_ageArray=StockPars$M_ageArray, 
+                          Wt_age=StockPars$Wt_age, 
+                          Mat_age=StockPars$Mat_age,
+                          Fec_age=StockPars$Fec_Age, 
+                          V=FleetPars$V_real, 
+                          maxage=StockPars$maxage, 
+                          R0=R0_new,
+                          SRrel=StockPars$SRrel, 
+                          hs=hs_new, 
+                          SSBpR=StockPars$SSBpR,
+                          yr.ind=y, 
+                          plusgroup=StockPars$plusgroup)
+    })
+  })
+  
+  crash_ref_pt &lt;- local({ # Internal function for calculating SPR crash
+    boundsF &lt;- c(1E-3, 3)
+    F_search &lt;- exp(seq(log(min(boundsF)), log(max(boundsF)), length.out = 50))
+    
+    lapply(1:Hist@OM@nsim, function(x) {
+      sapply(Hist@OM@nyears + 1:Hist@OM@proyears, function(y) {
+        Ref_search &lt;- MSEtool:::Ref_int_cpp(F_search, 
+                                            M_at_Age = StockPars$M_ageArray[x, , y],
+                                            Wt_at_Age = StockPars$Wt_age[x, , y], 
+                                            Mat_at_Age = StockPars$Mat_age[x, , y],
+                                            Fec_at_Age = StockPars$Fec_Age[x, , y], 
+                                            V_at_Age = FleetPars$V_real[x, , y],
+                                            maxage = StockPars$maxage,
+                                            plusgroup = StockPars$plusgroup)
+        SPR_search &lt;- Ref_search[2, ]
+        RPS &lt;- Ref_search[3, ]
+        
+        if(StockPars$SRrel[x] == 1) {
+          CR &lt;- 4 * StockPars$hs[x]/(1 - StockPars$hs[x])
+        } else if(StockPars$SRrel[x] == 2) {
+          CR &lt;- (5 * StockPars$hs[x])^1.25
+        }
+        alpha &lt;- mu[x] * CR/StockPars$SSBpR[x, 1] # New alpha
+        
+        if(min(RPS) &gt;= alpha) { # Unfished RPS is steeper than alpha
+          SPRcrash &lt;- min(1, RPS[1]/alpha) # Should be 1
+          Fcrash &lt;- 0
+        } else {
+          SPRcrash &lt;- MSEtool:::LinInterp_cpp(RPS, SPR_search, xlev = alpha)
+          Fcrash &lt;- MSEtool:::LinInterp_cpp(RPS, F_search, xlev = alpha)
+        }
+        c(SPRcrash = SPRcrash, Fcrash = Fcrash)
+      })
+    })
+  })
+  ref_pt &lt;- abind::abind(simplify2array(MSY_ref_pt), simplify2array(crash_ref_pt), along = 1)
+  dimnames(ref_pt)[[1]] &lt;- c(&quot;MSY&quot;, &quot;FMSY&quot;, &quot;SBMSY&quot;, &quot;SBMSY_SB0&quot;, &quot;BMSY_B0&quot;, &quot;BMSY&quot;, &quot;VBMSY&quot;, &quot;VBMSY_VB0&quot;, &quot;RMSY&quot;, &quot;SB0&quot;, &quot;B0&quot;, &quot;R0&quot;, &quot;h&quot;,
+                             &quot;N0&quot;, &quot;SN0&quot;, &quot;SPRcrash&quot;, &quot;Fcrash&quot;)
+  return(ref_pt)
+}</code></pre>
+<p>Let’s compare the ratio of the calculated <span class="math inline">\(SB_0\)</span> and the projected terminal SSB:</p>
+<pre class="r"><code>new_ref_pt &lt;- recalc_ref_pt(Hist, mu = mu_vec)
+SSB0_prime &lt;- new_ref_pt[&quot;SB0&quot;, OM@proyears, ]
+plot(mu_vec, SSB0_prime/terminal_SB, xlab = expression(mu), ylab = &quot;SB0/Terminal SB&quot;)</code></pre>
+<p><img src="/tutorial-reference-points/recruitment-deviations/_index.en_files/figure-html/unnamed-chunk-6-1.png" width="672" /></p>
+<p>Looks like our new reference points match the values from the projections. Note with <span class="math inline">\(\mu = 0.01\)</span>, the population crashes so <span class="math inline">\(SB_0 = 0\)</span>.</p>
+<p>Now let’s map out <span class="math inline">\(h&#39;/h\)</span> and <span class="math inline">\(R_0&#39;/R_0\)</span> as a function of <span class="math inline">\(\mu\)</span>:</p>
+<p><img src="/tutorial-reference-points/recruitment-deviations/_index.en_files/figure-html/unnamed-chunk-7-1.png" width="672" /><img src="/tutorial-reference-points/recruitment-deviations/_index.en_files/figure-html/unnamed-chunk-7-2.png" width="672" /></p>
+<p>If <span class="math inline">\(\mu &lt; 0.08\)</span>, our population crashes because <span class="math inline">\(R_0&#39; &lt; 0\)</span>, and <span class="math inline">\(SPR_{\textrm{crash}} = 1\)</span>:</p>
+<pre class="r"><code>SPRcrash &lt;- new_ref_pt[&quot;SPRcrash&quot;, OM@proyears, ]
+plot(mu_vec, SPRcrash, xlab = expression(mu), ylim = c(0, 1))</code></pre>
+<p><img src="/tutorial-reference-points/recruitment-deviations/_index.en_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+</div>
+</div>
+<div id="ricker-function" class="section level2">
+<h2>Ricker function</h2>
+<p>With a Ricker function where <span class="math inline">\(R_y = \alpha SB_y \exp(-\beta SB_y) \delta_y\)</span>, steepness is <span class="math inline">\(h = 0.2(\alpha\phi_0)^{0.8}\)</span> and <span class="math inline">\(R_0 = \log(\alpha\phi_0)/(\beta \phi_0)\)</span>.</p>
+<p>The new SR relationship is <span class="math inline">\(R_y = \alpha&#39; SB_y \exp(-\beta SB_y) \varepsilon_y\)</span>, with</p>
+<p><span class="math display">\[h&#39; = 0.2 (\alpha&#39; \phi_0)^{0.8} = \mu^{0.8} h\]</span></p>
+<p><span class="math display">\[R_0&#39; = 1 + \dfrac{0.8 R_0\log(\mu)}{\log(5h)}\]</span></p>
+</div>
