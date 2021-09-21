@@ -18,7 +18,7 @@ $$ h = \dfrac{\alpha \phi_0}{4 + \alpha \phi_0}$$
 
 $$ R_0 = \dfrac{1}{\beta}\left(\alpha - \dfrac{1}{\phi_0}\right)$$
 
-We define the unfished biomass as $SB_0 = R_0 \phi_0$. For easier reading, we have dropped the superscript $\textrm{SR}$ associated with $R_0$ and $h$.
+We define the unfished biomass as $SB_0 = R_0 \phi_0$. For easier reading, we have dropped the superscript $\textrm{SR}$ associated with $R_0$,  $h$, and $\phi_0$.
 
 If we want to change the productivity via recruitment deviations, we can sample recruitment deviations such that $E[\delta_y] = \mu$. For a less productive system, set $\mu < 1$. In effect, we will have created a new stock-recruit relationship:
 
@@ -32,8 +32,8 @@ With a new implied stock-recruit relationship, annual unfished and MSY reference
 
 $$ h' = \dfrac{\alpha' \phi_0}{4 + \alpha' \phi_0} =\dfrac{\mu h}{1 + h (\mu - 1)}$$
 
-$$ R_0 = \dfrac{1}{\beta}\left(\alpha' - \dfrac{1}{\phi_0}\right) = R_0\dfrac{h(4\mu + 1) - 1}{5h-1}$$
-Then, $SB_0 = R_0 \phi_0$.
+$$ R_0' = \dfrac{1}{\beta}\left(\alpha' - \dfrac{1}{\phi_0}\right) = R_0\dfrac{h(4\mu + 1) - 1}{5h-1}$$
+Then, $SB_0' = R_0' \phi_0$.
 
 In the simplest case with constant $\phi_0$, we expect $h' < h$ and $R_0' < R_0$ when $\mu < 1$, and also expect $SB_0$, $F_{\textrm{MSY}}$, $\textrm{MSY}$, and $SB_\textrm{MSY}$ to decrease.
 
@@ -73,7 +73,7 @@ contour(x = h[-1], y = mu_vec, z = R0_prime_neg[-1, ]/R0[-1], xlab = "", ylab = 
 S0_prime <- R0_prime * phi0
 S0 <- R0 * phi0
 
-contour(x = h[-1], y = mu_vec, z = S0_prime[-1, ]/S0[-1], xlab = "Original steepness (h)", ylab = expression(mu), main = "S0'/S0",
+contour(x = h[-1], y = mu_vec, z = S0_prime[-1, ]/S0[-1], xlab = "Original steepness (h)", ylab = expression(mu), main = "SB0'/SB0",
         nlevels = 20)
 ```
 
