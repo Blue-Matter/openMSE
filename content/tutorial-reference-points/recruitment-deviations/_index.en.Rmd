@@ -12,7 +12,7 @@ With the Beverton-Holt stock recruit relationship, the recruitment in year $y$ i
 
 $$ R_y = \dfrac{\alpha SB_y}{1 + \beta SB_y} \delta_y$$
 
-where $\delta_y$ are recruitment deviates. For stationary productivity around the recruitment predicted by the S-R curve, we sample $\delta_y$ from a lognormal distribution with $E[\delta_y] = 1$ and $V[\delta_y] = \exp(\sigma^2-1)$. Parameters $\alpha$ and $\beta$, along with $\phi_0$, can be used to calculate the corresponding unfished recruitment $R_0$ and steepness $h$:
+where $\delta_y$ are recruitment deviates. For stationary productivity around the recruitment predicted by the S-R curve, we sample $\delta_y$ from a lognormal distribution with $E[\delta_y] = 1$ and $V[\delta_y] = \exp(\sigma^2-1)$. These values are passed to the operating model in `OM@cpars$Perr_y`. Parameters $\alpha$ and $\beta$, along with $\phi_0$, can be used to calculate the corresponding unfished recruitment $R_0$ and steepness $h$:
 
 $$ h = \dfrac{\alpha \phi_0}{4 + \alpha \phi_0}$$
 
@@ -20,15 +20,15 @@ $$ R_0 = \dfrac{1}{\beta}\left(\alpha - \dfrac{1}{\phi_0}\right)$$
 
 We define the unfished biomass as $SB_0 = R_0 \phi_0$. For easier reading, we have dropped the superscript $\textrm{SR}$ associated with $R_0$,  $h$, and $\phi_0$.
 
-If we want to change the productivity via recruitment deviations, we can sample recruitment deviations such that $E[\delta_y] = \mu$. For a less productive system, set $\mu < 1$. In effect, we will have created a new stock-recruit relationship:
+If we want to change the productivity via recruitment deviations, we can re-scale the recruitment deviations. Set $\delta'_y = \mu \delta_y$, with $\mu < 1$ for a less productive system. In effect, we will have created a different stock-recruit relationship:
 
-$$ R_y = \dfrac{\alpha SB_y}{1 + \beta SB_y} \mu\delta_y = \dfrac{\alpha' SB_y}{1 + \beta SB_y} \varepsilon_y$$
+$$ R_y = \dfrac{\alpha SB_y}{1 + \beta SB_y} \delta'_y = \dfrac{\alpha' SB_y}{1 + \beta SB_y} \delta_y$$
 
-where $\alpha' = \mu \alpha$, $\varepsilon_y = \delta_y/\mu$ with $E[\varepsilon_y] = 1$ and $V[\varepsilon_y] = \exp(\sigma^2-1)/\mu^2$, and $\beta$ is unchanged.
+where $\alpha' = \mu \alpha$, $E[\delta'_y] = \mu$ and $V[\delta'_y] = \exp(\sigma^2-1)/\mu^2$, and $\beta$ is unchanged. In other words, by setting the mean of `OM@cpars$Perr_y` to $\mu$, we create a stock-recruit relationship defined by $\alpha'$ and recruitment variance of $V[\delta'_y]$.
 
 ## Implied reference points
 
-With a new implied stock-recruit relationship, annual unfished and MSY reference points can be re-calculated accordingly with $\alpha'$, $\beta$, and $\phi_0$. The implications on the reference points can be seen in "new" parameters $R_0'$ and $h'$ corresponding to "new" $\alpha'$:
+Annual unfished and MSY reference points can be re-calculated accordingly with $\alpha'$, $\beta$, and $\phi_0$. The implications on the reference points can be seen in "new" parameters $R_0'$ and $h'$ corresponding to "new" $\alpha'$:
 
 $$ h' = \dfrac{\alpha' \phi_0}{4 + \alpha' \phi_0} =\dfrac{\mu h}{1 + h (\mu - 1)}$$
 
@@ -81,7 +81,7 @@ Interestingly, there can exist a combination of low steepness and low $\mu$ such
 
 ### Forward projections
 
-Let's explore the dynamics in a forward projecting model in MSEtool. We'll create an operating model with 4 simulations with varying $\mu$ but constant stock-recruit parameters among simulations. Then we'll project the model using the `NFref` (no fishing) MP.
+Let's explore the dynamics in a forward projecting model in `MSEtool`. We'll create an operating model with 4 simulations with varying $\mu$ but constant stock-recruit parameters among simulations. Then we'll project the model using the `NFref` (no fishing) MP.
 
 ```{r}
 library(MSEtool)
@@ -233,7 +233,7 @@ plot(mu_vec, SPRcrash, xlab = expression(mu), ylim = c(0, 1))
 ## Ricker function
 With a Ricker function where $R_y = \alpha SB_y \exp(-\beta SB_y) \delta_y$, steepness is $h = 0.2(\alpha\phi_0)^{0.8}$ and $R_0 = \log(\alpha\phi_0)/(\beta \phi_0)$.
 
-The new SR relationship is $R_y = \alpha' SB_y \exp(-\beta SB_y) \varepsilon_y$, with
+The new SR relationship is $R_y = \alpha' SB_y \exp(-\beta SB_y) \delta_y$, with
 
 $$h' = 0.2 (\alpha' \phi_0)^{0.8} = \mu^{0.8} h$$
 

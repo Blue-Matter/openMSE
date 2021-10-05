@@ -7,4 +7,4 @@ type: tutorials
 weight: 2
 ---
 
-The following sections describe the mathematical details of the [Rapid Conditioning Model](/features-rcm).
+The following sections describe the mathematical details of the [Rapid Conditioning Model](/tutorial-rcm).

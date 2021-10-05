@@ -8,9 +8,9 @@ The calculation of reference points are impacted by inter-annual variability in 
 
 ## Stock-recruit relationship
 
-In a system where the productivity is highly variable, it is important to have something constant in order to anchor the description of the system dynamics. In openMSE, the stock-recruit relationship is constant through both the historical and projection period of the operating model. 
+In a system where the productivity is highly variable, it is important to have something constant in order to anchor the description of the system dynamics. In `openMSE`, the stock-recruit relationship is constant through both the historical and projection period of the operating model. 
 
-Using a Beverton-Holt relationship, the predicted recruitment $R_y$ in year $y$ is
+Using a Beverton-Holt relationship, the age-0 recruitment $R_y$ predicted from spawning biomass $SB_y$ in year $y$ is
 $$
 R_y = \dfrac{\alpha SB_y}{1 + \beta SB_y}
 $$
@@ -30,7 +30,7 @@ $$
 > $$\alpha = \dfrac{(5h^{\textrm{SR}})^{1.25}}{\phi^{\textrm{SR}}_0}$$
 > $$\beta = \dfrac{\log(\alpha\phi^{\textrm{SR}}_0)}{R_0^{\textrm{SR}}\phi^{\textrm{SR}}_0}$$ 
 
-Parameters $\alpha$ and $\beta$ are specified via the unfished recruitment parameter $R_0^{\textrm{SR}}$, steepness $h^{\textrm{SR}}$, and unfished spawners per recruit $\phi_0^{\textrm{SR}}$. Parameters $R_0^{\textrm{SR}}$ and $h^{\textrm{SR}}$ are specified in `Stock@R0` and `Stock@h`, respectively, while $\phi_0^{\textrm{SR}}$ is the mean spawners per recruit over the first generation ($A_{50}$ years):
+Parameters $\alpha$ and $\beta$ are specified via the unfished recruitment parameter $R_0^{\textrm{SR}}$, steepness $h^{\textrm{SR}}$, and unfished spawners per recruit $\phi_0^{\textrm{SR}}$. Superscripts $\textrm{SR}$ explicitly denotes that these parameters are used for calculating $\alpha$ and $\beta$. Parameters $R_0^{\textrm{SR}}$ and $h^{\textrm{SR}}$ are specified in `Stock@R0` and `Stock@h`, respectively, while $\phi_0^{\textrm{SR}}$ is the mean unfished spawners per recruit over the first generation ($A_{50}$ years):
 
 $$
 \phi_0^{\textrm{SR}} = \dfrac{\sum_{y=1}^{A_{50}} \phi_{0(y)}}{A_{50}}

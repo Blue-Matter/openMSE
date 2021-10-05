@@ -12,17 +12,17 @@ weight: 6
 <h2>Stock-recruit parameters</h2>
 <p>With the Beverton-Holt stock recruit relationship, the recruitment in year <span class="math inline">\(y\)</span> is:</p>
 <p><span class="math display">\[ R_y = \dfrac{\alpha SB_y}{1 + \beta SB_y} \delta_y\]</span></p>
-<p>where <span class="math inline">\(\delta_y\)</span> are recruitment deviates. For stationary productivity around the recruitment predicted by the S-R curve, we sample <span class="math inline">\(\delta_y\)</span> from a lognormal distribution with <span class="math inline">\(E[\delta_y] = 1\)</span> and <span class="math inline">\(V[\delta_y] = \exp(\sigma^2-1)\)</span>. Parameters <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>, along with <span class="math inline">\(\phi_0\)</span>, can be used to calculate the corresponding unfished recruitment <span class="math inline">\(R_0\)</span> and steepness <span class="math inline">\(h\)</span>:</p>
+<p>where <span class="math inline">\(\delta_y\)</span> are recruitment deviates. For stationary productivity around the recruitment predicted by the S-R curve, we sample <span class="math inline">\(\delta_y\)</span> from a lognormal distribution with <span class="math inline">\(E[\delta_y] = 1\)</span> and <span class="math inline">\(V[\delta_y] = \exp(\sigma^2-1)\)</span>. These values are passed to the operating model in <code>OM@cpars$Perr_y</code>. Parameters <span class="math inline">\(\alpha\)</span> and <span class="math inline">\(\beta\)</span>, along with <span class="math inline">\(\phi_0\)</span>, can be used to calculate the corresponding unfished recruitment <span class="math inline">\(R_0\)</span> and steepness <span class="math inline">\(h\)</span>:</p>
 <p><span class="math display">\[ h = \dfrac{\alpha \phi_0}{4 + \alpha \phi_0}\]</span></p>
 <p><span class="math display">\[ R_0 = \dfrac{1}{\beta}\left(\alpha - \dfrac{1}{\phi_0}\right)\]</span></p>
 <p>We define the unfished biomass as <span class="math inline">\(SB_0 = R_0 \phi_0\)</span>. For easier reading, we have dropped the superscript <span class="math inline">\(\textrm{SR}\)</span> associated with <span class="math inline">\(R_0\)</span>, <span class="math inline">\(h\)</span>, and <span class="math inline">\(\phi_0\)</span>.</p>
-<p>If we want to change the productivity via recruitment deviations, we can sample recruitment deviations such that <span class="math inline">\(E[\delta_y] = \mu\)</span>. For a less productive system, set <span class="math inline">\(\mu &lt; 1\)</span>. In effect, we will have created a new stock-recruit relationship:</p>
-<p><span class="math display">\[ R_y = \dfrac{\alpha SB_y}{1 + \beta SB_y} \mu\delta_y = \dfrac{\alpha&#39; SB_y}{1 + \beta SB_y} \varepsilon_y\]</span></p>
-<p>where <span class="math inline">\(\alpha&#39; = \mu \alpha\)</span>, <span class="math inline">\(\varepsilon_y = \delta_y/\mu\)</span> with <span class="math inline">\(E[\varepsilon_y] = 1\)</span> and <span class="math inline">\(V[\varepsilon_y] = \exp(\sigma^2-1)/\mu^2\)</span>, and <span class="math inline">\(\beta\)</span> is unchanged.</p>
+<p>If we want to change the productivity via recruitment deviations, we can re-scale the recruitment deviations. Set <span class="math inline">\(\delta&#39;_y = \mu \delta_y\)</span>, with <span class="math inline">\(\mu &lt; 1\)</span> for a less productive system. In effect, we will have created a different stock-recruit relationship:</p>
+<p><span class="math display">\[ R_y = \dfrac{\alpha SB_y}{1 + \beta SB_y} \delta&#39;_y = \dfrac{\alpha&#39; SB_y}{1 + \beta SB_y} \delta_y\]</span></p>
+<p>where <span class="math inline">\(\alpha&#39; = \mu \alpha\)</span>, <span class="math inline">\(E[\delta&#39;_y] = \mu\)</span> and <span class="math inline">\(V[\delta&#39;_y] = \exp(\sigma^2-1)/\mu^2\)</span>, and <span class="math inline">\(\beta\)</span> is unchanged. In other words, by setting the mean of <code>OM@cpars$Perr_y</code> to <span class="math inline">\(\mu\)</span>, we create a stock-recruit relationship defined by <span class="math inline">\(\alpha&#39;\)</span> and recruitment variance of <span class="math inline">\(V[\delta&#39;_y]\)</span>.</p>
 </div>
 <div id="implied-reference-points" class="section level2">
 <h2>Implied reference points</h2>
-<p>With a new implied stock-recruit relationship, annual unfished and MSY reference points can be re-calculated accordingly with <span class="math inline">\(\alpha&#39;\)</span>, <span class="math inline">\(\beta\)</span>, and <span class="math inline">\(\phi_0\)</span>. The implications on the reference points can be seen in “new” parameters <span class="math inline">\(R_0&#39;\)</span> and <span class="math inline">\(h&#39;\)</span> corresponding to “new” <span class="math inline">\(\alpha&#39;\)</span>:</p>
+<p>Annual unfished and MSY reference points can be re-calculated accordingly with <span class="math inline">\(\alpha&#39;\)</span>, <span class="math inline">\(\beta\)</span>, and <span class="math inline">\(\phi_0\)</span>. The implications on the reference points can be seen in “new” parameters <span class="math inline">\(R_0&#39;\)</span> and <span class="math inline">\(h&#39;\)</span> corresponding to “new” <span class="math inline">\(\alpha&#39;\)</span>:</p>
 <p><span class="math display">\[ h&#39; = \dfrac{\alpha&#39; \phi_0}{4 + \alpha&#39; \phi_0} =\dfrac{\mu h}{1 + h (\mu - 1)}\]</span></p>
 <p><span class="math display">\[ R_0&#39; = \dfrac{1}{\beta}\left(\alpha&#39; - \dfrac{1}{\phi_0}\right) = R_0\dfrac{h(4\mu + 1) - 1}{5h-1}\]</span>
 Then, <span class="math inline">\(SB_0&#39; = R_0&#39; \phi_0\)</span>.</p>
@@ -39,7 +39,7 @@ Then, <span class="math inline">\(SB_0&#39; = R_0&#39; \phi_0\)</span>.</p>
 </div>
 <div id="forward-projections" class="section level3">
 <h3>Forward projections</h3>
-<p>Let’s explore the dynamics in a forward projecting model in MSEtool. We’ll create an operating model with 4 simulations with varying <span class="math inline">\(\mu\)</span> but constant stock-recruit parameters among simulations. Then we’ll project the model using the <code>NFref</code> (no fishing) MP.</p>
+<p>Let’s explore the dynamics in a forward projecting model in <code>MSEtool</code>. We’ll create an operating model with 4 simulations with varying <span class="math inline">\(\mu\)</span> but constant stock-recruit parameters among simulations. Then we’ll project the model using the <code>NFref</code> (no fishing) MP.</p>
 <pre class="r"><code>library(MSEtool)</code></pre>
 <pre><code>## Loading required package: snowfall</code></pre>
 <pre><code>## Loading required package: snow</code></pre>
@@ -159,7 +159,7 @@ plot(mu_vec, SPRcrash, xlab = expression(mu), ylim = c(0, 1))</code></pre>
 <div id="ricker-function" class="section level2">
 <h2>Ricker function</h2>
 <p>With a Ricker function where <span class="math inline">\(R_y = \alpha SB_y \exp(-\beta SB_y) \delta_y\)</span>, steepness is <span class="math inline">\(h = 0.2(\alpha\phi_0)^{0.8}\)</span> and <span class="math inline">\(R_0 = \log(\alpha\phi_0)/(\beta \phi_0)\)</span>.</p>
-<p>The new SR relationship is <span class="math inline">\(R_y = \alpha&#39; SB_y \exp(-\beta SB_y) \varepsilon_y\)</span>, with</p>
+<p>The new SR relationship is <span class="math inline">\(R_y = \alpha&#39; SB_y \exp(-\beta SB_y) \delta_y\)</span>, with</p>
 <p><span class="math display">\[h&#39; = 0.2 (\alpha&#39; \phi_0)^{0.8} = \mu^{0.8} h\]</span></p>
 <p><span class="math display">\[R_0&#39; = 1 + \dfrac{0.8 R_0\log(\mu)}{\log(5h)}\]</span></p>
 </div>
