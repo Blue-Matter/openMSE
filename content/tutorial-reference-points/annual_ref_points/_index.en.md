@@ -46,6 +46,13 @@ Annual values of unfished reference points, including $N_{0(y)}$, $SN_{0(y)}$, $
 
 Note that $R_{0(y)}$ here is the asymptotic unfished recruitment if fishing were zero. It would be helpful to consider $R_0^{\textrm{SR}}$ more as a parameter for calculating $\alpha$ and $\beta$, and separate this value from the dynamics implied from a change in $\phi_0$. Similarly, $h_y$ is time-varying as well, and `Stock@h` is used for calculating $\alpha$.
 
+> $R_{0(y)} = SB_{0(y)}/\phi_{0(y)}$ where, for the Beverton-Holt function:
+> $$ SB_{0(y)} = \dfrac{\alpha \phi_{0(y)} - 1}{\beta}$$
+> $$ h_y = \dfrac{\alpha \phi_{0(y)}}{4 + \alpha \phi_{0(y)}}$$ 
+> and, for the Ricker function:
+> $$ SB_{0(y)} = \dfrac{\log(\alpha \phi_{0(y)})}{\beta} $$
+> $$ h_y = 0.2 (\alpha \phi_{0(y)})^{0.8}$$ 
+
 Annual values of MSY reference points, including $\textrm{MSY}_y$, $F_y^{\text{MSY}}$, $SB_y^{\text{MSY}}$, $B_y^{\text{MSY}}$, and $VB_y^{\text{MSY}}$, are calculated by maximizing the yield curve.
 
 The annual spawning potential ratio at which the stock crashes is 
