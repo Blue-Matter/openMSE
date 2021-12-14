@@ -1,6 +1,6 @@
 ---
-draft: false
-title: Operating Model Library
+title: "Operating Model Library"
+draft: no
 ---
 
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.5/css/jquery.dataTables.min.css">
