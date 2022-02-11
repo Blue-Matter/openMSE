@@ -32,5 +32,5 @@ There are two functions associated with importing from a [iSCAM](https://github.
 
 See `?iSCAM2OM` or the [relevant `MSEtool` documentation page](https://msetool.openmse.com/reference/iSCAM2OM.html) for more information. 
 
-### Import an generic assessment
+### Import a generic assessment
 The `Assess2OM` function reads bootstrap estimates from a VPA-type stock assessment and imports into an operating model. See `?Assess2OM` or the [relevant `MSEtool` documentation page](https://msetool.openmse.com/reference/Assess2OM.html) for more information. 
