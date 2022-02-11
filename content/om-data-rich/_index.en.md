@@ -13,9 +13,9 @@ The [Custom Parameters](/features-custom-parameters/) slot (`OM@cpars`) is popul
 
 ### Import a Stock Synthesis 3 assessment
 
-There are several functions associated with importing from a [Stock Synthesis 3](https://vlab.ncep.noaa.gov/web/stock-synthesis) stock assessment model:
+There are several functions associated with importing from a [Stock Synthesis 3](https://vlab.noaa.gov/web/stock-synthesis) stock assessment model:
 
-1. `SS2OM`: import a [Stock Synthesis 3](https://vlab.ncep.noaa.gov/web/stock-synthesis) stock assessment model.
+1. `SS2OM`: import a [Stock Synthesis 3](https://vlab.noaa.gov/web/stock-synthesis) stock assessment model.
 1. `SS2Data`: import a [Data Object](/object-data) from a directory with SS3 input and output files.
 1. `plot_SS2OM`: generates a markdown (HTML) report to compare the OM and SS3 output. 
 1. `SS2MOM`: import a multi-stock/multi-fleet operating model (MOM) from SS3 output. 
