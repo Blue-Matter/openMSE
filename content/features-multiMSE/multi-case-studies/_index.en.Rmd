@@ -1,0 +1,10 @@
+---
+date: "2022-03-16T11:35:01+06:00"
+title: Multi-OM Case Studies
+weight: 4
+---
+
+This page contains links to documents describing case studies using the multi-stock and/or multi-fleet feature of openMSE.
+
+
+* <a href="/multi-MSE/Framework_Manual.pdf"> Evaluating Single-Species Assessment and Management of Multi-Species Fisheries </a>
