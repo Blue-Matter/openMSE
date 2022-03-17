@@ -1,0 +1,164 @@
+---
+date: "2022-03-17T11:35:01+06:00"
+title: Other options
+weight: 4
+---
+
+
+
+<div id="sub-sections" class="section level3">
+<h3>Sub-Sections</h3>
+<ul>
+<li><a href="#sex-specific-multi-stock-operating-models">Sex-specific multi-stock operating models</a><br></li>
+<li><a href="#sequential-hermaphroditism">Sequential Hermaphroditism</a><br></li>
+<li><a href="#custom-tac-allocations">Custom TAC allocations</a><br></li>
+<li><a href="#custom-effort-allocations">Custom effort allocations</a><br></li>
+</ul>
+</div>
+<div id="sex-specific-multi-stock-operating-models" class="section level3">
+<h3>Sex-specific multi-stock operating models</h3>
+<p>Many fish population exhibit sex-specific dynamics that may have impacts on the performance of candidate management procedures, such as sexual dimorphism and single-sex spawing biomass limitations. Other sex-specific phenomenon that may be important include sequential hermaphroditism and sex-specific vulnerability to exploitation.</p>
+<p>In this example we place a female ‘stock’ in position 1, a male ‘stock’ in position 2 and use the the <code>SexPars</code> slot of the <code>MOM</code> object to calculate stock-recruitment according to a user-specified fraction of Spawning Stock Biomass originating from these stocks.</p>
+<pre class="r"><code>MaF&lt;-MaM &lt;- Mackerel        # Copy Mackerel dynamics to female and male objects
+MaF@Name &lt;- &quot;Mackerel_Female&quot;
+MaM@Name &lt;- &quot;Mackerel_Male&quot;
+MaF@Linf &lt;- MaM@Linf*1.2    # females grow to 20% higher asymptotic lengths
+MaF@M    &lt;- MaM@M*1.2       # female natural mortality rate is 20% higher
+MaF@K    &lt;- MaM@K*1.2       # female fish grow 20% faster
+
+Stocks &lt;- list(MaF,MaM)
+Fleets &lt;- list(list(Generic_DecE),list(Generic_DecE)) # A single fleet model
+Obs    &lt;- list(list(Perfect_Info),list(Perfect_Info))
+Imps   &lt;- list(list(Perfect_Imp),list(Perfect_Imp))
+
+SexPars &lt;- list()
+SexPars$SSBfrom &lt;- matrix(c(1,1,0,0),nrow=length(Stocks)) # Stock (Row) spawn from SSB contributed by Stock (Column)
+SexPars$SSBfrom</code></pre>
+<pre><code>##      [,1] [,2]
+## [1,]    1    0
+## [2,]    1    0</code></pre>
+<pre class="r"><code>#&gt;      [,1] [,2]
+#&gt; [1,]    1    0
+#&gt; [2,]    1    0
+MOMsex &lt;- new(&#39;MOM&#39;, Stocks, Fleets, Obs, Imps, nsim = nsim, SexPars = SexPars)</code></pre>
+<p>The list item <code>SSBfrom</code> is a matrix with nstock to rows and nstock from columns. In this case, both rows (i.e. both stocks) get all of their Spawning Biomass from stock 1. There are 1s in column 1 and zeros in column 2.</p>
+<p>If you wanted to model two sex-specific stocks where both recruit according to the female stock, the Stock and SSBfrom objects would look like this:</p>
+<pre class="r"><code>SnF&lt;-SnM &lt;- Snapper        # Copy Mackerel dynamics to female and male objects
+SnF@Name &lt;- &quot;Snapper_Female&quot;
+SnM@Name &lt;- &quot;Snapper_Male&quot;
+SnF@Linf &lt;- SnM@Linf*1.1    # females grow to 10% higher asymptotic lengths
+
+Stocks &lt;- list(MaF, MaM, SnF, SnM)
+SexPars$SSBfrom &lt;- matrix(c(1,1,0,0,0,0,0,0,0,0,1,1,0,0,0,0),nrow=length(Stocks)) 
+SexPars$SSBfrom</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    1    0    0    0
+## [2,]    1    0    0    0
+## [3,]    0    0    1    0
+## [4,]    0    0    1    0</code></pre>
+<p>Stocks 1 and 2 (female and male Mackerel) recruit according to spawning biomass from stock 1 (female Mackerel SSB) while Stocks 3 and 4 (female and male Snapper) recruit according to spawning biomass from stock 3 (female snapper SSB).</p>
+<p>If, for some reason, you want SSB to be calculated by more than one stock, then:</p>
+<pre class="r"><code>Stocks &lt;- list(MaF, MaM, SnF, SnM)
+SexPars$SSBfrom &lt;- matrix(c(1,1,0,0,1,1,0,0,0,0,1,1,0,0,1,1),nrow=length(Stocks)) 
+SexPars$SSBfrom</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    1    1    0    0
+## [2,]    1    1    0    0
+## [3,]    0    0    1    1
+## [4,]    0    0    1    1</code></pre>
+<p>In this case, the recruitment of male and female mackerel is determined by the aggregate SSB of the two sexes (the same applied for the male and female snapper).</p>
+<p>If you want to mix a sex-specific stock with non-sex specific stocks, you just put a 1 in the diagonal for non-sex specific stocks. E.g:</p>
+<pre class="r"><code>Stocks &lt;- list(Bluefin_tuna, MaF, MaM, Herring)
+SexPars$SSBfrom &lt;- matrix(c(1,0,0,0,0,1,1,0,0,0,0,0,0,0,0,1),nrow=length(Stocks)) 
+SexPars$SSBfrom</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    1    0    0    0
+## [2,]    0    1    0    0
+## [3,]    0    1    0    0
+## [4,]    0    0    0    1</code></pre>
+<p>When specified this way, Bluefin tuna(row 1) and Herring (row 4) recruitment is only determined by their stock-specific spawning biomass (rows 1 and 4, respectively), but Male and Female Mackerel recruitment (rows 2 and 3) depends only on female mackerel spawning stock biomass (column 2).</p>
+<p>You can put any fraction you like in these:</p>
+<pre class="r"><code>SexPars$SSBfrom &lt;- matrix(c(1,0,0,0,0,1,1,0,0,0.1,0.1,0,0,0,0,1),nrow=length(Stocks)) 
+SexPars$SSBfrom</code></pre>
+<pre><code>##      [,1] [,2] [,3] [,4]
+## [1,]    1    0  0.0    0
+## [2,]    0    1  0.1    0
+## [3,]    0    1  0.1    0
+## [4,]    0    0  0.0    1</code></pre>
+<p>Total SSB for male and female mackerel is now calculated from all of female SSB and 10% of male SSB.</p>
+</div>
+<div id="sequential-hermaphroditism" class="section level3">
+<h3>Sequential Hermaphroditism</h3>
+<p>Assuming you have specified sex-specific stock-recruitment using <code>SexPars</code>, you have the option of adding sequential hermaphroditism with the <code>SexPars$Herm</code> list.</p>
+<p>To specify protogyny (Female - Male) where stock 1 is male and stock 2 is female, you include a vector <code>H_1_2</code> that is the fraction male (Stock 1) at age:</p>
+<pre class="r"><code>H_1_2&lt;-array(rep(c(0,0,0,0,0,0,0.05,0.1,0.2,0.35,0.65,0.8,0.9,1),each=nsim),c(nsim,14))
+MOMsex@SexPars$Herm&lt;-list(H_1_2=H_1_2)</code></pre>
+<p>These list objects have to be named <code>H_stockfirst_stocksecond</code> (stocks are sexes in this model) where first and second controls the order of the sequential hermaphroditism. These are always vectors that start with a zero (none of stockfirst) and end in 1 (all of stocksecond).</p>
+<p>To specify protandry (Male - Female) you do the same as above but place the Male ‘stock’ object in stock position 1 and the female in stock position 2.</p>
+<p>The <code>H_1_2</code> type notation works for any position of stocks so:</p>
+<pre class="r"><code>H_3_11&lt;-array(rep(c(0,0,0,0,0,0,0.05,0.1,0.2,0.35,0.65,0.8,0.9,1),each=nsim),c(nsim,14))
+MOMsex@SexPars$Herm&lt;-list(H_1_2 = H_1_2, H_3_11 = H_3_11) </code></pre>
+<p>has two sequential hermaphroditic relationships, one as before exchanges between ‘stocks’ 1 and 2 and the vector is the fraction at age of ‘stock’ 1. The second is between ‘stocks’ 3 and 11 and the vector is the fraction at age of ‘stock’ 3.</p>
+</div>
+<div id="custom-tac-allocations" class="section level3">
+<h3>Custom TAC allocations</h3>
+<p>Recall, that when more than one fleet is specified, fleet-specific catchabilities are calculated from the <a href="/features-multimse/multi-om/#catch-fractions-by-fleet-for-each-stock">fraction of current stock catches for each fleet</a>. This is the <code>CatchFrac</code> slot of an <code>MOM</code> object, e.g:</p>
+<pre class="r"><code>nsim = 12
+#                  Fleet1  Fleet2   Fleet3
+bluefin_catchfrac&lt;-c(0.8,   0.01,   0.19)
+herring_catchfrac&lt;-c(0.05,  0.6,    0.35)
+CatchFrac &lt;- list(
+                  matrix( rep(bluefin_catchfrac, each=nsim), nrow=nsim),
+                  matrix( rep(herring_catchfrac, each=nsim), nrow=nsim)
+)
+
+CatchFrac[[1]]</code></pre>
+<pre><code>##       [,1] [,2] [,3]
+##  [1,]  0.8 0.01 0.19
+##  [2,]  0.8 0.01 0.19
+##  [3,]  0.8 0.01 0.19
+##  [4,]  0.8 0.01 0.19
+##  [5,]  0.8 0.01 0.19
+##  [6,]  0.8 0.01 0.19
+##  [7,]  0.8 0.01 0.19
+##  [8,]  0.8 0.01 0.19
+##  [9,]  0.8 0.01 0.19
+## [10,]  0.8 0.01 0.19
+## [11,]  0.8 0.01 0.19
+## [12,]  0.8 0.01 0.19</code></pre>
+<p>By default, in multi-fleet operating models, future TACs in projected years are allocated to fleet according to <code>CatchFrac.</code> You can however override this using the <code>MOM</code> slot <code>Allocation.</code> Lets say you want the same OM initialization using <code>CatchFrac</code> but you wish to half the allocation to fleet 1 and redistribute to equally to fleets 2 and 3 in future years. You can do this with something like:</p>
+<pre class="r"><code>#                  Fleet1  Fleet2   Fleet3
+bluefin_catchfrac&lt;-c(0.8,   0.01,   0.19)
+herring_catchfrac&lt;-c(0.05,  0.6,    0.35)
+CatchFrac &lt;- list(
+                  matrix( rep(bluefin_catchfrac, each=nsim), nrow=nsim),
+                  matrix( rep(herring_catchfrac, each=nsim), nrow=nsim)
+)
+
+#                  Fleet1  Fleet2   Fleet3
+bluefin_allocation&lt;-c(0.4,   0.21,   0.39)
+herring_allocation&lt;-c(0.025,  0.6125,    0.3625)
+Allocation &lt;- list(
+                  matrix( rep(bluefin_allocation, each=nsim), nrow=nsim),
+                  matrix( rep(herring_allocation, each=nsim), nrow=nsim)
+)
+
+MOM_BH_A &lt;- new(&#39;MOM&#39;, Stocks, Fleets, Obs, Imps, CatchFrac, Allocation=Allocation, nsim=nsim)</code></pre>
+</div>
+<div id="custom-effort-allocations" class="section level3">
+<h3>Custom effort allocations</h3>
+<p>When specifying effort control MPs, by default future effort recommendations are scaled as a multiple of effort in the current year (e.g. this was 1 in 2018, so an MP halving effort would make this 0.5 for all fleets).</p>
+<p>If users wish to control the relative effort of the various fleets in the future they can do this similarly to the <code>Allocation</code> slot above.</p>
+<pre class="r"><code>#                        Fleet1  Fleet2   Fleet3
+bluefin_fleet_efforts &lt;- c(1,    0.5,    0.0001)
+herring_fleet_efforts &lt;- c(1,     1,       1)
+
+Efactor &lt;- list(
+                  matrix( rep(bluefin_fleet_efforts, each=nsim), nrow=nsim),
+                  matrix( rep(herring_fleet_efforts, each=nsim), nrow=nsim)
+)
+
+MOM_BH_A &lt;- new(&#39;MOM&#39;, Stocks, Fleets, Obs, Imps, CatchFrac, Efactor=Efactor, nsim=nsim)</code></pre>
+<p>In this case all simulations are the same. Effort of the first bluefin fleet and all herring fleets will be as the default: phrased in terms of 100% of current year (e.g. 2018) fishing effort. However, MPs providing effort advice will now provide half the recommended amount to bluefin tuna fleet 2 and nearly zero effort to bluefin fleet 3.</p>
+<p>This relatively basic effort distribution code will be improved in later package versions, but for now allows users to investigate alternative management regimes in which fleets can be reduced, increased or removed completely.</p>
+</div>

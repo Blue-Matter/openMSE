@@ -6,4 +6,100 @@ weight: 2
 
 
 
-<p>Coming soon!</p>
+<div id="sub-sections" class="section level3">
+<h3>Sub-Sections</h3>
+<ul>
+<li><a href="#complex:-mps-for-stock-complexes">Complex: MPs for stock complexes</a><br></li>
+<li><a href="#by-stock:-stock-specific-mps">By stock: Stock-specific MPs</a><br></li>
+<li><a href="#by-fleet:-fleet-and-stock-specific-mps">By fleet: fleet and stock specific MPs</a><br></li>
+<li><a href="#multi-fleet-and/or-multi-stock-management-plans">Multi-fleet and/or Multi-stock management plans</a><br></li>
+</ul>
+<p>Let’s assume you have specified a <a href="/features-multimse/multi-om/">multi-operating model</a> with more than one stock and more than one fleet. There are a surprisingly large number of options for managing this simulated resource:</p>
+<ul>
+<li>‘complex’: an single MP is specified that provides a single recommendation that is applied to all stocks (i.e. a stock complex) and all fleets (e.g. a single TAC is shared across stocks and fleets)</li>
+<li>‘by stock’: an MP is specified by stock (e.g. a TAC is divvied up among fleets for a particular stock)</li>
+<li>‘by fleet’ an MP is specified for each stock and each fleet based on stock-fleet specific data (e.g. based on fleet-specific data a TAC is provided for each fleet for a particular stock)</li>
+<li>‘multi MP’ a single MP is specified that takes all the individual data by stock and fleet and provides an individual recommendation for each fleet and stock.</li>
+</ul>
+</div>
+<div id="complex-mps-for-stock-complexes" class="section level3">
+<h3>Complex: MPs for stock complexes</h3>
+<p>To configure management of this type you need only provide a vector of MP names:</p>
+<pre class="r"><code>avail(&#39;MP&#39;)</code></pre>
+<pre><code>## Searching for objects of class MP in package: MSEtool</code></pre>
+<pre><code>## [1] &quot;curEref&quot;   &quot;FMSYref&quot;   &quot;FMSYref50&quot; &quot;FMSYref75&quot; &quot;NFref&quot;</code></pre>
+<p>When you do this, the following assumptions are applied:</p>
+<ul>
+<li>Data from all stocks and fleets are combined. Catches are aggregated. Biological quantities such as depletion are averages weighted by vulnerable biomass. Fleet specific quantities such as mean length in the catch are weighted by vulnerable biomass (among stocks) and by catches (among fleets).</li>
+<li>Among stocks, overall TACs are distributed in proportion to vulnerable biomass.</li>
+<li>Among fleets within stock, the stock TAC is distributed according to <code>CatchFrac.</code></li>
+<li>Input controls such as Effort and Size limits apply to all fleets and stocks simultaneously (effort controls are phrased in terms of percentage of today’s effort and therefore affect all fleets equally).</li>
+</ul>
+<p>A future priority is the development of Linear Programming tools to provide plausible predictions of the distribution of catches among stocks and fleets given boundary constraints on fishing mortality rates and profitability.</p>
+</div>
+<div id="by-stock-stock-specific-mps" class="section level3">
+<h3>By stock: Stock-specific MPs</h3>
+<p>To specify an MP for each stock, you just list a vector by stock:</p>
+<pre class="r"><code>MPs_bs&lt;-list( c(&quot;DCAC&quot;, &quot;DBSRA&quot;, &quot;DD&quot;),      # Stock 1
+              c(&quot;DCAC&quot;, &quot;DCAC&quot;,  &quot;SPMSY&quot;) )  # Stock 2</code></pre>
+<p>Note that each position in the vector is a management scenario (we are describing three management systems in the code above). MP1 for Stock 1 and Stock 2 is DCAC for both stocks and hence we are testing a forward projection where DCAC is used on the data of each stock to provide advice for each stock. MP2 is <code>DBSRA</code> for Stock 1 and <code>DCAC</code> for Stock 2, so the second management system evaluates this combination simultaneously, and so on.</p>
+<p>If a user wishes to evaluate a full-cross of DCAC and DBSRA MPs for both stocks then they would need four management systems:</p>
+<pre class="r"><code>MPs&lt;-list( c(&quot;DCAC&quot;, &quot;DBSRA&quot;,&quot;DCAC&quot;, &quot;DBSRA&quot;),   # Stock 1
+           c(&quot;DCAC&quot;, &quot;DCAC&quot;, &quot;DBSRA&quot;,&quot;DBSRA&quot;) )  # Stock 2</code></pre>
+<p>Or, less laboriously, for five stocks and a total of 32 management systems:</p>
+<pre class="r"><code>myMPs &lt;- c(&quot;DCAC&quot;, &quot;DBSRA&quot;)
+nstocks &lt;- 5
+MPs &lt;- split(t(expand.grid(list(myMPs)[rep(1,nstocks)])), 1:nstocks)</code></pre>
+<p>The ‘by stock’ mode includes the following assumptions:</p>
+<ul>
+<li>Data are aggregated over fleets. Biological information such as depletion is taken from a single fleet. Fleet specific information such as mean length in the catch is weighted by fleet catches.</li>
+<li>TAC advice is divided between the fleets according to <code>CatchFrac.</code></li>
+</ul>
+</div>
+<div id="by-fleet-fleet-and-stock-specific-mps" class="section level3">
+<h3>By fleet: fleet and stock specific MPs</h3>
+<p>Although not very likely, it is possible that users wish to take the individual data of a particular stock and fleet and provide management advice for that fleet and stock.</p>
+<p>Believe it or not, the following describes just two management systems that will be tested by closed-loop projection:</p>
+<pre class="r"><code>#                       Fleet 1             Fleet 2
+#                     MP1      MP2          MP1    MP2
+MPs_bf&lt;-list( list(c(&quot;DCAC&quot;, &quot;DBSRA&quot;),  c(&quot;MCD&quot;, &quot;AvC&quot;)),    # Stock 1
+              list(c(&quot;CurE&quot;,  &quot;DD&quot;),    c(&quot;AvC&quot;,&quot;SPMSY&quot;)) )  # Stock 2</code></pre>
+<p>Management system 2 involved the simultaneous tesing of <code>DBSRA</code> (Stock 1, Fleet 1), <code>AvC</code> (Stock 1, Fleet2), <code>DD</code> (Stock 2, Fleet 1) and <code>SPMSY</code> (Stock 2, Fleet 2).</p>
+</div>
+<div id="multi-fleet-andor-multi-stock-management-plans" class="section level3">
+<h3>Multi-fleet and/or Multi-stock management plans</h3>
+<p>It is conceivable that managers would like to control fishery exploitation holistically, for example accounting for the depletion levels of various stocks on the management of any individual stock. In this case, stock and fleet specific data must be submitted to an MP that then provides advice individually for all stock and fleets.</p>
+<p>To do this users need a special class of <code>MP</code> called <code>MMP</code> (multi-management procedure) and the user then just specifies a vector of MMPs similarly to the case of ‘complex’ above:</p>
+<pre class="r"><code>MPs_mmp &lt;- c(&quot;MMP_1&quot;, &quot;MMP_2&quot;, &quot;MMP_3&quot;)</code></pre>
+<p>Here is now to code an <code>MMP.</code> The vanilla class of method <a href="/features-management-procedures/"><code>MP</code></a>, takes in data in an object of class <a href="/object-data/"><code>Data</code></a> and provides management recommendations in an object of class <a href="/object-rec/"><code>Rec</code></a>. The <code>MMP</code> works exactly the same way but it accepts <code>Data</code> objects in a hierarchical list (Fleets nested in Stocks) and provides MP recommendations in a hierarchical list of the same dimensions (Fleets nested in Stocks).</p>
+<p>The reason you wish to do this is to allow the data from all fleets and stocks to impact advice of any fleet and stock. However for the sake of demonstrating the format of <code>MMP</code>, we’re going to just make an <code>MMP</code> object that sets TACs to the average historical catches of each fleet and stock:</p>
+<pre class="r"><code>mydaft_MMP &lt;- function(DataList, reps=1){
+  
+  nStocks &lt;- length(DataList)        # First level is stocks
+  nFleets &lt;- length(DataList[[1]])   # Second level is fleets (same dimensions among stocks)
+  
+  RecList &lt;- new(&#39;list&#39;)             # The hierarchical list we are going to put recommendations in
+  
+  for(ss in 1:nStocks){
+    
+    RecList[[ss]] &lt;- new(&#39;list&#39;)     # List of recommendations by fleet within stock
+     
+    for(ff in 1:nFleets){
+      
+      Rec &lt;- new(&quot;Rec&quot;)              # New blank recommendations object
+      Rec@TAC &lt;- apply(DataList[[ss]][[ff]]@Cat,1,mean, na.rm = T) # TAC is average historical catch
+      RecList[[ss]][[ff]]&lt;-Rec       # Store recommendations object in RecList
+      
+    }
+    
+  }
+  
+  RecList                            # Return the RecList
+
+}
+
+class(mydaft_MMP) &lt;- &#39;MMP&#39;           # Assign our new function the correct class</code></pre>
+<p>The important thing to note is that a very complex set of rules could have been included in <code>MMP</code> that, for example account for gradients in abundance indices for all species on the change in TAC for any particular species.</p>
+<p>MMPs can be considered as a multi-stock, multi-fleet management plans.</p>
+<p>Next, we look at running a multi-MSE.</p>
+</div>

@@ -75,5 +75,26 @@ message <- function(...) {
   }
 }
 
+makeTOC <- function() {
+  this_file <- file.path(getwd(), '_index.en.Rmd')
+  txt <- readLines(this_file)
+  heads <- Filter(function(x) grepl(x, pattern='###'), txt)
+  if (length(heads)>0) {
+    cat('### Sub-Sections\n')
+    for (i in 1:length(heads)) {
+      cat(makeLink(heads[i]))
+    }
+  }
+
+}
+
+makeLink <- function(txt) {
+  txt <- gsub('### ', '', txt)
+  txt2 <- tolower(txt)
+  txt2 <- gsub(' ', '-', txt2)
+  out <- paste0('* <a href="#', txt2, '">', txt, '</a><br>\n')
+  out
+}
+
 
 

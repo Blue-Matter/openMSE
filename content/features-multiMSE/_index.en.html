@@ -1,6 +1,6 @@
 ---
-title: "Multi-Stock and Multi-Fleet"
-description: MSE for multiple stocks and fleets
+title: "Multi-MSE"
+description: Multi-Stock and Multi-Fleet Operating Models and MSE
 date: '2022-03-16T11:35:01+06:00'
 icon: fas fa-clone
 type: features
@@ -9,4 +9,11 @@ weight: 8
 
 
 
-<p>Coming soon!</p>
+<p>Management Strategy Evaluation can be a complex business even for single-stock and single-fleet operating models. Population dynamics, fleet dynamics, observation processes (e.g. catch over reporting), implementation error (e.g. catch-limit overages) and appropriate management procedures (MPs) all need to be specified.</p>
+<p>In most fisheries settings, single-stock, single-fleet operating models are sufficient. Unless management advice is explicitly given on a fleet-by-fleet basis (e.g. two TACs each specific to recreational and commercial fisheries) then the fleet dynamics can be pooled into an aggregate fishery. Unless (A) the dynamics of one stock interact with another stock (e.g. a predator and prey) or (B) stocks with varying dynamics are managed as a complex (e.g. one TAC for all sculpins as in Alaska) then MPs can be tested for one individual stock at a time.</p>
+<p>There are situations when managers wish to evaluate the robustness of a proposed management plan among fleets and/or stocks, acknowledging that there are interactions between these. To this end, <code>openMSE</code> includes the function <a href="https://msetool.openmse.com/reference/multiMSE.html"><code>multiMSE()</code></a>, a version of <a href="https://msetool.openmse.com/reference/runMSE.html"><code>runMSE()</code></a> that conducts MSE for multiple fleets/stocks and allows users to prescribe interactions between stocks using R models, including sex-specific population dynamics and hermaphroditism, and models of intermediate complexity for ecosystem interactions (MICE).</p>
+<p>To accomplish this, you will need to become familiar with a new class of operating model object <code>MOM</code> (multi operating model), a new class of MSE object <code>MMSE</code> (multi MSE), and optionally, a new class of management procedure <code>MMP</code> (multi MP).</p>
+<p>Beyond learning about these new objects and functions, <code>multiMSE()</code> is extremely simple to use and hence misuse. We can’t stress enough how important it is to have a clear justification for why a multi-stock and/or multi-fleet MSE is necessary for your particular management setting (it may not be). To code <code>multiMSE()</code> it was necessary to identify all of the various use-cases and it became clear that there are a very large number each with their own specific set of requirements and assumptions.</p>
+<p>In this section, we attempt to clarify these various use cases and be explicit about the assumptions entailed.</p>
+<p>Before going crazy with many fleet, many stock models, it might be good to temper your expectations. You can do an awful lot with <code>multiMSE()</code> but numerically solving the multi-stock, multi-fleet equations while maintaining MICE relationships is computationally costly. This is only reflected in the initialization phase of the MSE - which can take some time. A rough rule of thumb is that the minutes to initialize = (nsimulations * nstocks * nfleets) divided by (10 * ncores). So for a 100-simulation MSE with 4 stocks, 5 fleets and parallel computing set up over 4 cores you are talking about 2000 / 40 = 50 minute initialization. Faster solutions are on the way for non-MICE models that don’t require R optimization due to R MICE functions.</p>
+<p>Caution: you are now wandering into a relatively unestablished and unchartered territory of MSE - good luck!</p>
