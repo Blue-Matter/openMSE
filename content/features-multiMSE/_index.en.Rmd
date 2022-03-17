@@ -1,6 +1,6 @@
 ---
-title: "Multi-Stock and Multi-Fleet"
-description: MSE for multiple stocks and fleets
+title: "Multi-MSE"
+description: Multi-Stock and Multi-Fleet Operating Models and MSE
 date: '2022-03-16T11:35:01+06:00'
 icon: fas fa-clone
 type: features
