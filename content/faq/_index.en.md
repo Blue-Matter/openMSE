@@ -37,9 +37,8 @@ Options to include density-dependence in growth, mortality, etc, may be added at
 {{< faq "Can I model multiple stocks and fleets?" >}}
 Yes. The standard `openMSE` model is a single-sex, single-fleet model (i.e, models all fleets in aggregate and assumes females and males are identical). 
 
-The `multiMSE` function provides the option to model multiple stocks and fleets, and test fleet-specific management procedures.
+The [`multiMSE`](/features-multimse/) feature provides the option to model multiple stocks and fleets, and test fleet-specific management procedures.
 
-More information on `multiMSE` features will be added soon. [Bug us](/contact) if this is a feature you are interested in and you cannot find the information you need.
 {{</ faq >}}
 
 {{< faq "Can I use growth models other than von Bertalanffy function?" >}}
@@ -58,7 +57,8 @@ In some cases during the MSE, a [Management Procedure](/features-management-proc
 
 For example, a catch-curve may used to estimate $Z$, and $F$ is calculated as $F=Z-M$. Because of process and observation error, it is possible that the estimated $F$ is negative, in which case the MP may fail to calculate a recommended catch limit. 
 
-The Management Procedures have been designed to return `NA` if they fail to calculate a management recommendation for any reason. In this case, the management recommendations from the previous year are used in the simulation, e.g., $\text{TAC}_y = \text{TAC}_{y-1}$.
+The Management Procedures have been designed to return `NA` if they fail to calculate a management recommendation for any reason. In this case, the management recommendations from the previous year are used in the simulation,e.g., $ \text{TAC}_y = \text{TAC}\_{y-1}$.
+
 {{</ faq >}}
 
 
