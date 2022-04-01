@@ -47,7 +47,7 @@ vul_par</code></pre>
 ## [3,]    1  0.5  0.9</code></pre>
 <p>Note that <code>Vmaxlen</code> is ultimately not used when the selectivity is logistic and the value in the third row, first column is merely an unused placeholder. If <code>vul_par</code> is provided, another step is needed to turn off this parameter (see next subsection).</p>
 <p>If we have selectivity as free parameters (independent parameters for each age), <code>vul_par</code> has <code>OM@maxage + 1</code> rows with each row giving the selectivity value to the corresponding age (first row = age-0, etc.):</p>
-<pre class="r"><code>OM@maxage &lt;- 6
+<pre class="r"><code>OM@maxage &lt;- 5
 selectivity &lt;- c(&quot;logistic&quot;, &quot;dome&quot;, &quot;free&quot;)
 vul_par</code></pre>
 <pre><code>##      [,1] [,2] [,3]
