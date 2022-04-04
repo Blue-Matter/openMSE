@@ -3,6 +3,24 @@ draft: false
 title: Frequently Asked Questions
 ---
 
+### Training and Consulting
+
+{{< faq "Do you offer training courses for `openMSE`?" >}}
+Yes. [Blue Matter](https://www.bluematterscience.com/) has run several `openMSE` training courses in the past, including topics suitable for a general audience of fisheries stakeholders (e.g, MSE concepts and philosophy) and more technical topics including operating model conditioning, design of custom management procedures, and conducting MSE for multi-stock and multi-fleet fisheries. 
+
+We can also develop customized training courses that are tailored to suit your particular needs. 
+
+Please [Contact Us](/contact) to learn about upcoming courses or to discuss a training course for your organization.
+
+{{</ faq >}}
+
+{{< faq "Can you work with us to construct operating models, design management procedures, and conduct MSE?" >}}
+Yes. [Blue Matter](https://www.bluematterscience.com/) is a consulting firm that specializes in conditioning operating models, developing bespoke management procedures, and conducting MSE to identity management approaches that are robust to uncertainty. 
+
+Please visit the [Blue Matter](https://www.bluematterscience.com/) website for more details, or [Contact Us](/contact) to discuss how we can work with you on your fishery problem.
+
+{{</ faq >}}
+
 
 
 ### openMSE Questions
