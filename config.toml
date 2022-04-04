@@ -22,9 +22,13 @@ unsafe = true
 ############################# Default Parameters ##########################
 [params]
 # logo is for all page
-logo = "images/fish_logo.png"
+logo = "images/OpenMSE2_color.png"
+logo_BM2 = "images/Blue Matter colour.png"
+
 # logo white is for homepage logo, you can use colorful logo too...
 logo_white = "images/OpenMSE2_white.png"
+logo_BM = "images/Blue Matter white.png"
+
 # when logo is empty, it will shown your site title
 
 intro_text = ""

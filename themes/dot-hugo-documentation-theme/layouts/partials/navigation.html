@@ -1,5 +1,7 @@
 <nav class="navbar navbar-expand-md {{ if .IsHome }}navbar-dark{{ else }}navbar-light{{ end }}">
   <div class="container">
+
+    <!-- openMSE logo -->
     <a class="navbar-brand px-2" href="{{ site.BaseURL | relLangURL }}">
       {{ $logo:= site.Params.logo }}
       {{ $logoWhite:= site.Params.logo_white }}
@@ -14,6 +16,22 @@
       {{ site.Title }}
       {{ end }}
     </a>
+
+    <!-- BM logo -->
+        <a class="navbar-brand px-2" href="http://www.bluematterscience.com">
+      {{ $logoBM:= site.Params.logo_BM }}
+      {{ $logoBM2:= site.Params.logo_BM2 }}
+      {{ if (or $logo $logoWhite) }}
+      {{ if .IsHome }}
+      <img class="img-fluid" src="{{$logoBM}}" alt="Blue Matter Science Ltd.">
+      {{ else }}
+      <img class="img-fluid" src="{{ $logoBM2 | absURL }}" alt="{{ site.Title }}">
+      {{ end }}
+      {{ else }}
+      {{ site.Title }}
+      {{ end }}
+    </a>
+
     <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navigation"
       aria-controls="navigation" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
