@@ -37,7 +37,7 @@ Please see the [Frequently Asked Questions](/faq) for a list of the most commonl
 
 
 #### Getting Started
-For first time users of `openMSE`, we recommend reading through the following sub-sections, and then taking the [Quick Tour](/a-quick-tour/) of `openMSE`.
+For first time users of `openMSE`, we recommend reading through the following sub-sections, and then taking the [Quick Tour](/welcome-a-quick-tour/) of `openMSE`.
 
 
 
