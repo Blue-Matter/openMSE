@@ -9,7 +9,7 @@ title = "openMSE"
 # disable language
 disableLanguages = []
 # google analytics
-googleAnalytics = "" # paste your analytics ID here. (Ex: UA-123-45)
+googleAnalytics = "G-5J6H3TBM2E" # paste your analytics ID here. (Ex: UA-123-45)
 
 ignoreFiles = ["\\.Rmd$", "\\.Rmarkdown$", "_cache$", "\\.knit\\.md$", "\\.utf8\\.md$"]
 # unsafe html
@@ -22,9 +22,13 @@ unsafe = true
 ############################# Default Parameters ##########################
 [params]
 # logo is for all page
-logo = "images/OpenMSE.png"
+logo = "images/OpenMSE2_color.png"
+logo_BM2 = "images/Blue Matter colour.png"
+
 # logo white is for homepage logo, you can use colorful logo too...
-logo_white = "images/OpenMSE_white.png"
+logo_white = "images/OpenMSE2_white.png"
+logo_BM = "images/Blue Matter white.png"
+
 # when logo is empty, it will shown your site title
 
 intro_text = ""

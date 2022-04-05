@@ -3,6 +3,24 @@ draft: false
 title: Frequently Asked Questions
 ---
 
+### Training and Consulting
+
+{{< faq "Do you offer training courses for `openMSE`?" >}}
+Yes. [Blue Matter](https://www.bluematterscience.com/) has run several `openMSE` training courses in the past, including topics suitable for a general audience of fisheries stakeholders (e.g, MSE concepts and philosophy) and more technical topics including operating model conditioning, design of custom management procedures, and conducting MSE for multi-stock and multi-fleet fisheries. 
+
+We can also develop customized training courses that are tailored to suit your particular needs. 
+
+Please [Contact Us](/contact) to learn about upcoming courses or to discuss a training course for your organization.
+
+{{</ faq >}}
+
+{{< faq "Can you work with us to construct operating models, design management procedures, and conduct MSE?" >}}
+Yes. [Blue Matter](https://www.bluematterscience.com/) is a consulting firm that specializes in conditioning operating models, developing bespoke management procedures, and conducting MSE to identity management approaches that are robust to uncertainty. 
+
+Please visit the [Blue Matter](https://www.bluematterscience.com/) website for more details, or [Contact Us](/contact) to discuss how we can work with you on your fishery problem.
+
+{{</ faq >}}
+
 
 
 ### openMSE Questions
@@ -37,9 +55,8 @@ Options to include density-dependence in growth, mortality, etc, may be added at
 {{< faq "Can I model multiple stocks and fleets?" >}}
 Yes. The standard `openMSE` model is a single-sex, single-fleet model (i.e, models all fleets in aggregate and assumes females and males are identical). 
 
-The `multiMSE` function provides the option to model multiple stocks and fleets, and test fleet-specific management procedures.
+The [`multiMSE`](/features-multimse/) feature provides the option to model multiple stocks and fleets, and test fleet-specific management procedures.
 
-More information on `multiMSE` features will be added soon. [Bug us](/contact) if this is a feature you are interested in and you cannot find the information you need.
 {{</ faq >}}
 
 {{< faq "Can I use growth models other than von Bertalanffy function?" >}}
@@ -58,7 +75,8 @@ In some cases during the MSE, a [Management Procedure](/features-management-proc
 
 For example, a catch-curve may used to estimate $Z$, and $F$ is calculated as $F=Z-M$. Because of process and observation error, it is possible that the estimated $F$ is negative, in which case the MP may fail to calculate a recommended catch limit. 
 
-The Management Procedures have been designed to return `NA` if they fail to calculate a management recommendation for any reason. In this case, the management recommendations from the previous year are used in the simulation, e.g., $\text{TAC}_y = \text{TAC}_{y-1}$.
+The Management Procedures have been designed to return `NA` if they fail to calculate a management recommendation for any reason. In this case, the management recommendations from the previous year are used in the simulation,e.g., $ \text{TAC}_y = \text{TAC}\_{y-1}$.
+
 {{</ faq >}}
 
 
