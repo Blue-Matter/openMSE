@@ -88,12 +88,12 @@ To do this users need a special class of `MP` called `MMP` (multi-management pro
 MPs_mmp <- c("MMP_1", "MMP_2", "MMP_3")
 ```
 
-Here is now to code an `MMP.` The vanilla class of method [`MP`](/features-management-procedures/), takes in data in an object of class [`Data`](/object-data/) and provides management recommendations in an object of class [`Rec`](/object-rec/). The `MMP` works exactly the same way but it accepts `Data` objects in a hierarchical list (Fleets nested in Stocks) and provides MP recommendations in a hierarchical list of the same dimensions (Fleets nested in Stocks).
+Now we need to code an `MMP.` The vanilla class of method [`MP`](/features-management-procedures/), takes in data in an object of class [`Data`](/object-data/) and provides management recommendations in an object of class [`Rec`](/object-rec/). The `MMP` works exactly the same way but it accepts `Data` objects in a hierarchical list (Fleets nested in Stocks) and provides MP recommendations in a hierarchical list of the same dimensions (Fleets nested in Stocks).
 
 The reason you wish to do this is to allow the data from all fleets and stocks to impact advice of any fleet and stock. However for the sake of demonstrating the format of `MMP`, we're going to just make an `MMP` object that sets TACs to the average historical catches of each fleet and stock:
 
 ```{r}
-mydaft_MMP <- function(DataList, reps=1){
+mydaft_MMP <- function(x, DataList, reps=1){
   
   nStocks <- length(DataList)        # First level is stocks
   nFleets <- length(DataList[[1]])   # Second level is fleets (same dimensions among stocks)
@@ -107,7 +107,7 @@ mydaft_MMP <- function(DataList, reps=1){
     for(ff in 1:nFleets){
       
       Rec <- new("Rec")              # New blank recommendations object
-      Rec@TAC <- apply(DataList[[ss]][[ff]]@Cat,1,mean, na.rm = T) # TAC is average historical catch
+      Rec@TAC <- apply(DataList[[ss]][[ff]]@Cat[x,],1,mean, na.rm = T) # TAC is average historical catch
       RecList[[ss]][[ff]]<-Rec       # Store recommendations object in RecList
       
     }
