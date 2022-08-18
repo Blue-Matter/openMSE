@@ -26,7 +26,7 @@ weight: 2
 <h3>Complex: MPs for stock complexes</h3>
 <p>To configure management of this type you need only provide a vector of MP names:</p>
 <pre class="r"><code>avail(&#39;MP&#39;)</code></pre>
-<pre><code>## Searching for objects of class MP in package: MSEtool</code></pre>
+<pre><code>## ✔ Searching for objects of class MP in package: MSEtool</code></pre>
 <pre><code>## [1] &quot;curEref&quot;   &quot;FMSYref&quot;   &quot;FMSYref50&quot; &quot;FMSYref75&quot; &quot;NFref&quot;</code></pre>
 <p>When you do this, the following assumptions are applied:</p>
 <ul>
@@ -71,9 +71,9 @@ MPs_bf&lt;-list( list(c(&quot;DCAC&quot;, &quot;DBSRA&quot;),  c(&quot;MCD&quot;
 <p>It is conceivable that managers would like to control fishery exploitation holistically, for example accounting for the depletion levels of various stocks on the management of any individual stock. In this case, stock and fleet specific data must be submitted to an MP that then provides advice individually for all stock and fleets.</p>
 <p>To do this users need a special class of <code>MP</code> called <code>MMP</code> (multi-management procedure) and the user then just specifies a vector of MMPs similarly to the case of ‘complex’ above:</p>
 <pre class="r"><code>MPs_mmp &lt;- c(&quot;MMP_1&quot;, &quot;MMP_2&quot;, &quot;MMP_3&quot;)</code></pre>
-<p>Here is now to code an <code>MMP.</code> The vanilla class of method <a href="/features-management-procedures/"><code>MP</code></a>, takes in data in an object of class <a href="/object-data/"><code>Data</code></a> and provides management recommendations in an object of class <a href="/object-rec/"><code>Rec</code></a>. The <code>MMP</code> works exactly the same way but it accepts <code>Data</code> objects in a hierarchical list (Fleets nested in Stocks) and provides MP recommendations in a hierarchical list of the same dimensions (Fleets nested in Stocks).</p>
+<p>Now we need to code an <code>MMP.</code> The vanilla class of method <a href="/features-management-procedures/"><code>MP</code></a>, takes in data in an object of class <a href="/object-data/"><code>Data</code></a> and provides management recommendations in an object of class <a href="/object-rec/"><code>Rec</code></a>. The <code>MMP</code> works exactly the same way but it accepts <code>Data</code> objects in a hierarchical list (Fleets nested in Stocks) and provides MP recommendations in a hierarchical list of the same dimensions (Fleets nested in Stocks).</p>
 <p>The reason you wish to do this is to allow the data from all fleets and stocks to impact advice of any fleet and stock. However for the sake of demonstrating the format of <code>MMP</code>, we’re going to just make an <code>MMP</code> object that sets TACs to the average historical catches of each fleet and stock:</p>
-<pre class="r"><code>mydaft_MMP &lt;- function(DataList, reps=1){
+<pre class="r"><code>mydaft_MMP &lt;- function(x, DataList, reps=1){
   
   nStocks &lt;- length(DataList)        # First level is stocks
   nFleets &lt;- length(DataList[[1]])   # Second level is fleets (same dimensions among stocks)
@@ -87,7 +87,7 @@ MPs_bf&lt;-list( list(c(&quot;DCAC&quot;, &quot;DBSRA&quot;),  c(&quot;MCD&quot;
     for(ff in 1:nFleets){
       
       Rec &lt;- new(&quot;Rec&quot;)              # New blank recommendations object
-      Rec@TAC &lt;- apply(DataList[[ss]][[ff]]@Cat,1,mean, na.rm = T) # TAC is average historical catch
+      Rec@TAC &lt;- apply(DataList[[ss]][[ff]]@Cat[x,],1,mean, na.rm = T) # TAC is average historical catch
       RecList[[ss]][[ff]]&lt;-Rec       # Store recommendations object in RecList
       
     }
