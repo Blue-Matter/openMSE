@@ -4,4 +4,4 @@ title: Multi-Stock and Multi-Fleet MPs
 weight: 6
 ---
 
-See the [Multi-Management Procedures]() page for information on developing management procedures with stock- and/or fleet-specific advice.
+See the [Multi-Management Procedures](/features-multimse/multi-mp/) page for information on developing management procedures with stock- and/or fleet-specific advice.
