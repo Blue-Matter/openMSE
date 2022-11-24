@@ -1,7 +1,7 @@
 ---
 date: "2021-02-10T11:35:01+06:00"
 title: Additional resources
-weight: 4
+weight: 5
 ---
 
 The mathematical description of the `RCM` model is available [here](/tutorial-rcm-eq).
