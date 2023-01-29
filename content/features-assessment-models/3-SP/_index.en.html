@@ -4,7 +4,6 @@ title: Surplus production model
 weight: 3
 ---
 
-<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 
 <div id="dynamics-equations" class="section level3">
@@ -54,14 +53,19 @@ where <span class="math inline">\(\delta_t \sim N(0, \tau^2)\)</span> are biomas
 <span class="math display">\[L^I = \sum_s \lambda_s \sum_t \left(-\log(\sigma_{s,t}) - 0.5\left[\dfrac{\log(I_{s,t}) - \log(\hat{q}_s \hat{B}_t)}{\sigma_{s,t}}\right]^2\right)\]</span>
 where <span class="math inline">\(lamba_s\)</span> is the weighting coefficient of index <span class="math inline">\(s\)</span>, <span class="math inline">\(q_s\)</span> is the cathabilitiy coefficient, and the circumflex denotes an estimate.</p>
 <p>Log-biomass deviations <span class="math inline">\(\hat{\delta}_t\)</span> are typically estimated as penalized parameters towards the likelihood, with the penalty:
-<span class="math display">\[L^{\delta} = \sum_t \left(-\log(\tau) - 0.5\left[\dfrac{\delta_t}{\tau}\right]^2\right).\]</span></p>
+<span class="math display">\[L^{\delta} = \sum_t \left(-\log(\tau) - 0.5\left[\dfrac{\delta_t}{\tau}\right]^2\right).\]</span>
+#### Prior for MSY</p>
+<p>A lognormal prior (a penalty to the likelihood) can be provided to the model:</p>
+<p><span class="math display">\[L^{\textrm{MSY}} = - 0.5\left(\dfrac{\log(\widehat{\textrm{MSY}}) - \log(\mu_{\textrm{MSY}})}{\sigma_{\textrm{MSY}}}\right)^2\]</span></p>
 <div id="prior-for-r" class="section level4">
 <h4>Prior for r</h4>
-<p>To generate the prior for the intrinsic rate of increase, natural mortality <span class="math inline">\(M\)</span> and steepness <span class="math inline">\(h\)</span> are sampled from a distribution. Natural mortality is modelled to be age-invariant and is sampled from a lognormal distribution.</p>
-<p>With either a Beverton-Holt or Ricker stock-recruit relationship, steepness is sampled from a transformed beta or transformed lognormal distribution, respectively.</p>
+<p>A lognormal prior for the <span class="math inline">\(r\)</span> can be provided to the model:</p>
+<p><span class="math display">\[L^r = - 0.5\left(\dfrac{\log(\hat{r}) - \log(\mu_r)}{\sigma_r}\right)^2,\]</span>
+Users can explicitly specify <span class="math inline">\(\log(\mu_r)\)</span> and <span class="math inline">\(\sigma_r\)</span>.</p>
+<p>Alternatively, the Euler-Lotka method can be used to generate the prior for the intrinsic rate of increase, by sampling natural mortality <span class="math inline">\(M\)</span> and steepness <span class="math inline">\(h\)</span> from a distribution. Natural mortality is modelled to be age-invariant and is sampled from a lognormal distribution. With either a Beverton-Holt or Ricker stock-recruit relationship, steepness is sampled from a transformed beta or transformed lognormal distribution, respectively. From these samples, <span class="math inline">\(\log(\mu_r)\)</span> and <span class="math inline">\(\sigma_r\)</span> are calculated.</p>
 <p>For each pair of sampled M and h values, the corresponding value of <span class="math inline">\(r\)</span> is obtained by solving a modified Euler-Lotka equation:
 <span class="math display">\[\alpha \sum_a l_a f_a \exp(-r \times a) = 1.\]</span></p>
-<p>Equation 15 is modified to include the <span class="math inline">\(\alpha\)</span> term from the stock-recruit relationship (Stanley et al. 2009). In this way, the recruits-per-spawner at low stock sizes, i.e., as spawning biomass approaches zero, is considered for calculating <span class="math inline">\(r\)</span>.</p>
+<p>Equation 16 is modified to include the <span class="math inline">\(\alpha\)</span> term from the stock-recruit relationship (Stanley et al. 2009). In this way, the recruits-per-spawner at low stock sizes, i.e., as spawning biomass approaches zero, is considered for calculating <span class="math inline">\(r\)</span>.</p>
 <p>The numbers-per-recruit at age <span class="math inline">\(a\)</span> is
 <span class="math display">\[
 l_a =
@@ -83,8 +87,6 @@ or
 for a Beverton-Holt and Ricker stock-recruit relationship, respectively. Unfished recruits-per-spawner <span class="math inline">\(\phi_0\)</span>
 is
 <span class="math display">\[\phi_0 = \sum_a l_a f_a.\]</span></p>
-<p>A normal distribution is assumed for the prior (a penalty to the likelihood) with the mean (<span class="math inline">\(\mu_r\)</span>) and standard deviation (<span class="math inline">\(\sigma_r\)</span>) calculated from the values of <span class="math inline">\(r\)</span> calculated using the above procedure:</p>
-<p><span class="math display">\[L^r = - 0.5\left(\dfrac{\hat{r} - \mu_r}{\sigma_r}\right)^2,\]</span></p>
 </div>
 </div>
 <div id="references" class="section level3">

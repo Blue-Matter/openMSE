@@ -52,16 +52,25 @@ where $lamba_s$ is the weighting coefficient of index $s$, $q_s$ is the cathabil
 
 Log-biomass deviations $\hat{\delta}_t$ are typically estimated as penalized parameters towards the likelihood, with the penalty:
 $$L^{\delta} = \sum_t \left(-\log(\tau) - 0.5\left[\dfrac{\delta_t}{\tau}\right]^2\right).$$
+#### Prior for MSY
+
+A lognormal prior (a penalty to the likelihood) can be provided to the model:
+
+$$L^{\textrm{MSY}} = - 0.5\left(\dfrac{\log(\widehat{\textrm{MSY}}) - \log(\mu_{\textrm{MSY}})}{\sigma_{\textrm{MSY}}}\right)^2$$
 
 #### Prior for r
-To generate the prior for the intrinsic rate of increase, natural mortality $M$ and steepness $h$ are sampled from a distribution. Natural mortality is modelled to be age-invariant and is sampled from a lognormal distribution.
 
-With either a Beverton-Holt or Ricker stock-recruit relationship, steepness is sampled from a transformed beta or transformed lognormal distribution, respectively.
+A lognormal prior for the $r$ can be provided to the model:
+
+$$L^r = - 0.5\left(\dfrac{\log(\hat{r}) - \log(\mu_r)}{\sigma_r}\right)^2,$$
+Users can explicitly specify $\log(\mu_r)$ and $\sigma_r$. 
+
+Alternatively, the Euler-Lotka method can be used to generate the prior for the intrinsic rate of increase, by sampling natural mortality $M$ and steepness $h$ from a distribution. Natural mortality is modelled to be age-invariant and is sampled from a lognormal distribution. With either a Beverton-Holt or Ricker stock-recruit relationship, steepness is sampled from a transformed beta or transformed lognormal distribution, respectively. From these samples, $\log(\mu_r)$ and $\sigma_r$ are calculated. 
 
 For each pair of sampled M and h values, the corresponding value of $r$ is obtained by solving a modified Euler-Lotka equation:
 $$\alpha \sum_a l_a f_a \exp(-r \times a) = 1.$$
 
-Equation 15 is modified to include the $\alpha$ term from the stock-recruit relationship (Stanley et al. 2009). In this way, the recruits-per-spawner at low stock sizes, i.e., as spawning biomass approaches zero, is considered for calculating $r$.
+Equation 16 is modified to include the $\alpha$ term from the stock-recruit relationship (Stanley et al. 2009). In this way, the recruits-per-spawner at low stock sizes, i.e., as spawning biomass approaches zero, is considered for calculating $r$.
 
 The numbers-per-recruit at age $a$ is
 $$
@@ -88,9 +97,6 @@ for a Beverton-Holt and Ricker stock-recruit relationship, respectively. Unfishe
 is
 $$\phi_0 = \sum_a l_a f_a.$$
 
-A normal distribution is assumed for the prior (a penalty to the likelihood) with the mean ($\mu_r$) and standard deviation ($\sigma_r$) calculated from the values of $r$ calculated using the above procedure:
-
-$$L^r = - 0.5\left(\dfrac{\hat{r} - \mu_r}{\sigma_r}\right)^2,$$
 
 ### References
 Fletcher, R.I. 1978. On the restructuring of the Pella-Tomlinson system. Fishery Bulletin 76:515-521.
