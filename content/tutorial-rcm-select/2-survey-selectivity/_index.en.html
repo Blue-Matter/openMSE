@@ -4,31 +4,31 @@ title: Index selectivity
 weight: 2
 ---
 
-<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 
 <p>Next, we can move on to index selectivity. Unlike fleet selectivity, selectivity is unique to each index and no dummy fleets are used.</p>
 <div id="is-index-selectivity-already-defined-elsewhere" class="section level3">
 <h3>Is index selectivity already defined elsewhere?</h3>
-<p>The vector <code>s_selectivity</code> defines where the index selectivity is defined (the terms index and survey are used interchangeably). Index selectivity may be identical to fleet selectivity, i.e., vulnerable biomass, or could be related to spawning or total biomass. If we have 4 surveys with:</p>
+<p>The vector <code>s_selectivity</code> defines where the index selectivity is defined (the terms index and survey are used interchangeably). Index selectivity may be identical to fleet selectivity, i.e., vulnerable biomass, or could be related to spawning or total biomass. If we have 4 indices with:</p>
 <pre class="r"><code>s_selectivity &lt;- c(&quot;SSB&quot;, &quot;B&quot;, 1, 2)</code></pre>
 <p>The first index is an index of spawning biomass as denoted by “SSB” (maturity is configured in the <code>OM</code>), the second index tracks total biomass as denoted by “B” (selectivity = 1 for all ages), and the third and fourth indices have the selectivity of the first and second fleets, respectively. Integers for fleets refer to the true fleet and not to selectivity blocks/dummy fleets.</p>
-<p>No further consideration of survey selectivity is needed when defined elsewhere, and the <code>RCM</code> function call can look like this:</p>
+<p>No further consideration of index selectivity is needed when defined elsewhere, and the <code>RCM</code> function call can look like this:</p>
 <pre class="r"><code>output &lt;- RCM(OM, RCMdata, selectivity = selectivity, 
-              s_selectivity = s_selectivity, ...)</code></pre>
+              s_selectivity = s_selectivity, 
+              ...)</code></pre>
 </div>
 <div id="index-selectivity-is-independent-of-anything-else-in-the-model" class="section level3">
 <h3>Index selectivity is independent of anything else in the model</h3>
-<p>On the other hand, if survey selectivity needs to be explicitly defined, then the <code>s_selectivity</code> vector can indicate the functional form, using one of <code>logistic</code>, <code>dome</code>, or <code>free</code>. Let’s look at another situation with 5 surveys:</p>
+<p>On the other hand, if index selectivity needs to be explicitly defined, then the <code>s_selectivity</code> vector can indicate the functional form, using one of <code>logistic</code>, <code>dome</code>, or <code>free</code>. Let’s look at another situation with 5 indices with this selectivity definition:</p>
 <pre class="r"><code>s_selectivity &lt;- c(2, &quot;SSB&quot;, &quot;B&quot;, &quot;dome&quot;, &quot;free&quot;)</code></pre>
-<p>For the fourth and fifth surveys, the selectivity functions are dome-shaped and free parameters, respectively. We will need to consider what the parameters defining this functions are, either as starting values to be estimated or fixed values in the model.</p>
+<p>For the fourth and fifth index, the selectivity functions are dome-shaped and free parameters, respectively. We will need to consider what the parameters defining this functions are, either as starting values to be estimated or fixed values in the model.</p>
 <div id="selectivity-parameters" class="section level4">
 <h4>Selectivity parameters</h4>
 <p>Just as with the fleet selectivity parameters, the index selectivity parameters by default use <code>OM@LFS</code>, <code>OM@L5</code>, and <code>OM@Vmaxlen</code> for start values when <code>s_selectivity = "logistic"</code> or <code>"dome"</code>. Custom start values are needed when index selectivity uses free parameters.</p>
-<p>Custom start values are passed to the RCM in the <code>ivul_par</code> matrix with the same layout as for <code>vul_par</code>:</p>
-<pre class="r"><code>OM@maxage &lt;- 6
+<p>Custom start values are passed to the RCM in the <code>start$ivul_par</code> matrix with the same dimension and layout as for <code>start$vul_par</code>:</p>
+<pre class="r"><code>OM@maxage &lt;- 5
 s_selectivity &lt;- c(2, &quot;SSB&quot;, &quot;B&quot;, &quot;dome&quot;, &quot;free&quot;)
-s_vul_par</code></pre>
+ivul_par</code></pre>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5]
 ## [1,]    0    0    0 55.0    1
 ## [2,]    0    0    0 40.0    0
@@ -36,8 +36,8 @@ s_vul_par</code></pre>
 ## [4,]    0    0    0  0.0    0
 ## [5,]    0    0    0  0.0    0
 ## [6,]    0    0    0  0.0    0</code></pre>
-<p>Parameter slots for surveys 1 - 3 are ignored. Again they’re placeholders for internal organization. The first three rows in column four are the start values for the three parameters of the dome function (to be estimated), and the fifth survey only selects age-1 animals, i.e., a survey of recruits.</p>
-<p>Finally, to remove parameters from estimation either because they’re just placeholders (surveys 1-4) or they should be fixed in the model (survey 5), we provide the map argument for <code>ivul_par</code> with <code>map_ivul_par</code>:</p>
+<p>Parameter slots for index 1-3 in the first three columns are ignored. Again they’re placeholders for internal organization. The first three rows in column four are the start values for the three parameters of the dome function (to be estimated), and the fifth index only selects age-0 animals, i.e., an index of recruits.</p>
+<p>Finally, to remove parameters from estimation either because they’re just placeholders (indices 1-3) or they should be fixed in the model (index 5), we provide the map argument for <code>ivul_par</code> with <code>map$ivul_par</code>:</p>
 <pre class="r"><code>map_ivul_par</code></pre>
 <pre><code>##      [,1] [,2] [,3] [,4] [,5]
 ## [1,]   NA   NA   NA    1   NA
@@ -46,9 +46,11 @@ s_vul_par</code></pre>
 ## [4,]   NA   NA   NA   NA   NA
 ## [5,]   NA   NA   NA   NA   NA
 ## [6,]   NA   NA   NA   NA   NA</code></pre>
-<p>A function call utilizing this custom set-up for survey selectivity would be:</p>
-<pre class="r"><code>output &lt;- RCM(OM, data, 
-              selectivity = selectivity, s_selectivity = s_selectivity, 
-              ivul_par = ivul_par, map_ivul_par = map_ivul_par, ...)</code></pre>
+<p>A function call utilizing this custom set-up for index selectivity would be:</p>
+<pre class="r"><code>output &lt;- RCM(OM, data, selectivity = selectivity, 
+              s_selectivity = s_selectivity, 
+              start = list(ivul_par = ivul_par), 
+              map = list(ivul_par = map_ivul_par), 
+              ...)</code></pre>
 </div>
 </div>

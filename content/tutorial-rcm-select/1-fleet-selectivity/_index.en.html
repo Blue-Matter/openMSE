@@ -4,7 +4,6 @@ title: Fleet selectivity
 weight: 1
 ---
 
-<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 
 <p>The general function call for <code>RCM</code> is:</p>
@@ -38,7 +37,7 @@ weight: 1
 <div id="starting-values-of-selectivity-parameters" class="section level3">
 <h3>Starting values of selectivity parameters</h3>
 <p>For logistic and dome selectivity, the default behavior is to generate starting values from <code>OM@LFS</code>, <code>OM@L5</code>, and <code>OM@Vmaxlen</code>. Custom start values are needed when selectivity uses free parameters.</p>
-<p>Custom starting values are passed to the model with the <code>vul_par</code> matrix (the terms selectivity and vulnerability are used interchangeably). If only logistic or dome options are used, then <code>vul_par</code> is a matrix of 3 rows (corresponding to LFS, L5, and Vmaxlen) and <code>nsel_block</code> (3) columns:</p>
+<p>Custom starting values are passed to the model with the <code>start</code> list with a named entry for the <code>vul_par</code> matrix (the terms selectivity and vulnerability are used interchangeably). If only logistic or dome options are used, then <code>vul_par</code> is a matrix of 3 rows (corresponding to LFS, L5, and Vmaxlen) and <code>nsel_block</code> (3) columns:</p>
 <pre class="r"><code>selectivity &lt;- c(&quot;logistic&quot;, &quot;dome&quot;, &quot;dome&quot;)
 vul_par</code></pre>
 <pre><code>##      [,1] [,2] [,3]
@@ -61,7 +60,7 @@ vul_par</code></pre>
 </div>
 <div id="fixing-and-sharing-parameters" class="section level3">
 <h3>Fixing and sharing parameters</h3>
-<p>Selectivity parameters may be fixed or shared. In TMB, this is accomplished by the <code>map</code> argument, which can be provided in <code>RCM</code> via the <code>map_vul_par</code> matrix of identical dimension to <code>vul_par</code>. <code>map_vul_par</code> tells TMB what to do to the parameter of the corresponding row and column in <code>vul_par</code>. Shared parameters are assigned a unique integer amongst themselves while fixed or unused parameters are assigned <code>NA</code>. Let’s look at the first <code>vul_par</code> example again:</p>
+<p>Selectivity parameters may be fixed or shared. In TMB, this is accomplished by the <code>map</code> argument, which can be provided in <code>RCM</code> via the <code>map</code> list with named entry for <code>vul_par</code>. <code>map$vul_par</code> tells TMB what to do to the parameter of the corresponding row and column in <code>vul_par</code>. Shared parameters are assigned a unique integer amongst themselves while fixed or unused parameters are assigned <code>NA</code>. Let’s look at the first <code>vul_par</code> example again:</p>
 <pre class="r"><code>selectivity &lt;- c(&quot;logistic&quot;, &quot;dome&quot;, &quot;dome&quot;)
 vul_par</code></pre>
 <pre><code>##      [,1] [,2] [,3]
@@ -99,5 +98,7 @@ map_vul_par</code></pre>
 ## [6,]   NA   NA   NA</code></pre>
 <p>Finally the function call looks like this:</p>
 <pre class="r"><code>output &lt;- RCM(OM, RCMdata, selectivity = selectivity, 
-              vul_par = vul_par, map_vul_par = map_vul_par, ...)</code></pre>
+              start = list(vul_par = vul_par), 
+              map = list(vul_par = map_vul_par), 
+              ...)</code></pre>
 </div>

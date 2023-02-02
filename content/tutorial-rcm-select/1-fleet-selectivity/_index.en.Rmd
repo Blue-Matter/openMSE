@@ -4,7 +4,7 @@ title: Fleet selectivity
 weight: 1
 ---
 
-```{r echo = FALSE}
+```{r echo = FALSE, message = FALSE}
 library(SAMtool, quietly = TRUE)
 OM <- MSEtool::testOM
 RCMdata <- new("RCMdata")
@@ -57,7 +57,7 @@ These functions are described [here](../../tutorial-rcm-eq/1-selectivity).
 
 For logistic and dome selectivity, the default behavior is to generate starting values from `OM@LFS`, `OM@L5`, and `OM@Vmaxlen`. Custom start values are needed when selectivity uses free parameters.
 
-Custom starting values are passed to the model with the `vul_par` matrix (the terms selectivity and vulnerability are used interchangeably). If only logistic or dome options are used, then `vul_par` is a matrix of 3 rows (corresponding to LFS, L5, and Vmaxlen) and `nsel_block` (3) columns:
+Custom starting values are passed to the model with the `start` list with a named entry for the `vul_par` matrix (the terms selectivity and vulnerability are used interchangeably). If only logistic or dome options are used, then `vul_par` is a matrix of 3 rows (corresponding to LFS, L5, and Vmaxlen) and `nsel_block` (3) columns:
 
 
 ```{r echo = FALSE}
@@ -85,7 +85,7 @@ Rows 4 to maxage+1 for logistic and dome selectivity (columns 1 and 2) are unuse
 
 ### Fixing and sharing parameters
 
-Selectivity parameters may be fixed or shared. In TMB, this is accomplished by the `map` argument, which can be provided in `RCM` via the `map_vul_par` matrix of identical dimension to `vul_par`. `map_vul_par` tells TMB what to do to the parameter of the corresponding row and column in `vul_par`. Shared parameters are assigned a unique integer amongst themselves while fixed or unused parameters are assigned `NA`. Let's look at the first `vul_par` example again:
+Selectivity parameters may be fixed or shared. In TMB, this is accomplished by the `map` argument, which can be provided in `RCM` via the `map` list with named entry for `vul_par`. `map$vul_par` tells TMB what to do to the parameter of the corresponding row and column in `vul_par`. Shared parameters are assigned a unique integer amongst themselves while fixed or unused parameters are assigned `NA`. Let's look at the first `vul_par` example again:
 
 
 ```{r echo = FALSE}
@@ -134,5 +134,7 @@ Finally the function call looks like this:
 
 ```{r eval = FALSE}
 output <- RCM(OM, RCMdata, selectivity = selectivity, 
-              vul_par = vul_par, map_vul_par = map_vul_par, ...)
+              start = list(vul_par = vul_par), 
+              map = list(vul_par = map_vul_par), 
+              ...)
 ```
