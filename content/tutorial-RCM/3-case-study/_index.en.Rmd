@@ -35,9 +35,9 @@ mat_ogive <- ifelse(0:pcod$OM@maxage < 2, 0, 1)
 out <- RCM(OM = pcod$OM, data = pcod$data, 
            condition = "catch", mean_fit = TRUE,
            selectivity = "free", s_selectivity = rep("SSB", ncol(pcod$data@Index)),
-           vul_par = matrix(mat_ogive, pcod$OM@maxage + 1, 1),
-           map_vul_par = matrix(NA, pcod$OM@maxage + 1, 1),
-           map_log_early_rec_dev = rep(1, pcod$OM@maxage),
+           start = list(vul_par = matrix(mat_ogive, length(mat_ogive), 1)),
+           map = list(vul_par = matrix(NA, length(mat_ogive), 1),
+                      log_early_rec_dev = rep(1, pcod$OM@maxage)),
            prior = pcod$prior)
 ```
 
@@ -125,9 +125,9 @@ out_age3 <- local({
   RCM(OM = pcod$OM, data = pcod$data, 
       condition = "catch", mean_fit = TRUE,
       selectivity = "free", s_selectivity = rep("SSB", ncol(pcod$data@Index)),
-      vul_par = matrix(mat_ogive_age3, length(mat_ogive_age3), 1),
-      map_vul_par = matrix(NA, length(mat_ogive_age3), 1),
-      map_log_early_rec_dev = rep(1, pcod$OM@maxage),
+      start = list(vul_par = matrix(mat_ogive_age3, length(mat_ogive_age3), 1)),
+      map = list(vul_par = matrix(NA, length(mat_ogive_age3), 1),   
+                 log_early_rec_dev = rep(1, pcod$OM@maxage)),
       prior = pcod$prior)
 })
 ```

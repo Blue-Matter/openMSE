@@ -4,7 +4,6 @@ title: Case study
 weight: 3
 ---
 
-<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 
 <div id="pacific-cod-example" class="section level3">
@@ -30,16 +29,16 @@ data(pcod)</code></pre>
 out &lt;- RCM(OM = pcod$OM, data = pcod$data, 
            condition = &quot;catch&quot;, mean_fit = TRUE,
            selectivity = &quot;free&quot;, s_selectivity = rep(&quot;SSB&quot;, ncol(pcod$data@Index)),
-           vul_par = matrix(mat_ogive, pcod$OM@maxage + 1, 1),
-           map_vul_par = matrix(NA, pcod$OM@maxage + 1, 1),
-           map_log_early_rec_dev = rep(1, pcod$OM@maxage),
+           start = list(vul_par = matrix(mat_ogive, length(mat_ogive), 1)),
+           map = list(vul_par = matrix(NA, length(mat_ogive), 1),
+                      log_early_rec_dev = rep(1, pcod$OM@maxage)),
            prior = pcod$prior)</code></pre>
 <div id="operating-model" class="section level4">
 <h4>Operating model</h4>
 <p>The preliminary operating model (<code>pcod$OM</code>) contains biological parameters for growth, maturity, natural mortality, steepness, recruitment variability that will be used to inform the conditioning model.</p>
 <p>The operating models were set up with values of steepness <code>pcod$OM@cpars$h</code> and M <code>pcod$OM@cpars$M</code> sampled from their respective distributions, the means and standard deviations of which were informed by the posterior of the delay difference assessment.</p>
-<p><img src="/tutorial-RCM/3-case-study/_index.en_files/figure-html/unnamed-chunk-4-1.png" width="672" />
-<img src="/tutorial-RCM/3-case-study/_index.en_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
+<p><img src="/tutorial-rcm/3-case-study/_index.en_files/figure-html/unnamed-chunk-4-1.png" width="672" />
+<img src="/tutorial-rcm/3-case-study/_index.en_files/figure-html/unnamed-chunk-5-1.png" width="672" /></p>
 </div>
 <div id="selectivity" class="section level4">
 <h4>Selectivity</h4>
@@ -67,11 +66,11 @@ out &lt;- RCM(OM = pcod$OM, data = pcod$data,
 <p>Model fits and estimated parameters can be found in the markdown reports:</p>
 <pre class="r"><code>plot(out)</code></pre>
 <p>Since we sampled steepness and natural mortality from a distribution, a range of historical SSB values is reconstructed:</p>
-<p><img src="/tutorial-RCM/3-case-study/_index.en_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
+<p><img src="/tutorial-rcm/3-case-study/_index.en_files/figure-html/unnamed-chunk-8-1.png" width="672" /></p>
 <p>When conditioned on catch, a range for fishing mortality is similarly produced:
-<img src="/tutorial-RCM/3-case-study/_index.en_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
+<img src="/tutorial-rcm/3-case-study/_index.en_files/figure-html/unnamed-chunk-9-1.png" width="672" /></p>
 <p>For all simulations, the SSB in 2020 is below the upper stock reference (USR), the mean SSB estimated during 1956-2004:</p>
-<p><img src="/tutorial-RCM/3-case-study/_index.en_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
+<p><img src="/tutorial-rcm/3-case-study/_index.en_files/figure-html/unnamed-chunk-10-1.png" width="672" /></p>
 <p>These figures are comparable to Figures 19, 20, and 22 of <a href="https://www.dfo-mpo.gc.ca/csas-sccs/Publications/ResDocs-DocRech/2020/2020_070-eng.html">Forrest et al. 2020</a>.</p>
 <p>Finally, RCM also generates an updated OM that is ready for closed-loop simulation, where the historical period is conditioned by the estimation model:</p>
 <pre class="r"><code>MSE &lt;- MSEtool::runMSE(out@OM, ...)</code></pre>
@@ -86,9 +85,9 @@ out &lt;- RCM(OM = pcod$OM, data = pcod$data,
   RCM(OM = pcod$OM, data = pcod$data, 
       condition = &quot;catch&quot;, mean_fit = TRUE,
       selectivity = &quot;free&quot;, s_selectivity = rep(&quot;SSB&quot;, ncol(pcod$data@Index)),
-      vul_par = matrix(mat_ogive_age3, length(mat_ogive_age3), 1),
-      map_vul_par = matrix(NA, length(mat_ogive_age3), 1),
-      map_log_early_rec_dev = rep(1, pcod$OM@maxage),
+      start = list(vul_par = matrix(mat_ogive_age3, length(mat_ogive_age3), 1)),
+      map = list(vul_par = matrix(NA, length(mat_ogive_age3), 1),   
+                 log_early_rec_dev = rep(1, pcod$OM@maxage)),
       prior = pcod$prior)
 })</code></pre>
 </div>
@@ -99,5 +98,5 @@ out &lt;- RCM(OM = pcod$OM, data = pcod$data,
             scenario = list(names = c(&quot;Age-2 maturity&quot;, &quot;Age-3 maturity&quot;)),
             s_name = colnames(pcod$data@Index))</code></pre>
 <p>The comparison primarily uses the mean scenarios from each OM:</p>
-<p><img src="/tutorial-RCM/3-case-study/_index.en_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p><img src="/tutorial-rcm/3-case-study/_index.en_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
 </div>
