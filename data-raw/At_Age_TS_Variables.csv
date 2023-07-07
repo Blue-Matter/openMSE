@@ -1,0 +1,7 @@
+Variable,Class,Slot
+Number,Hist,Number
+Biomass,Hist,Biomass
+Spawning Biomass,Hist,SBiomass
+Vulnerable Biomass,Hist,VBiomass
+Removals,Hist,Removals
+Landings,Hist,Landings

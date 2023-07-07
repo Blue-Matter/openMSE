@@ -1,6 +1,6 @@
 Package: openMSE
 Title: Easily Install and Load the 'openMSE' Packages
-Version: 1.0.0
+Version: 1.1.0
 Authors@R: c(
   person("Adrian", "Hordyk", 
          role = c("aut", "cre"),
@@ -27,11 +27,16 @@ BugReports: https://github.com/Blue-Matter/openMSE/issues
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.1.2
+RoxygenNote: 7.2.3
 Depends: 
     R (>= 4.0.0),
     MSEtool (>= 3.0.0),
     DLMtool (>= 6.0.0),
     SAMtool
 Imports:
-    crayon
+    crayon,
+    dplyr,
+    purrr,
+    ggplot2,
+    grid,
+    tidyr
