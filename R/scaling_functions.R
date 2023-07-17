@@ -45,7 +45,7 @@ mm2inch <- function(x) x/25.4
 
 #' @describeIn scale Convert from centimeters to inches
 #' @export
-cm2inch <- function(x) mm2inch(x)  %>% multiply_10()
+cm2inch <- function(x) mm2inch(x) %>% multiply_10()
 
 
 #' @describeIn scale Divide values by 1000

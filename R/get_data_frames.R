@@ -400,24 +400,24 @@ get_ts <- function(x, variable='Spawning Biomass', model='Model 1', scale=NULL) 
 #' @rdname get_ts
 #' @export
 valid_ts_variables <- function() {
-  unique(MSEgraph::TS_Variables$Variable)
+  unique(TS_Variables$Variable)
 }
 
 match_ts_variable <- function(variable='Spawning Biomass', class='Hist') {
-  if (!variable %in%  MSEgraph::TS_Variables$Variable)
+  if (!variable %in%  TS_Variables$Variable)
     stop('Not a valid time-series variable. See `valid_ts_variables()`')
-  out <- MSEgraph::TS_Variables %>% filter(Variable %in% variable, Class==class)
+  out <- TS_Variables %>% filter(Variable %in% variable, Class==class)
   out$Slot
 }
 
 #' @rdname get_ts
 #' @export
 valid_at_age_ts_variables <- function() {
-  unique(MSEgraph::At_Age_TS_Variables$Variable)
+  unique(At_Age_TS_Variables$Variable)
 }
 
 match_at_age_ts_variable <- function(variable='Spawning Biomass', class='Hist') {
-  if (!variable %in%  MSEgraph::At_Age_TS_Variables$Variable)
+  if (!variable %in%  At_Age_TS_Variables$Variable)
     stop('Not a valid time-series variable. See `valid_at_age_ts_variables()`')
   out <- At_Age_TS_Variables %>% filter(Variable %in% variable, Class==class)
   out$Slot
@@ -559,7 +559,8 @@ get_ts.multiHist <- function(x, variable='Spawning Biomass', model='Model 1', sc
                                      Value=value,
                                      Variable=variable,
                                      Period=years$Period,
-                                     Model=stock_names[st])
+                                     Model=model,
+                                     Stock=stock_names[st])
     }
     out <- do.call('rbind', stock_list)
   } else {
@@ -583,7 +584,8 @@ get_ts.multiHist <- function(x, variable='Spawning Biomass', model='Model 1', sc
                                              Value=value,
                                              Variable=variable,
                                              Period=years$Period,
-                                             Model=stock_names[st],
+                                             Model=model,
+                                             Stock=stock_names[st],
                                              Fleet=fleet_names[fl])
       }
       stock_list[[st]] <- do.call('rbind', stock_list[[st]])
@@ -594,6 +596,61 @@ get_ts.multiHist <- function(x, variable='Spawning Biomass', model='Model 1', sc
   out
 }
 
+
+#' @export
+#' @rdname get_ts
+get_ts.MMSE <- function(x, variable='Spawning Biomass', model='Model 1', scale=NULL) {
+  metadata <- get_Metadata(x)
+  nsim <- x@nsim
+  nMPs <- x@nMPs
+  MPs <- x@MPs[[1]]
+  nstock <- x@nstocks
+  stock_names <- names(x@multiHist)
+  if (is.null(stock_names))
+    stock_names <- paste('Stock', 1:n_stocks)
+
+  # Historical
+  do_hist <- TRUE
+  if (!inherits(x@multiHist, 'multiHist'))
+    do_hist <- FALSE
+
+  if (do_hist)
+    hist_df <- get_ts(x@multiHist, variable=variable, model=model, scale=scale)
+
+  # Projection
+  slot <- match_ts_variable(variable, 'MMSE')
+  if (grepl('\\()', slot)) {
+    fn <- gsub('\\()','', slot)
+    value <- get(fn)(x)
+  } else {
+    value <- as.vector(slot(x, slot))
+  }
+
+  proj.years <- metadata$Pro.Years
+  pyears <- metadata$proyears
+
+  if (!is.null(scale) & inherits(scale, 'function')) {
+    value <- scale(value)
+  }
+
+
+  proj_df <- data.frame(Sim=1:nsim,
+                        Stock=rep(stock_names, each=nsim),
+                        MP=rep(MPs,each=nsim*nstock),
+                        Year=rep(proj.years$Year, each=nsim*nMPs*nstock),
+                        Variable=variable,
+                        Value=value)
+
+  proj_df <- dplyr::left_join(proj_df, proj.years, by = join_by(Year))
+
+  if (do_hist) {
+    out <- bind_rows(hist_df, proj_df)
+  } else {
+    message('Not including values from Historical period. Add `Hist` object to `MSE@Hist` or upgrade to more recent version of MSEtool to always include `MSE@Hist`')
+    out <- proj_df
+  }
+  out
+}
 
 
 #' @export

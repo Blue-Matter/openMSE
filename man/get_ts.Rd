@@ -8,6 +8,7 @@
 \alias{get_ts.MSE}
 \alias{get_ts.list}
 \alias{get_ts.multiHist}
+\alias{get_ts.MMSE}
 \alias{get_Biomass}
 \alias{get_Landings}
 \alias{get_Removals}
@@ -31,6 +32,8 @@ valid_at_age_ts_variables()
 \method{get_ts}{list}(x, variable = "Spawning Biomass", model = "Model 1", scale = NULL)
 
 \method{get_ts}{multiHist}(x, variable = "Spawning Biomass", model = "Model 1", scale = NULL)
+
+\method{get_ts}{MMSE}(x, variable = "Spawning Biomass", model = "Model 1", scale = NULL)
 
 get_Biomass(x, model = "Model 1", ...)
 

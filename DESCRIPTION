@@ -30,7 +30,7 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.2.3
 Depends: 
     R (>= 4.0.0),
-    MSEtool (>= 3.0.0),
+    MSEtool (>= 3.7.0),
     DLMtool (>= 6.0.0),
     SAMtool
 Imports:

@@ -1,5 +1,5 @@
-remotes::install_github("Blue-Matter/SAMtool") # version 1.5.1 or later
-remotes::install_github("Blue-Matter/MSEtool") # v3.7.0 or later
+# remotes::install_github("Blue-Matter/SAMtool") # version 1.5.1 or later
+# remotes::install_github("Blue-Matter/MSEtool") # v3.7.0 or later
 
 
 # Create some Hist and MSE objects for development
@@ -24,7 +24,7 @@ Hist3 <- MSEtool::Simulate(OM3)
 Hist4 <- MSEtool::Simulate(OM4)
 
 SCA_40_10 <- make_MP(SCA, HCR40_10, diagnostic = "full")
-SCA_60_20 <- make_MP(SCA, HCR60_20, diagnostic = "full")
+SCA_60_20 <- make_MP(SCA, HCR60_20)
 
 MPs <- c('FMSYref', 'FMSYref50', 'SCA_40_10', 'SCA_60_20' )
 
@@ -33,18 +33,26 @@ MSE2 <- MSEtool::Project(Hist2, MPs=MPs)
 MSE3 <- MSEtool::Project(Hist3, MPs=MPs)
 MSE4 <- MSEtool::Project(Hist4, MPs=MPs)
 
+multiHist <- SimulateMOM()
+MMSE <- ProjectMOM(multiHist, MPs=MPs)
+
 HistList <- list(Base_Case=Hist1, Lower_M=Hist2, Higher_M=Hist3, Lower_h=Hist4)
 MSEList <- list(Base_Case=MSE1, Lower_M=MSE2, Higher_M=MSE3, Lower_h=MSE4)
 
-usethis::use_data(Hist1, overwrite = TRUE)
-usethis::use_data(Hist2, overwrite = TRUE)
-usethis::use_data(Hist3, overwrite = TRUE)
-usethis::use_data(Hist4, overwrite = TRUE)
+saveRDS(Hist1, 'test_objects/Hist1.rda')
+saveRDS(Hist2, 'test_objects/Hist2.rda')
+saveRDS(Hist3, 'test_objects/Hist3.rda')
+saveRDS(Hist4, 'test_objects/Hist4.rda')
 
-usethis::use_data(MSE1, overwrite = TRUE)
-usethis::use_data(MSE2, overwrite = TRUE)
-usethis::use_data(MSE3, overwrite = TRUE)
-usethis::use_data(MSE4, overwrite = TRUE)
+saveRDS(MSE1, 'test_objects/MSE1.rda')
+saveRDS(MSE2, 'test_objects/MSE2.rda')
+saveRDS(MSE3, 'test_objects/MSE3.rda')
+saveRDS(MSE4, 'test_objects/MSE4.rda')
 
-usethis::use_data(HistList, overwrite = TRUE)
-usethis::use_data(MSEList, overwrite = TRUE)
+saveRDS(HistList, 'test_objects/HistList.rda')
+saveRDS(MSEList, 'test_objects/MSEList.rda')
+
+saveRDS(multiHist, 'test_objects/multiHist.rda')
+saveRDS(MMSE, 'test_objects/MMSE.rda')
+
+

@@ -9,3 +9,5 @@ Removals,Hist,Removals
 Removals,MSE,Removals
 Recruits,Hist,hist.recruits()
 Recruits,MSE,mse.recruits()
+Spawning Biomass,MMSE,SSB
+Biomass,MMSE,B
