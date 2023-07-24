@@ -5,16 +5,26 @@ weight: 6
 ---
 
 ### Selectivity
-For a fleet block $b$ for which selectivity is estimated, then parameters $x^{LFS}_b$ and $x^{L5}_b$ are estimated over all real numbers, where
+
+For length-based parametric selectivity functions (dome or logistic), then parameters $x^{FS}_b$ and $x^{L5}_b$ for block $b$ are estimated over all real numbers, where
 
 $$ \begin{align}
-L^{\textrm{FS}}_b &= 0.99 \times L_{\infty} \times \textrm{logit}^{-1}(x^{LFS}_b)\\
+L^{\textrm{FS}}_b &= L_{\infty} \times \textrm{logit}^{-1}(x^{FS}_b)\\
 L^5_b &= L^{\textrm{FS}}_b - \exp(x^{L5}_b) 
 \end{align}$$
 
 If a third parameter $x^{V}_b$is estimated for dome selectivity, then
 $$ V^{L_{\infty}}_b = \textrm{logit}^{-1}(x^V_b)$$
 
+If the parametric selectivity function is age-based, then 
+
+$$ \begin{align}
+a^{\textrm{FS}}_b &= A \times \textrm{logit}^{-1}(x^{FS}_b)\\
+a^5_b &= a^{\textrm{FS}}_b - \exp(x^{a5}_b)\\
+V^A_b &= \textrm{logit}^{-1}(x^V_b)
+\end{align}$$
+
+where $A$ is the maximum age.
 
 If selectivity is parameterized as free parameters, then
 $$ v_{y,a,f} = \textrm{logit}^{-1}(x^v_{y,a,f}).$$

@@ -4,18 +4,24 @@ title: Estimated parameters
 weight: 6
 ---
 
-<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 
 <div id="selectivity" class="section level3">
 <h3>Selectivity</h3>
-<p>For a fleet block <span class="math inline">\(b\)</span> for which selectivity is estimated, then parameters <span class="math inline">\(x^{LFS}_b\)</span> and <span class="math inline">\(x^{L5}_b\)</span> are estimated over all real numbers, where</p>
+<p>For length-based parametric selectivity functions (dome or logistic), then parameters <span class="math inline">\(x^{FS}_b\)</span> and <span class="math inline">\(x^{L5}_b\)</span> for block <span class="math inline">\(b\)</span> are estimated over all real numbers, where</p>
 <p><span class="math display">\[ \begin{align}
-L^{\textrm{FS}}_b &amp;= 0.99 \times L_{\infty} \times \textrm{logit}^{-1}(x^{LFS}_b)\\
-L^5_b &amp;= L^{\textrm{FS}}_b - \exp(x^{L5}_b) 
+L^{\textrm{FS}}_b &amp;= L_{\infty} \times \textrm{logit}^{-1}(x^{FS}_b)\\
+L^5_b &amp;= L^{\textrm{FS}}_b - \exp(x^{L5}_b)
 \end{align}\]</span></p>
 <p>If a third parameter <span class="math inline">\(x^{V}_b\)</span>is estimated for dome selectivity, then
 <span class="math display">\[ V^{L_{\infty}}_b = \textrm{logit}^{-1}(x^V_b)\]</span></p>
+<p>If the parametric selectivity function is age-based, then</p>
+<p><span class="math display">\[ \begin{align}
+a^{\textrm{FS}}_b &amp;= A \times \textrm{logit}^{-1}(x^{FS}_b)\\
+a^5_b &amp;= a^{\textrm{FS}}_b - \exp(x^{a5}_b)\\
+V^A_b &amp;= \textrm{logit}^{-1}(x^V_b)
+\end{align}\]</span></p>
+<p>where <span class="math inline">\(A\)</span> is the maximum age.</p>
 <p>If selectivity is parameterized as free parameters, then
 <span class="math display">\[ v_{y,a,f} = \textrm{logit}^{-1}(x^v_{y,a,f}).\]</span></p>
 <p>For indices, parameterizations are identical except with indexing for survey <span class="math inline">\(s\)</span>.</p>
@@ -23,9 +29,9 @@ L^5_b &amp;= L^{\textrm{FS}}_b - \exp(x^{L5}_b)
 <div id="fishing-mortality" class="section level3">
 <h3>Fishing mortality</h3>
 <p>If <span class="math inline">\(F_{y,f}\)</span> are estimated parameters (<code>condition = "catch"</code>), then one parameter <span class="math inline">\(x^F_f\)</span> is the estimated <span class="math inline">\(F\)</span> in log-space in the middle of the time series is estimated and all others are subsequent deviations, represented as <span class="math inline">\(x^{F_{dev}}_{y,f}\)</span>:</p>
-<p><span class="math display">\[ F_{y,f} = 
+<p><span class="math display">\[ F_{y,f} =
 \begin{cases}
-\exp(x^F_f) &amp; y \textrm{ is midpoint of the time series}\\ 
+\exp(x^F_f) &amp; y \textrm{ is midpoint of the time series}\\
 \exp(x^F_f) \times \exp(x^{F_{dev}}_{y,f}) &amp; \textrm{otherwise}\\
 \end{cases}
 \]</span></p>

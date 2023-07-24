@@ -15,18 +15,18 @@ The proportion of the catch-at-age is
 $$ p_{y,a,f} = \dfrac{C_{y,a,f}}{\sum_a C_{y,a,f}}.$$
 
 ### Catch at length
-The catch at length is calculated assuming a normally distributed length-at-age $P(\ell,a)$, where
-$$ C_{y,\ell,f} = \sum_a C_{y,a,f} P(\ell|a) $$
+The catch at length is calculated assuming a normally distributed length-at-age $P(\ell,a)_y$, where
+$$ C_{y,\ell,f} = \sum_a C_{y,a,f} P(\ell|a)_y $$
 and
 
-$$ P(\ell|a) = 
+$$ P(\ell|a)_y = 
 \begin{cases}
-      \phi(L'_{\ell+1}) & \ell = 1\\
-      \phi(L'_{\ell+1}) - \phi(L'_\ell) & \ell = 2, \ldots, L - 1,\\
-      1 -\phi(L'_\ell) & \ell = L
+      \phi_y(L'_{\ell+1}) & \ell = 1\\
+      \phi_y(L'_{\ell+1}) - \phi(L'_\ell) & \ell = 2, \ldots, L - 1,\\
+      1 -\phi_y(L'_\ell) & \ell = L
 \end{cases}
 $$
-with $L'_{\ell}$ as the length at the lower boundary of length bin $\ell$ and $\phi(L'_{\ell})$ as the cumulative distribution function of a normal variable with mean $\tilde{L}_{y,a}$ (the expected mean length at age $a$) and standard deviation $\tilde{L}_{y,a} \times CV^L$ ($CV^L$ is the coefficient of variation in mean length at age). 
+with $L'_{\ell}$ as the length at the lower boundary of length bin $\ell$ and $\phi_y(L'_{\ell})$ as the year-specific cumulative distribution function of a normal variable with mean $\tilde{L}_{y,a}$ (the expected mean length at age $a$) and standard deviation $\tilde{L}_{y,a} \times CV^L$ ($CV^L$ is the coefficient of variation in mean length at age). 
 
 The proportion of the catch-at-length is
 $$ p_{y,\ell,f} = \dfrac{C_{y,\ell,f}}{\sum_{\ell}C_{y,\ell,f}}.$$

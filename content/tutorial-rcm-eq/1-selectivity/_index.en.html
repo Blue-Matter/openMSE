@@ -4,29 +4,60 @@ title: Selectivity and mortality
 weight: 1
 ---
 
-<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 
 <div id="fleet-selectivity" class="section level3">
 <h3>Fleet selectivity</h3>
 <p>For fleets, selectivity is defined by blocks (indexed by <span class="math inline">\(b\)</span>) which can then be assigned to any fleet <span class="math inline">\(f\)</span> and year <span class="math inline">\(y\)</span> to allow for time-varying selectivity. By default, each fleet is assigned to its own block for all years (no time-varying selectivity).</p>
+<div id="length-based-selectivity" class="section level4">
+<h4>Length-based selectivity</h4>
 <p>For flat-topped selectivity in block <span class="math inline">\(b\)</span>, two parameters are used and expressed in terms of length units: the length of 5% selectivity (<span class="math inline">\(L^5_b\)</span>) and the length of full selectivity <span class="math inline">\(L^{\textrm{FS}}_b\)</span>.</p>
-<p>For dome selectivity, a third parameter, the selectivity at <span class="math inline">\(L_{\infty}\)</span>, <span class="math inline">\(V^{L_{\infty}}_b\)</span> is also used. Length-based selectivity is converted to age-based selectivity in the age-structured model as:</p>
-<p><span class="math display">\[ v_{y,a,b} = 
+<p>For dome selectivity, a third parameter, the selectivity at <span class="math inline">\(L_{\infty}\)</span>, <span class="math inline">\(V^{L_{\infty}}_b\)</span> is also used.</p>
+<p>The selectivity <span class="math inline">\(v\)</span> at length <span class="math inline">\(L\)</span> at the midpoint of length bin <span class="math inline">\(\ell\)</span> in year <span class="math inline">\(y\)</span> for block <span class="math inline">\(b\)</span> is:</p>
+<p><span class="math display">\[ v_{y,\ell,b} =
 \begin{cases}
-2^{-[(L_{y,a} - L^{\textrm{FS}}_b)/(\sigma^{\textrm{asc}}_b)]^2} &amp; \textrm{if } L_{y,a} &lt; L^{\textrm{FS}}_b\\ 
-1 &amp; \textrm{if logistic and } L_{y,a} \ge L^{\textrm{FS}}_b,\\
-2^{-[(L_{y,a} - L^{\textrm{FS}}_b)/(\sigma^{\textrm{des}}_b)]^2} &amp; \textrm{if dome and } L_{y,a} \ge L^{\textrm{FS}}_b
+2^{-[(L&#39;_\ell - L^{\textrm{FS}}_b)/(\sigma^{\textrm{asc}}_b)]^2} &amp; \textrm{if } L&#39;_\ell &lt; L^{\textrm{FS}}_b\\
+1 &amp; \textrm{if logistic and } L&#39;_\ell \ge L^{\textrm{FS}}_b,\\
+2^{-[(L&#39;_\ell - L^{\textrm{FS}}_b)/(\sigma^{\textrm{des}}_b)]^2} &amp; \textrm{if dome and } L&#39;_\ell \ge L^{\textrm{FS}}_b
 \end{cases}
 \]</span></p>
-<p>where <span class="math inline">\(L_{y,a}\)</span> is the mean length-at-age and <span class="math inline">\(\sigma^{\textrm{asc}}_b = (L^5_b - L^{\textrm{FS}}_b)/\sqrt{-\log_2(0.05)}\)</span> and <span class="math inline">\(\sigma^{\textrm{des}}_b = (L_{\infty} - L^{\textrm{FS}}_b)/\sqrt{-\log_2(V^{L_{\infty}}_b)}\)</span> control the shape of the ascending and descending limbs, respectively, of the selectivity function.</p>
-<p>In this parameterization, length-based selectivity is constant over time. The corresponding age-based selectivity within each block is constant so long as growth is not time-varying.</p>
+<p>where <span class="math inline">\(\sigma^{\textrm{asc}}_b = (L^5_b - L^{\textrm{FS}}_b)/\sqrt{-\log_2(0.05)}\)</span> and <span class="math inline">\(\sigma^{\textrm{des}}_b = (L_{\infty} - L^{\textrm{FS}}_b)/\sqrt{-\log_2(V^{L_{\infty}}_b)}\)</span> control the shape of the ascending and descending limbs, respectively, of the selectivity function.</p>
+<p>Length-based selectivity is converted to age-based selectivity in the age-structured model as:</p>
+<p><span class="math display">\[ v_{y,a,b} = \sum_\ell v_{y,\ell,b} P(\ell|a)_y \]</span></p>
+<p>where <span class="math inline">\(P(\ell|a)_y\)</span> is the probability of length-at-age, which can be time-varying:</p>
+<p><span class="math display">\[ P(\ell|a)_y =
+\begin{cases}
+      \phi_y(L&#39;_{\ell+1}) &amp; \ell = 1\\
+      \phi_y(L&#39;_{\ell+1}) - \phi_y(L&#39;_\ell) &amp; \ell = 2, \ldots, L - 1,\\
+      1 -\phi_y(L&#39;_\ell) &amp; \ell = L
+\end{cases}
+\]</span></p>
+<p>and <span class="math inline">\(\phi_y(L&#39;_{\ell})\)</span> is the cumulative normal distribution function with mean length at age <span class="math inline">\(L_{y,a}\)</span> and standard deviation <span class="math inline">\(\sigma^L_{y,a}\)</span> evaluated at <span class="math inline">\(L&#39;_{\ell}\)</span> which is the lower boundary of length bin <span class="math inline">\(\ell\)</span>.</p>
+</div>
+<div id="age-based-selectivity" class="section level4">
+<h4>Age-based selectivity</h4>
+<p>Parametric functions can be directly specified in terms of age, where</p>
+<p><span class="math display">\[ v_{y,a,b} =
+\begin{cases}
+2^{-[(a - a^{\textrm{FS}}_b)/(\sigma^{\textrm{asc}}_b)]^2} &amp; \textrm{if } a &lt; a^{\textrm{FS}}_b\\
+1 &amp; \textrm{if logistic and } a \ge a^{\textrm{FS}}_b,\\
+2^{-[(a - a^{\textrm{FS}}_b)/(\sigma^{\textrm{des}}_b)]^2} &amp; \textrm{if dome and } a \ge a^{\textrm{FS}}_b
+\end{cases}
+\]</span></p>
+<p>where <span class="math inline">\(a^{\textrm{FS}}_b\)</span> is the age of full selectivity, <span class="math inline">\(\sigma^{\textrm{asc}}_b = (a^5_b - a^{\textrm{FS}}_b)/\sqrt{-\log_2(0.05)}\)</span>, <span class="math inline">\(\sigma^{\textrm{des}}_b = (A - a^{\textrm{FS}}_b)/\sqrt{-\log_2(V^A_b)}\)</span> with <span class="math inline">\(a^5_b\)</span> the age of 5 percent selectivity, and <span class="math inline">\(V^A_b\)</span> is the selectivity at the maximum age.</p>
+<div class="figure"><span style="display:block;" id="fig:sel-figure"></span>
+<img src="/tutorial-rcm-eq/1-selectivity/_index.en_files/figure-html/sel-figure-1.png" alt="Example age-based selectivity function." width="672" />
+<p class="caption">
+Figure 1: Example age-based selectivity function.
+</p>
+</div>
 <p>Selectivity can also be parameterized where <span class="math inline">\(v_{y,a,b}\)</span> are free independent parameters. In this case, selectivity does not vary among years.</p>
 <p>Total mortality <span class="math inline">\(Z\)</span> in year <span class="math inline">\(y\)</span> and for age <span class="math inline">\(a\)</span> is the sum of fishing mortality <span class="math inline">\(F\)</span> from all fleets and natural mortality <span class="math inline">\(M\)</span>,</p>
 <p><span class="math display">\[ Z_{y,a} = M_{y,a} + \sum_f v_{y,a,f} F_{y,f},\]</span></p>
 <p>where <span class="math inline">\(v_{y,a,f}\)</span> is the fleet selectivity after assigning blocks to fleets.</p>
 </div>
+</div>
 <div id="index-selectivity" class="section level3">
 <h3>Index selectivity</h3>
-<p>Index selectivity is constant over time and is denoted as <span class="math inline">\(v_{a,s}\)</span>, using either logistic, dome, or free parameterizations.</p>
+<p>Index selectivity is constant over time and is denoted as <span class="math inline">\(v_{a,s}\)</span>, using either logistic, dome, (in terms of either length or age) or free parameterizations. Index selectivity can also be <a href="mirrored">../../tutorial-rcm-select/2-survey-selectivity</a> to be equal to the selectivity of a fishing fleet, or select the spawning biomass or total biomass.</p>
 </div>
