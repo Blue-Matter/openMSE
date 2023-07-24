@@ -81,3 +81,59 @@ output <- RCM(OM, data, selectivity = selectivity,
               ...)
 ```
 
+### Index catchability
+
+By default, each index series is time-invariant with respect to the selectivity and catchability ($q$). By default, catchability for index $s$ is solved analytically in the model,
+
+$$
+q_s = \exp\left(\dfrac{\sum_y \log(I^{\textrm{obs}}_{y,s}) - \sum_y \log(x_{y,s})}{n_s}\right)
+$$
+
+where $I$ is the observed index, $x$ is the biomass or abundance vulnerable to the index, and $n_s$ is the number of data points.
+
+This section goes through the three use cases if one or both of selectivity and catchability changes.
+
+#### Case 1 - Both catchability and selectivity change
+
+Simply break the index into two series and model them separately.
+
+#### Case 2 - Catchability changes but selectivity does not
+
+Break the index into two series and map the selectivity parameters so that the two series share the same parameters (see selectivity section above).
+
+#### Case 3 - Catchability is constant but selectivity changes
+
+Break the index into two series. Then use the map argument to identify the index series which share a common $q$. As an example with 5 index series,
+
+```{r map-q, eval=FALSE}
+RCM(..., map = list(q = c(1, 1, 2, 2, NA)))
+```
+
+This map argument sets up the model so that index series 1 & 2 share one $q$ parameter and series 3 and 4 share another $q$ parameter. When map is an integer, $q$ is an estimated parameter while `r NA` for the fifth index indicates that $q$ will be calculated analytically.
+
+#### Fixing catchability
+
+RCM provides an option for fixing catchability to one:
+
+```{r abs-I, eval=FALSE}
+RCMdata@abs_I <- c(0, 0, 0, 0, 1)
+```
+
+where $q = 1$ for the fifth index.
+
+There are two ways to fix $q$ to an alternative value. First, rescale the index such that the new index will have $q=1$. Second, set the q prior to with a tight prior:
+
+```{r q-prior-abs-I, eval=FALSE}
+prior <- list()
+prior$q <- matrix(NA, 5, 2)
+prior$q[5, ] <- c(0.5, 0.001)
+  
+RCM(..., prior = prior)
+```
+
+where the $q$ for the fifth index has a prior mean of 0.5 and lognormal standard deviation of 0.001.
+
+#### Offset catchability
+
+If two index series have offset catchability, e.g., the $q$ of one index is twice of another index, simply re-scale one of them and share the $q$ parameter between the two.
+

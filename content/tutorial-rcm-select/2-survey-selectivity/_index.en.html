@@ -1,6 +1,6 @@
 ---
 date: "2021-01-21T11:35:01+06:00"
-title: Index selectivity
+title: Index selectivity and catchability
 weight: 2
 ---
 
@@ -52,5 +52,45 @@ ivul_par</code></pre>
               start = list(ivul_par = ivul_par), 
               map = list(ivul_par = map_ivul_par), 
               ...)</code></pre>
+</div>
+</div>
+<div id="index-catchability" class="section level3">
+<h3>Index catchability</h3>
+<p>By default, each index series is time-invariant with respect to the selectivity and catchability (<span class="math inline">\(q\)</span>). By default, catchability for index <span class="math inline">\(s\)</span> is solved analytically in the model,</p>
+<p><span class="math display">\[
+q_s = \exp\left(\dfrac{\sum_y \log(I^{\textrm{obs}}_{y,s}) - \sum_y \log(x_{y,s})}{n_s}\right)
+\]</span></p>
+<p>where <span class="math inline">\(I\)</span> is the observed index, <span class="math inline">\(x\)</span> is the biomass or abundance vulnerable to the index, and <span class="math inline">\(n_s\)</span> is the number of data points.</p>
+<p>This section goes through the three use cases if one or both of selectivity and catchability changes.</p>
+<div id="case-1---both-catchability-and-selectivity-change" class="section level4">
+<h4>Case 1 - Both catchability and selectivity change</h4>
+<p>Simply break the index into two series and model them separately.</p>
+</div>
+<div id="case-2---catchability-changes-but-selectivity-does-not" class="section level4">
+<h4>Case 2 - Catchability changes but selectivity does not</h4>
+<p>Break the index into two series and map the selectivity parameters so that the two series share the same parameters (see selectivity section above).</p>
+</div>
+<div id="case-3---catchability-is-constant-but-selectivity-changes" class="section level4">
+<h4>Case 3 - Catchability is constant but selectivity changes</h4>
+<p>Break the index into two series. Then use the map argument to identify the index series which share a common <span class="math inline">\(q\)</span>. As an example with 5 index series,</p>
+<pre class="r"><code>RCM(..., map = list(q = c(1, 1, 2, 2, NA)))</code></pre>
+<p>This map argument sets up the model so that index series 1 &amp; 2 share one <span class="math inline">\(q\)</span> parameter and series 3 and 4 share another <span class="math inline">\(q\)</span> parameter. When map is an integer, <span class="math inline">\(q\)</span> is an estimated parameter while NA for the fifth index indicates that <span class="math inline">\(q\)</span> will be calculated analytically.</p>
+</div>
+<div id="fixing-catchability" class="section level4">
+<h4>Fixing catchability</h4>
+<p>RCM provides an option for fixing catchability to one:</p>
+<pre class="r"><code>RCMdata@abs_I &lt;- c(0, 0, 0, 0, 1)</code></pre>
+<p>where <span class="math inline">\(q = 1\)</span> for the fifth index.</p>
+<p>There are two ways to fix <span class="math inline">\(q\)</span> to an alternative value. First, rescale the index such that the new index will have <span class="math inline">\(q=1\)</span>. Second, set the q prior to with a tight prior:</p>
+<pre class="r"><code>prior &lt;- list()
+prior$q &lt;- matrix(NA, 5, 2)
+prior$q[5, ] &lt;- c(0.5, 0.001)
+  
+RCM(..., prior = prior)</code></pre>
+<p>where the <span class="math inline">\(q\)</span> for the fifth index has a prior mean of 0.5 and lognormal standard deviation of 0.001.</p>
+</div>
+<div id="offset-catchability" class="section level4">
+<h4>Offset catchability</h4>
+<p>If two index series have offset catchability, e.g., the <span class="math inline">\(q\)</span> of one index is twice of another index, simply re-scale one of them and share the <span class="math inline">\(q\)</span> parameter between the two.</p>
 </div>
 </div>
