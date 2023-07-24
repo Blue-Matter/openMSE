@@ -57,12 +57,18 @@ where $O^{IL}$ is the annual sample sizes for the survey length compositions.
 Vague priors are added to selectivity parameters to aid in convergence, with 
 $$ \begin{align}
 x^{\textrm{LFS}}_b &\sim N(0,3)\\
-x^{\textrm{L5}}_b &\sim N(0,3)\\
+\textrm{logit}^{-1}(x^{\textrm{L5}}_b) &\sim \textrm{Beta}(1.01, 1.01)\\
 V^{L_{\infty}}_b &\sim \textrm{Beta}(1.01, 1.01)
 \end{align}$$
 
 If free selectivity parameters are estimated, then 
 $$v_{y,a,f} \sim \textrm{Beta}(1.01, 1.01)$$
+
+```{r beta-prior, echo = FALSE, fig.cap="Beta prior for aiding convergence with constants removed where x is the parameter and y is the prior density evaluated at x."}
+x <- seq(0.01, 0.99, 0.01)
+y <- x^0.01 * (1 - x)^0.01
+plot(x, -log(y), typ = "l", ylim = c(0, 0.1))
+```
 
 ### Optional priors 
 

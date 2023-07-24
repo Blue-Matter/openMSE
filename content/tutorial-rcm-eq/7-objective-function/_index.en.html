@@ -4,7 +4,6 @@ title: Objective function
 weight: 7
 ---
 
-<script src="/rmarkdown-libs/header-attrs/header-attrs.js"></script>
 
 
 <div id="total-objective-function" class="section level3">
@@ -48,11 +47,17 @@ where <span class="math inline">\(O^{IL}\)</span> is the annual sample sizes for
 <p>Vague priors are added to selectivity parameters to aid in convergence, with
 <span class="math display">\[ \begin{align}
 x^{\textrm{LFS}}_b &amp;\sim N(0,3)\\
-x^{\textrm{L5}}_b &amp;\sim N(0,3)\\
+\textrm{logit}^{-1}(x^{\textrm{L5}}_b) &amp;\sim \textrm{Beta}(1.01, 1.01)\\
 V^{L_{\infty}}_b &amp;\sim \textrm{Beta}(1.01, 1.01)
 \end{align}\]</span></p>
 <p>If free selectivity parameters are estimated, then
 <span class="math display">\[v_{y,a,f} \sim \textrm{Beta}(1.01, 1.01)\]</span></p>
+<div class="figure"><span style="display:block;" id="fig:beta-prior"></span>
+<img src="/tutorial-rcm-eq/7-objective-function/_index.en_files/figure-html/beta-prior-1.png" alt="Beta prior for aiding convergence with constants removed where x is the parameter and y is the prior density evaluated at x." width="672" />
+<p class="caption">
+Figure 1: Beta prior for aiding convergence with constants removed where x is the parameter and y is the prior density evaluated at x.
+</p>
+</div>
 </div>
 <div id="optional-priors" class="section level3">
 <h3>Optional priors</h3>
@@ -61,9 +66,9 @@ V^{L_{\infty}}_b &amp;\sim \textrm{Beta}(1.01, 1.01)
 <div id="penalties" class="section level3">
 <h3>Penalties</h3>
 <p>A penalty to the likelihood is added when <span class="math inline">\(F_{y,f} \ge F_{\textrm{max}}\)</span> for any year and fleet. The penalty is</p>
-<p><span class="math display">\[\textrm{pen}_{y,f} = 
+<p><span class="math display">\[\textrm{pen}_{y,f} =
 \begin{cases}
-0.01 (F_{y,f} - F_{\textrm{max}})^2 &amp; F_{y,f} \ge F_{\textrm{max}}\\ 
+0.01 (F_{y,f} - F_{\textrm{max}})^2 &amp; F_{y,f} \ge F_{\textrm{max}}\\
 0 &amp; \textrm{otherwise}
 \end{cases}.\]</span></p>
 </div>
