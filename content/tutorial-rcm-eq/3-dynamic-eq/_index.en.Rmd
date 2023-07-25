@@ -23,5 +23,5 @@ $$ R_y =
 $$
 
 The spawning biomass is $B^S_y$ is
-$$B^S_y = \sum_a w_{y,a} m_{y,a} N_{y,a},$$
-where $m_{y,a}$ and $w_{y,a}$ are the maturity at age and weight at age, respectively.
+$$B^S_y = \sum_a f_{y,a} m_{y,a} N_{y,a} \exp(-\Delta \times Z_{y,a}),$$
+where $m_{y,a}$ and $f_{y,a}$ are the maturity at age and fecundity at age, respectively, and $\Delta$ is the spawn timing, the elapsed fraction of the year that elapses when spawning occurs, e.g., $\Delta = 0.5$ is the midpoint of the year.

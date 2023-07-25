@@ -8,11 +8,28 @@ The population numbers at age $N_{y=1,a}$ in the first year of the model $y=1$ f
 $$ N_{y=1,a} = 
 \begin{cases}
       R^{\textrm{eq}} \exp(\delta_{y=1} - 0.5 \tau^2) & a = 0\\ 
-      R^{\textrm{eq}} \exp(-\sum_{i=1}^{a}Z^{\textrm{eq}}_i)\exp(\delta^{\textrm{init}}_a-0.5\tau^2) & a = 1, \ldots, A-1\\
-      \dfrac{R^{\textrm{eq}} \exp(-\sum_{i=1}^{a}Z^{\textrm{eq}}_i)\exp(\delta^{\textrm{init}}_a-0.5\tau^2)}{1 - \exp(-Z^{\textrm{eq}}_A)} & a = A,
+      R^{\textrm{eq}} \times l(Z^{\textrm{eq}})_a \times \exp(\delta^{\textrm{init}}_a-0.5\tau^2) & a = 1, \ldots, A\\
 \end{cases}
 $$
-where the $R^{\textrm{eq}}$ is the equilibrium recruitment and $Z^{\textrm{eq}}_a = M_{1,a} + \sum_f v_{1,a,f} F^{\textrm{eq}}_f$ is the equilibrium total mortality rate. Unfished conditions are modeled by setting $F^{\textrm{eq}}_f = 0$. The model estimates $F^{\textrm{eq}}_f$ from the provided equilibrium catch in weight $Y^{\textrm{eq}}_f$ using the yield curve. Once $Z^{\textrm{eq}}_a$ is obtained, then the equilibrium recruitment is calculated as:
+where the $R^{\textrm{eq}}$ is the equilibrium recruitment $l(Z^{\textrm{eq}})_a$ is the survival:
+
+$$ l(Z^{\textrm{eq}})_a = 
+\begin{cases}
+      1 & a = 0\\ 
+      \exp(-\sum_{i=0}^{a-1}Z^{\textrm{eq}}_i) & a = 1, \ldots, A-1\\
+      \dfrac{\exp(-\sum_{i=0}^{a-1}Z^{\textrm{eq}}_i)}{1 - \exp(-Z^{\textrm{eq}}_A)} & a = A,
+\end{cases}
+$$
+where $Z^{\textrm{eq}}_a = M_{y=1,a} + \sum_f v_{y=1,a,f} F^{\textrm{eq}}_f$ is the equilibrium total mortality rate. 
+
+Unfished conditions are modeled by setting $Z^{\textrm{eq}}_a = M_{y=1,a}$. 
+
+The model estimates $F^{\textrm{eq}}_f$ and $R^{\textrm{eq}}$ from the equilibrium catch in weight ($Y^{\textrm{eq}}_f$, user-provided) such that 
+
+$$
+Y^{\textrm{eq}}_f = \sum_a\left[\frac{v_{y=1,a,f} F^{\textrm{eq}}_f}{Z^{\textrm{eq}}_a}R^{\textrm{eq}}l_a(1 - \exp(Z^{\textrm{eq}}_a))w_a\right]
+$$
+Once $Z^{\textrm{eq}}_a$ is obtained, then the equilibrium recruitment is calculated as:
 
 $$ R^{\textrm{eq}} = 
 \begin{cases}
@@ -20,8 +37,10 @@ $$ R^{\textrm{eq}} =
       \dfrac{\log(\alpha^{\textrm{R}}\phi^{\textrm{eq}})}{\beta^{\textrm{R}}\phi^{\textrm{eq}}} & \textrm{if Ricker stock-recruit relationship}
 \end{cases},
 $$
-where $\phi^{\textrm{eq}}$ is the spawners-per-recruit when total mortality at age is $Z^{\textrm{eq}}_a$. 
+where $\phi^{\textrm{eq}} = \sum_a l(Z^{\textrm{eq}})_a \times f_a \times m_a$ is the spawners-per-recruit calculated from equilibrium survival, spawning output $f_a$ (typically from weight as a proxy) and maturity $m_a$ at age.
 
 From steepness $h$, $\alpha^{\textrm{B}} = \frac{4h}{(1-h)\phi_0}$, $\beta^{\textrm{B}} = \frac{5h-1}{(1-h)B^S_0}$, $\alpha^{\textrm{R}} = \frac{(5h)^{1.25}}{\phi_0}$, $\beta^{\textrm{R}} = \frac{\log(5h)}{B^S_0}$, where $\phi_0$ and $B^S_0$ are unfished spawners-per-recruit and unfished spawning biomass, respectively.
 
-The initial recruitment deviations $\delta^{\textrm{init}}_a$ can also be estimated, with $\tau$ as the corresponding standard deviation. By default they are not estimated.
+The initial recruitment deviations $\delta^{\textrm{init}}_a$ can be estimated, with $\tau$ as the corresponding standard deviation. 
+
+By default, the model initializes with an unfished population, i.e., no fishing mortality and no deviations from the equilibrium age structure.
