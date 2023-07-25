@@ -17,7 +17,21 @@ where <span class="math inline">\(K\)</span> is the carrying capacity, <span cla
 <span class="math display">\[\gamma = \dfrac{1}{n-1}n^{n/(n-1)}.\]</span></p>
 <p>The fishing mortality <span class="math inline">\(F_t\)</span> is conditioned on the observed catch <span class="math inline">\(C_t\)</span>. If fishing occurs as a pulse fishery, then
 <span class="math display">\[\hat{F}_t = \dfrac{C_t}{\hat{B}_t},\]</span>
-where <span class="math inline">\(F_t\)</span> is effectively an exploitation rate. Alternatively, smaller time steps are used in the model to approximate continuous production and fishing. Given the biomass in the start of the year and assuming a constant fishing mortality over the time steps within a year, the fishing mortality that produces the observed annual catch is solved iteratively. By default, four sub-annual time steps are used to solve for <span class="math inline">\(F_t\)</span>.</p>
+where <span class="math inline">\(F_t\)</span> is effectively an exploitation rate.</p>
+</div>
+<div id="continuous-surplus-production" class="section level3">
+<h3>Continuous surplus production</h3>
+<p>Smaller time steps are used in the model to approximate continuous production and fishing. With the biomass at the start of the year, the model iteratively solves for the year-specific fishing mortality rate that produces the observed annual catch over sub-annual time steps.</p>
+<p>For each seasonal time step <span class="math inline">\(t&#39;\)</span> within year,</p>
+<p><span class="math display">\[
+\begin{align}
+P_{t&#39;} &amp;= \Delta \times \gamma \times MSY \times \left(\dfrac{B_{t&#39;}}{K}-\left[\dfrac{B_{t&#39;}}{K}\right]^n\right)\\
+C_{t&#39;} &amp;= \Delta \times F_t \times B_{t&#39;}\\
+B_{t&#39;+1} &amp;= B_{t&#39;} + P_{t&#39;} - C_{t&#39;}\\
+C_t &amp;= \sum_{t&#39;} C_{t&#39;}
+\end{align}
+\]</span></p>
+<p>By default, four sub-annual time steps <span class="math inline">\(\Delta = 0.25\)</span> with <span class="math inline">\(t&#39;=1,2,3,4\)</span> are used to solve for <span class="math inline">\(F_t\)</span>.</p>
 </div>
 <div id="estimated-and-derived-parameters" class="section level3">
 <h3>Estimated and derived parameters</h3>
@@ -53,10 +67,12 @@ where <span class="math inline">\(\delta_t \sim N(0, \tau^2)\)</span> are biomas
 <span class="math display">\[L^I = \sum_s \lambda_s \sum_t \left(-\log(\sigma_{s,t}) - 0.5\left[\dfrac{\log(I_{s,t}) - \log(\hat{q}_s \hat{B}_t)}{\sigma_{s,t}}\right]^2\right)\]</span>
 where <span class="math inline">\(lamba_s\)</span> is the weighting coefficient of index <span class="math inline">\(s\)</span>, <span class="math inline">\(q_s\)</span> is the cathabilitiy coefficient, and the circumflex denotes an estimate.</p>
 <p>Log-biomass deviations <span class="math inline">\(\hat{\delta}_t\)</span> are typically estimated as penalized parameters towards the likelihood, with the penalty:
-<span class="math display">\[L^{\delta} = \sum_t \left(-\log(\tau) - 0.5\left[\dfrac{\delta_t}{\tau}\right]^2\right).\]</span>
-#### Prior for MSY</p>
+<span class="math display">\[L^{\delta} = \sum_t \left(-\log(\tau) - 0.5\left[\dfrac{\delta_t}{\tau}\right]^2\right).\]</span></p>
+<div id="prior-for-msy" class="section level4">
+<h4>Prior for MSY</h4>
 <p>A lognormal prior (a penalty to the likelihood) can be provided to the model:</p>
 <p><span class="math display">\[L^{\textrm{MSY}} = - 0.5\left(\dfrac{\log(\widehat{\textrm{MSY}}) - \log(\mu_{\textrm{MSY}})}{\sigma_{\textrm{MSY}}}\right)^2\]</span></p>
+</div>
 <div id="prior-for-r" class="section level4">
 <h4>Prior for r</h4>
 <p>A lognormal prior for the <span class="math inline">\(r\)</span> can be provided to the model:</p>
@@ -93,7 +109,7 @@ is
 <h3>References</h3>
 <p>Fletcher, R.I. 1978. On the restructuring of the Pella-Tomlinson system. Fishery Bulletin 76:515-521.</p>
 <p>Meyer, R., and Millar, R.B. 1999. BUGS in Bayesian stock assessments. Canadian Journal of Fisheries and Aquatic Science 56:1078-1086.</p>
-<p>Stanley, R.D., M. McAllister, P. Starr and N. Olsen. 2009. Stock assessment for bocaccio (Sebastes
-paucispinis) in British Columbia waters. DFO Can. Sci. Advis. Sec. Res. Doc. 2009/055.
+<p>Stanley, R.D., M. McAllister, P. Starr and N. Olsen. 2009. Stock assessment for bocaccio (<em>Sebastes
+paucispinis</em>) in British Columbia waters. DFO Can. Sci. Advis. Sec. Res. Doc. 2009/055.
 xiv + 200 p. </p>
 </div>
