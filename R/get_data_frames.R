@@ -43,7 +43,7 @@ get_Metadata.Hist <- function(x) {
   out$nyear <- nyear
   hist.years <- years %>% filter(Period=='Historical')
   out$Hist.Years <- hist.years
-  pro.years <- years %>% filter(Period=='Historical')
+  pro.years <- years %>% filter(Period=='Projection')
   out$proyears <- length(pro.years$Year)
   out$Pro.Years <- pro.years
   out$All.Years <- years
@@ -530,7 +530,7 @@ get_ts.multiHist <- function(x, variable='Spawning Biomass', model='Model 1', sc
     by_stock <- TRUE
     by_fleet <- FALSE
   }
-  if (variable %in% c('Landings', 'Removals')) {
+  if (variable %in% c('Landings', 'Removals', "Apical Fishing Mortality")) {
     by_stock <- TRUE
     by_fleet <- TRUE
   }
@@ -604,10 +604,15 @@ get_ts.MMSE <- function(x, variable='Spawning Biomass', model='Model 1', scale=N
   nsim <- x@nsim
   nMPs <- x@nMPs
   MPs <- x@MPs[[1]]
-  nstock <- x@nstocks
+  n_stocks <- x@nstocks
   stock_names <- names(x@multiHist)
   if (is.null(stock_names))
     stock_names <- paste('Stock', 1:n_stocks)
+  n_fleets <- length(x@multiHist[[1]])
+  fleet_names <- names(x@multiHist[[1]])
+  if (is.null(fleet_names))
+    fleet_names <- paste('Fleet', 1:n_fleets)
+
 
   # Historical
   do_hist <- TRUE
@@ -619,29 +624,73 @@ get_ts.MMSE <- function(x, variable='Spawning Biomass', model='Model 1', scale=N
 
   # Projection
   slot <- match_ts_variable(variable, 'MMSE')
-  if (grepl('\\()', slot)) {
-    fn <- gsub('\\()','', slot)
-    value <- get(fn)(x)
-  } else {
-    value <- as.vector(slot(x, slot))
-  }
-
   proj.years <- metadata$Pro.Years
   pyears <- metadata$proyears
 
-  if (!is.null(scale) & inherits(scale, 'function')) {
-    value <- scale(value)
+  if (variable %in% c('Spawning Biomass', 'Biomass', 'Recruits')) {
+    by_stock <- TRUE
+    by_fleet <- FALSE
+  }
+  if (variable %in% c('Landings', 'Removals', "Apical Fishing Mortality")) {
+    by_stock <- TRUE
+    by_fleet <- TRUE
   }
 
 
-  proj_df <- data.frame(Sim=1:nsim,
-                        Stock=rep(stock_names, each=nsim),
-                        MP=rep(MPs,each=nsim*nstock),
-                        Year=rep(proj.years$Year, each=nsim*nMPs*nstock),
-                        Variable=variable,
-                        Value=value)
+  stock_list <- list()
+  if (!by_fleet) {
+    for (st in 1:n_stocks) {
+      if (grepl('\\()', slot)) {
+        fn <- gsub('\\()','', slot)
+        value <- get(fn)(x)
+      } else {
+        value <- as.vector(slot(x, slot)[,st,,])
+      }
 
-  proj_df <- dplyr::left_join(proj_df, proj.years, by = join_by(Year))
+      if (!is.null(scale) & inherits(scale, 'function')) {
+        value <- scale(value)
+      }
+
+
+      stock_list[[st]] <- data.frame(Year=rep(proj.years$Year, each=nsim*nMPs),
+                                     Sim=1:nsim,
+                                     MP=rep(MPs,each=nsim),
+                                     Value=value,
+                                     Variable=variable,
+                                     Period=proj.years$Period,
+                                     Model=model,
+                                     Stock=stock_names[st])
+    }
+    proj_df <- do.call('rbind', stock_list)
+  } else {
+    for (st in 1:n_stocks) {
+      stock_list[[st]] <- list()
+      for (fl in 1:n_fleets) {
+        if (grepl('\\()', slot)) {
+          fn <- gsub('\\()','', slot)
+          value <- get(fn)(x)
+        } else {
+          value <- as.vector(slot(x, slot)[,st,fl,,])
+        }
+        if (!is.null(scale) & inherits(scale, 'function')) {
+          value <- scale(value)
+        }
+        stock_list[[st]][[fl]] <- data.frame(Year=rep(proj.years$Year, each=nsim*nMPs),
+                                       Sim=1:nsim,
+                                       MP=rep(MPs,each=nsim),
+                                       Value=value,
+                                       Variable=variable,
+                                       Period=proj.years$Period,
+                                       Model=model,
+                                       Stock=stock_names[st],
+                                       Fleet=fleet_names[fl])
+
+      }
+      stock_list[[st]] <- do.call('rbind', stock_list[[st]])
+    }
+    proj_df <- do.call('rbind', stock_list)
+  }
+
 
   if (do_hist) {
     out <- bind_rows(hist_df, proj_df)
@@ -686,6 +735,12 @@ get_SSB <- function(x, model='Model 1', ...) {
 }
 
 
+#' @export
+#' @rdname get_ts
+get_F <- function(x, model='Model 1', ...) {
+  get_ts(x, variable='Apical Fishing Mortality', model=model, ...)
+}
+
 hist.recruits <- function(x) {
   as.vector(apply(x@AtAge$Number[,1,,], 1:2, sum))
 }
@@ -697,12 +752,6 @@ mse.recruits <- function(x) {
       stop('Need to use `extended=TRUE` argument for `runMSE`, or update to a more recent version of `MSEtool` and run `runMSE` again')
   }
 }
-
-
-
-
-
-
 
 
 

@@ -14,6 +14,7 @@
 \alias{get_Removals}
 \alias{get_Recruits}
 \alias{get_SSB}
+\alias{get_F}
 \alias{get_Biomass_at_Age}
 \alias{get_Number_at_Age}
 \alias{get_SSB_at_Age}
@@ -44,6 +45,8 @@ get_Removals(x, model = "Model 1", ...)
 get_Recruits(x, model = "Model 1", ...)
 
 get_SSB(x, model = "Model 1", ...)
+
+get_F(x, model = "Model 1", ...)
 
 get_Biomass_at_Age(x, model = "Model 1", ...)
 

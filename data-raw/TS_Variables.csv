@@ -5,9 +5,14 @@ Biomass,Hist,Biomass
 Biomass,MSE,B
 Landings,Hist,Landings
 Landings,MSE,Catch
+Landings,MMSE,Catch
 Removals,Hist,Removals
 Removals,MSE,Removals
+Removals,MMSE,Removals
 Recruits,Hist,hist.recruits()
 Recruits,MSE,mse.recruits()
 Spawning Biomass,MMSE,SSB
 Biomass,MMSE,B
+Apical Fishing Mortality,Hist,Find
+Apical Fishing Mortality,MSE,FM
+Apical Fishing Mortality,MMSE,FM
