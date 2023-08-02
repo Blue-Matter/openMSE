@@ -1,6 +1,9 @@
 Variable,Class,Slot
 Spawning Biomass,Hist,SBiomass
 Spawning Biomass,MSE,SSB
+SB_SBMSY,MMSE,SB_SBMSY
+TAC,MMSE,TAC
+F_FMSY,MMSE,F_FMSY
 Biomass,Hist,Biomass
 Biomass,MSE,B
 Landings,Hist,Landings

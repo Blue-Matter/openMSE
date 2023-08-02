@@ -734,6 +734,12 @@ get_SSB <- function(x, model='Model 1', ...) {
   get_ts(x, variable='Spawning Biomass', model=model, ...)
 }
 
+#' @export
+#' @rdname get_ts
+get_SB_SBMSY <- function(x, model='Model 1', ...) {
+  get_ts(x, variable='SB_SBMSY', model=model, ...)
+}
+
 
 #' @export
 #' @rdname get_ts
