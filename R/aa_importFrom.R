@@ -1,7 +1,9 @@
 utils::globalVariables(c("Class", "Fleet", "Lower", 'MP', 'Median',
                          'Model', 'Period', 'Upper', 'Value', 'Variable',
                          'Year', 'alpha', 'colpalette', '.',
-                         'value', 'variable'))
+                         'value', 'variable', 'st', 'Sim', 'Age', 'Stock',
+                         'At_Age_TS_Variables', 'TS_Variables'
+                         ))
 
 
 
@@ -10,5 +12,5 @@ utils::globalVariables(c("Class", "Fleet", "Lower", 'MP', 'Median',
 #' @importFrom grid unit
 #' @importFrom purrr map2_df
 #' @importFrom stats median quantile
-#' @importFrom utils globalVariables
+#' @importFrom utils globalVariables head tail
 NULL

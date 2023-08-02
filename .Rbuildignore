@@ -21,4 +21,6 @@ netlify.toml
 ^\.github$
 ^CRAN-RELEASE$
 ^README\.Rmd$
-^test_objects
+^TESTING.R
+^data-raw
+^man-roxygen
