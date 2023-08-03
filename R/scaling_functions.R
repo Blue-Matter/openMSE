@@ -25,7 +25,7 @@ kg2lb <- function(x) x/0.453592
 
 #' @describeIn scale Convert from kilograms to 1000 pounds
 #' @export
-kg2_1000lb <- function(kg) kg*2.205 / 1000
+kg2_1000lb <- function(x) x*2.205 / 1000
 
 #' @describeIn scale Convert from kilograms to metric tons
 #' @export

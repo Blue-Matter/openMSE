@@ -23,8 +23,6 @@ If \code{names(x)} is \code{NULL}, \code{model} will be given sequential numeric
 
 \item{scale}{An optional function with a single numeric argument that returns transformed or scaled numeric values. See \code{lb2kg} and \code{kg2lb} for example.
 Can be a list of functions for list objects (NA for no transformation)}
-
-\item{...}{named arguments passed to \code{get_ts}}
 }
 \description{
 Create a data.frame with time-series information by simulation and year

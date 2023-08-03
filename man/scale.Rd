@@ -24,7 +24,7 @@ lb2mt(x)
 
 kg2lb(x)
 
-kg2_1000lb(kg)
+kg2_1000lb(x)
 
 kg2mt(x)
 

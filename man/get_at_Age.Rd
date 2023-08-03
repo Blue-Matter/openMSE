@@ -21,6 +21,8 @@ get_at_Age(x, model = "Model 1", ...)
 \item{model}{An optional name for the model.
 If \code{x} is a list of objects, \code{model} will be taken from \code{names(x)}.
 If \code{names(x)} is \code{NULL}, \code{model} will be given sequential numerical values (e.g., \verb{Model 1}, \verb{Model 2}, ...)}
+
+\item{...}{additional arguments}
 }
 \value{
 A data.frame

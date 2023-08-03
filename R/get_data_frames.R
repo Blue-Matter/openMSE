@@ -237,6 +237,7 @@ get_Assess_Estimates.list <- function(x, model=NULL) {
 #'
 #' @template x-parameter
 #' @template model-parameter
+#' @param ... additional arguments
 #' @return A data.frame
 #' @export
 #'
@@ -338,6 +339,7 @@ get_at_Age.multiHist <- function(x, model='Model 1', ...) {
 #'
 #' @template x-parameter
 #' @template model-parameter
+#' @param ... additional arguments
 #' @return A data.frame
 #' @export
 get_at_Length <- function(x, model='Model 1', ...) {
@@ -864,7 +866,6 @@ get_LifeHistory.MSE <- function(x, model='Model 1') {
 #' Use `valid_ts_variables()` for valid variable names.
 #' @template model-parameter
 #' @template scale-parameter
-#' @param ... named arguments passed to `get_ts`
 #'
 #' @export
 get_at_age_ts <- function(x, variable='Spawning Biomass', model='Model 1', scale=NULL) {
