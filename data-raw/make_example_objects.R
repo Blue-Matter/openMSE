@@ -39,6 +39,9 @@ MMSE <- ProjectMOM(multiHist, MPs=MPs)
 HistList <- list(Base_Case=Hist1, Lower_M=Hist2, Higher_M=Hist3, Lower_h=Hist4)
 MSEList <- list(Base_Case=MSE1, Lower_M=MSE2, Higher_M=MSE3, Lower_h=MSE4)
 
+if(!dir.exists('test_objects'))
+  dir.create('test_objects')
+
 saveRDS(Hist1, 'test_objects/Hist1.rda')
 saveRDS(Hist2, 'test_objects/Hist2.rda')
 saveRDS(Hist3, 'test_objects/Hist3.rda')

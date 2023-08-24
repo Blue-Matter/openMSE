@@ -5,7 +5,7 @@
 \alias{TS_Variables}
 \title{Time Series Variables}
 \format{
-An object of class \code{data.frame} with 20 rows and 3 columns.
+An object of class \code{data.frame} with 21 rows and 3 columns.
 }
 \usage{
 TS_Variables

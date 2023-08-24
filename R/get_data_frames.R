@@ -207,7 +207,7 @@ get_Assess_Estimates.MSE.MP <- function(mp, MSE, model='Model 1') {
   lapply(1:MSE@nsim, function(x) {
     if (!is.null(MSE@PPD[[mp]]@Misc[[x]]$Assessment_report)) {
       MSE@PPD[[mp]]@Misc[[x]]$Assessment_report %>%
-        mutate(MP = MSE@MPs[mp], Simulation = x, Model=model) %>%
+        mutate(MP = MSE@MPs[mp], Sim = x, Model=model) %>%
         rename(Variable=variable, Value=value)
     }
   })
@@ -226,6 +226,39 @@ get_Assess_Estimates.list <- function(x, model=NULL) {
   x <- check_names(x)
   purrr::map2(x, names(x), get_Assess_Estimates.MSE) %>%
     purrr::list_rbind()
+}
+
+get_Assess_Estimates.MMSE.MP <- function(mp, PPD, MPs, nsim, model='Model 1') {
+  lapply(1:nsim, function(x) {
+    if (!is.null(PPD[[mp]]@Misc[[x]]$Assessment_report)) {
+      PPD[[mp]]@Misc[[x]]$Assessment_report %>%
+        mutate(MP = MPs[mp], Sim= x, Model=model) %>%
+        rename(Variable=variable, Value=value)
+    }
+  })
+}
+
+#' @export
+#' @rdname get_Assess_Estimates
+get_Assess_Estimates.MMSE <- function(x, model=NULL) {
+  s_list <- list()
+  for (s in 1:x@nstocks) {
+    s_list[[s]] <- list()
+    for (fl in 1:x@nfleets) {
+      MPs <- x@MPs[[s]]
+      if (inherits(MPs,'list'))
+        MPs <- MPs[[fl]]
+      df <- lapply(1:x@nMPs, get_Assess_Estimates.MMSE.MP,
+             PPD=x@PPD[[s]][[fl]], MPs,
+             nsim=x@nsim, model=model) %>% bind_rows()
+      df$Stock <- x@Snames[s]
+      df$Fleet <- x@Fnames[fl, s]
+      s_list[[s]][[fl]] <- df
+    }
+    s_list[[s]] <- do.call('rbind', s_list[[s]])
+  }
+  do.call('rbind', s_list)
+
 }
 
 # At-Age Schedules ----
@@ -278,6 +311,24 @@ get_at_Age.Hist <- function(x, model='Model 1', ...) {
 
 #' @export
 #' @rdname get_at_Age
+get_at_Age.list <- function(x, model='Model 1', ...) {
+  x <- check_names(x)
+  if (inherits(x[[1]], 'MSE')) {
+    out <- purrr::map2(x, names(x), get_at_Age.MSE, ...) %>%
+      purrr::list_rbind()
+  } else if (inherits(x[[1]], 'Hist')) {
+    out <- purrr::map2(x, names(x), get_at_Age.Hist, ...) %>%
+      purrr::list_rbind()
+  } else {
+    out <- get_at_Age.multiHist(x, model=model, ...)
+  }
+  out
+}
+
+
+
+#' @export
+#' @rdname get_at_Age
 get_at_Age.MSE <- function(x, model='Model 1', ...) {
 
   Vars <- c('Length', 'Weight', 'Select', 'Retention', 'Maturity', 'N.Mortality')
@@ -296,9 +347,6 @@ get_at_Age.MSE <- function(x, model='Model 1', ...) {
   for (i in seq_along(Vars)) {
     var <- Vars[i]
     value <- as.vector(x@AtAge[[var]])
-    if (!is.null(scale) & inherits(scale, 'function')) {
-      value <- scale(value)
-    }
     df_out[[var]] <- value
   }
   df_out %>% tidyr::pivot_longer(., cols=all_of(Vars),
@@ -328,6 +376,26 @@ get_at_Age.multiHist <- function(x, model='Model 1', ...) {
     stock_list[[st]] <- purrr::list_rbind(stock_list[[st]])
   }
   do.call('rbind',stock_list)
+}
+
+#' @export
+#' @rdname get_at_Age
+get_at_Age.MMSE <- function(x, model='Model 1', ...) {
+  nstocks <- x@nstocks
+  nfleets <- x@nfleets
+  s_list <- list()
+  for (s in 1:nstocks) {
+    s_list[[s]] <- list()
+    for (fl in 1:nfleets) {
+      df <- get_at_Age.Hist(x@multiHist[[s]][[fl]])
+      df$Stock <- x@Snames[s]
+      df$Fleet <- x@Fnames[fl,s]
+      s_list[[s]][[fl]] <- df
+    }
+    s_list[[s]] <- do.call('rbind', s_list[[s]])
+  }
+  do.call('rbind', s_list)
+
 }
 
 # At-Length Schedules ----
@@ -545,7 +613,13 @@ get_ts.multiHist <- function(x, variable='Spawning Biomass', model='Model 1', sc
   stock_list <- list()
   if (!by_fleet) {
     for (st in 1:n_stocks) {
-      value <- as.vector(apply(x[[st]][[1]]@TSdata[[slot]], 1:2, sum))
+
+      if (grepl('\\()', slot)) {
+        fn <- gsub('\\()','', slot)
+        value <- get(fn)(x[[st]][[1]])
+      } else {
+        value <- as.vector(apply(x[[st]][[1]]@TSdata[[slot]], 1:2, sum))
+      }
       if (inherits(scale, 'list')) {
         if (!is.null(scale[[st]]) & inherits(scale[[st]], 'function')) {
           value <- scale[[st]](value)
@@ -645,6 +719,8 @@ get_ts.MMSE <- function(x, variable='Spawning Biomass', model='Model 1', scale=N
       if (grepl('\\()', slot)) {
         fn <- gsub('\\()','', slot)
         value <- get(fn)(x)
+        value <- as.vector(value[,,1,])
+
       } else {
         value <- as.vector(slot(x, slot)[,st,,])
       }
@@ -759,23 +835,14 @@ mse.recruits <- function(x) {
     if (length(x@Misc$extended)<1)
       stop('Need to use `extended=TRUE` argument for `runMSE`, or update to a more recent version of `MSEtool` and run `runMSE` again')
   }
+  as.vector(apply(x@N[,1,,,], c(1,2,3), sum))
 }
 
 
+mmse.recruits <- function(x) {
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+  apply(x@N[,,1,,,, drop=FALSE], c(1,2,4,5), sum)
+}
 
 
 
@@ -790,25 +857,23 @@ check_names <- function(x) {
 
 
 
-
-
 #' Get Life History Parameters
 #'
 #' Extracts the life-history parameters: `Linf`, `K`, `L50`, and `ageM`
 #'
 #' @template x-parameter
 #' @template model-parameter
-#'
+#' @param ... additiona arguments (not used)
 #' @return A data.frame
 #' @export
 
-get_LifeHistory <- function(x, model='Model 1') {
+get_LifeHistory <- function(x, model='Model 1', ...) {
   UseMethod("get_LifeHistory")
 }
 
 #' @export
 #' @rdname get_LifeHistory
-get_LifeHistory.Hist <- function(x, model='Model 1') {
+get_LifeHistory.Hist <- function(x, model='Model 1', ...) {
 
   Vars <- c('Linf', 'K', 'M', 'L50', 'ageM')
 
@@ -836,15 +901,26 @@ get_LifeHistory.Hist <- function(x, model='Model 1') {
 
 #' @export
 #' @rdname get_LifeHistory
-get_LifeHistory.list <- function(x, model='Model 1') {
-  x <- check_names(x)
-  purrr::map2(x, names(x), get_LifeHistory) %>%
-    purrr::list_rbind()
+get_LifeHistory.list <- function(x, model='Model 1', ...) {
+  if (inherits(x, 'multiHist')) {
+    out <- lapply(1:length(x), function(s) {
+      dd <- get_LifeHistory.Hist(x[[s]][[1]])
+      dd$Stock <- attributes(x)$Stocks[s]
+      dd
+    } )
+    out <- do.call('rbind', out)
+
+  } else {
+    x <- check_names(x)
+    out <- purrr::map2(x, names(x), get_LifeHistory) %>%
+      purrr::list_rbind()
+  }
+  out
 }
 
 #' @export
 #' @rdname get_LifeHistory
-get_LifeHistory.MSE <- function(x, model='Model 1') {
+get_LifeHistory.MSE <- function(x, model='Model 1', ...) {
   x@Hist@OM@nyears <- x@nyears
   x@Hist@OM@proyears <- x@proyears
   x@Hist@OM@CurrentYr <-  x@OM$CurrentYr[1]
@@ -855,6 +931,21 @@ get_LifeHistory.MSE <- function(x, model='Model 1') {
   }
   get_LifeHistory(Hist, model=model)
 }
+
+#' @export
+#' @rdname get_LifeHistory
+get_LifeHistory.MMSE <- function(x, model='Model 1', ...) {
+
+  s_list <- list()
+  for (s in 1:x@nstocks) {
+    s_list[[s]] <- list()
+    s_list[[s]] <- get_LifeHistory.Hist(x@multiHist[[s]][[1]])
+    s_list[[s]]$Stock <- x@Snames[s]
+  }
+  do.call('rbind', s_list)
+
+}
+
 
 
 # At Age Time-Series ----

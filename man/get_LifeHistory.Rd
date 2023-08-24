@@ -5,15 +5,18 @@
 \alias{get_LifeHistory.Hist}
 \alias{get_LifeHistory.list}
 \alias{get_LifeHistory.MSE}
+\alias{get_LifeHistory.MMSE}
 \title{Get Life History Parameters}
 \usage{
-get_LifeHistory(x, model = "Model 1")
+get_LifeHistory(x, model = "Model 1", ...)
 
-\method{get_LifeHistory}{Hist}(x, model = "Model 1")
+\method{get_LifeHistory}{Hist}(x, model = "Model 1", ...)
 
-\method{get_LifeHistory}{list}(x, model = "Model 1")
+\method{get_LifeHistory}{list}(x, model = "Model 1", ...)
 
-\method{get_LifeHistory}{MSE}(x, model = "Model 1")
+\method{get_LifeHistory}{MSE}(x, model = "Model 1", ...)
+
+\method{get_LifeHistory}{MMSE}(x, model = "Model 1", ...)
 }
 \arguments{
 \item{x}{An object of class \code{Hist}, \code{MSE}, or a list of \code{Hist} or \code{MSE} objects}
@@ -21,6 +24,8 @@ get_LifeHistory(x, model = "Model 1")
 \item{model}{An optional name for the model.
 If \code{x} is a list of objects, \code{model} will be taken from \code{names(x)}.
 If \code{names(x)} is \code{NULL}, \code{model} will be given sequential numerical values (e.g., \verb{Model 1}, \verb{Model 2}, ...)}
+
+\item{...}{additiona arguments (not used)}
 }
 \value{
 A data.frame

@@ -4,6 +4,7 @@
 \alias{get_Assess_Estimates}
 \alias{get_Assess_Estimates.MSE}
 \alias{get_Assess_Estimates.list}
+\alias{get_Assess_Estimates.MMSE}
 \title{Create a data.frame with estimated values from a \code{SAMtool} assessment method
 used in an MSE}
 \usage{
@@ -12,6 +13,8 @@ get_Assess_Estimates(x, model = "Model 1")
 \method{get_Assess_Estimates}{MSE}(x, model = "Model 1")
 
 \method{get_Assess_Estimates}{list}(x, model = NULL)
+
+\method{get_Assess_Estimates}{MMSE}(x, model = NULL)
 }
 \arguments{
 \item{x}{An object of class \code{MSE} or a list of \code{MSE} objects, where

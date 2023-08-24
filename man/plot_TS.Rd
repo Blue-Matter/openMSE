@@ -7,6 +7,7 @@
 \alias{plot_Landings}
 \alias{plot_Removals}
 \alias{plot_Recruits}
+\alias{plot_F}
 \alias{plot_LifeHistory}
 \title{Plots the median and quantiles of a time-series}
 \usage{
@@ -39,6 +40,8 @@ plot_Landings(x, ylab = "Landings", ...)
 plot_Removals(x, ylab = "Removals", ...)
 
 plot_Recruits(x, ylab = "Recruits", ...)
+
+plot_F(x, ylab = "Fishing Mortality (F)", ...)
 
 plot_LifeHistory(
   x,
@@ -113,6 +116,8 @@ Plots the median and quantiles of a time-series
 \item \code{plot_Removals()}: Plot the Removals (biomass)
 
 \item \code{plot_Recruits()}: Plot the Recruits (numbers)
+
+\item \code{plot_F()}: Plot the Recruits (numbers)
 
 \item \code{plot_LifeHistory()}: Plot the Life-History parameters
 

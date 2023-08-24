@@ -4,10 +4,10 @@ summary_df <- function(x, quantiles=c(0.025, 0.975), func=get_SSB, scale=NULL, y
 
   df <- func(x, scale=scale)
   df$Model <- factor(df$Model, ordered = TRUE, levels=unique(df$Model))
-  if (!is.null(df$Fleet))
+  if (!is.null(df[["Fleet"]]))
     df$Fleet <- factor(df$Fleet, ordered = TRUE, levels=unique(df$Fleet))
 
-  if (!is.null(df$Stock))
+  if (!is.null(df[["Stock"]]))
     df$Stock <- factor(df$Stock, ordered = TRUE, levels=unique(df$Stock))
 
   # filter years
@@ -98,7 +98,7 @@ plot_ts_quants <- function(df,
       p <- plot_ts_hist(df, xlab, ylab, title, alpha, lwd, colpalette)
     } else {
       p <- plot_ts_hist(df, xlab, ylab, title, alpha, lwd, colpalette)
-      if (!is.null(df$Fleet)) {
+      if (!is.null(df[['Fleet']])) {
         p <- p + facet_grid(Model~Fleet, scales='free_y')
       } else {
         p <- p + facet_wrap(~Model)
@@ -158,7 +158,7 @@ plot_ts_hist <- function(df, xlab, ylab, title, alpha, lwd, colpalette) {
   # no facet and no legend
   if (is.null(ylab))
     ylab <- unique(df$Variable)
-  p <- ggplot(df, aes(x=Year, y=Median, ymin=Lower, ymax=Upper, group=1))+
+  p <- ggplot(df, aes(x=Year, y=Median, ymin=Lower, ymax=Upper, group=Model))+
     geom_ribbon(alpha=alpha, aes(fill=Model)) +
     geom_line(linewidth=lwd, aes(color=Model)) +
     labs(x = xlab, y = ylab, title= title) +
@@ -192,7 +192,7 @@ plot_ts_proj <- function(df, xlab, ylab, title, alpha, lwd, inc.Hist, colpalette
     MPs <- MPs[!is.na(MPs)]
     df$MP <- factor(df$MP, ordered = TRUE, levels=MPs)
   }
-  p <- ggplot(df, aes(x=Year, y=Median, ymin=Lower, ymax=Upper, group=1)) +
+  p <- ggplot(df, aes(x=Year, y=Median, ymin=Lower, ymax=Upper, group=MP)) +
     geom_ribbon(alpha=alpha, aes(fill=MP)) +
     geom_line(linewidth=lwd, aes(color=MP)) +
     labs(x = xlab, y = ylab, title= title) +
@@ -201,7 +201,7 @@ plot_ts_proj <- function(df, xlab, ylab, title, alpha, lwd, inc.Hist, colpalette
     expand_limits(y=0)
 
   if (inc.Hist) {
-    lastYr <- df_hist$Year %>% max()
+    lastYr <- as.numeric(df_hist$Year) %>% max()
     p <- p + geom_vline(xintercept = lastYr, lty=3)
   }
 
@@ -308,6 +308,13 @@ plot_Recruits <- function(x, ylab='Recruits', ...) {
 }
 
 #' @export
+#' @describeIn plot_TS Plot the Recruits (numbers)
+plot_F <- function(x, ylab='Fishing Mortality (F)', ...) {
+  plot_TS(x, get_function=get_F, ylab=ylab, ...)
+}
+
+
+#' @export
 #' @describeIn plot_TS Plot the Life-History parameters
 plot_LifeHistory <- function(x,
                              xlab='Year',
@@ -324,11 +331,11 @@ plot_LifeHistory <- function(x,
                              inc.Hist=FALSE,
                              print=TRUE) {
 
-  df <- summary_df(x, quantiles=quantiles, get_LifeHistory)
+  df <- summary_df(x, quantiles=quantiles, func=get_LifeHistory, scale=NULL)
 
   nmodel <- df$Model %>% unique() %>% length()
   multi_model <- ifelse(nmodel>1, TRUE, FALSE)
-
+  df$Year <- as.numeric(df$Year)
   if (multi_model) {
     p <- ggplot(df, aes(x=Year, y=Median, ymin=Lower, ymax=Upper))+
       geom_ribbon(alpha=alpha, aes(fill=Model)) +
@@ -337,11 +344,13 @@ plot_LifeHistory <- function(x,
       guides(color='none', fill='none')
 
   } else {
+
     p <- ggplot(df, aes(x=Year, y=Median, ymin=Lower, ymax=Upper))+
       geom_ribbon(alpha=alpha, aes(fill=Model)) +
       geom_line(linewidth=lwd, aes(color=Model)) +
       facet_wrap(~Variable, scales='free_y') +
       guides(color='none', fill='none')
+
   }
   p <- p +  scale_fill_brewer(palette=colpalette) +
     scale_color_brewer(palette=colpalette)

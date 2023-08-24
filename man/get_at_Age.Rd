@@ -3,17 +3,23 @@
 \name{get_at_Age}
 \alias{get_at_Age}
 \alias{get_at_Age.Hist}
+\alias{get_at_Age.list}
 \alias{get_at_Age.MSE}
 \alias{get_at_Age.multiHist}
+\alias{get_at_Age.MMSE}
 \title{Create a data.frame with at-age schedules by simulation and year}
 \usage{
 get_at_Age(x, model = "Model 1", ...)
 
 \method{get_at_Age}{Hist}(x, model = "Model 1", ...)
 
+\method{get_at_Age}{list}(x, model = "Model 1", ...)
+
 \method{get_at_Age}{MSE}(x, model = "Model 1", ...)
 
 \method{get_at_Age}{multiHist}(x, model = "Model 1", ...)
+
+\method{get_at_Age}{MMSE}(x, model = "Model 1", ...)
 }
 \arguments{
 \item{x}{An object of class \code{Hist}, \code{MSE}, or a list of \code{Hist} or \code{MSE} objects}

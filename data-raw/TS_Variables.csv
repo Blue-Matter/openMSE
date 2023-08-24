@@ -14,6 +14,7 @@ Removals,MSE,Removals
 Removals,MMSE,Removals
 Recruits,Hist,hist.recruits()
 Recruits,MSE,mse.recruits()
+Recruits,MMSE,mmse.recruits()
 Spawning Biomass,MMSE,SSB
 Biomass,MMSE,B
 Apical Fishing Mortality,Hist,Find
