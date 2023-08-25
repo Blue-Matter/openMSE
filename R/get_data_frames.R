@@ -623,7 +623,12 @@ get_ts.multiHist <- function(x, variable='Spawning Biomass', model='Model 1', sc
         fn <- gsub('\\()','', slot)
         value <- get(fn)(x[[st]][[1]])
       } else {
-        value <- as.vector(apply(x[[st]][[1]]@TSdata[[slot]], 1:2, sum))
+        if (variable=='Apical Fishing Mortality') {
+          value <- as.vector(apply(x[[st]][[1]]@AtAge$F.Mortality, c(1,3), max))
+        } else {
+          value <- as.vector(apply(x[[st]][[1]]@TSdata[[slot]], 1:2, sum))
+        }
+
       }
       if (inherits(scale, 'list')) {
         if (!is.null(scale[[st]]) & inherits(scale[[st]], 'function')) {
@@ -648,7 +653,13 @@ get_ts.multiHist <- function(x, variable='Spawning Biomass', model='Model 1', sc
     for (st in 1:n_stocks) {
       stock_list[[st]] <- list()
       for (fl in 1:n_fleets) {
-        value <- as.vector(apply(x[[st]][[fl]]@TSdata[[slot]], 1:2, sum))
+        if (variable=='Apical Fishing Mortality') {
+          value <- as.vector(apply(x[[st]][[fl]]@AtAge$F.Mortality, c(1,3), max))
+        } else {
+          value <- as.vector(apply(x[[st]][[fl]]@TSdata[[slot]], 1:2, sum))
+        }
+
+
 
         if (inherits(scale, 'list')) {
           if (!is.null(scale[[st]]) & inherits(scale[[st]], 'function')) {
