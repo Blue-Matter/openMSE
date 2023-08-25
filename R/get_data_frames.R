@@ -502,7 +502,12 @@ get_ts.Hist <- function(x, variable='Spawning Biomass', model='Model 1', scale=N
     fn <- gsub('\\()','', slot)
     value <- get(fn)(x)
   } else {
-    value <- as.vector(apply(x@TSdata[[slot]], 1:2, sum))
+    if (variable=='Apical Fishing Mortality') {
+      value <- as.vector(apply(x@AtAge$F.Mortality, c(1,3), max))
+    } else {
+      value <- as.vector(apply(x@TSdata[[slot]], 1:2, sum))
+    }
+
   }
   if (!is.null(scale) & inherits(scale, 'function')) {
     value <- scale(value)
