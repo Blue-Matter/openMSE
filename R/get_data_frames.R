@@ -498,6 +498,7 @@ match_at_age_ts_variable <- function(variable='Spawning Biomass', class='Hist') 
 #' @rdname get_ts
 get_ts.Hist <- function(x, variable='Spawning Biomass', model='Model 1', scale=NULL) {
   slot <- match_ts_variable(variable, 'Hist')
+  if (length(slot)==0) stop(variable, ' currently not supported for this object')
   if (grepl('\\()', slot)) {
     fn <- gsub('\\()','', slot)
     value <- get(fn)(x)
@@ -550,6 +551,7 @@ get_ts.MSE <- function(x, variable='Spawning Biomass', model='Model 1', scale=NU
 
   # Projection
   slot <- match_ts_variable(variable, 'MSE')
+  if (length(slot)==0) stop(variable, ' currently not supported for this object')
   if (grepl('\\()', slot)) {
     fn <- gsub('\\()','', slot)
     value <- get(fn)(x)
@@ -614,6 +616,7 @@ get_ts.multiHist <- function(x, variable='Spawning Biomass', model='Model 1', sc
   nsim <- x[[1]][[1]]@Misc$MOM@nsim
 
   slot <- match_ts_variable(variable, 'Hist')
+  if (length(slot)==0) stop(variable, ' currently not supported for this object')
 
   stock_list <- list()
   if (!by_fleet) {
