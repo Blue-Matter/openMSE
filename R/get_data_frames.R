@@ -902,8 +902,10 @@ get_LifeHistory.Hist <- function(x, model='Model 1', ...) {
 
   df_out <- data.frame(Year=rep(years$Year, each=nsim),
                        Sim=1:nsim,
-                       Period=years$Period,
+                       Period=rep(years$Period, each=nsim),
                        Model=model)
+
+
 
   for (i in seq_along(Vars)) {
     var <- Vars[i]
