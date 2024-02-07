@@ -854,7 +854,10 @@ mse.recruits <- function(x) {
     if (length(x@Misc$extended)<1)
       stop('Need to use `extended=TRUE` argument for `runMSE`, or update to a more recent version of `MSEtool` and run `runMSE` again')
   }
-  as.vector(apply(x@N[,1,,,], c(1,2,3), sum))
+  recs <- x@N[,1,,,]
+  as.vector(apply(recs, 1:2, sum))
+
+
 }
 
 

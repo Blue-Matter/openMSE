@@ -205,6 +205,12 @@ get_LifeHistory(multiHist) %>% head()
 get_LifeHistory(MMSE) %>% head()
 
 
+
+get_SB_SBMSY(MSE)
+
+x <- get_ts(multiHist, variable = "F_FMSY")
+
+
 # Plots ------
 
 # Note: August 2023 - currently plotting functions don't work for MMSE and multiHist objects
