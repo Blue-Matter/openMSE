@@ -1,6 +1,6 @@
 Package: openMSE
 Title: Easily Install and Load the 'openMSE' Packages
-Version: 1.1.0
+Version: 1.1.1
 Authors@R: c(
   person("Adrian", "Hordyk", 
          role = c("aut", "cre"),

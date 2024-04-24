@@ -142,11 +142,12 @@ get_Years.Hist <- function(x) {
     out <- data.frame(Year=c(hist.yrs, proj.yrs), Period=c(rep('Historical', Hist@OM@nyears),
                                                            rep('Projection', Hist@OM@proyears)))
   } else {
-    hist.yrs <- x@Data@Year
-    CurrentYr <- max(hist.yrs)
+    CurrentYr <- Hist@OMPars$CurrentYr[1]
+    nyears <- length(Hist@SampPars$Fleet$Find[1,])
+    hist.yrs <- rev(seq(CurrentYr, by=-1, length.out=nyears))
+
     if (is.na(CurrentYr))
       CurrentYr <- x@OMPars$CurrentYr[1]
-
 
     if (all(is.na(hist.yrs))) {
       nyears <- ncol(x@SampPars$Fleet$Find)
@@ -167,9 +168,10 @@ get_Years.Hist <- function(x) {
 get_Years.multiHist <- function(x) {
   multiHist <- x
 
-  hist.yrs <- multiHist[[1]][[1]]@Data@Year
-  CurrentYr <- max(hist.yrs)
-  nyears <- length(hist.yrs)
+  CurrentYr <- multiHist[[1]][[1]]@OMPars$CurrentYr[1]
+  nyears <- length(multiHist[[1]][[1]]@SampPars$Fleet$Find[1,])
+  hist.yrs <- rev(seq(CurrentYr, by=-1, length.out=nyears))
+
   proyears <- multiHist[[1]][[1]]@Misc$MOM@proyears
   proj.yrs <- (CurrentYr+1):(CurrentYr[1]+proyears)
   data.frame(Year=c(hist.yrs, proj.yrs), Period=c(rep('Historical', nyears),
