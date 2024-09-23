@@ -1,1 +1,4 @@
-url: 'https://openmse.openmse.com/'
+url: https://openmse.openmse.com/
+template:
+  bootstrap: 5
+

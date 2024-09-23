@@ -54,7 +54,7 @@ devtools::install_github("Blue-Matter/openMSE")
 
 The `demo` function runs an example MSE using three data-limited management procedures from `DLMtool` and one stock assessment model from `SAMtool`, and demonstrates some example plotting output:
 
-```{r example}
+```{r example, message=FALSE}
 library(openMSE)
 demo()
 ```
