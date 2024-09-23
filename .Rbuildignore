@@ -24,3 +24,5 @@ netlify.toml
 ^TESTING.R
 ^data-raw
 ^man-roxygen
+^test_objects
+DEVELOPMENT.R

@@ -205,7 +205,7 @@ get_Assess_Estimates <- function(x, model='Model 1') {
   UseMethod('get_Assess_Estimates')
 }
 
-get_Assess_Estimates.MSE.MP <- function(mp, MSE, model='Model 1') {
+get_Assess_Estimates_MSE_MP <- function(mp, MSE, model='Model 1') {
   lapply(1:MSE@nsim, function(x) {
     if (!is.null(MSE@PPD[[mp]]@Misc[[x]]$Assessment_report)) {
       MSE@PPD[[mp]]@Misc[[x]]$Assessment_report %>%
@@ -218,7 +218,7 @@ get_Assess_Estimates.MSE.MP <- function(mp, MSE, model='Model 1') {
 #' @export
 #' @rdname get_Assess_Estimates
 get_Assess_Estimates.MSE <- function(x, model='Model 1') {
-  lapply(1:x@nMPs, get_Assess_Estimates.MSE.MP, MSE=x, model=model) %>%
+  lapply(1:x@nMPs, get_Assess_Estimates_MSE_MP, MSE=x, model=model) %>%
     bind_rows()
 }
 
@@ -230,7 +230,7 @@ get_Assess_Estimates.list <- function(x, model=NULL) {
     purrr::list_rbind()
 }
 
-get_Assess_Estimates.MMSE.MP <- function(mp, PPD, MPs, nsim, model='Model 1') {
+get_Assess_Estimates_MMSE_MP <- function(mp, PPD, MPs, nsim, model='Model 1') {
   lapply(1:nsim, function(x) {
     if (!is.null(PPD[[mp]]@Misc[[x]]$Assessment_report)) {
       PPD[[mp]]@Misc[[x]]$Assessment_report %>%
@@ -250,7 +250,7 @@ get_Assess_Estimates.MMSE <- function(x, model=NULL) {
       MPs <- x@MPs[[s]]
       if (inherits(MPs,'list'))
         MPs <- MPs[[fl]]
-      df <- lapply(1:x@nMPs, get_Assess_Estimates.MMSE.MP,
+      df <- lapply(1:x@nMPs, get_Assess_Estimates_MMSE_MP,
              PPD=x@PPD[[s]][[fl]], MPs,
              nsim=x@nsim, model=model) %>% bind_rows()
       df$Stock <- x@Snames[s]
@@ -846,9 +846,11 @@ get_F <- function(x, model='Model 1', ...) {
   get_ts(x, variable='Apical Fishing Mortality', model=model, ...)
 }
 
+#' @export
 hist.recruits <- function(x) {
   as.vector(apply(x@AtAge$Number[,1,,], 1:2, sum))
 }
+
 
 mse.recruits <- function(x) {
   dd <- dim(x@N)
@@ -861,7 +863,6 @@ mse.recruits <- function(x) {
 
 
 }
-
 
 mmse.recruits <- function(x) {
 
@@ -989,6 +990,7 @@ get_at_age_ts <- function(x, variable='Spawning Biomass', model='Model 1', scale
   UseMethod("get_at_age_ts")
 }
 
+#' @export
 get_at_age_ts.multiHist <- function(x, variable='Spawning Biomass', model='Model 1', scale=NULL) {
   n_stocks <- length(x)
   stock_names <- names(x)
@@ -1068,6 +1070,7 @@ get_at_age_ts.multiHist <- function(x, variable='Spawning Biomass', model='Model
   out
 }
 
+#' @export
 get_at_age_ts.MMSE <- function(x, variable='Biomass', model='Model 1', scale=NULL) {
 
   metadata <- get_Metadata(x)
