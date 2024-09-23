@@ -21,6 +21,7 @@ knitr::opts_chunk$set(
 [![R build status](https://github.com/Blue-Matter/openMSE/workflows/R-CMD-check/badge.svg)](https://github.com/Blue-Matter/openMSE/actions)
 `r badge_devel("blue-matter/openMSE", "blue")`
 
+[![R-CMD-check](https://github.com/Blue-Matter/openMSE/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/Blue-Matter/openMSE/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
 openMSE is an umbrella R package for building operating models, analyzing fishery data, and conducting Management Strategy Evaluation (MSE) for a wide range of fisheries.
