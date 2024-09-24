@@ -2,7 +2,7 @@ pandoc: 3.1.11
 pkgdown: 2.1.1
 pkgdown_sha: ~
 articles: {}
-last_built: 2024-09-23T22:03Z
+last_built: 2024-09-24T15:59Z
 urls:
   reference: https://openmse.openmse.com/reference
   article: https://openmse.openmse.com/articles
