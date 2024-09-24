@@ -26,3 +26,4 @@ netlify.toml
 ^man-roxygen
 ^test_objects
 DEVELOPMENT.R
+^CRAN-SUBMISSION$

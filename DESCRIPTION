@@ -21,7 +21,7 @@ Description: The 'openMSE' package is designed for building operating models,
     'openMSE', users have access to the full functionality contained within
     these packages. Learn more about 'openMSE' at <https://openmse.com/>.
 License: GPL-3
-URL: https://openmse.com/, https://github.com/Blue-Matter/openMSE, https://blue-matter.github.io/openMSE/
+URL: https://openmse.com/, https://github.com/Blue-Matter/openMSE, https://openMSE.openMSE.com
 BugReports: https://github.com/Blue-Matter/openMSE/issues
 Encoding: UTF-8
 LazyData: true

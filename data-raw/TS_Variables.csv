@@ -12,9 +12,9 @@ Landings,MMSE,Catch
 Removals,Hist,Removals
 Removals,MSE,Removals
 Removals,MMSE,Removals
-Recruits,Hist,hist.recruits()
-Recruits,MSE,mse.recruits()
-Recruits,MMSE,mmse.recruits()
+Recruits,Hist,hist_recruits()
+Recruits,MSE,mse_recruits()
+Recruits,MMSE,mmse_recruits()
 Spawning Biomass,MMSE,SSB
 Biomass,MMSE,B
 Apical Fishing Mortality,Hist,Find

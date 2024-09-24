@@ -1,3 +1,9 @@
+## Note to CRAN Maintainers
+
+Re-submission:
+* replaced the old URL in DESCRIPTION
+* fixed mismatch for methods registered for non-generic
+
 
 ## Test environments
 * local - Windows 4.4.1

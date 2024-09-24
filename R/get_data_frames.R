@@ -846,13 +846,12 @@ get_F <- function(x, model='Model 1', ...) {
   get_ts(x, variable='Apical Fishing Mortality', model=model, ...)
 }
 
-#' @export
-hist.recruits <- function(x) {
+hist_recruits <- function(x) {
   as.vector(apply(x@AtAge$Number[,1,,], 1:2, sum))
 }
 
 
-mse.recruits <- function(x) {
+mse_recruits <- function(x) {
   dd <- dim(x@N)
   if (length(dd)==3) {
     if (length(x@Misc$extended)<1)
@@ -864,8 +863,7 @@ mse.recruits <- function(x) {
 
 }
 
-mmse.recruits <- function(x) {
-
+mmse_recruits <- function(x) {
   apply(x@N[,,1,,,, drop=FALSE], c(1,2,4,5), sum)
 }
 
