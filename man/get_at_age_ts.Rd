@@ -25,5 +25,5 @@ If \code{names(x)} is \code{NULL}, \code{model} will be given sequential numeric
 Can be a list of functions for list objects (NA for no transformation)}
 }
 \description{
-Create a data.frame with time-series information by simulation and year
+This function is deprecated. It works only with legacy \code{Hist} and \code{MSE} objects.
 }

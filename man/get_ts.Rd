@@ -73,5 +73,5 @@ Can be a list of functions for list objects (NA for no transformation)}
 \item{...}{named arguments passed to \code{get_ts}}
 }
 \description{
-Create a data.frame with time-series information by simulation and year
+This function is deprecated. It works only with legacy \code{Hist} and \code{MSE} objects.
 }

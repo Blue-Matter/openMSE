@@ -84,6 +84,11 @@ schedules.
 \details{
 Note that the Selectivity and Retention curves in these plots are from the operating model. If an MP changes the
 selectivity/retention, this is not shown in these plots.
+
+These functions are deprecated. They work only with legacy \code{Hist} and \code{MSE}
+objects. For \code{stock}, \code{fleet}, \code{hist}, and \code{mse} objects use \code{MSEtool::PlotLength()},
+\code{MSEtool::PlotWeight()}, \code{MSEtool::PlotMaturity()}, \code{MSEtool::PlotNaturalMortality()},
+\code{MSEtool::PlotSelectivity()}, and \code{MSEtool::PlotRetention()}.
 }
 \section{Functions}{
 \itemize{

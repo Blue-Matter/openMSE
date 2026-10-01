@@ -28,11 +28,7 @@ S3method(get_ts,MMSE)
 S3method(get_ts,MSE)
 S3method(get_ts,list)
 S3method(get_ts,multiHist)
-export(cm2inch)
 export(demo)
-export(divide_10)
-export(divide_100)
-export(divide_1000)
 export(get_Assess_Estimates)
 export(get_Biomass)
 export(get_Biomass_at_Age)
@@ -51,17 +47,6 @@ export(get_at_Age)
 export(get_at_Length)
 export(get_at_age_ts)
 export(get_ts)
-export(inch2cm)
-export(inch2mm)
-export(kg2_1000lb)
-export(kg2lb)
-export(kg2mt)
-export(lb2kg)
-export(lb2mt)
-export(mm2inch)
-export(multiply_10)
-export(multiply_100)
-export(multiply_1000)
 export(plot_Biomass)
 export(plot_F)
 export(plot_Landings)
@@ -82,49 +67,61 @@ export(theme_default)
 export(userguide)
 export(valid_at_age_ts_variables)
 export(valid_ts_variables)
-importFrom(DLMtool,AvC)
-importFrom(DLMtool,Itarget1)
-importFrom(DLMtool,matlenlim)
-importFrom(MSEtool,Kplot)
-importFrom(MSEtool,Pplot)
-importFrom(MSEtool,Tplot)
-importFrom(MSEtool,runMSE)
+importFrom(DLMtool,
+  AvC,
+  Itarget1,
+  matlenlim
+)
+importFrom(MSEtool,
+  Kplot,
+  Pplot,
+  Tplot,
+  runMSE
+)
 importFrom(SAMtool,DDSS_MSY)
 importFrom(crayon,blue)
-importFrom(dplyr,"%>%")
-importFrom(dplyr,all_of)
-importFrom(dplyr,bind_rows)
-importFrom(dplyr,distinct)
-importFrom(dplyr,filter)
-importFrom(dplyr,group_by)
-importFrom(dplyr,join_by)
-importFrom(dplyr,left_join)
-importFrom(dplyr,mutate)
-importFrom(dplyr,rename)
-importFrom(dplyr,select)
-importFrom(dplyr,summarize)
-importFrom(ggplot2,aes)
-importFrom(ggplot2,element_rect)
-importFrom(ggplot2,element_text)
-importFrom(ggplot2,expand_limits)
-importFrom(ggplot2,facet_grid)
-importFrom(ggplot2,facet_wrap)
-importFrom(ggplot2,geom_line)
-importFrom(ggplot2,geom_ribbon)
-importFrom(ggplot2,geom_vline)
-importFrom(ggplot2,ggplot)
-importFrom(ggplot2,guides)
-importFrom(ggplot2,labs)
-importFrom(ggplot2,rel)
-importFrom(ggplot2,scale_color_brewer)
-importFrom(ggplot2,scale_fill_brewer)
-importFrom(ggplot2,scale_x_discrete)
-importFrom(ggplot2,theme)
-importFrom(ggplot2,theme_light)
+importFrom(dplyr,
+  "%>%",
+  all_of,
+  bind_rows,
+  distinct,
+  filter,
+  group_by,
+  join_by,
+  left_join,
+  mutate,
+  rename,
+  select,
+  summarize
+)
+importFrom(ggplot2,
+  aes,
+  element_rect,
+  element_text,
+  expand_limits,
+  facet_grid,
+  facet_wrap,
+  geom_line,
+  geom_ribbon,
+  geom_vline,
+  ggplot,
+  guides,
+  labs,
+  rel,
+  scale_color_brewer,
+  scale_fill_brewer,
+  scale_x_discrete,
+  theme,
+  theme_light
+)
 importFrom(grid,unit)
 importFrom(purrr,map2_df)
-importFrom(stats,median)
-importFrom(stats,quantile)
-importFrom(utils,globalVariables)
-importFrom(utils,head)
-importFrom(utils,tail)
+importFrom(stats,
+  median,
+  quantile
+)
+importFrom(utils,
+  globalVariables,
+  head,
+  tail
+)

@@ -37,6 +37,5 @@ A data.frame with columns:\tabular{ll}{
 }
 }
 \description{
-Create a data.frame with estimated values from a \code{SAMtool} assessment method
-used in an MSE
+This function is deprecated. It works only with legacy \code{Hist} and \code{MSE} objects.
 }

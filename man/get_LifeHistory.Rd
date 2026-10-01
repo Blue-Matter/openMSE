@@ -31,5 +31,8 @@ If \code{names(x)} is \code{NULL}, \code{model} will be given sequential numeric
 A data.frame
 }
 \description{
+This function is deprecated. It works only with legacy \code{Hist} and \code{MSE} objects.
+}
+\details{
 Extracts the life-history parameters: \code{Linf}, \code{K}, \code{L50}, and \code{ageM}
 }

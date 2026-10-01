@@ -2,6 +2,8 @@
 # Meta-data ----
 #' Extract the meta-data from a `Hist` or `MSE` object
 #'
+#' This function is deprecated. It works only with legacy `Hist` and `MSE` objects.
+#'
 #' @template x-parameter
 #'
 #' @details If `x` is a list of objects, each object must
@@ -23,6 +25,7 @@
 #' @export
 #'
 get_Metadata <- function(x) {
+  .DeprecateLegacy("get_Metadata()")
   UseMethod("get_Metadata")
 }
 
@@ -99,11 +102,14 @@ get_Metadata.MMSE <- function(x) {
 
 #' Create a data.frame with Historical and Projection years
 #'
+#' This function is deprecated. It works only with legacy `Hist` and `MSE` objects.
+#'
 #' @template x-parameter
 #'
 #' @return A data.frame with years and period (Historical or Projection)
 #' @export
 get_Years <- function(x) {
+  .DeprecateLegacy("get_Years()", "MSEtool::Years()")
   UseMethod("get_Years")
 }
 
@@ -184,6 +190,8 @@ get_Years.multiHist <- function(x) {
 #' Create a data.frame with estimated values from a `SAMtool` assessment method
 #' used in an MSE
 #'
+#' This function is deprecated. It works only with legacy `Hist` and `MSE` objects.
+#'
 #' @param x An object of class `MSE` or a list of `MSE` objects, where
 #' `MSE` includes management procedures that use `SAMtool` stock assessment
 #' functions that return estimated values in `MSE@PPD`.
@@ -202,6 +210,7 @@ get_Years.multiHist <- function(x) {
 #' @export
 #'
 get_Assess_Estimates <- function(x, model='Model 1') {
+  .DeprecateLegacy("get_Assess_Estimates()")
   UseMethod('get_Assess_Estimates')
 }
 
@@ -267,6 +276,8 @@ get_Assess_Estimates.MMSE <- function(x, model=NULL) {
 
 #' Create a data.frame with at-age schedules by simulation and year
 #'
+#' This function is deprecated. It works only with legacy `Hist` and `MSE` objects.
+#'
 #' Note that the Selectivity and Retention curves in these plots are from the operating model. If an MP changes the
 #' selectivity/retention, this is not shown in these plots.
 #'
@@ -277,6 +288,7 @@ get_Assess_Estimates.MMSE <- function(x, model=NULL) {
 #' @export
 #'
 get_at_Age <- function(x, model='Model 1', ...) {
+  .DeprecateLegacy("get_at_Age()")
   UseMethod("get_at_Age")
 }
 
@@ -404,6 +416,8 @@ get_at_Age.MMSE <- function(x, model='Model 1', ...) {
 
 #' Create a data.frame with at-length selectivity and retention schedules by simulation and year
 #'
+#' This function is deprecated. It works only with legacy `Hist` and `MSE` objects.
+#'
 #' Note that the Selectivity and Retention curves in these plots are from the operating model. If an MP changes the
 #' selectivity/retention, this is not shown in these plots.
 #'
@@ -413,6 +427,7 @@ get_at_Age.MMSE <- function(x, model='Model 1', ...) {
 #' @return A data.frame
 #' @export
 get_at_Length <- function(x, model='Model 1', ...) {
+  .DeprecateLegacy("get_at_Length()")
   UseMethod("get_at_Length")
 }
 
@@ -457,6 +472,8 @@ get_at_Length.multiHist <- function(x, model='Model 1', ...) {
 
 #' Create a data.frame with time-series information by simulation and year
 #'
+#' This function is deprecated. It works only with legacy `Hist` and `MSE` objects.
+#'
 #' @template x-parameter
 #' @param variable A character string with a valid name for a time-series variable.
 #' Use `valid_ts_variables()` for valid variable names.
@@ -466,12 +483,14 @@ get_at_Length.multiHist <- function(x, model='Model 1', ...) {
 #'
 #' @export
 get_ts <- function(x, variable='Spawning Biomass', model='Model 1', scale=NULL) {
+  .DeprecateLegacy("get_ts()")
   UseMethod("get_ts")
 }
 
 #' @rdname get_ts
 #' @export
 valid_ts_variables <- function() {
+  .DeprecateLegacy("valid_ts_variables()")
   unique(TS_Variables$Variable)
 }
 
@@ -485,6 +504,7 @@ match_ts_variable <- function(variable='Spawning Biomass', class='Hist') {
 #' @rdname get_ts
 #' @export
 valid_at_age_ts_variables <- function() {
+  .DeprecateLegacy("valid_at_age_ts_variables()")
   unique(At_Age_TS_Variables$Variable)
 }
 
@@ -804,6 +824,7 @@ get_ts.MMSE <- function(x, variable='Spawning Biomass', model='Model 1', scale=N
 #' @export
 #' @rdname get_ts
 get_Biomass <- function(x, model='Model 1', ...) {
+  .DeprecateLegacy("get_Biomass()", "MSEtool::Biomass()")
   get_ts(x, variable='Biomass', model=model, ...)
 }
 
@@ -811,18 +832,21 @@ get_Biomass <- function(x, model='Model 1', ...) {
 #' @export
 #' @rdname get_ts
 get_Landings <- function(x, model='Model 1', ...) {
+  .DeprecateLegacy("get_Landings()", "MSEtool::Landings()")
   get_ts(x, variable='Landings', model=model, ...)
 }
 
 #' @export
 #' @rdname get_ts
 get_Removals <- function(x, model='Model 1', ...) {
+  .DeprecateLegacy("get_Removals()", "MSEtool::Removals()")
   get_ts(x, variable='Removals', model=model, ...)
 }
 
 #' @export
 #' @rdname get_ts
 get_Recruits <- function(x, model='Model 1', ...) {
+  .DeprecateLegacy("get_Recruits()")
   get_ts(x, variable='Recruits', model=model, ...)
 }
 
@@ -830,12 +854,14 @@ get_Recruits <- function(x, model='Model 1', ...) {
 #' @export
 #' @rdname get_ts
 get_SSB <- function(x, model='Model 1', ...) {
+  .DeprecateLegacy("get_SSB()", "MSEtool::SBiomass()")
   get_ts(x, variable='Spawning Biomass', model=model, ...)
 }
 
 #' @export
 #' @rdname get_ts
 get_SB_SBMSY <- function(x, model='Model 1', ...) {
+  .DeprecateLegacy("get_SB_SBMSY()", "MSEtool::SB_SBMSY()")
   get_ts(x, variable='SB_SBMSY', model=model, ...)
 }
 
@@ -843,6 +869,7 @@ get_SB_SBMSY <- function(x, model='Model 1', ...) {
 #' @export
 #' @rdname get_ts
 get_F <- function(x, model='Model 1', ...) {
+  .DeprecateLegacy("get_F()", "MSEtool::FDead()")
   get_ts(x, variable='Apical Fishing Mortality', model=model, ...)
 }
 
@@ -882,6 +909,8 @@ check_names <- function(x) {
 
 #' Get Life History Parameters
 #'
+#' This function is deprecated. It works only with legacy `Hist` and `MSE` objects.
+#'
 #' Extracts the life-history parameters: `Linf`, `K`, `L50`, and `ageM`
 #'
 #' @template x-parameter
@@ -891,6 +920,7 @@ check_names <- function(x) {
 #' @export
 
 get_LifeHistory <- function(x, model='Model 1', ...) {
+  .DeprecateLegacy("get_LifeHistory()")
   UseMethod("get_LifeHistory")
 }
 
@@ -977,6 +1007,8 @@ get_LifeHistory.MMSE <- function(x, model='Model 1', ...) {
 
 #' Create a data.frame with time-series information by simulation and year
 #'
+#' This function is deprecated. It works only with legacy `Hist` and `MSE` objects.
+#'
 #' @template x-parameter
 #' @param variable A character string with a valid name for a time-series variable.
 #' Use `valid_ts_variables()` for valid variable names.
@@ -985,6 +1017,7 @@ get_LifeHistory.MMSE <- function(x, model='Model 1', ...) {
 #'
 #' @export
 get_at_age_ts <- function(x, variable='Spawning Biomass', model='Model 1', scale=NULL) {
+  .DeprecateLegacy("get_at_age_ts()")
   UseMethod("get_at_age_ts")
 }
 
@@ -1154,18 +1187,21 @@ get_at_age_ts.MMSE <- function(x, variable='Biomass', model='Model 1', scale=NUL
 #' @export
 #' @rdname get_ts
 get_Biomass_at_Age <- function(x, model='Model 1', ...) {
+  .DeprecateLegacy("get_Biomass_at_Age()", "MSEtool::Biomass()")
   get_at_age_ts(x, variable='Biomass', model=model, ...)
 }
 
 #' @export
 #' @rdname get_ts
 get_Number_at_Age <- function(x, model='Model 1', ...) {
+  .DeprecateLegacy("get_Number_at_Age()", "MSEtool::Number()")
   get_at_age_ts(x, variable='Number', model=model, ...)
 }
 
 #' @export
 #' @rdname get_ts
 get_SSB_at_Age <- function(x, model='Model 1', ...) {
+  .DeprecateLegacy("get_SSB_at_Age()", "MSEtool::SBiomass()")
   get_at_age_ts(x, variable='Spawning Biomass', model=model, ...)
 }
 

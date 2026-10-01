@@ -229,6 +229,11 @@ check_class <- function(x) {
 
 #' Plots the median and quantiles of a time-series
 #'
+#' These functions are deprecated. They work only with legacy `Hist` and `MSE`
+#' objects. For `hist` and `mse` objects use `MSEtool::PlotSBiomass()`,
+#' `MSEtool::PlotBiomass()`, `MSEtool::PlotLandings()`, `MSEtool::PlotRemovals()`,
+#' `MSEtool::PlotF()`, and `MSEtool::PlotStock()`.
+#'
 #' @template x-parameter
 #' @param xlab X-axis label (default 'Year')
 #' @param ylab Y-axes label
@@ -269,6 +274,30 @@ plot_TS <- function(x,
                     get_function=get_SSB,
                     years=NULL,
                     ...) {
+  lifecycle::deprecate_warn("2.0.0", "plot_TS()")
+  .plot_TS(x, xlab=xlab, ylab=ylab, title=title, quantiles=quantiles, scale=scale,
+           alpha=alpha, lwd=lwd, use_theme=use_theme, colpalette=colpalette, facet=facet,
+           inc.Legend=inc.Legend, inc.Hist=inc.Hist, print=print,
+           get_function=get_function, years=years)
+}
+
+.plot_TS <- function(x,
+                     xlab='Year',
+                     ylab='Spawning Biomass',
+                     title='',
+                     quantiles=c(0.025, 0.975),
+                     scale=NULL,
+                     alpha=0.1,
+                     lwd=1,
+                     use_theme=NULL,
+                     colpalette='Dark2',
+                     facet=TRUE,
+                     inc.Legend=!facet,
+                     inc.Hist=FALSE,
+                     print=TRUE,
+                     get_function=get_SSB,
+                     years=NULL,
+                     ...) {
   check_class(x)
   df <- summary_df(x, quantiles=quantiles, get_function, scale=scale, years=years)
 
@@ -279,38 +308,44 @@ plot_TS <- function(x,
 #' @export
 #' @describeIn plot_TS Plot the Spawning Biomass
 plot_SSB <- function(x, ...) {
-  plot_TS(x, get_function=get_SSB, ...)
+  lifecycle::deprecate_warn("2.0.0", "plot_SSB()", "MSEtool::PlotSBiomass()")
+  .plot_TS(x, get_function=get_SSB, ...)
 }
 
 #' @export
 #' @describeIn plot_TS Plot the Total Biomass
 plot_Biomass <- function(x, ylab='Biomass', ...) {
-  plot_TS(x, get_function=get_Biomass, ylab=ylab, ...)
+  lifecycle::deprecate_warn("2.0.0", "plot_Biomass()", "MSEtool::PlotBiomass()")
+  .plot_TS(x, get_function=get_Biomass, ylab=ylab, ...)
 }
 
 #' @export
 #' @describeIn plot_TS Plot the Landings (biomass)
 plot_Landings <- function(x, ylab='Landings', ...) {
-  plot_TS(x, get_function=get_Landings, ylab=ylab, ...)
+  lifecycle::deprecate_warn("2.0.0", "plot_Landings()", "MSEtool::PlotLandings()")
+  .plot_TS(x, get_function=get_Landings, ylab=ylab, ...)
 }
 
 
 #' @export
 #' @describeIn plot_TS Plot the Removals (biomass)
 plot_Removals <- function(x, ylab='Removals', ...) {
-  plot_TS(x, get_function=get_Removals, ylab=ylab, ...)
+  lifecycle::deprecate_warn("2.0.0", "plot_Removals()", "MSEtool::PlotRemovals()")
+  .plot_TS(x, get_function=get_Removals, ylab=ylab, ...)
 }
 
 #' @export
 #' @describeIn plot_TS Plot the Recruits (numbers)
 plot_Recruits <- function(x, ylab='Recruits', ...) {
-  plot_TS(x, get_function=get_Recruits, ylab=ylab, ...)
+  lifecycle::deprecate_warn("2.0.0", "plot_Recruits()")
+  .plot_TS(x, get_function=get_Recruits, ylab=ylab, ...)
 }
 
 #' @export
 #' @describeIn plot_TS Plot the Recruits (numbers)
 plot_F <- function(x, ylab='Fishing Mortality (F)', ...) {
-  plot_TS(x, get_function=get_F, ylab=ylab, ...)
+  lifecycle::deprecate_warn("2.0.0", "plot_F()", "MSEtool::PlotF()")
+  .plot_TS(x, get_function=get_F, ylab=ylab, ...)
 }
 
 
@@ -330,6 +365,7 @@ plot_LifeHistory <- function(x,
                              inc.Legend=!facet,
                              inc.Hist=FALSE,
                              print=TRUE) {
+  lifecycle::deprecate_warn("2.0.0", "plot_LifeHistory()", "MSEtool::PlotStock()")
 
   df <- summary_df(x, quantiles=quantiles, func=get_LifeHistory, scale=NULL)
 

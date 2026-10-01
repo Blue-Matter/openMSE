@@ -36,7 +36,7 @@ A named list with elements:\tabular{ll}{
 }
 }
 \description{
-Extract the meta-data from a \code{Hist} or \code{MSE} object
+This function is deprecated. It works only with legacy \code{Hist} and \code{MSE} objects.
 }
 \details{
 If \code{x} is a list of objects, each object must

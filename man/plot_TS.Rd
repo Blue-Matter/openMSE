@@ -103,7 +103,10 @@ A named list with:\tabular{ll}{
 }
 }
 \description{
-Plots the median and quantiles of a time-series
+These functions are deprecated. They work only with legacy \code{Hist} and \code{MSE}
+objects. For \code{hist} and \code{mse} objects use \code{MSEtool::PlotSBiomass()},
+\code{MSEtool::PlotBiomass()}, \code{MSEtool::PlotLandings()}, \code{MSEtool::PlotRemovals()},
+\code{MSEtool::PlotF()}, and \code{MSEtool::PlotStock()}.
 }
 \section{Functions}{
 \itemize{

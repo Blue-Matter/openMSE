@@ -98,3 +98,13 @@ makeLink <- function(txt) {
 
 
 
+
+# Warn only when called directly, not from other openMSE functions
+.DeprecateLegacy <- function(what, with = NULL) {
+  ns <- topenv()
+  frames <- sys.frames()
+  callers <- frames[seq_len(max(length(frames) - 2, 0))]
+  if (any(vapply(callers, \(f) identical(topenv(f), ns), logical(1))))
+    return(invisible(NULL))
+  lifecycle::deprecate_warn("2.0.0", what, with, user_env = parent.frame(2))
+}

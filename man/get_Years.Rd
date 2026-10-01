@@ -25,5 +25,5 @@ get_Years(x)
 A data.frame with years and period (Historical or Projection)
 }
 \description{
-Create a data.frame with Historical and Projection years
+This function is deprecated. It works only with legacy \code{Hist} and \code{MSE} objects.
 }

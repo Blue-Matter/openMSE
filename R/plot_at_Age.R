@@ -7,6 +7,11 @@
 #' Note that the Selectivity and Retention curves in these plots are from the operating model. If an MP changes the
 #' selectivity/retention, this is not shown in these plots.
 #'
+#' These functions are deprecated. They work only with legacy `Hist` and `MSE`
+#' objects. For `stock`, `fleet`, `hist`, and `mse` objects use `MSEtool::PlotLength()`,
+#' `MSEtool::PlotWeight()`, `MSEtool::PlotMaturity()`, `MSEtool::PlotNaturalMortality()`,
+#' `MSEtool::PlotSelectivity()`, and `MSEtool::PlotRetention()`.
+#'
 #' @template x-parameter
 #' @param quantiles Lower and upper quantiles to calculate. Numeric vector of length 2.
 #' @template scale-parameter
@@ -39,6 +44,25 @@ plot_at_Age <- function(x,
                         use_theme=NULL,
                         colpalette='Dark2',
                         print=TRUE) {
+  lifecycle::deprecate_warn("2.0.0", "plot_at_Age()")
+  .plot_at_Age(x, quantiles=quantiles, scale=scale, variable=variable, xlab=xlab,
+               ylab=ylab, title=title, years=years, alpha=alpha, lwd=lwd,
+               use_theme=use_theme, colpalette=colpalette, print=print)
+}
+
+.plot_at_Age <- function(x,
+                         quantiles=c(0.025, 0.975),
+                         scale=NULL,
+                         variable='Length',
+                         xlab='Age (Year)',
+                         ylab=NULL,
+                         title='',
+                         years=NULL,
+                         alpha=0.1,
+                         lwd=1,
+                         use_theme=NULL,
+                         colpalette='Dark2',
+                         print=TRUE) {
   check_class(x)
 
   df <- summary_df(x, quantiles=quantiles, get_at_Age, scale=scale, years=years) %>%
@@ -99,44 +123,51 @@ plot_at_Age <- function(x,
 #' @export
 #' @describeIn plot_at_Age Plot Length-at-Age
 plot_Length <- function(x, ...) {
-  plot_at_Age(x, variable='Length', ...)
+  lifecycle::deprecate_warn("2.0.0", "plot_Length()", "MSEtool::PlotLength()")
+  .plot_at_Age(x, variable='Length', ...)
 }
 
 #' @export
 #' @describeIn plot_at_Age Plot Weight-at-Age
 plot_Weight <- function(x, ...) {
-  plot_at_Age(x, variable='Weight', ...)
+  lifecycle::deprecate_warn("2.0.0", "plot_Weight()", "MSEtool::PlotWeight()")
+  .plot_at_Age(x, variable='Weight', ...)
 }
 
 #' @export
 #' @describeIn plot_at_Age Plot Maturity-at-Age
 plot_Maturity <- function(x, ...) {
-  plot_at_Age(x, variable='Maturity', ...)
+  lifecycle::deprecate_warn("2.0.0", "plot_Maturity()", "MSEtool::PlotMaturity()")
+  .plot_at_Age(x, variable='Maturity', ...)
 }
 
 #' @export
 #' @describeIn plot_at_Age Plot N.Mortality-at-Age
 plot_N.Mortality <- function(x, ...) {
-  plot_at_Age(x, variable='N.Mortality', ...)
+  lifecycle::deprecate_warn("2.0.0", "plot_N.Mortality()", "MSEtool::PlotNaturalMortality()")
+  .plot_at_Age(x, variable='N.Mortality', ...)
 }
 
 
 #' @export
 #' @describeIn plot_at_Age Plot Selectivity-at-Age
 plot_Select <- function(x, ...) {
-  plot_at_Age(x, variable='Select', ...)
+  lifecycle::deprecate_warn("2.0.0", "plot_Select()", "MSEtool::PlotSelectivity()")
+  .plot_at_Age(x, variable='Select', ...)
 }
 
 #' @export
 #' @describeIn plot_at_Age Plot Retention -at-Age
 plot_Retention <- function(x, ...) {
-  plot_at_Age(x, variable='Retention', ...)
+  lifecycle::deprecate_warn("2.0.0", "plot_Retention()", "MSEtool::PlotRetention()")
+  .plot_at_Age(x, variable='Retention', ...)
 }
 
 #' @export
 #' @describeIn plot_at_Age Plot Selectivity-, Retention-, and Maturity-at-Age
 plot_Select_Maturity <- function(x, ...) {
-  plot_at_Age(x, variable=c('Select', 'Maturity', 'Retention'), ...)
+  lifecycle::deprecate_warn("2.0.0", "plot_Select_Maturity()")
+  .plot_at_Age(x, variable=c('Select', 'Maturity', 'Retention'), ...)
 }
 
 

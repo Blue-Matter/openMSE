@@ -27,3 +27,6 @@ netlify.toml
 ^test_objects
 DEVELOPMENT.R
 ^CRAN-SUBMISSION$
+^vignettes/articles$
+^\.positai$
+^\.claude$
